@@ -4,7 +4,6 @@ import flustix.fluxifyed.Main;
 import flustix.fluxifyed.command.SlashCommand;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Region;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
@@ -17,8 +16,6 @@ public class ServerInfoSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
-
-
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(interaction.getGuild().getName())
                 .setThumbnail(interaction.getGuild().getIconUrl())

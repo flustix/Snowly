@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 import java.util.ArrayList;
@@ -23,6 +22,7 @@ public class SlashCommandList {
     public static void initializeList() {
         addCommand(new PingSlashCommand());
         addCommand(new ServerInfoSlashCommand());
+        addCommand(new UserInfoSlashCommand());
         addCommand(new RedditSlashCommand());
     }
 
