@@ -7,7 +7,6 @@ import flustix.fluxifyed.command.SlashCommandList;
 import flustix.fluxifyed.listeners.MessageListener;
 import flustix.fluxifyed.listeners.ReadyListener;
 import flustix.fluxifyed.listeners.SlashCommandListener;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
