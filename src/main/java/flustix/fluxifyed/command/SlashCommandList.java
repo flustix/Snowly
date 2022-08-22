@@ -19,6 +19,7 @@ public class SlashCommandList {
     public static void initializeList() {
         addCommand(new PingSlashCommand());
         addCommand(new ServerInfoSlashCommand());
+        addCommand(new UserInfoSlashCommand());
         addCommand(new RedditSlashCommand());
     }
 
