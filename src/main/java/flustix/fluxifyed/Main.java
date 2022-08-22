@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import flustix.fluxifyed.command.CommandList;
 import flustix.fluxifyed.command.SlashCommandList;
+import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.listeners.MessageListener;
 import flustix.fluxifyed.listeners.ReadyListener;
 import flustix.fluxifyed.listeners.SlashCommandListener;
@@ -29,6 +30,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         config = JsonParser.parseString(Files.readString(Path.of("config.json"))).getAsJsonObject();
 
+        Database.initializeDataSource();
         CommandList.initializeList();
         SlashCommandList.initializeList();
 
