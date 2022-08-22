@@ -49,6 +49,10 @@ public class SlashCommand {
         return options;
     }
 
+    public PermissionLevel getPermissionLevel() {
+        return permissionLevel;
+    }
+
     public HashMap<String, String[]> getOptionAutocompletes() {
         return optionAutocompletes;
     }

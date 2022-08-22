@@ -2,6 +2,10 @@ package flustix.fluxifyed.command;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.commands.*;
+import flustix.fluxifyed.utils.messages.MessageUtils;
+import flustix.fluxifyed.utils.permissions.PermissionUtils;
+import flustix.fluxifyed.utils.slash.SlashCommandUtils;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -40,9 +44,19 @@ public class SlashCommandList {
     }
 
     public static void execute(SlashCommandInteractionEvent interaction) {
-        if (commands.containsKey(interaction.getName()))
-            commands.get(interaction.getName()).execute(interaction);
-        else
+        if (commands.containsKey(interaction.getName())) {
+            SlashCommand command = commands.get(interaction.getName());
+            if (PermissionUtils.checkLevel(interaction.getMember(), command.getPermissionLevel())) {
+                command.execute(interaction);
+            } else {
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle("You don't have enough permissions to run this command!")
+                        .addField("Required Permissions", PermissionUtils.getDescription(command.getPermissionLevel()), false)
+                        .setColor(0xFF5555);
+
+                SlashCommandUtils.reply(interaction, embed.build());
+            }
+        } else
             interaction.reply("This command is not implemented yet.").complete();
     }
 }
