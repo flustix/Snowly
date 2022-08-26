@@ -1,7 +1,7 @@
 package flustix.fluxifyed.api;
 
+import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpServer;
-import flustix.fluxifyed.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +10,16 @@ public class APIServer {
 
     public static void main() throws Exception {
         Router router = new Router();
+
+        router.addRoute("/hello", () -> {
+            JsonObject json = new JsonObject();
+            json.addProperty("message", "Hello World!");
+            return json;
+        });
+
+        router.addRoute("/error", () -> {
+            throw new Exception("Test Exception");
+        });
 
         int port = 8080;
 

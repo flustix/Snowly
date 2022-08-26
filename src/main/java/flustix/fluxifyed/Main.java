@@ -35,7 +35,15 @@ public class Main {
         CommandList.initializeList();
         SlashCommandList.initializeList();
 
-        APIServer.main();
+        Thread apiThread = new Thread(() -> {
+            try {
+                APIServer.main();
+            } catch (Exception e) {
+                LOGGER.error("Error while starting API Server", e);
+            }
+        });
+        apiThread.setName("API Server");
+        apiThread.start();
 
         EnumSet<GatewayIntent> intents = EnumSet.allOf(GatewayIntent.class);
         intents.remove(GatewayIntent.MESSAGE_CONTENT);

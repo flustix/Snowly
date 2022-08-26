@@ -1,7 +1,7 @@
 package flustix.fluxifyed.api.types;
 
-import java.sql.SQLException;
+import com.google.gson.JsonObject;
 
 public interface Route {
-    String execute() throws SQLException;
+    JsonObject execute() throws Exception;
 }
