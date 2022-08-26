@@ -9,10 +9,11 @@ import flustix.fluxifyed.command.SlashCommandList;
 import flustix.fluxifyed.utils.permissions.PermissionUtils;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class CommandsRoute implements Route {
-    public JsonObject execute(HttpExchange exchange) throws Exception {
+    public JsonObject execute(HttpExchange exchange, HashMap<String, String> params) throws Exception {
         JsonObject json = new JsonObject();
 
         JsonArray commands = new JsonArray();

@@ -8,11 +8,11 @@ import flustix.fluxifyed.api.types.Route;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Router implements HttpHandler {
-    private static HashMap<String, Route> routes = new HashMap<>();
+    private static final HashMap<String, Route> routes = new HashMap<>();
 
     public void handle(HttpExchange exchange) throws IOException {
         Headers headers = exchange.getResponseHeaders();
@@ -21,15 +21,40 @@ public class Router implements HttpHandler {
         JsonObject json = new JsonObject();
         json.addProperty("code", 0); // do this first so it is always at the top
 
-        if (routes.containsKey(exchange.getRequestURI().getPath())) {
-            try {
-                Route route = routes.get(exchange.getRequestURI().getPath());
-                json.add("data", route.execute(exchange));
-            } catch (Exception e) {
-                responseCode = 500;
-                json.addProperty("error", e.getMessage());
+        boolean notFound = true;
+
+        for (Map.Entry<String, Route> routeEntry : routes.entrySet()) {
+            String[] pathSplit = routeEntry.getKey().split("/");
+            String[] requestSplit = exchange.getRequestURI().getPath().split("/");
+
+            if (pathSplit.length == requestSplit.length) {
+                boolean match = true;
+                HashMap<String, String> params = new HashMap<>();
+
+                for (int i = 0; i < pathSplit.length; i++) {
+                    if (pathSplit[i].startsWith(":")) {
+                        params.put(pathSplit[i].substring(1), requestSplit[i]);
+                        continue;
+                    }
+                    if (!pathSplit[i].equals(requestSplit[i])) {
+                        match = false;
+                        break;
+                    }
+                }
+                if (match) {
+                    notFound = false;
+                    try {
+                        json.add("data", routeEntry.getValue().execute(exchange, params));
+                    } catch (Exception e) {
+                        responseCode = 500;
+                        json.addProperty("error", e.getMessage());
+                    }
+                    break;
+                }
             }
-        } else {
+        }
+
+        if (notFound) {
             responseCode = 404;
             json.addProperty("error", "Not Found");
         }

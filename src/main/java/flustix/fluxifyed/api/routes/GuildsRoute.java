@@ -8,8 +8,10 @@ import flustix.fluxifyed.api.types.Route;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 
+import java.util.HashMap;
+
 public class GuildsRoute implements Route {
-    public JsonObject execute(HttpExchange exchange) throws Exception {
+    public JsonObject execute(HttpExchange exchange, HashMap<String, String> params) throws Exception {
         JsonObject json = new JsonObject();
 
         JsonArray guilds = new JsonArray();
