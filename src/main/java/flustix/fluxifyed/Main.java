@@ -2,6 +2,7 @@ package flustix.fluxifyed;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import flustix.fluxifyed.api.APIServer;
 import flustix.fluxifyed.command.CommandList;
 import flustix.fluxifyed.command.SlashCommandList;
 import flustix.fluxifyed.database.Database;
@@ -33,6 +34,8 @@ public class Main {
         Database.initializeDataSource();
         CommandList.initializeList();
         SlashCommandList.initializeList();
+
+        APIServer.main();
 
         EnumSet<GatewayIntent> intents = EnumSet.allOf(GatewayIntent.class);
         intents.remove(GatewayIntent.MESSAGE_CONTENT);
