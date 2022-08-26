@@ -23,10 +23,11 @@ public class Router implements HttpHandler {
 
         if (routes.containsKey(exchange.getRequestURI().getPath())) {
             try {
-                json.add("data", routes.get(exchange.getRequestURI().getPath()).execute());
+                Route route = routes.get(exchange.getRequestURI().getPath());
+                json.add("data", route.execute(exchange));
             } catch (Exception e) {
-                json.addProperty("error", e.getMessage());
                 responseCode = 500;
+                json.addProperty("error", e.getMessage());
             }
         } else {
             responseCode = 404;
