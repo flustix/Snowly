@@ -32,7 +32,7 @@ public class PermissionUtils {
             case MODERATOR:
                 return "Moderator (Able to ban people)";
             case EVERYONE:
-                return "what"; // how did you even get here
+                return "Everyone";
         }
 
         return "";

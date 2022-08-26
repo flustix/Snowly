@@ -59,4 +59,8 @@ public class SlashCommandList {
         } else
             interaction.reply("This command is not implemented yet.").complete();
     }
+
+    public static TreeMap<String, SlashCommand> getCommands() {
+        return commands;
+    }
 }
