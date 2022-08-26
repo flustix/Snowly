@@ -21,6 +21,7 @@ public class GuildsRoute implements Route {
                 JsonObject guildJson = new JsonObject();
                 guildJson.addProperty("id", guild.getId());
                 guildJson.addProperty("name", guild.getName());
+                guildJson.addProperty("owner", guild.getOwnerId());
                 guildJson.addProperty("shard", shard.getShardInfo().getShardId());
                 guilds.add(guildJson);
             }
