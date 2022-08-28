@@ -2,6 +2,7 @@ package flustix.fluxifyed.api;
 
 import com.sun.net.httpserver.HttpServer;
 import flustix.fluxifyed.api.routes.*;
+import flustix.fluxifyed.api.routes.xp.XPUserRoute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +14,7 @@ public class APIServer {
 
         router.addRoute("/guilds", new GuildsRoute());
         router.addRoute("/commands", new CommandsRoute());
+        router.addRoute("/xp/:guild/:user", new XPUserRoute());
 
         int port = 8080;
 
