@@ -20,7 +20,7 @@ public class XPUser {
             return;
 
         this.xp += xp;
-        Database.executeQuery("INSERT INTO xp (guildid, userid, xp) VALUES ('" + gid + "', '" + id + "', " + xp + ") ON DUPLICATE KEY UPDATE xp = " + xp);
+        Database.executeQuery("INSERT INTO xp (guildid, userid, xp) VALUES ('" + gid + "', '" + id + "', " + xp + ") ON DUPLICATE KEY UPDATE xp = " + this.xp);
         lastUpdate = System.currentTimeMillis();
     }
 

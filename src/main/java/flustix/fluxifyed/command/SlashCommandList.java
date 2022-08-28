@@ -24,6 +24,7 @@ public class SlashCommandList {
         addCommand(new UserInfoSlashCommand());
         addCommand(new RedditSlashCommand());
         addCommand(new BanSlashCommand());
+        addCommand(new RankSlashCommand());
     }
 
     private static void addCommand(SlashCommand command) {

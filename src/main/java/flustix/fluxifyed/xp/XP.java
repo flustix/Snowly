@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.sql.ResultSet;
 import java.util.HashMap;
+import java.util.Random;
 
 public class XP {
     private static final HashMap<String, XPGuild> guilds = new HashMap<>();
@@ -23,7 +24,8 @@ public class XP {
         }
 
         XPUser user = guild.getUser(event.getAuthor().getId());
-        user.addXP(1);
+        int xp = new Random().nextInt(11) + 10;
+        user.addXP(xp);
     }
 
     public static void initGuild(String guildID) {
