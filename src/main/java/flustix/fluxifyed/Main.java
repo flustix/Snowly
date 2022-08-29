@@ -6,6 +6,7 @@ import flustix.fluxifyed.api.APIServer;
 import flustix.fluxifyed.command.CommandList;
 import flustix.fluxifyed.command.SlashCommandList;
 import flustix.fluxifyed.database.Database;
+import flustix.fluxifyed.listeners.GuildListener;
 import flustix.fluxifyed.listeners.MessageListener;
 import flustix.fluxifyed.listeners.ReadyListener;
 import flustix.fluxifyed.listeners.SlashCommandListener;
@@ -58,7 +59,8 @@ public class Main {
         shardBuilder.addEventListeners(
                 new MessageListener(),
                 new ReadyListener(),
-                new SlashCommandListener()
+                new SlashCommandListener(),
+                new GuildListener()
         );
 
         try {
