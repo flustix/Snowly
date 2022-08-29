@@ -24,6 +24,10 @@ public class XPUser {
         lastUpdate = System.currentTimeMillis();
     }
 
+    public void setXP(int xp) {
+        this.xp = xp;
+    }
+
     public int getXP() {
         return xp;
     }

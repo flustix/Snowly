@@ -36,7 +36,7 @@ public class XP {
             ResultSet rs = Database.executeQuery("SELECT * FROM xp WHERE guildid = '" + guildID + "'");
             while (rs.next()) {
                 XPUser user = new XPUser(guildID, rs.getString("userid"));
-                user.addXP(rs.getInt("xp"));
+                user.setXP(rs.getInt("xp"));
                 guild.addUser(user);
             }
         } catch (Exception e) {

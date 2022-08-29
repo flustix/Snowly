@@ -1,8 +1,10 @@
 package flustix.fluxifyed.api;
 
+import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpServer;
 import flustix.fluxifyed.api.routes.*;
 import flustix.fluxifyed.api.routes.xp.XPUserRoute;
+import flustix.fluxifyed.database.Database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,11 @@ public class APIServer {
         router.addRoute("/guilds", new GuildsRoute());
         router.addRoute("/commands", new CommandsRoute());
         router.addRoute("/xp/:guild/:user", new XPUserRoute());
+        router.addRoute("/db", (exchange, params) -> {
+            JsonObject json = new JsonObject();
+            json.addProperty("connectionCount", Database.connectionCount());
+            return json;
+        });
 
         int port = 8080;
 

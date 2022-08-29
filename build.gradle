@@ -14,7 +14,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.9.0'
     compile 'ch.qos.logback:logback-classic:1.2.11'
     compile 'com.zaxxer:HikariCP:5.0.1'
-    compile 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
+    compile 'org.mariadb.jdbc:mariadb-java-client:2.1.2' // i literally cant update this without breaking the database connections
 }
 
 jar {

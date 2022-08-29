@@ -7,6 +7,7 @@ import flustix.fluxifyed.Main;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Database {
     static HikariDataSource dataSource;
@@ -16,13 +17,10 @@ public class Database {
 
         try {
             HikariConfig hikariConfig = new HikariConfig();
-            hikariConfig.addDataSourceProperty("serverName", config.get("host").getAsString());
-            hikariConfig.addDataSourceProperty("databaseName", config.get("database").getAsString());
-            hikariConfig.addDataSourceProperty("port", 3306);
+            hikariConfig.setDriverClassName("org.mariadb.jdbc.Driver");
+            hikariConfig.setJdbcUrl("jdbc:mysql://foxes4life.net:3306/fluxifyed");
             hikariConfig.setUsername(config.get("user").getAsString());
             hikariConfig.setPassword(config.get("pass").getAsString());
-            hikariConfig.setIdleTimeout(10000);
-            hikariConfig.setDataSourceClassName("org.mariadb.jdbc.MariaDbDataSource");
             dataSource = new HikariDataSource(hikariConfig);
         } catch (Exception ex) {
             Main.LOGGER.error("Error while initializing the database", ex);
@@ -31,10 +29,18 @@ public class Database {
 
     public static ResultSet executeQuery(String query) {
         try {
-            return dataSource.getConnection().createStatement().executeQuery(query);
+            Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            connection.close(); // no, hikari does not auto close them, i tested it
+            return rs;
         } catch (Exception ex) {
             Main.LOGGER.error("Failed to execute query: " + query, ex);
             return null;
         }
+    }
+
+    public static int connectionCount() {
+        return dataSource.getHikariPoolMXBean().getActiveConnections();
     }
 }
