@@ -4,6 +4,7 @@ import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.xp.types.XPGuild;
 import flustix.fluxifyed.xp.types.XPUser;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.sql.ResultSet;
@@ -28,22 +29,22 @@ public class XP {
         user.addXP(xp);
     }
 
-    public static void initGuild(String guildID) {
-        Main.LOGGER.info("Initializing guild " + guildID);
-        XPGuild guild = new XPGuild(guildID);
+    public static void initGuild(Guild newGuild) {
+        Main.LOGGER.info("Initializing guild '" + newGuild.getName() + "' (" + newGuild.getId() + ")");
+        XPGuild guild = new XPGuild(newGuild.getId());
 
         try {
-            ResultSet rs = Database.executeQuery("SELECT * FROM xp WHERE guildid = '" + guildID + "'");
+            ResultSet rs = Database.executeQuery("SELECT * FROM xp WHERE guildid = '" + newGuild.getId() + "'");
             while (rs.next()) {
-                XPUser user = new XPUser(guildID, rs.getString("userid"));
+                XPUser user = new XPUser(newGuild.getId(), rs.getString("userid"));
                 user.setXP(rs.getInt("xp"));
                 guild.addUser(user);
             }
         } catch (Exception e) {
-            Main.LOGGER.error("Error while initializing guild " + guildID, e);
+            Main.LOGGER.error("Error while initializing guild " + newGuild, e);
         }
 
-        guilds.put(guildID, guild);
+        guilds.put(newGuild.getId(), guild);
     }
 
     public static XPGuild getGuild(String guildID) {

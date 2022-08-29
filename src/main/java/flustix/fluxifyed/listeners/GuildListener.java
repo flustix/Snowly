@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class GuildListener extends ListenerAdapter {
     public void onGuildJoin(@NotNull GuildJoinEvent event) {
         Main.LOGGER.info("Added to guild '" + event.getGuild().getName() + "' (" + event.getGuild().getId() + ")");
-        XP.initGuild(event.getGuild().getId());
+        XP.initGuild(event.getGuild());
     }
 
     @Override

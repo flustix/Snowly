@@ -17,6 +17,6 @@ public class ReadyListener extends ListenerAdapter {
     }
 
     public void onGuildReady(@NotNull GuildReadyEvent event) {
-        XP.initGuild(event.getGuild().getId());
+        XP.initGuild(event.getGuild());
     }
 }
