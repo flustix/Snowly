@@ -2,6 +2,8 @@ package flustix.fluxifyed.command;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.commands.*;
+import flustix.fluxifyed.commands.moderation.*;
+import flustix.fluxifyed.commands.utility.*;
 import flustix.fluxifyed.commands.xp.*;
 import flustix.fluxifyed.utils.permissions.PermissionUtils;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
