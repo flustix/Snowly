@@ -2,6 +2,7 @@ package flustix.fluxifyed.command;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.commands.*;
+import flustix.fluxifyed.commands.xp.*;
 import flustix.fluxifyed.utils.permissions.PermissionUtils;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -25,6 +26,7 @@ public class SlashCommandList {
         addCommand(new RedditSlashCommand());
         addCommand(new BanSlashCommand());
         addCommand(new RankSlashCommand());
+        addCommand(new GiveXPSlashCommand());
     }
 
     private static void addCommand(SlashCommand command) {

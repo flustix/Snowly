@@ -1,4 +1,4 @@
-package flustix.fluxifyed.commands;
+package flustix.fluxifyed.commands.xp;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.command.SlashCommand;
