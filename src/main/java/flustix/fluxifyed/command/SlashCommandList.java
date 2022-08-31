@@ -47,6 +47,11 @@ public class SlashCommandList {
     }
 
     public static void execute(SlashCommandInteractionEvent interaction) {
+        if (!interaction.isFromGuild()) {
+            interaction.reply("Commands can only be used in a guild!").complete();
+            return;
+        }
+
         if (commands.containsKey(interaction.getName())) {
             SlashCommand command = commands.get(interaction.getName());
             if (PermissionUtils.checkLevel(interaction.getMember(), command.getPermissionLevel())) {
