@@ -55,7 +55,14 @@ public class RedditUtils {
         }
 
         if (data.get("gallery_data") != null) {
-            imageUrl = data.get("gallery_data").getAsJsonObject().getAsJsonArray("items").get(0).getAsString();
+            JsonObject galleryData = data.getAsJsonObject("gallery_data");
+            JsonObject imageMetadata = data.getAsJsonObject("media_metadata").getAsJsonObject(galleryData.getAsJsonArray("items").get(0).getAsJsonObject().get("media_id").getAsString());
+
+            if (imageMetadata.get("e").getAsString().equals("Image")) {
+                imageUrl = imageMetadata.getAsJsonObject("s").get("u").getAsString().replace("&amp;", "&");
+            } else if (imageMetadata.get("e").getAsString().equals("AnimatedImage")) {
+                imageUrl = imageMetadata.getAsJsonObject("s").get("gif").getAsString().replace("&amp;", "&");
+            }
         }
 
         if (!imageUrl.isEmpty()) {
