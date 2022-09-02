@@ -46,10 +46,20 @@ public class RedditUtils {
                 data.get("ups").getAsInt()
         );
 
+        String imageUrl = "";
+
         if (data.get("post_hint") != null) {
             if (data.get("post_hint").getAsString().equals("image")) {
-                post.setImage(data.get("url").getAsString());
+                imageUrl = data.get("url").getAsString();
             }
+        }
+
+        if (data.get("gallery_data") != null) {
+            imageUrl = data.get("gallery_data").getAsJsonObject().getAsJsonArray("items").get(0).getAsString();
+        }
+
+        if (!imageUrl.isEmpty()) {
+            post.setImage(imageUrl);
         }
 
         if (data.get("selftext") != null) {
