@@ -16,6 +16,7 @@ public class XP {
 
     public static void addXP(MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
+        if (!event.isFromGuild()) return;
 
         XPGuild guild = guilds.get(event.getGuild().getId());
 
