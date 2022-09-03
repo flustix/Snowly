@@ -15,7 +15,7 @@ import java.util.Date;
 public class RedditSlashCommand extends SlashCommand {
     public RedditSlashCommand() {
         super("reddit", "Get a reddit post");
-        addOption(OptionType.STRING, "subreddit", "The subreddit to get a post from", true, false);
+        addOption(OptionType.STRING, "subreddit", "The subreddit to get a post from", true, true);
     }
 
     public void execute(SlashCommandInteraction interaction) {
@@ -53,6 +53,9 @@ public class RedditSlashCommand extends SlashCommand {
                         .setTitle("This post is NSFW")
                         .setDescription("NSFW post can only be viewed in NSFW channels!")
                         .setColor(0xFF5555);
+            } else {
+                Main.LOGGER.info("Adding r/" + post.getSubreddit() + " to autocompletes");
+                addAutocomplete("subreddit", post.getSubreddit());
             }
 
             hook.editOriginal(

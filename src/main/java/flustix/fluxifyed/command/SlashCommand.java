@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class SlashCommand {
     String description;
     PermissionLevel permissionLevel = PermissionLevel.EVERYONE;
     List<OptionData> options = new ArrayList<>();
-    HashMap<String, String[]> optionAutocompletes = new HashMap<>();
+    HashMap<String, List<String>> optionAutocompletes = new HashMap<>();
 
     public SlashCommand(String name, String desc) {
         this.name = name;
@@ -26,7 +27,11 @@ public class SlashCommand {
     }
 
     public void addAutocomplete(String option, String... autocompletes) {
-        optionAutocompletes.put(option, autocompletes);
+        if (optionAutocompletes.containsKey(option)) {
+            optionAutocompletes.get("option").addAll(Arrays.stream(autocompletes).toList());
+        } else {
+            optionAutocompletes.put(option, Arrays.stream(autocompletes).toList());
+        }
     }
 
     public void setPermissionLevel(PermissionLevel level) {
@@ -53,7 +58,7 @@ public class SlashCommand {
         return permissionLevel;
     }
 
-    public HashMap<String, String[]> getOptionAutocompletes() {
+    public HashMap<String, List<String>> getOptionAutocompletes() {
         return optionAutocompletes;
     }
 }
