@@ -40,7 +40,7 @@ public class BanSlashCommand extends SlashCommand {
                         .addField(":x: Error", error.getMessage(), false)
                         .setColor(Main.accentColor);
 
-                interaction.replyEmbeds(embed.build()).queue();
+                interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
             });
         } catch (Exception e) {
             EmbedBuilder embed = new EmbedBuilder()
@@ -49,7 +49,7 @@ public class BanSlashCommand extends SlashCommand {
                     .addField(":x: Error", e.getMessage(), false)
                     .setColor(Main.accentColor);
 
-            SlashCommandUtils.reply(interaction, embed.build());
+            SlashCommandUtils.replyEphemeral(interaction, embed.build());
         }
     }
 }

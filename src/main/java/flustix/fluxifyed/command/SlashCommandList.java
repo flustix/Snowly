@@ -50,7 +50,7 @@ public class SlashCommandList {
 
     public static void execute(SlashCommandInteractionEvent interaction) {
         if (!interaction.isFromGuild()) {
-            interaction.reply("Commands can only be used in a guild!").complete();
+            SlashCommandUtils.replyEphemeral(interaction, "Commands can only be used in a guild!");
             return;
         }
 
@@ -64,10 +64,10 @@ public class SlashCommandList {
                         .addField("Required Permissions", PermissionUtils.getDescription(command.getPermissionLevel()), false)
                         .setColor(0xFF5555);
 
-                SlashCommandUtils.reply(interaction, embed.build());
+                SlashCommandUtils.replyEphemeral(interaction, embed.build());
             }
         } else
-            interaction.reply("This command is not implemented yet.").complete();
+            SlashCommandUtils.replyEphemeral(interaction, "This command is not implemented yet.");
     }
 
     public static TreeMap<String, SlashCommand> getCommands() {
