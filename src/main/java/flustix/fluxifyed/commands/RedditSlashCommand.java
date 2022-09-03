@@ -54,7 +54,6 @@ public class RedditSlashCommand extends SlashCommand {
                         .setDescription("NSFW post can only be viewed in NSFW channels!")
                         .setColor(0xFF5555);
             } else {
-                Main.LOGGER.info("Adding r/" + post.getSubreddit() + " to autocompletes");
                 addAutocomplete("subreddit", post.getSubreddit());
             }
 

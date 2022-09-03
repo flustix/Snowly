@@ -1,5 +1,6 @@
 package flustix.fluxifyed.command;
 
+import flustix.fluxifyed.Main;
 import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
@@ -28,9 +29,14 @@ public class SlashCommand {
 
     public void addAutocomplete(String option, String... autocompletes) {
         if (optionAutocompletes.containsKey(option)) {
-            optionAutocompletes.get("option").addAll(Arrays.stream(autocompletes).toList());
+            for (String autocomplete : autocompletes) {
+                if (!optionAutocompletes.get(option).contains(autocomplete)) {
+                    optionAutocompletes.get(option).add(autocomplete);
+                }
+            }
         } else {
-            optionAutocompletes.put(option, Arrays.stream(autocompletes).toList());
+            List<String> list = new ArrayList<>(Arrays.asList(autocompletes));
+            optionAutocompletes.put(option, list);
         }
     }
 
