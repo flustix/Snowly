@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import flustix.fluxifyed.api.APIServer;
 import flustix.fluxifyed.command.CommandList;
 import flustix.fluxifyed.command.SlashCommandList;
+import flustix.fluxifyed.console.ConsoleCommands;
 import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.listeners.GuildListener;
 import flustix.fluxifyed.listeners.MessageListener;
@@ -49,6 +50,16 @@ public class Main {
         });
         apiThread.setName("API Server");
         apiThread.start();
+
+        Thread consoleThread = new Thread(() -> {
+            try {
+                while (true) {
+                    ConsoleCommands.start();
+                }
+            } catch (Exception ignored) {}
+        });
+        consoleThread.setName("Fluxifyed Console");
+        consoleThread.start();
 
         EnumSet<GatewayIntent> intents = EnumSet.allOf(GatewayIntent.class);
         intents.remove(GatewayIntent.MESSAGE_CONTENT);
