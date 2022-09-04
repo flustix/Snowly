@@ -22,14 +22,18 @@ public class SlashCommandList {
     private static final TreeMap<String, SlashCommand> commands = new TreeMap<>();
 
     public static void initializeList() {
+        addCommand(new BanSlashCommand());
+        addCommand(new KickSlashCommand());
+
+        addCommand(new AboutSlashCommand());
         addCommand(new PingSlashCommand());
         addCommand(new ServerInfoSlashCommand());
         addCommand(new UserInfoSlashCommand());
-        addCommand(new RedditSlashCommand());
-        addCommand(new BanSlashCommand());
-        addCommand(new RankSlashCommand());
+
         addCommand(new GiveXPSlashCommand());
-        addCommand(new AboutSlashCommand());
+        addCommand(new RankSlashCommand());
+
+        addCommand(new RedditSlashCommand());
     }
 
     private static void addCommand(SlashCommand command) {
