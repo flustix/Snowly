@@ -3,7 +3,6 @@ package flustix.fluxifyed;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import flustix.fluxifyed.api.APIServer;
-import flustix.fluxifyed.command.CommandList;
 import flustix.fluxifyed.command.SlashCommandList;
 import flustix.fluxifyed.console.ConsoleCommands;
 import flustix.fluxifyed.database.Database;
@@ -31,7 +30,6 @@ public class Main {
 
     private static List<JDA> shards = new ArrayList<>();
     private static JsonObject config;
-    private static final String prefix = "flux ";
     private static final int maxShards = 1;
     private static final String version = "2022.1.0";
 
@@ -39,7 +37,6 @@ public class Main {
         config = JsonParser.parseString(Files.readString(Path.of("config.json"))).getAsJsonObject();
 
         Database.initializeDataSource();
-        CommandList.initializeList();
         SlashCommandList.initializeList();
 
         Thread apiThread = new Thread(() -> {
@@ -87,10 +84,6 @@ public class Main {
 
     public static JsonObject getConfig() {
         return config;
-    }
-
-    public static String getPrefix() {
-        return prefix;
     }
 
     public static List<JDA> getShards() {
