@@ -23,7 +23,7 @@ public class APIServer {
             return json;
         });
 
-        int port = 8080;
+        int port = 6679;
 
         HttpServer server = HttpServer.create(new java.net.InetSocketAddress(port), 0);
         server.createContext("/", router);
