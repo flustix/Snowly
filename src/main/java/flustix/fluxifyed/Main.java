@@ -51,9 +51,7 @@ public class Main {
 
         Thread consoleThread = new Thread(() -> {
             try {
-                while (true) {
-                    ConsoleCommands.start();
-                }
+                ConsoleCommands.start();
             } catch (Exception ignored) {}
         });
         consoleThread.setName("Fluxifyed Console");
