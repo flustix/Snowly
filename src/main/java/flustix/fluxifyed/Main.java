@@ -33,6 +33,7 @@ public class Main {
     private static JsonObject config;
     private static final String prefix = "flux ";
     private static final int maxShards = 1;
+    private static final String version = "2022.1.0";
 
     public static void main(String[] args) throws Exception {
         config = JsonParser.parseString(Files.readString(Path.of("config.json"))).getAsJsonObject();
@@ -94,5 +95,9 @@ public class Main {
 
     public static List<JDA> getShards() {
         return shards;
+    }
+
+    public static String getVersion() {
+        return version;
     }
 }

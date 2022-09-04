@@ -18,6 +18,7 @@ public class RedditUtils {
             HttpClient client = HttpClient.newBuilder().followRedirects(HttpClient.Redirect.ALWAYS).build();
             HttpRequest req = HttpRequest.newBuilder(URI.create(url))
                     .header("Accept", "application/json, text/plain, /")
+                    .header("User-Agent", "Fluxifyed/" + Main.getVersion() + " (by /u/Flustix)")
                     .build();
             HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
 
