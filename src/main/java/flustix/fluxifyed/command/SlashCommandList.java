@@ -29,6 +29,7 @@ public class SlashCommandList {
         addCommand(new BanSlashCommand());
         addCommand(new RankSlashCommand());
         addCommand(new GiveXPSlashCommand());
+        addCommand(new AboutSlashCommand());
     }
 
     private static void addCommand(SlashCommand command) {
