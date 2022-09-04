@@ -11,7 +11,7 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 public class BanSlashCommand extends SlashCommand {
     public BanSlashCommand() {
-        super("ban", "Bans people");
+        super("ban", "Bans a user from the server.");
         setPermissionLevel(PermissionLevel.MODERATOR);
         addOption(OptionType.USER, "target", "The user to ban", true, false);
         addOption(OptionType.STRING, "reason", "The reason for the ban", false, false);
