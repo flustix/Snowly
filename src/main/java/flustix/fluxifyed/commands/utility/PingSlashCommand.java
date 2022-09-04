@@ -13,12 +13,13 @@ public class PingSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
-        long time = System.currentTimeMillis();
         SlashCommandUtils.reply(interaction, "<a:catItSlaps:935449425722109993>", (hook) -> {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Pong!")
                     .setColor(Main.accentColor)
-                    .addField("\ud83d\udcf6 Ping", (System.currentTimeMillis() - time) + "ms", true);
+                    .addField(":1234: Ping", interaction.getJDA().getGatewayPing() + "ms", true)
+                    .addField(":1234: Rest", interaction.getJDA().getRestPing().complete() + "ms", true)
+                    .addField(":hash: Shard ID", interaction.getJDA().getShardInfo().getShardId() + "", true);
 
             hook.editOriginal(
                     new MessageBuilder()
