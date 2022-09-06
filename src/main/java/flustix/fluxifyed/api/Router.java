@@ -23,33 +23,37 @@ public class Router implements HttpHandler {
 
         boolean notFound = true;
 
-        for (Map.Entry<String, Route> routeEntry : routes.entrySet()) {
-            String[] pathSplit = routeEntry.getKey().split("/");
-            String[] requestSplit = exchange.getRequestURI().getPath().split("/");
+        if (exchange.getRequestMethod().equals("HEAD")) {
+            return; // don't do anything if it's a HEAD request
+        } else {
+            for (Map.Entry<String, Route> routeEntry : routes.entrySet()) {
+                String[] pathSplit = routeEntry.getKey().split("/");
+                String[] requestSplit = exchange.getRequestURI().getPath().split("/");
 
-            if (pathSplit.length == requestSplit.length) {
-                boolean match = true;
-                HashMap<String, String> params = new HashMap<>();
+                if (pathSplit.length == requestSplit.length) {
+                    boolean match = true;
+                    HashMap<String, String> params = new HashMap<>();
 
-                for (int i = 0; i < pathSplit.length; i++) {
-                    if (pathSplit[i].startsWith(":")) {
-                        params.put(pathSplit[i].substring(1), requestSplit[i]);
-                        continue;
+                    for (int i = 0; i < pathSplit.length; i++) {
+                        if (pathSplit[i].startsWith(":")) {
+                            params.put(pathSplit[i].substring(1), requestSplit[i]);
+                            continue;
+                        }
+                        if (!pathSplit[i].equals(requestSplit[i])) {
+                            match = false;
+                            break;
+                        }
                     }
-                    if (!pathSplit[i].equals(requestSplit[i])) {
-                        match = false;
+                    if (match) {
+                        notFound = false;
+                        try {
+                            json.add("data", routeEntry.getValue().execute(exchange, params));
+                        } catch (Exception e) {
+                            responseCode = 500;
+                            json.addProperty("error", e.getMessage());
+                        }
                         break;
                     }
-                }
-                if (match) {
-                    notFound = false;
-                    try {
-                        json.add("data", routeEntry.getValue().execute(exchange, params));
-                    } catch (Exception e) {
-                        responseCode = 500;
-                        json.addProperty("error", e.getMessage());
-                    }
-                    break;
                 }
             }
         }
