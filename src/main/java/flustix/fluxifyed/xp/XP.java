@@ -25,6 +25,8 @@ public class XP {
             return;
         }
 
+        if (!guild.isXpEnabled) return;
+
         XPUser user = guild.getUser(event.getAuthor().getId());
         int xp = new Random().nextInt(11) + 10;
         user.addXP(xp);
@@ -32,20 +34,28 @@ public class XP {
 
     public static void initGuild(Guild newGuild) {
         Main.LOGGER.info("Initializing guild '" + newGuild.getName() + "' (" + newGuild.getId() + ")");
-        XPGuild guild = new XPGuild(newGuild.getId());
 
         try {
-            ResultSet rs = Database.executeQuery("SELECT * FROM xp WHERE guildid = '" + newGuild.getId() + "'");
-            while (rs.next()) {
-                XPUser user = new XPUser(newGuild.getId(), rs.getString("userid"));
-                user.setXP(rs.getInt("xp"));
+            XPGuild guild = new XPGuild(newGuild.getId());
+
+            ResultSet users = Database.executeQuery("SELECT * FROM xp WHERE guildid = '" + newGuild.getId() + "'");
+            ResultSet settings = Database.executeQuery("SELECT * FROM guildSettings WHERE guildid = '" + newGuild.getId() + "'");
+
+            while (users.next()) {
+                XPUser user = new XPUser(newGuild.getId(), users.getString("userid"));
+                user.setXP(users.getInt("xp"));
                 guild.addUser(user);
             }
+
+            while (settings.next()) {
+                guild.isXpEnabled = settings.getBoolean("xp");
+            }
+
+            guilds.put(newGuild.getId(), guild);
         } catch (Exception e) {
             Main.LOGGER.error("Error while initializing guild " + newGuild, e);
         }
 
-        guilds.put(newGuild.getId(), guild);
     }
 
     public static XPGuild getGuild(String guildID) {

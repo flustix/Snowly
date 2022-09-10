@@ -32,6 +32,7 @@ public class SlashCommandList {
 
         addCommand(new GiveXPSlashCommand());
         addCommand(new RankSlashCommand());
+        addCommand(new ToggleXPSlashCommand());
 
         addCommand(new RedditSlashCommand());
     }

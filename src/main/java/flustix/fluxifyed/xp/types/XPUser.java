@@ -1,6 +1,5 @@
 package flustix.fluxifyed.xp.types;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.Database;
 
 public class XPUser {

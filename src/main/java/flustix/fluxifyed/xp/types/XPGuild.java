@@ -1,11 +1,10 @@
 package flustix.fluxifyed.xp.types;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.HashMap;
 
 public class XPGuild {
     private final String id;
+    public boolean isXpEnabled = true;
     private final HashMap<String, XPUser> users = new HashMap<>();
 
     public XPGuild(String id) {
