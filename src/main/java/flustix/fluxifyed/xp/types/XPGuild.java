@@ -1,6 +1,8 @@
 package flustix.fluxifyed.xp.types;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class XPGuild {
     private final String id;
@@ -24,6 +26,12 @@ public class XPGuild {
 
     public void addUser(XPUser user) {
         users.put(user.getID(), user);
+    }
+
+    public List<XPUser> getTop() {
+        List<XPUser> top = new ArrayList<>(users.values().stream().toList());
+        top.sort((a, b) -> b.getXP() - a.getXP());
+        return top;
     }
 
     public String getId() {

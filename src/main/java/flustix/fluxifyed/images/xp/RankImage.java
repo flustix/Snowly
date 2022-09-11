@@ -13,7 +13,7 @@ import java.net.URL;
 public class RankImage {
     public static File file = new File("rank.png");
 
-    public static boolean create(String pfp, String username, String servericon, String servername, int xp, Color color) {
+    public static boolean create(String pfp, String username, String servericon, String servername, int xp, int rank, Color color) {
         try {
             if (color == null) color = new Color(Main.accentColor);
 
@@ -33,7 +33,7 @@ public class RankImage {
             graphics.drawImage(drawRoundedRect(scaleImage(ImageIO.read(new URL(pfp)), 170, 170), 8), 30, 30, null);
 
             // username
-            graphics.fillRoundRect(220, 20, 960, 190, 5, 5);
+            graphics.fillRoundRect(220, 20, 760, 190, 5, 5);
             graphics.setFont(font.deriveFont(64f));
             graphics.setColor(color);
             GraphicsUtils.drawString(graphics, username, 230, 20);
@@ -45,6 +45,15 @@ public class RankImage {
             graphics.setFont(font.deriveFont(32f));
             graphics.setColor(Color.WHITE);
             GraphicsUtils.drawString(graphics, servername, 300, 122);
+
+            // rank
+            graphics.setColor(new Color(54, 57, 63));
+            graphics.fillRoundRect(990, 20, 190, 190, 5, 5);
+            graphics.setColor(color);
+            GraphicsUtils.drawCenteredString(graphics, "Rank", 1085, 70);
+            graphics.setColor(Color.WHITE);
+            GraphicsUtils.drawCenteredString(graphics, "#" + rank, 1085, 110);
+
 
             int level = XPUtils.calculateLevel(xp);
             float nextLevel = XPUtils.calculateXP( level + 1);

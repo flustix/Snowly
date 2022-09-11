@@ -36,6 +36,7 @@ public class RankSlashCommand extends SlashCommand {
                     interaction.getGuild().getIconUrl() + "?size=128",
                     interaction.getGuild().getName(),
                     guild.getUser(interaction.getMember().getId()).getXP(),
+                    guild.getTop().indexOf(guild.getUser(interaction.getMember().getId())) + 1,
                     interaction.getMember().getColor())) {
                 hook.editOriginal("").addFile(RankImage.file).complete();
                 hook.editOriginalEmbeds(new ArrayList<>()).complete();
