@@ -30,7 +30,7 @@ public class Main {
 
     private static List<JDA> shards = new ArrayList<>();
     private static JsonObject config;
-    private static final int maxShards = 2;
+    private static final int maxShards = 1;
     private static final String version = "2022.2.0";
 
     public static void main(String[] args) throws Exception {
