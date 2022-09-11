@@ -16,8 +16,8 @@ public class RankImage {
     public static boolean create(String pfp, String username, String servericon, String servername, int xp) {
         try {
             BufferedImage image = new BufferedImage(1200, 500, BufferedImage.TYPE_INT_ARGB);
-
             Graphics2D graphics = image.createGraphics();
+            Font font = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/fonts/Lato-Bold.ttf"));
 
             graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -29,7 +29,7 @@ public class RankImage {
             graphics.drawImage(drawRoundedRect(scaleImage(ImageIO.read(new URL(pfp)), 170, 170), 8), 30, 30, null);
 
             // username
-            graphics.setFont(new Font("Lato", Font.BOLD, 64));
+            graphics.setFont(font.deriveFont(64f));
             graphics.setColor(Color.WHITE);
             GraphicsUtils.drawString(graphics, username, 210, 20);
 
@@ -37,7 +37,7 @@ public class RankImage {
             graphics.drawImage(drawRoundedRect(scaleImage(ImageIO.read(new URL(servericon)), 60, 60), 4), 210, 120, null);
 
             // server name
-            graphics.setFont(new Font("Lato", Font.BOLD, 32));
+            graphics.setFont(font.deriveFont(32f));
             graphics.setColor(Color.WHITE);
             GraphicsUtils.drawString(graphics, servername, 280, 122);
 
@@ -50,7 +50,6 @@ public class RankImage {
             graphics.fillRoundRect(30, 450, (int) (1140 * (xp / nextLevel)), 20, 5, 5);
 
             // xp
-            graphics.setFont(new Font("Lato", Font.BOLD, 32));
             graphics.setColor(new Color(Main.accentColor));
             GraphicsUtils.drawCenteredString(graphics, "Level", 300, 260);
             GraphicsUtils.drawCenteredString(graphics, "XP", 600, 260);
