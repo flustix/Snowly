@@ -57,7 +57,6 @@ public class TopImage {
                     GraphicsUtils.drawString(graphics, "#" + member.getUser().getDiscriminator(), 120 + graphics.getFontMetrics().stringWidth(member.getUser().getName()), 32 + (90 * i));
                 } catch (Exception e) {
                     GraphicsUtils.drawString(graphics, "Not Found", 120, 32 + (90 * i));
-                    e.printStackTrace();
                 }
 
                 graphics.setColor(Color.WHITE);
