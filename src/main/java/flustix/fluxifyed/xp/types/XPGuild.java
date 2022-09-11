@@ -34,7 +34,7 @@ public class XPGuild {
         return top;
     }
 
-    public String getId() {
+    public String getID() {
         return id;
     }
 }

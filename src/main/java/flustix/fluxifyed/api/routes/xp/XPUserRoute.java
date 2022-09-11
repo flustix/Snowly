@@ -22,7 +22,7 @@ public class XPUserRoute implements Route {
         if (user == null)
             return json; // return nothing if it doesnt exist :shrug:
 
-        json.addProperty("guild", guild.getId());
+        json.addProperty("guild", guild.getID());
         json.addProperty("user", user.getID());
         json.addProperty("xp", user.getXP());
 
