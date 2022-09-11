@@ -13,8 +13,10 @@ import java.net.URL;
 public class RankImage {
     public static File file = new File("rank.png");
 
-    public static boolean create(String pfp, String username, String servericon, String servername, int xp) {
+    public static boolean create(String pfp, String username, String servericon, String servername, int xp, Color color) {
         try {
+            if (color == null) color = new Color(Main.accentColor);
+
             BufferedImage image = new BufferedImage(1200, 500, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
             Font font = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/fonts/Lato-Bold.ttf"));
@@ -30,7 +32,7 @@ public class RankImage {
 
             // username
             graphics.setFont(font.deriveFont(64f));
-            graphics.setColor(Color.WHITE);
+            graphics.setColor(color);
             GraphicsUtils.drawString(graphics, username, 210, 20);
 
             // server icon
@@ -46,11 +48,11 @@ public class RankImage {
             float nextLevel = XPUtils.calculateXP( level + 1);
             graphics.setColor(new Color(0, 0, 0, 255 / 4));
             graphics.fillRoundRect(30, 450, 1140, 20, 5, 5);
-            graphics.setColor(new Color(Main.accentColor));
+            graphics.setColor(color);
             graphics.fillRoundRect(30, 450, (int) (1140 * (xp / nextLevel)), 20, 5, 5);
 
             // xp
-            graphics.setColor(new Color(Main.accentColor));
+            graphics.setColor(color);
             GraphicsUtils.drawCenteredString(graphics, "Level", 300, 260);
             GraphicsUtils.drawCenteredString(graphics, "XP", 600, 260);
             GraphicsUtils.drawCenteredString(graphics, "XP Left", 900, 260);
