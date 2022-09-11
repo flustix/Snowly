@@ -22,7 +22,7 @@ public class TopImage {
             if (length > 10) length = 10;
 
             int width = 1000;
-            int height = (length * 90) + 10;
+            int height = (length * 90) + 20;
 
             BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
