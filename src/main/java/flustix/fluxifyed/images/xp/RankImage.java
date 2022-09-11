@@ -17,49 +17,61 @@ public class RankImage {
         try {
             if (color == null) color = new Color(Main.accentColor);
 
-            BufferedImage image = new BufferedImage(1200, 500, BufferedImage.TYPE_INT_ARGB);
+            BufferedImage image = new BufferedImage(1200, 460, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
             Font font = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/fonts/Lato-Bold.ttf"));
 
             graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             // background
-            graphics.setColor(new Color(0, 0, 0, 255 / 4));
-            graphics.fillRoundRect(10, 10 , 1180, 480, 24, 24);
+            graphics.setColor(new Color(47, 49, 54));
+            graphics.fillRoundRect(10, 10 , 1180, 450, 5, 5);
 
             // profile picture
+            graphics.setColor(new Color(54, 57, 63));
+            graphics.fillRoundRect(20, 20, 190, 190, 5, 5);
             graphics.drawImage(drawRoundedRect(scaleImage(ImageIO.read(new URL(pfp)), 170, 170), 8), 30, 30, null);
 
             // username
+            graphics.fillRoundRect(220, 20, 960, 190, 5, 5);
             graphics.setFont(font.deriveFont(64f));
             graphics.setColor(color);
-            GraphicsUtils.drawString(graphics, username, 210, 20);
+            GraphicsUtils.drawString(graphics, username, 230, 20);
 
             // server icon
-            graphics.drawImage(drawRoundedRect(scaleImage(ImageIO.read(new URL(servericon)), 60, 60), 4), 210, 120, null);
+            graphics.drawImage(drawRoundedRect(scaleImage(ImageIO.read(new URL(servericon)), 60, 60), 4), 230, 120, null);
 
             // server name
             graphics.setFont(font.deriveFont(32f));
             graphics.setColor(Color.WHITE);
-            GraphicsUtils.drawString(graphics, servername, 280, 122);
+            GraphicsUtils.drawString(graphics, servername, 300, 122);
 
-            // progressbar
             int level = XPUtils.calculateLevel(xp);
             float nextLevel = XPUtils.calculateXP( level + 1);
-            graphics.setColor(new Color(0, 0, 0, 255 / 4));
-            graphics.fillRoundRect(30, 450, 1140, 20, 5, 5);
-            graphics.setColor(color);
-            graphics.fillRoundRect(30, 450, (int) (1140 * (xp / nextLevel)), 20, 5, 5);
 
-            // xp
+            // xp bg
+            graphics.setColor(new Color(54, 57, 63));
+            graphics.fillRoundRect(20, 220, 380, 180, 5, 5);
+            graphics.fillRoundRect(410, 220, 380, 180, 5, 5);
+            graphics.fillRoundRect(800, 220, 380, 180, 5, 5);
+
+            //xp text
             graphics.setColor(color);
-            GraphicsUtils.drawCenteredString(graphics, "Level", 300, 260);
+            GraphicsUtils.drawCenteredString(graphics, "Level", 210, 260);
             GraphicsUtils.drawCenteredString(graphics, "XP", 600, 260);
-            GraphicsUtils.drawCenteredString(graphics, "XP Left", 900, 260);
+            GraphicsUtils.drawCenteredString(graphics, "XP Left", 990, 260);
             graphics.setColor(Color.WHITE);
-            GraphicsUtils.drawCenteredString(graphics, level + "", 300, 300);
+            GraphicsUtils.drawCenteredString(graphics, level + "", 210, 300);
             GraphicsUtils.drawCenteredString(graphics, xp + "", 600, 300);
-            GraphicsUtils.drawCenteredString(graphics, Math.round(nextLevel - xp) + "", 900, 300);
+            GraphicsUtils.drawCenteredString(graphics, Math.round(nextLevel - xp) + "", 990, 300);
+
+            // progressbar
+            graphics.setColor(new Color(54, 57, 63));
+            graphics.fillRoundRect(20, 410, 1160, 40, 5, 5);
+            graphics.setColor(new Color(47, 49, 54));
+            graphics.fillRoundRect(30, 420, 1140, 20, 5, 5);
+            graphics.setColor(color);
+            graphics.fillRoundRect(30, 420, (int) (1140 * (xp / nextLevel)), 20, 5, 5);
 
             graphics.dispose();
             ImageIO.write(image, "png", file);
