@@ -21,8 +21,8 @@ public class XPUser {
     }
 
     public void addXP(int xp, MessageReceivedEvent event) {
-        /*if (lastUpdate + 60000 > System.currentTimeMillis())
-            return;*/
+        if (lastUpdate + 60000 > System.currentTimeMillis())
+            return;
 
         this.xp += xp;
 
