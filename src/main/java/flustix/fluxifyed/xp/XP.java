@@ -39,7 +39,7 @@ public class XP {
             XPGuild guild = new XPGuild(newGuild.getId());
 
             ResultSet users = Database.executeQuery("SELECT * FROM xp WHERE guildid = '" + newGuild.getId() + "'");
-            ResultSet settings = Database.executeQuery("SELECT * FROM guildSettings WHERE guildid = '" + newGuild.getId() + "'");
+            ResultSet settings = Database.executeQuery("SELECT * FROM xpSettings WHERE guildid = '" + newGuild.getId() + "'");
 
             while (users.next()) {
                 XPUser user = new XPUser(newGuild.getId(), users.getString("userid"));
@@ -48,7 +48,7 @@ public class XP {
             }
 
             while (settings.next()) {
-                guild.isXpEnabled = settings.getBoolean("xp");
+                guild.isXpEnabled = settings.getBoolean("enabled");
             }
 
             guilds.put(newGuild.getId(), guild);

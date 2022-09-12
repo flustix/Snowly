@@ -23,7 +23,7 @@ public class ToggleXPSlashCommand extends SlashCommand {
             guild.isXpEnabled = !guild.isXpEnabled;
 
             int enabled = guild.isXpEnabled ? 1 : 0;
-            Database.executeQuery("INSERT INTO guildSettings (guildid, xp) VALUES ('" + interaction.getGuild().getId() + "', " + enabled + ") ON DUPLICATE KEY UPDATE xp = " + enabled);
+            Database.executeQuery("INSERT INTO xpSettings (guildid, enabled) VALUES ('" + interaction.getGuild().getId() + "', " + enabled + ") ON DUPLICATE KEY UPDATE enabled = " + enabled);
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Toggled XP")
