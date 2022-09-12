@@ -1,5 +1,7 @@
 package flustix.fluxifyed.utils.graphics;
 
+import flustix.fluxifyed.Main;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -21,6 +23,19 @@ public class GraphicsUtils {
         }
 
         g2d.drawString(str, finalX, y + g2d.getFontMetrics().getHeight());
+    }
+
+    public static void drawString(Graphics2D g2d, String str, int x, int y, int size, int maxWidth, Alignment align) {
+        int width = g2d.getFontMetrics().stringWidth(str);
+
+        if (width > maxWidth) {
+            float newSize = size * (maxWidth / (float) width);
+            g2d.setFont(g2d.getFont().deriveFont(newSize));
+
+            y += (size - newSize) / 2;
+        }
+
+        drawString(g2d, str, x, y, align);
     }
 
     public static BufferedImage drawRoundedRect(BufferedImage image, int cornerRadius) {

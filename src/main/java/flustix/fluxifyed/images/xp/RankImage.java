@@ -37,7 +37,7 @@ public class RankImage {
             graphics.fillRoundRect(220, 20, 760, 190, 5, 5);
             graphics.setFont(font.deriveFont(64f));
             graphics.setColor(color);
-            GraphicsUtils.drawString(graphics, username, 230, 20, Alignment.LEFT);
+            GraphicsUtils.drawString(graphics, username, 230, 20, 64, 740, Alignment.LEFT);
 
             // server icon
             graphics.drawImage(GraphicsUtils.drawRoundedRect(GraphicsUtils.scaleImage(ImageIO.read(new URL(servericon)), 60, 60), 4), 230, 120, null);

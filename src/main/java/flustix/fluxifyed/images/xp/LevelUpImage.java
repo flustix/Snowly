@@ -1,6 +1,7 @@
 package flustix.fluxifyed.images.xp;
 
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.utils.graphics.Alignment;
 import flustix.fluxifyed.utils.graphics.GraphicsUtils;
 
 import javax.imageio.ImageIO;
@@ -36,9 +37,9 @@ public class LevelUpImage {
             graphics.fillRoundRect(190, 20, 590, 160, 5, 5);
             graphics.setColor(Color.WHITE);
             graphics.setFont(font.deriveFont(50f));
-            graphics.drawString(username, 200, 90);
+            GraphicsUtils.drawString(graphics, username, 200, 20, 50, 570, Alignment.LEFT);
             graphics.setFont(font.deriveFont(30f));
-            graphics.drawString("Leveled up to level " + level, 200, 150);
+            GraphicsUtils.drawString(graphics, "Leveled up to level " + level, 200, 110, Alignment.LEFT);
 
             graphics.dispose();
             ImageIO.write(image, "png", file);
