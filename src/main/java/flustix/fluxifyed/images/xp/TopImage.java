@@ -1,6 +1,7 @@
 package flustix.fluxifyed.images.xp;
 
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.utils.graphics.Alignment;
 import flustix.fluxifyed.utils.graphics.GraphicsUtils;
 import flustix.fluxifyed.xp.types.XPGuild;
 import flustix.fluxifyed.xp.types.XPUser;
@@ -43,7 +44,7 @@ public class TopImage {
                 graphics.fillRoundRect(20, 20 + (90 * i), 80, 80, 5, 5);
                 graphics.setColor(Color.WHITE);
                 graphics.setFont(font.deriveFont(32f));
-                GraphicsUtils.drawCenteredString(graphics, "#" + (i + 1), 60, 32 + (90 * i));
+                GraphicsUtils.drawString(graphics, "#" + (i + 1), 60, 32 + (90 * i), Alignment.CENTER);
 
                 Guild g = Main.getShards().get(0).getGuildById(guild.getID());
 
@@ -52,15 +53,15 @@ public class TopImage {
                     if (member == null)
                         member = g.retrieveMemberById(user.getID()).complete();
 
-                    GraphicsUtils.drawString(graphics, member.getUser().getName(), 120, 32 + (90 * i));
+                    GraphicsUtils.drawString(graphics, member.getUser().getName(), 120, 32 + (90 * i), Alignment.LEFT);
                     graphics.setColor(Color.gray);
-                    GraphicsUtils.drawString(graphics, "#" + member.getUser().getDiscriminator(), 120 + graphics.getFontMetrics().stringWidth(member.getUser().getName()), 32 + (90 * i));
+                    GraphicsUtils.drawString(graphics, "#" + member.getUser().getDiscriminator(), 120 + graphics.getFontMetrics().stringWidth(member.getUser().getName()), 32 + (90 * i), Alignment.LEFT);
                 } catch (Exception e) {
-                    GraphicsUtils.drawString(graphics, "Not Found", 120, 32 + (90 * i));
+                    GraphicsUtils.drawString(graphics, "Not Found", 120, 32 + (90 * i), Alignment.LEFT);
                 }
 
                 graphics.setColor(Color.WHITE);
-                GraphicsUtils.drawRightAlignedString(graphics, user.getXP() + "XP", width - 30, 32 + (90 * i));
+                GraphicsUtils.drawString(graphics, user.getXP() + "XP", width - 30, 32 + (90 * i), Alignment.RIGHT);
             }
 
             graphics.dispose();

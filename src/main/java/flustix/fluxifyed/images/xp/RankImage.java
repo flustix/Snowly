@@ -1,6 +1,7 @@
 package flustix.fluxifyed.images.xp;
 
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.utils.graphics.Alignment;
 import flustix.fluxifyed.utils.graphics.GraphicsUtils;
 import flustix.fluxifyed.utils.xp.XPUtils;
 
@@ -30,29 +31,29 @@ public class RankImage {
             // profile picture
             graphics.setColor(new Color(54, 57, 63));
             graphics.fillRoundRect(20, 20, 190, 190, 5, 5);
-            graphics.drawImage(drawRoundedRect(scaleImage(ImageIO.read(new URL(pfp)), 170, 170), 8), 30, 30, null);
+            graphics.drawImage(GraphicsUtils.drawRoundedRect(GraphicsUtils.scaleImage(ImageIO.read(new URL(pfp)), 170, 170), 8), 30, 30, null);
 
             // username
             graphics.fillRoundRect(220, 20, 760, 190, 5, 5);
             graphics.setFont(font.deriveFont(64f));
             graphics.setColor(color);
-            GraphicsUtils.drawString(graphics, username, 230, 20);
+            GraphicsUtils.drawString(graphics, username, 230, 20, Alignment.LEFT);
 
             // server icon
-            graphics.drawImage(drawRoundedRect(scaleImage(ImageIO.read(new URL(servericon)), 60, 60), 4), 230, 120, null);
+            graphics.drawImage(GraphicsUtils.drawRoundedRect(GraphicsUtils.scaleImage(ImageIO.read(new URL(servericon)), 60, 60), 4), 230, 120, null);
 
             // server name
             graphics.setFont(font.deriveFont(32f));
             graphics.setColor(Color.WHITE);
-            GraphicsUtils.drawString(graphics, servername, 300, 122);
+            GraphicsUtils.drawString(graphics, servername, 300, 122, Alignment.LEFT);
 
             // rank
             graphics.setColor(new Color(54, 57, 63));
             graphics.fillRoundRect(990, 20, 190, 190, 5, 5);
             graphics.setColor(color);
-            GraphicsUtils.drawCenteredString(graphics, "Rank", 1085, 70);
+            GraphicsUtils.drawString(graphics, "Rank", 1085, 70, Alignment.CENTER);
             graphics.setColor(Color.WHITE);
-            GraphicsUtils.drawCenteredString(graphics, "#" + rank, 1085, 110);
+            GraphicsUtils.drawString(graphics, "#" + rank, 1085, 110, Alignment.CENTER);
 
 
             int level = XPUtils.calculateLevel(xp);
@@ -66,13 +67,13 @@ public class RankImage {
 
             //xp text
             graphics.setColor(color);
-            GraphicsUtils.drawCenteredString(graphics, "Level", 210, 260);
-            GraphicsUtils.drawCenteredString(graphics, "XP", 600, 260);
-            GraphicsUtils.drawCenteredString(graphics, "XP Left", 990, 260);
+            GraphicsUtils.drawString(graphics, "Level", 210, 260, Alignment.CENTER);
+            GraphicsUtils.drawString(graphics, "XP", 600, 260, Alignment.CENTER);
+            GraphicsUtils.drawString(graphics, "XP Left", 990, 260, Alignment.CENTER);
             graphics.setColor(Color.WHITE);
-            GraphicsUtils.drawCenteredString(graphics, level + "", 210, 300);
-            GraphicsUtils.drawCenteredString(graphics, xp + "", 600, 300);
-            GraphicsUtils.drawCenteredString(graphics, Math.round(nextLevel - xp) + "", 990, 300);
+            GraphicsUtils.drawString(graphics, level + "", 210, 300, Alignment.CENTER);
+            GraphicsUtils.drawString(graphics, xp + "", 600, 300, Alignment.CENTER);
+            GraphicsUtils.drawString(graphics, Math.round(nextLevel - xp) + "", 990, 300, Alignment.CENTER);
 
             // progressbar
             graphics.setColor(new Color(54, 57, 63));
@@ -93,32 +94,5 @@ public class RankImage {
 
 //        ImagePlus imagePlus = new ImagePlus("test.png");
 //        imagePlus.show();
-    }
-
-    static BufferedImage drawRoundedRect(BufferedImage image, int cornerRadius) {
-        int w = image.getWidth();
-        int h = image.getHeight();
-        BufferedImage output = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-
-        Graphics2D g2 = output.createGraphics();
-        g2.setComposite(AlphaComposite.Src);
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setColor(Color.WHITE);
-        g2.fillRoundRect(0, 0, w, h, cornerRadius, cornerRadius);
-
-        g2.setComposite(AlphaComposite.SrcAtop);
-        g2.drawImage(image, 0, 0, null);
-
-        g2.dispose();
-
-        return output;
-    }
-
-    static BufferedImage scaleImage(BufferedImage image, int width, int height) {
-        BufferedImage scaledImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D graphics2D = scaledImage.createGraphics();
-        graphics2D.drawImage(image, 0, 0, width, height, null);
-        graphics2D.dispose();
-        return scaledImage;
     }
 }

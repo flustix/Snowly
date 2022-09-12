@@ -29,7 +29,7 @@ public class XP {
 
         XPUser user = guild.getUser(event.getAuthor().getId());
         int xp = new Random().nextInt(11) + 10;
-        user.addXP(xp);
+        user.addXP(xp, event);
     }
 
     public static void initGuild(Guild newGuild) {
