@@ -70,13 +70,8 @@ public class Main {
                 new GuildListener()
         );
 
-        try {
-            for (int i = 0; i < maxShards; i++) {
-                shards.add(shardBuilder.useSharding(i, maxShards).build());
-            }
-        } catch(LoginException ignored) {
-            LOGGER.error("Failed to log in!");
-            System.exit(1);
+        for (int i = 0; i < maxShards; i++) {
+            shards.add(shardBuilder.useSharding(i, maxShards).build());
         }
     }
 

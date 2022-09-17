@@ -9,6 +9,8 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
+import java.util.concurrent.TimeUnit;
+
 public class BanSlashCommand extends SlashCommand {
     public BanSlashCommand() {
         super("ban", "Bans a user from the server.");
@@ -24,7 +26,7 @@ public class BanSlashCommand extends SlashCommand {
         String reasonText = reason == null ? "No reason" : reason.getAsString();
 
         try {
-            interaction.getGuild().ban(target.getAsUser(), 7, reasonText).queue((v) -> {
+            interaction.getGuild().ban(target.getAsUser(), 7, TimeUnit.DAYS).reason(reasonText).queue((v) -> {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle(":white_check_mark: Banned user!")
                         .addField(":bust_in_silhouette: User", target.getAsUser().getAsTag(), true)

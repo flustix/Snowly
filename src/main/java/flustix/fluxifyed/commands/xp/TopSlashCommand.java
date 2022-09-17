@@ -8,6 +8,7 @@ import flustix.fluxifyed.xp.XP;
 import flustix.fluxifyed.xp.types.XPGuild;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
+import net.dv8tion.jda.api.utils.FileUpload;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,7 @@ public class TopSlashCommand extends SlashCommand {
             }
 
             if (TopImage.create(guild)) {
-                hook.editOriginal("").addFile(TopImage.file).complete();
+                hook.editOriginal("").setFiles(FileUpload.fromData(TopImage.file)).complete();
                 hook.editOriginalEmbeds(new ArrayList<>()).complete();
             } else {
                 hook.editOriginal("An error occurred!").complete();

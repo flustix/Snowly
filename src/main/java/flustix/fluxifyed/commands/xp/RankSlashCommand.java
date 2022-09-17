@@ -8,6 +8,7 @@ import flustix.fluxifyed.xp.XP;
 import flustix.fluxifyed.xp.types.XPGuild;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
+import net.dv8tion.jda.api.utils.FileUpload;
 
 import java.util.ArrayList;
 
@@ -38,7 +39,7 @@ public class RankSlashCommand extends SlashCommand {
                     guild.getUser(interaction.getMember().getId()).getXP(),
                     guild.getTop().indexOf(guild.getUser(interaction.getMember().getId())) + 1,
                     interaction.getMember().getColor())) {
-                hook.editOriginal("").addFile(RankImage.file).complete();
+                hook.editOriginal("").setFiles(FileUpload.fromData(RankImage.file)).complete();
                 hook.editOriginalEmbeds(new ArrayList<>()).complete();
             } else {
                 hook.editOriginal("An error occurred!").complete();

@@ -6,6 +6,7 @@ import flustix.fluxifyed.images.xp.LevelUpImage;
 import flustix.fluxifyed.utils.xp.XPUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.utils.FileUpload;
 
 public class XPUser {
     private int xp = 0;
@@ -34,7 +35,8 @@ public class XPUser {
                     event.getMember().getEffectiveName(),
                     level
             )) {
-                event.getChannel().sendFile(LevelUpImage.file).complete();
+
+                event.getChannel().sendFiles(FileUpload.fromData(LevelUpImage.file)).complete();
             } else {
                 event.getChannel().sendMessage("Congrats " + event.getAuthor().getAsMention() + " you leveled up to level " + level + "!").complete();
             }

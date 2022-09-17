@@ -4,8 +4,8 @@ import flustix.fluxifyed.Main;
 import flustix.fluxifyed.command.SlashCommand;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
+import net.dv8tion.jda.api.utils.messages.MessageEditBuilder;
 
 public class PingSlashCommand extends SlashCommand {
     public PingSlashCommand() {
@@ -22,7 +22,7 @@ public class PingSlashCommand extends SlashCommand {
                     .addField(":hash: Shard ID", interaction.getJDA().getShardInfo().getShardId() + "", true);
 
             hook.editOriginal(
-                    new MessageBuilder()
+                    new MessageEditBuilder()
                             .setEmbeds(embed.build())
                             .build()
             ).complete();

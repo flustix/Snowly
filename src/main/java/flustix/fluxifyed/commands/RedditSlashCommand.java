@@ -6,9 +6,9 @@ import flustix.fluxifyed.utils.reddit.RedditUtils;
 import flustix.fluxifyed.utils.reddit.types.RedditPost;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
+import net.dv8tion.jda.api.utils.messages.MessageEditBuilder;
 
 import java.util.Date;
 
@@ -58,7 +58,7 @@ public class RedditSlashCommand extends SlashCommand {
             }
 
             hook.editOriginal(
-                    new MessageBuilder()
+                    new MessageEditBuilder()
                             .setEmbeds(
                                     embed.build()
                             ).build()
