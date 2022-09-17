@@ -23,7 +23,7 @@ public class ConsoleCommands {
 
     static void registerCommand(ConsoleCommand command) {
         commands.put(command.name, command);
-        LOGGER.info("Registered console command " + command.name);
+        LOGGER.debug("Registered console command " + command.name);
     }
 
     public static void listen() {

@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class ReadyListener extends ListenerAdapter {
     @Override
     public void onReady(@NotNull ReadyEvent event) {
-        Main.LOGGER.info("Successfully logged in, shard " + event.getJDA().getShardInfo().getShardId());
+        Main.LOGGER.info("Everything Ready!");
 
         SlashCommandList.registerCommands(event);
     }

@@ -30,6 +30,6 @@ public class APIServer {
         server.setExecutor(null);
         server.start();
 
-        LOGGER.info("API Server started on port {}", port);
+        LOGGER.debug("API Server started on port {}", port);
     }
 }

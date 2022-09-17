@@ -33,6 +33,8 @@ public class Main {
     private static final String version = "2022.3.0";
 
     public static void main(String[] args) throws Exception {
+        LOGGER.info("Starting Fluxifyed v" + version);
+
         config = JsonParser.parseString(Files.readString(Path.of("config.json"))).getAsJsonObject();
 
         Database.initializeDataSource();

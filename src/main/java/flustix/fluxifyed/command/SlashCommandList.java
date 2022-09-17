@@ -41,7 +41,7 @@ public class SlashCommandList {
 
     private static void addCommand(SlashCommand command) {
         commands.put(command.getName(), command);
-        Main.LOGGER.info("Loaded slash command " + command.getName() + "!");
+        Main.LOGGER.debug("Loaded slash command " + command.getName() + "!");
     }
 
     public static void registerCommands(ReadyEvent event) {

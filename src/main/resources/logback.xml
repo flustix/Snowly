@@ -2,11 +2,15 @@
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} %highlight(%-6level) %boldGreen(%-15.-15logger{0}) %red(%10.10X{jda.shard}) %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} %highlight(%-6level) %boldGreen(%-15.-15logger{0}) %msg%n</pattern>
         </encoder>
     </appender>
 
     <root level="info">
         <appender-ref ref="STDOUT" />
     </root>
+
+    <logger name="com.zaxxer.hikari.pool.PoolBase" level="ERROR"/>
+    <logger name="com.zaxxer.hikari.pool.HikariPool" level="ERROR"/>
+    <logger name="com.zaxxer.hikari.HikariDataSource" level="ERROR"/>
 </configuration>
