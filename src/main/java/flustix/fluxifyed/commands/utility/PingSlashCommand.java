@@ -23,6 +23,7 @@ public class PingSlashCommand extends SlashCommand {
 
             hook.editOriginal(
                     new MessageEditBuilder()
+                            .setContent("")
                             .setEmbeds(embed.build())
                             .build()
             ).complete();

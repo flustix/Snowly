@@ -59,9 +59,9 @@ public class RedditSlashCommand extends SlashCommand {
 
             hook.editOriginal(
                     new MessageEditBuilder()
-                            .setEmbeds(
-                                    embed.build()
-                            ).build()
+                            .setContent("")
+                            .setEmbeds(embed.build())
+                            .build()
             ).complete();
         });
     }
