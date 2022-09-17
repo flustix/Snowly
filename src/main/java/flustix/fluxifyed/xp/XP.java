@@ -33,8 +33,6 @@ public class XP {
     }
 
     public static void initGuild(Guild newGuild) {
-        Main.LOGGER.info("Initializing guild '" + newGuild.getName() + "' (" + newGuild.getId() + ")");
-
         try {
             XPGuild guild = new XPGuild(newGuild.getId());
 
