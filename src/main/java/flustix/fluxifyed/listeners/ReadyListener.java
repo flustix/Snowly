@@ -11,7 +11,9 @@ import org.jetbrains.annotations.NotNull;
 public class ReadyListener extends ListenerAdapter {
     @Override
     public void onReady(@NotNull ReadyEvent event) {
-        Main.LOGGER.info("Everything Ready!");
+        long ms = System.currentTimeMillis() - Main.getStartTime();
+        long s = ms / 1000;
+        Main.LOGGER.info("Everything Ready! Took {} second(s) and {}ms to start", s, ms - s * 1000);
 
         SlashCommandList.registerCommands(event);
     }
