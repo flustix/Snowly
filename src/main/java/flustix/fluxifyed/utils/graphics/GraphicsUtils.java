@@ -49,7 +49,7 @@ public class GraphicsUtils {
         g2.setColor(Color.WHITE);
         g2.fillRoundRect(0, 0, w, h, cornerRadius, cornerRadius);
 
-        g2.setComposite(AlphaComposite.SrcAtop);
+        g2.setComposite(AlphaComposite.SrcIn);
         g2.drawImage(image, 0, 0, null);
 
         g2.dispose();
