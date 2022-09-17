@@ -18,8 +18,7 @@ public class PingSlashCommand extends SlashCommand {
                     .setTitle("Pong!")
                     .setColor(Main.accentColor)
                     .addField(":1234: Ping", interaction.getJDA().getGatewayPing() + "ms", true)
-                    .addField(":1234: Rest", interaction.getJDA().getRestPing().complete() + "ms", true)
-                    .addField(":hash: Shard ID", interaction.getJDA().getShardInfo().getShardId() + "", true);
+                    .addField(":1234: Rest", interaction.getJDA().getRestPing().complete() + "ms", true);
 
             hook.editOriginal(
                     new MessageEditBuilder()
