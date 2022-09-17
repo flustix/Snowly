@@ -6,7 +6,7 @@
 
     <groupId>flustix</groupId>
     <artifactId>fluxifyed</artifactId>
-    <version>2022.2.0</version>
+    <version>2022.3.0</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
