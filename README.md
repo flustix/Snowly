@@ -4,10 +4,15 @@ A powerful and feature-rich Discord bot
 ## Features
 - Moderation
   - Ban 
+  - Kick
+  - Clear
 - Utility
   - Server Info 
   - User Info 
-- XP (very wip for now)
+- XP
+  - Ranks
+  - Leveling
+  - Leaderboard
 - Fun
   - Reddit
 
@@ -15,7 +20,7 @@ A powerful and feature-rich Discord bot
 - A lot of customization
 - Welcome Messages
 - XP Role Rewards & Multipliers
-- More Moderation (Kick, Warns etc)
+- More Moderation (Warns, Notes, Muting)
 - Server currency system with shops (for roles, and more)
 
-###### Copyright (C) Flustix
+###### Copyright (C) 2022 Flustix
