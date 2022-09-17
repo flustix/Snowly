@@ -26,7 +26,7 @@ public class RankImage {
 
             // background
             graphics.setColor(new Color(47, 49, 54));
-            graphics.fillRoundRect(10, 10 , 1180, 450, 5, 5);
+            graphics.fillRoundRect(10, 10, 1180, 450, 5, 5);
 
             // profile picture
             graphics.setColor(new Color(54, 57, 63));
@@ -57,7 +57,7 @@ public class RankImage {
 
 
             int level = XPUtils.calculateLevel(xp);
-            float nextLevel = XPUtils.calculateXP( level + 1);
+            float nextLevel = XPUtils.calculateXP(level + 1);
 
             // xp bg
             graphics.setColor(new Color(54, 57, 63));

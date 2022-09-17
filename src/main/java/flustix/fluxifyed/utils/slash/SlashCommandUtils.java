@@ -1,6 +1,5 @@
 package flustix.fluxifyed.utils.slash;
 
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
@@ -15,7 +14,7 @@ public class SlashCommandUtils {
     }
 
     public static void reply(SlashCommandInteraction interaction, MessageCreateData message) {
-        reply(interaction, message, (hook)-> {});
+        reply(interaction, message, (hook) -> {});
     }
 
     public static void reply(SlashCommandInteraction interaction, MessageEmbed embed) {
@@ -44,7 +43,7 @@ public class SlashCommandUtils {
     }
 
     public static void replyEphemeral(SlashCommandInteraction interaction, MessageCreateData message) {
-        replyEphemeral(interaction, message, (hook)-> {});
+        replyEphemeral(interaction, message, (hook) -> {});
     }
 
     public static void replyEphemeral(SlashCommandInteraction interaction, String content, Consumer<InteractionHook> callback) {

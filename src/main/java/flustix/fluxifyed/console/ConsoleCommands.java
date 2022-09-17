@@ -1,6 +1,7 @@
 package flustix.fluxifyed.console;
 
-import flustix.fluxifyed.console.commands.*;
+import flustix.fluxifyed.console.commands.HelpConsoleCommand;
+import flustix.fluxifyed.console.commands.StopConsoleCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

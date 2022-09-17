@@ -25,7 +25,7 @@ public class LevelUpImage {
 
             // background
             graphics.setColor(new Color(47, 49, 54));
-            graphics.fillRoundRect(10, 10 , width - 20, height - 20, 5, 5);
+            graphics.fillRoundRect(10, 10, width - 20, height - 20, 5, 5);
 
             // pfp
             graphics.setColor(new Color(54, 57, 63));

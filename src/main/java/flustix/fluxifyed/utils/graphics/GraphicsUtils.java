@@ -1,7 +1,5 @@
 package flustix.fluxifyed.utils.graphics;
 
-import flustix.fluxifyed.Main;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 

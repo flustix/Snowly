@@ -34,7 +34,7 @@ public class UserInfoSlashCommand extends SlashCommand {
                 .setThumbnail(u.getEffectiveAvatarUrl())
                 .setColor(Main.accentColor);
 
-        embed.addField(":abc: Tag",u.getAsTag(), true);
+        embed.addField(":abc: Tag", u.getAsTag(), true);
         embed.addField(":1234: ID", u.getId(), true);
         embed.addField(":clock1: Creation Date", "<t:" + u.getTimeCreated().toEpochSecond() + ":f>", true);
 
@@ -44,7 +44,7 @@ public class UserInfoSlashCommand extends SlashCommand {
             m = interaction.getGuild().retrieveMemberById(u.getId()).complete();
         }
 
-        if(m != null) {
+        if (m != null) {
             List<String> roles = new ArrayList<>();
             for (Role role : m.getRoles()) {
                 roles.add(role.getAsMention());

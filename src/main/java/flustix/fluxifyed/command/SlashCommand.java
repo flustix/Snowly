@@ -1,6 +1,5 @@
 package flustix.fluxifyed.command;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionType;

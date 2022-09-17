@@ -2,7 +2,8 @@ package flustix.fluxifyed.api;
 
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpServer;
-import flustix.fluxifyed.api.routes.*;
+import flustix.fluxifyed.api.routes.CommandsRoute;
+import flustix.fluxifyed.api.routes.GuildsRoute;
 import flustix.fluxifyed.api.routes.xp.XPUserRoute;
 import flustix.fluxifyed.database.Database;
 import org.slf4j.Logger;

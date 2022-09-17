@@ -6,7 +6,6 @@ import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.api.types.Route;
 import flustix.fluxifyed.command.SlashCommand;
 import flustix.fluxifyed.command.SlashCommandList;
-import flustix.fluxifyed.utils.permissions.PermissionUtils;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 import java.util.HashMap;

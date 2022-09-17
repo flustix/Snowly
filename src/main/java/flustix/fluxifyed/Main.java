@@ -17,12 +17,9 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.security.auth.login.LoginException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
 
 public class Main {
     public static Logger LOGGER = LoggerFactory.getLogger("Fluxifyed");
@@ -54,7 +51,8 @@ public class Main {
         Thread consoleThread = new Thread(() -> {
             try {
                 ConsoleCommands.start();
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         });
         consoleThread.setName("Fluxifyed Console");
         consoleThread.start();

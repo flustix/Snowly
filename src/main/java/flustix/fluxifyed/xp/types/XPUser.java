@@ -1,10 +1,8 @@
 package flustix.fluxifyed.xp.types;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.images.xp.LevelUpImage;
 import flustix.fluxifyed.utils.xp.XPUtils;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.utils.FileUpload;
 

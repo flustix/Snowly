@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
-public class KickSlashCommand  extends SlashCommand {
+public class KickSlashCommand extends SlashCommand {
     public KickSlashCommand() {
         super("kick", "Kicks a user from the server.");
         setPermissionLevel(PermissionLevel.MODERATOR);

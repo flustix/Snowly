@@ -21,7 +21,7 @@ public class RedditSlashCommand extends SlashCommand {
     public void execute(SlashCommandInteraction interaction) {
         String subreddit = interaction.getOption("subreddit").getAsString();
 
-        SlashCommandUtils.reply(interaction, "Getting a post from r/" + subreddit + "...", (hook)->{
+        SlashCommandUtils.reply(interaction, "Getting a post from r/" + subreddit + "...", (hook) -> {
             RedditPost post = RedditUtils.getRandomPost(subreddit);
 
             EmbedBuilder embed = new EmbedBuilder()
