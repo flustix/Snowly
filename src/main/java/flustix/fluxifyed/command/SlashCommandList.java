@@ -23,6 +23,7 @@ public class SlashCommandList {
 
     public static void initializeList() {
         addCommand(new BanSlashCommand());
+        addCommand(new ClearSlashCommand());
         addCommand(new KickSlashCommand());
 
         addCommand(new AboutSlashCommand());

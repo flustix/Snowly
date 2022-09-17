@@ -3,6 +3,7 @@ package flustix.fluxifyed.commands.xp;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.command.SlashCommand;
 import flustix.fluxifyed.images.xp.RankImage;
+import flustix.fluxifyed.utils.presets.EmbedPresets;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import flustix.fluxifyed.xp.XP;
 import flustix.fluxifyed.xp.types.XPGuild;
@@ -23,12 +24,7 @@ public class RankSlashCommand extends SlashCommand {
     public void execute(SlashCommandInteraction interaction) {
         Member member = interaction.getOption("user") != null ? interaction.getOption("user").getAsMember() : interaction.getMember();
 
-        EmbedBuilder embed = new EmbedBuilder()
-                .setAuthor("Loading...", null, interaction.getJDA().getSelfUser().getAvatarUrl())
-                .setDescription("Please wait...")
-                .setColor(Main.accentColor);
-
-        SlashCommandUtils.reply(interaction, embed.build(), (hook) -> {
+        SlashCommandUtils.reply(interaction, EmbedPresets.loading.build(), (hook) -> {
             XPGuild guild = XP.getGuild(interaction.getGuild().getId());
             if (!guild.isXpEnabled) {
                 hook.editOriginal(":x: XP is disabled on this server!").complete();
