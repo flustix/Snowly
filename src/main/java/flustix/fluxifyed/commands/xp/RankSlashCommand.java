@@ -7,6 +7,8 @@ import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import flustix.fluxifyed.xp.XP;
 import flustix.fluxifyed.xp.types.XPGuild;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.utils.FileUpload;
 
@@ -15,9 +17,12 @@ import java.util.ArrayList;
 public class RankSlashCommand extends SlashCommand {
     public RankSlashCommand() {
         super("rank", "Show your rank on the current server.");
+        addOption(OptionType.USER, "user", "The user to show the rank of.", false, false);
     }
 
     public void execute(SlashCommandInteraction interaction) {
+        Member member = interaction.getOption("user") != null ? interaction.getOption("user").getAsMember() : interaction.getMember();
+
         EmbedBuilder embed = new EmbedBuilder()
                 .setAuthor("Loading...", null, interaction.getJDA().getSelfUser().getAvatarUrl())
                 .setDescription("Please wait...")
@@ -32,13 +37,13 @@ public class RankSlashCommand extends SlashCommand {
             }
 
             if (RankImage.create(
-                    interaction.getMember().getEffectiveAvatarUrl() + "?size=256",
-                    interaction.getMember().getEffectiveName(),
+                    member.getEffectiveAvatarUrl() + "?size=256",
+                    member.getEffectiveName(),
                     interaction.getGuild().getIconUrl() + "?size=128",
                     interaction.getGuild().getName(),
-                    guild.getUser(interaction.getMember().getId()).getXP(),
-                    guild.getTop().indexOf(guild.getUser(interaction.getMember().getId())) + 1,
-                    interaction.getMember().getColor())) {
+                    guild.getUser(member.getId()).getXP(),
+                    guild.getTop().indexOf(guild.getUser(member.getId())) + 1,
+                    member.getColor())) {
                 hook.editOriginal("").setFiles(FileUpload.fromData(RankImage.file)).complete();
                 hook.editOriginalEmbeds(new ArrayList<>()).complete();
             } else {
