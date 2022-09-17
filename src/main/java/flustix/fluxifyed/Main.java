@@ -28,7 +28,7 @@ public class Main {
     public static Logger LOGGER = LoggerFactory.getLogger("Fluxifyed");
     public static final int accentColor = 0xef6624;
 
-    private static List<JDA> shards = new ArrayList<>();
+    private static JDA bot;
     private static JsonObject config;
     private static final int maxShards = 1;
     private static final String version = "2022.3.0";
@@ -60,27 +60,24 @@ public class Main {
         EnumSet<GatewayIntent> intents = EnumSet.allOf(GatewayIntent.class);
         intents.remove(GatewayIntent.MESSAGE_CONTENT);
 
-        JDABuilder shardBuilder = JDABuilder.createDefault(config.get("token").getAsString());
-        shardBuilder.enableIntents(intents);
-        shardBuilder.setActivity(Activity.listening("/help"));
-        shardBuilder.addEventListeners(
+        JDABuilder builder = JDABuilder.createDefault(config.get("token").getAsString());
+        builder.enableIntents(intents);
+        builder.setActivity(Activity.listening("/help"));
+        builder.addEventListeners(
                 new MessageListener(),
                 new ReadyListener(),
                 new SlashCommandListener(),
                 new GuildListener()
         );
-
-        for (int i = 0; i < maxShards; i++) {
-            shards.add(shardBuilder.useSharding(i, maxShards).build());
-        }
+        bot = builder.build();
     }
 
     public static JsonObject getConfig() {
         return config;
     }
 
-    public static List<JDA> getShards() {
-        return shards;
+    public static JDA getBot() {
+        return bot;
     }
 
     public static String getVersion() {

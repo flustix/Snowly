@@ -46,7 +46,7 @@ public class TopImage {
                 graphics.setFont(font.deriveFont(32f));
                 GraphicsUtils.drawString(graphics, "#" + (i + 1), 60, 32 + (90 * i), Alignment.CENTER);
 
-                Guild g = Main.getShards().get(0).getGuildById(guild.getID());
+                Guild g = Main.getBot().getGuildById(guild.getID());
 
                 try {
                     Member member = g.getMemberById(user.getID());
