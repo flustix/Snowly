@@ -1,6 +1,7 @@
 package flustix.fluxifyed.listeners;
 
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.command.SlashCommand;
 import flustix.fluxifyed.command.SlashCommandList;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -19,22 +20,10 @@ public class SlashCommandListener extends ListenerAdapter {
 
     @Override
     public void onCommandAutoCompleteInteraction(@NotNull CommandAutoCompleteInteractionEvent event) {
-        SlashCommandList.getCommands().forEach((key, command) -> {
-            if (command.getName().equals(event.getName())) {
-                command.getOptionAutocompletes().forEach((autoKey, autocompletes) -> {
-                    if (event.getFocusedOption().getName().equals(autoKey)) {
-                        List<Command.Choice> choices = new ArrayList<>();
+        SlashCommand command = SlashCommandList.getCommands().getOrDefault(event.getName(), new SlashCommand("null", "null"));
+        String option = event.getFocusedOption().getName();
+        String input = event.getOption(option).getAsString();
 
-                        for (String choice : autocompletes) {
-                            if (choice.toLowerCase().startsWith(event.getOption(autoKey).getAsString().toLowerCase())) {
-                                choices.add(new Command.Choice(choice, choice));
-                            }
-                        }
-
-                        event.replyChoices(choices).complete();
-                    }
-                });
-            }
-        });
+        event.replyChoices(command.handleAutocomplete(option, input)).complete();
     }
 }

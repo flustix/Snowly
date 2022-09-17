@@ -2,6 +2,7 @@ package flustix.fluxifyed.command;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.utils.permissions.PermissionLevel;
+import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
@@ -46,6 +47,18 @@ public class SlashCommand {
 
     public void execute(SlashCommandInteraction interaction) {
         interaction.reply("This command is not implemented yet.").complete();
+    }
+
+    public List<Command.Choice> handleAutocomplete(String option, String input) {
+        List<Command.Choice> choices = new ArrayList<>();
+
+        for (String choice : optionAutocompletes.getOrDefault(option, new ArrayList<>())) {
+            if (choice.toLowerCase().startsWith(input.toLowerCase())) {
+                choices.add(new Command.Choice(choice, choice));
+            }
+        }
+
+        return choices;
     }
 
     public String getName() {
