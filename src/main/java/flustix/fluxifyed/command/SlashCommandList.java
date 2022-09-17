@@ -31,7 +31,7 @@ public class SlashCommandList {
         addCommand(new ServerInfoSlashCommand());
         addCommand(new UserInfoSlashCommand());
 
-        addCommand(new GiveXPSlashCommand());
+        addCommand(new ModifyXPSlashCommand());
         addCommand(new RankSlashCommand());
         addCommand(new ToggleXPSlashCommand());
         addCommand(new TopSlashCommand());

@@ -11,12 +11,12 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
-public class GiveXPSlashCommand extends SlashCommand {
-    public GiveXPSlashCommand() {
-        super("givexp", "Give XP to a user.");
+public class ModifyXPSlashCommand extends SlashCommand {
+    public ModifyXPSlashCommand() {
+        super("modifyxp", "Give/Remove XP to/from a user.");
         setPermissionLevel(PermissionLevel.MODERATOR);
-        addOption(OptionType.USER, "user", "The user to give XP to.", true, false);
-        addOption(OptionType.INTEGER, "amount", "The amount of XP to give.", true, false);
+        addOption(OptionType.USER, "user", "The user to give/remove XP.", true, false);
+        addOption(OptionType.INTEGER, "amount", "The amount of XP to give/remove. (Use negative values to remove xp)", true, false);
     }
 
     public void execute(SlashCommandInteraction interaction) {
