@@ -30,7 +30,6 @@ public class Main {
 
     private static JDA bot;
     private static JsonObject config;
-    private static final int maxShards = 1;
     private static final String version = "2022.3.0";
 
     public static void main(String[] args) throws Exception {
