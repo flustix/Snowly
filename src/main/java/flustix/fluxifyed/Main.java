@@ -27,7 +27,7 @@ public class Main {
 
     private static JDA bot;
     private static JsonObject config;
-    private static final String version = "2022.3.0";
+    private static final String version = "2022.4.0";
     private static final long startTime = System.currentTimeMillis();
 
     public static void main(String[] args) throws Exception {
