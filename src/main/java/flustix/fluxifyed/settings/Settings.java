@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class Settings {
     static Map<String, GuildSettings> guilds = new HashMap<>();
+    static Map<String, UserSettings> users = new HashMap<>();
 
     public static void loadGuild(Guild g) {
         ResultSet rs = Database.executeQuery("SELECT * FROM guilds WHERE guildid = " + g.getId());
@@ -43,5 +44,16 @@ public class Settings {
         }
 
         return guild;
+    }
+
+    public static UserSettings getUserSettings(String userId) {
+        UserSettings user = users.get(userId);
+
+        if (user == null) {
+            user = new UserSettings(userId);
+            users.put(userId, user);
+        }
+
+        return user;
     }
 }

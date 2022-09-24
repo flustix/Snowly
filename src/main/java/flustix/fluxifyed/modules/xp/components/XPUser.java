@@ -2,6 +2,7 @@ package flustix.fluxifyed.modules.xp.components;
 
 import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.modules.xp.images.LevelUpImage;
+import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.xp.XPUtils;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.utils.FileUpload;
@@ -28,15 +29,17 @@ public class XPUser {
         if (XPUtils.calculateLevel(this.xp) > level) {
             updateLevel();
 
-            if (LevelUpImage.create(
-                    event.getMember().getEffectiveAvatarUrl() + "?size=256",
-                    event.getMember().getEffectiveName(),
-                    level
-            )) {
+            if (Settings.getUserSettings(id).levelUpMessagesEnabled()) {
+                if (LevelUpImage.create(
+                        event.getMember().getEffectiveAvatarUrl() + "?size=256",
+                        event.getMember().getEffectiveName(),
+                        level
+                )) {
 
-                event.getChannel().sendFiles(FileUpload.fromData(LevelUpImage.file)).complete();
-            } else {
-                event.getChannel().sendMessage("Congrats " + event.getAuthor().getAsMention() + " you leveled up to level " + level + "!").complete();
+                    event.getChannel().sendFiles(FileUpload.fromData(LevelUpImage.file)).complete();
+                } else {
+                    event.getChannel().sendMessage("Congrats " + event.getAuthor().getAsMention() + " you leveled up to level " + level + "!").complete();
+                }
             }
         }
 
