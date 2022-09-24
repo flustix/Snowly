@@ -33,6 +33,7 @@ public class GuildsRoute implements Route {
             guildJson.addProperty("id", guild.getId());
             guildJson.addProperty("name", guild.getName());
             guildJson.addProperty("owner", guild.getOwnerId());
+            guildJson.addProperty("icon", guild.getIconUrl());
             guilds.add(guildJson);
         }
 
