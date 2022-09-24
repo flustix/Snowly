@@ -35,6 +35,13 @@ public class Settings {
     }
 
     public static GuildSettings getGuildSettings(String guildId) {
-        return guilds.getOrDefault(guildId, new GuildSettings(guildId));
+        GuildSettings guild = guilds.get(guildId);
+
+        if (guild == null) {
+            guild = new GuildSettings(guildId);
+            guild.setup();
+        }
+
+        return guild;
     }
 }
