@@ -1,4 +1,4 @@
-package flustix.fluxifyed.images.xp;
+package flustix.fluxifyed.modules.xp.images;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.utils.graphics.Alignment;

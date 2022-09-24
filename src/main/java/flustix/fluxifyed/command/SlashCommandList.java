@@ -1,18 +1,10 @@
 package flustix.fluxifyed.command;
 
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.commands.RedditSlashCommand;
-import flustix.fluxifyed.commands.moderation.BanSlashCommand;
-import flustix.fluxifyed.commands.moderation.ClearSlashCommand;
-import flustix.fluxifyed.commands.moderation.KickSlashCommand;
-import flustix.fluxifyed.commands.utility.AboutSlashCommand;
-import flustix.fluxifyed.commands.utility.PingSlashCommand;
-import flustix.fluxifyed.commands.utility.ServerInfoSlashCommand;
-import flustix.fluxifyed.commands.utility.UserInfoSlashCommand;
-import flustix.fluxifyed.commands.xp.ModifyXPSlashCommand;
-import flustix.fluxifyed.commands.xp.RankSlashCommand;
-import flustix.fluxifyed.commands.xp.ToggleXPSlashCommand;
-import flustix.fluxifyed.commands.xp.TopSlashCommand;
+import flustix.fluxifyed.commands.*;
+import flustix.fluxifyed.commands.moderation.*;
+import flustix.fluxifyed.commands.utility.*;
+import flustix.fluxifyed.modules.xp.commands.*;
 import flustix.fluxifyed.utils.permissions.PermissionUtils;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;

@@ -3,7 +3,7 @@ package flustix.fluxifyed.listeners;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.command.SlashCommandList;
 import flustix.fluxifyed.settings.Settings;
-import flustix.fluxifyed.xp.XP;
+import flustix.fluxifyed.modules.xp.XP;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

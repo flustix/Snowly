@@ -1,14 +1,11 @@
-package flustix.fluxifyed.commands.xp;
+package flustix.fluxifyed.modules.xp.commands;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.command.SlashCommand;
-import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
-import flustix.fluxifyed.xp.XP;
-import flustix.fluxifyed.xp.types.XPGuild;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 

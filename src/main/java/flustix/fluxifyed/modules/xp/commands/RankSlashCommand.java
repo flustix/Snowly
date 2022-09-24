@@ -1,12 +1,12 @@
-package flustix.fluxifyed.commands.xp;
+package flustix.fluxifyed.modules.xp.commands;
 
 import flustix.fluxifyed.command.SlashCommand;
-import flustix.fluxifyed.images.xp.RankImage;
+import flustix.fluxifyed.modules.xp.images.RankImage;
 import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.presets.EmbedPresets;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
-import flustix.fluxifyed.xp.XP;
-import flustix.fluxifyed.xp.types.XPGuild;
+import flustix.fluxifyed.modules.xp.XP;
+import flustix.fluxifyed.modules.xp.components.XPGuild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;

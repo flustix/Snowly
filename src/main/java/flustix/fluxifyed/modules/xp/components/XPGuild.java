@@ -1,4 +1,4 @@
-package flustix.fluxifyed.xp.types;
+package flustix.fluxifyed.modules.xp.components;
 
 import java.util.ArrayList;
 import java.util.HashMap;

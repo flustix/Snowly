@@ -3,9 +3,9 @@ package flustix.fluxifyed.api.routes.xp;
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.api.types.Route;
-import flustix.fluxifyed.xp.XP;
-import flustix.fluxifyed.xp.types.XPGuild;
-import flustix.fluxifyed.xp.types.XPUser;
+import flustix.fluxifyed.modules.xp.XP;
+import flustix.fluxifyed.modules.xp.components.XPGuild;
+import flustix.fluxifyed.modules.xp.components.XPUser;
 
 import java.util.HashMap;
 
