@@ -2,6 +2,7 @@ package flustix.fluxifyed.command;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.commands.*;
+import flustix.fluxifyed.commands.auth.GenerateTokenSlashCommand;
 import flustix.fluxifyed.commands.moderation.*;
 import flustix.fluxifyed.commands.utility.*;
 import flustix.fluxifyed.modules.reactionroles.commands.ReactAddSlashCommand;
@@ -43,6 +44,7 @@ public class SlashCommandList {
         addCommand(new ReactAddSlashCommand());
 
         addCommand(new RedditSlashCommand());
+        addCommand(new GenerateTokenSlashCommand());
     }
 
     private static void addCommand(SlashCommand command) {
