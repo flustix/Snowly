@@ -4,6 +4,8 @@ import flustix.fluxifyed.Main;
 import flustix.fluxifyed.commands.*;
 import flustix.fluxifyed.commands.moderation.*;
 import flustix.fluxifyed.commands.utility.*;
+import flustix.fluxifyed.modules.reactionroles.commands.ReactAddSlashCommand;
+import flustix.fluxifyed.modules.reactionroles.commands.ReactCreateSlashCommand;
 import flustix.fluxifyed.modules.xp.commands.*;
 import flustix.fluxifyed.utils.permissions.PermissionUtils;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
@@ -36,6 +38,9 @@ public class SlashCommandList {
         addCommand(new ToggleXPSlashCommand());
         addCommand(new TopSlashCommand());
         addCommand(new ToggleLevelUPSlashCommand());
+
+        addCommand(new ReactCreateSlashCommand());
+        addCommand(new ReactAddSlashCommand());
 
         addCommand(new RedditSlashCommand());
     }

@@ -5,10 +5,7 @@ import com.google.gson.JsonParser;
 import flustix.fluxifyed.database.api.APIServer;
 import flustix.fluxifyed.command.SlashCommandList;
 import flustix.fluxifyed.database.Database;
-import flustix.fluxifyed.listeners.GuildListener;
-import flustix.fluxifyed.listeners.MessageListener;
-import flustix.fluxifyed.listeners.ReadyListener;
-import flustix.fluxifyed.listeners.SlashCommandListener;
+import flustix.fluxifyed.listeners.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -57,7 +54,8 @@ public class Main {
                 new MessageListener(),
                 new ReadyListener(),
                 new SlashCommandListener(),
-                new GuildListener()
+                new GuildListener(),
+                new ReactionListener()
         );
         bot = builder.build();
     }
