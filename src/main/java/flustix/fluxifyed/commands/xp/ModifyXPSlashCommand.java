@@ -2,6 +2,7 @@ package flustix.fluxifyed.commands.xp;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.command.SlashCommand;
+import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import flustix.fluxifyed.xp.XP;
@@ -25,7 +26,7 @@ public class ModifyXPSlashCommand extends SlashCommand {
 
         XPGuild guild = XP.getGuild(interaction.getGuild().getId());
 
-        if (!guild.isXpEnabled) {
+        if (!Settings.getGuildSettings(interaction.getGuild().getId()).xpEnabled()) {
             SlashCommandUtils.replyEphemeral(interaction, ":x: XP is disabled on this server!");
             return;
         }

@@ -2,6 +2,7 @@ package flustix.fluxifyed.xp;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.Database;
+import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.xp.types.XPGuild;
 import flustix.fluxifyed.xp.types.XPUser;
 import net.dv8tion.jda.api.entities.Guild;
@@ -25,7 +26,7 @@ public class XP {
             return;
         }
 
-        if (!guild.isXpEnabled) return;
+        if (!Settings.getGuildSettings(event.getGuild().getId()).xpEnabled()) return;
 
         XPUser user = guild.getUser(event.getAuthor().getId());
         int xp = new Random().nextInt(11) + 10;
@@ -37,7 +38,6 @@ public class XP {
             XPGuild guild = new XPGuild(newGuild.getId());
 
             ResultSet users = Database.executeQuery("SELECT * FROM xp WHERE guildid = '" + newGuild.getId() + "'");
-            ResultSet settings = Database.executeQuery("SELECT * FROM xpSettings WHERE guildid = '" + newGuild.getId() + "'");
 
             while (users.next()) {
                 XPUser user = new XPUser(newGuild.getId(), users.getString("userid"));
@@ -45,15 +45,10 @@ public class XP {
                 guild.addUser(user);
             }
 
-            while (settings.next()) {
-                guild.isXpEnabled = settings.getBoolean("enabled");
-            }
-
             guilds.put(newGuild.getId(), guild);
         } catch (Exception e) {
-            Main.LOGGER.error("Error while initializing guild " + newGuild, e);
+            Main.LOGGER.error("Error while loading xp for guild  '" + newGuild.getName() + "' (" + newGuild.getId() + ")", e);
         }
-
     }
 
     public static XPGuild getGuild(String guildID) {

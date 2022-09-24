@@ -2,6 +2,7 @@ package flustix.fluxifyed.listeners;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.command.SlashCommandList;
+import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.xp.XP;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
@@ -21,6 +22,7 @@ public class ReadyListener extends ListenerAdapter {
     public void onGuildReady(@NotNull GuildReadyEvent event) {
         Main.LOGGER.info("Initializing guild '" + event.getGuild().getName() + "' (" + event.getGuild().getId() + ")");
 
+        Settings.loadGuild(event.getGuild());
         XP.initGuild(event.getGuild());
     }
 }

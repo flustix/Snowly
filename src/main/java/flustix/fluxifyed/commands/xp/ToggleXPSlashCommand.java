@@ -3,6 +3,8 @@ package flustix.fluxifyed.commands.xp;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.command.SlashCommand;
 import flustix.fluxifyed.database.Database;
+import flustix.fluxifyed.settings.GuildSettings;
+import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import flustix.fluxifyed.xp.XP;
@@ -18,16 +20,13 @@ public class ToggleXPSlashCommand extends SlashCommand {
 
     public void execute(SlashCommandInteraction interaction) {
         try {
-            XPGuild guild = XP.getGuild(interaction.getGuild().getId());
+            GuildSettings guild = Settings.getGuildSettings(interaction.getGuild().getId());
 
-            guild.isXpEnabled = !guild.isXpEnabled;
-
-            int enabled = guild.isXpEnabled ? 1 : 0;
-            Database.executeQuery("INSERT INTO xpSettings (guildid, enabled) VALUES ('" + interaction.getGuild().getId() + "', " + enabled + ") ON DUPLICATE KEY UPDATE enabled = " + enabled);
+            guild.setXpEnabled(!guild.xpEnabled());
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Toggled XP")
-                    .addField(":1234: XP", guild.isXpEnabled ? "Enabled" : "Disabled", true)
+                    .addField(":1234: XP", guild.xpEnabled() ? "Enabled" : "Disabled", true)
                     .setColor(Main.accentColor);
 
             SlashCommandUtils.reply(interaction, embed.build());

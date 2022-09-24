@@ -6,7 +6,6 @@ import java.util.List;
 
 public class XPGuild {
     private final String id;
-    public boolean isXpEnabled = true;
     private final HashMap<String, XPUser> users = new HashMap<>();
 
     public XPGuild(String id) {
