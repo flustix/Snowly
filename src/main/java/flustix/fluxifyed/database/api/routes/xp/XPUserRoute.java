@@ -1,8 +1,8 @@
-package flustix.fluxifyed.api.routes.xp;
+package flustix.fluxifyed.database.api.routes.xp;
 
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
-import flustix.fluxifyed.api.types.Route;
+import flustix.fluxifyed.database.api.types.Route;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.modules.xp.components.XPUser;

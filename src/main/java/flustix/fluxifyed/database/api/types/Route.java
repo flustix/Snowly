@@ -1,4 +1,4 @@
-package flustix.fluxifyed.api.types;
+package flustix.fluxifyed.database.api.types;
 
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;

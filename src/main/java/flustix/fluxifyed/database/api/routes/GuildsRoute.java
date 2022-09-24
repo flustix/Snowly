@@ -1,10 +1,10 @@
-package flustix.fluxifyed.api.routes;
+package flustix.fluxifyed.database.api.routes;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.api.types.Route;
+import flustix.fluxifyed.database.api.types.Route;
 import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.HashMap;
