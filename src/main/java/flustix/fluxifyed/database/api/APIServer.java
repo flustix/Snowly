@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpServer;
 import flustix.fluxifyed.database.api.routes.CommandsRoute;
 import flustix.fluxifyed.database.api.routes.GuildsRoute;
+import flustix.fluxifyed.database.api.routes.LoginRoute;
 import flustix.fluxifyed.database.api.routes.xp.XPUserRoute;
 import flustix.fluxifyed.database.Database;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ public class APIServer {
         Router router = new Router();
 
         router.addRoute("/guilds", new GuildsRoute());
+        router.addRoute("/login", new LoginRoute());
         router.addRoute("/commands", new CommandsRoute());
         router.addRoute("/xp/:guild/:user", new XPUserRoute());
         router.addRoute("/db", (exchange, params) -> {
