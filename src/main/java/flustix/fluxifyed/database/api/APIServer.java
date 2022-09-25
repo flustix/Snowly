@@ -3,7 +3,8 @@ package flustix.fluxifyed.database.api;
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpServer;
 import flustix.fluxifyed.database.api.routes.CommandsRoute;
-import flustix.fluxifyed.database.api.routes.GuildsRoute;
+import flustix.fluxifyed.database.api.routes.guild.GuildRoute;
+import flustix.fluxifyed.database.api.routes.guild.GuildsRoute;
 import flustix.fluxifyed.database.api.routes.LoginRoute;
 import flustix.fluxifyed.database.api.routes.xp.XPUserRoute;
 import flustix.fluxifyed.database.Database;
@@ -17,9 +18,14 @@ public class APIServer {
         Router router = new Router();
 
         router.addRoute("/guilds", new GuildsRoute());
+        router.addRoute("/guild/:id", new GuildRoute());
+
         router.addRoute("/login", new LoginRoute());
+
         router.addRoute("/commands", new CommandsRoute());
+
         router.addRoute("/xp/:guild/:user", new XPUserRoute());
+
         router.addRoute("/db", (exchange, params) -> {
             JsonObject json = new JsonObject();
             json.addProperty("connectionCount", Database.connectionCount());
