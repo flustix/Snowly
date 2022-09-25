@@ -15,6 +15,6 @@ public class GuildRoute implements Route {
         String token = AuthUtils.getToken(exchange.getRequestHeaders());
         if (token.isEmpty()) return null;
 
-        return JSONUtils.toJson(AuthUtils.getGuild(token, params.get("id"))).getAsJsonObject();
+        return JSONUtils.toJson(AuthUtils.getGuild(AuthUtils.getUserId(token), params.get("id"))).getAsJsonObject();
     }
 }
