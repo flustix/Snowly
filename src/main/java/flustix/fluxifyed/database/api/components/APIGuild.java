@@ -10,6 +10,7 @@ public class APIGuild {
     public String owner;
     public String icon;
     public String banner;
+    public String inviteBanner;
 
     public boolean xpEnabled;
     public boolean shopEnabled;
@@ -20,6 +21,7 @@ public class APIGuild {
         owner = guild.getOwner().getUser().getId();
         icon = guild.getIconUrl();
         banner = guild.getBannerUrl();
+        inviteBanner = guild.getSplashUrl();
 
         GuildSettings settings = Settings.getGuildSettings(guild.getId());
         xpEnabled = settings.xpEnabled();
