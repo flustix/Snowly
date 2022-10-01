@@ -5,7 +5,9 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.api.v1.authentification.AuthUtils;
+import flustix.fluxifyed.database.api.v1.components.APIUser;
 import flustix.fluxifyed.database.api.v1.types.Route;
+import flustix.fluxifyed.utils.json.JSONUtils;
 import net.dv8tion.jda.api.entities.User;
 
 import java.util.HashMap;
@@ -13,8 +15,6 @@ import java.util.List;
 
 public class LoginRoute implements Route {
     public JsonObject execute(HttpExchange exchange, HashMap<String, String> params) throws Exception {
-        JsonObject json = new JsonObject();
-
         Headers headers = exchange.getRequestHeaders();
         List<String> tokenHeader = headers.get("Authorization");
 
@@ -35,12 +35,7 @@ public class LoginRoute implements Route {
             if (user == null)
                 user = Main.getBot().retrieveUserById(userid).complete();
 
-            json.addProperty("userid", userid);
-            json.addProperty("username", user.getName());
-            json.addProperty("discriminator", user.getDiscriminator());
-            json.addProperty("avatar", user.getEffectiveAvatarUrl() + "?size=1024");
-
-            return json;
+            return JSONUtils.toJson(new APIUser(user)).getAsJsonObject();
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("User not found");
