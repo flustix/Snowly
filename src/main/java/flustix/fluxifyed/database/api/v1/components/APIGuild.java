@@ -1,4 +1,4 @@
-package flustix.fluxifyed.database.api.components;
+package flustix.fluxifyed.database.api.v1.components;
 
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;

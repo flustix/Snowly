@@ -1,11 +1,9 @@
-package flustix.fluxifyed.database.api.routes.guild;
+package flustix.fluxifyed.database.api.v1.routes.guild;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
-import flustix.fluxifyed.database.api.authentification.AuthUtils;
-import flustix.fluxifyed.database.api.components.APIGuild;
-import flustix.fluxifyed.database.api.types.Route;
+import flustix.fluxifyed.database.api.v1.authentification.AuthUtils;
+import flustix.fluxifyed.database.api.v1.types.Route;
 import flustix.fluxifyed.utils.json.JSONUtils;
 
 import java.util.HashMap;

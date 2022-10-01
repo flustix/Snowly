@@ -1,9 +1,9 @@
-package flustix.fluxifyed.database.api.authentification;
+package flustix.fluxifyed.database.api.v1.authentification;
 
 import com.sun.net.httpserver.Headers;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.Database;
-import flustix.fluxifyed.database.api.components.APIGuild;
+import flustix.fluxifyed.database.api.v1.components.APIGuild;
 import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import flustix.fluxifyed.utils.permissions.PermissionUtils;
 import net.dv8tion.jda.api.entities.Guild;
