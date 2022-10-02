@@ -1,14 +1,11 @@
 package flustix.fluxifyed.utils.file;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
+import java.util.Scanner;
 public class FileUtils {
     public static String getResourceString(String path) {
         try {
-            return Files.readString(Paths.get(FileUtils.class.getResource(path).toURI()));
+            return new Scanner(FileUtils.class.getResourceAsStream(path), "UTF-8").useDelimiter("\\A").next();
         } catch (Exception e) {
-            e.printStackTrace();
             return "";
         }
     }
