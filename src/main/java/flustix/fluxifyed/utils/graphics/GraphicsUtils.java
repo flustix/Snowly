@@ -24,6 +24,7 @@ public class GraphicsUtils {
     }
 
     public static void drawString(Graphics2D g2d, String str, int x, int y, int size, int maxWidth, Alignment align) {
+        g2d.setFont(g2d.getFont().deriveFont((float) size));
         int width = g2d.getFontMetrics().stringWidth(str);
 
         if (width > maxWidth) {
@@ -58,6 +59,7 @@ public class GraphicsUtils {
     public static BufferedImage scaleImage(BufferedImage image, int width, int height) {
         BufferedImage scaledImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics2D = scaledImage.createGraphics();
+        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         graphics2D.drawImage(image, 0, 0, width, height, null);
         graphics2D.dispose();
         return scaledImage;
