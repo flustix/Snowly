@@ -60,7 +60,12 @@ public class GraphicsUtils {
         BufferedImage scaledImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics2D = scaledImage.createGraphics();
         graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        graphics2D.drawImage(image, 0, 0, width, height, null);
+
+        float factor = (float) width / image.getWidth();
+        int newHeight = (int) (image.getHeight() * factor);
+        int y = (height - newHeight) / 2;
+
+        graphics2D.drawImage(image, 0, y, width, newHeight, null);
         graphics2D.dispose();
         return scaledImage;
     }
