@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.utils.color.ColorUtils;
 import flustix.fluxifyed.utils.file.FileUtils;
 import flustix.fluxifyed.utils.graphics.Alignment;
 import flustix.fluxifyed.utils.graphics.GraphicsUtils;
@@ -68,7 +69,7 @@ public class ImageRenderer {
 
         f = replaceVars(f, data);
 
-        g2d.setColor(Color.decode(f));
+        g2d.setColor(ColorUtils.hexToRGBA(f));
         g2d.fillRoundRect(x, y, w, h, r, r);
     }
 
@@ -86,7 +87,7 @@ public class ImageRenderer {
         float xpLeft = Integer.parseInt(replaceVars("{xp.xpleft}", data));
         w = (int) (w * (xp / (xp + xpLeft)));
 
-        g2d.setColor(Color.decode(f));
+        g2d.setColor(ColorUtils.hexToRGBA(f));
         g2d.fillRoundRect(x, y, w, h, r, r);
     }
 
@@ -105,9 +106,7 @@ public class ImageRenderer {
             BufferedImage scaledImage = GraphicsUtils.scaleImage(image, w, h);
             BufferedImage roundedImage = GraphicsUtils.drawRoundedRect(scaledImage, r);
             g2d.drawImage(roundedImage, x, y, w, h, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignored) {}
     }
 
     static void renderText(JsonObject json, RenderData data, Graphics2D g2d) {
@@ -134,7 +133,7 @@ public class ImageRenderer {
             }
         }
 
-        g2d.setColor(Color.decode(c));
+        g2d.setColor(ColorUtils.hexToRGBA(c));
         GraphicsUtils.drawString(g2d, t, x, y, s, w, alignment);
     }
 

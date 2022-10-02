@@ -28,6 +28,8 @@ public class RenderData {
         // guild.-
         data.put("guild.name", guild.getName());
         data.put("guild.icon", guild.getIconUrl());
+        String splash = guild.getSplashUrl();
+        data.put("guild.splash", splash == null ? "" : splash);
 
         // member.-
         data.put("member.nickname", member.getEffectiveName());
