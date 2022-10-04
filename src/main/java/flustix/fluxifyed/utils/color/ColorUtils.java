@@ -7,25 +7,25 @@ public class ColorUtils {
         if (colorStr.startsWith("#"))
             colorStr = colorStr.substring(1);
 
-        if (colorStr.length() == 3) {
+        if (colorStr.length() == 3) { // #RGB
             String r = colorStr.substring(0, 1);
             String g = colorStr.substring(1, 2);
             String b = colorStr.substring(2, 3);
 
-            colorStr = r + r + g + g + b + b;
+            colorStr = r + r + g + g + b + b; // #RRGGBB
         }
 
-        if (colorStr.length() == 4) {
+        if (colorStr.length() == 4) { // #RGBA
             String r = colorStr.substring(0, 1);
             String g = colorStr.substring(1, 2);
             String b = colorStr.substring(2, 3);
             String a = colorStr.substring(3, 4);
 
-            colorStr = r + r + g + g + b + b + a + a;
+            colorStr = r + r + g + g + b + b + a + a; // #RRGGBBAA
         }
 
         if (colorStr.length() == 6)
-            colorStr += "ff";
+            colorStr += "ff"; // #RRGGBBAA
 
         return new Color(
                 Integer.valueOf(colorStr.substring(0, 2), 16),
