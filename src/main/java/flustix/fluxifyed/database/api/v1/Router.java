@@ -4,6 +4,10 @@ import com.google.gson.JsonObject;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import flustix.fluxifyed.database.api.v1.routes.*;
+import flustix.fluxifyed.database.api.v1.routes.guild.*;
+import flustix.fluxifyed.database.api.v1.routes.xp.*;
+import flustix.fluxifyed.database.api.v1.routes.xp.leaderboard.*;
 import flustix.fluxifyed.database.api.v1.types.Route;
 
 import java.io.IOException;
@@ -13,6 +17,18 @@ import java.util.Map;
 
 public class Router implements HttpHandler {
     private static final HashMap<String, Route> routes = new HashMap<>();
+
+    public void init() {
+        addRoute("/guilds", new GuildsRoute());
+        addRoute("/guild/:id", new GuildRoute());
+
+        addRoute("/login", new LoginRoute());
+
+        addRoute("/commands", new CommandsRoute());
+
+        addRoute("/xp/leaderboard", new GlobalLeaderboardRoute());
+        addRoute("/xp/:guild/:user", new XPUserRoute());
+    }
 
     public void handle(HttpExchange exchange) throws IOException {
         Headers headers = exchange.getResponseHeaders();

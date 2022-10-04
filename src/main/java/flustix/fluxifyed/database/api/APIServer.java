@@ -17,21 +17,7 @@ public class APIServer {
 
     public static void main() throws Exception {
         Router router = new Router();
-
-        router.addRoute("/guilds", new GuildsRoute());
-        router.addRoute("/guild/:id", new GuildRoute());
-
-        router.addRoute("/login", new LoginRoute());
-
-        router.addRoute("/commands", new CommandsRoute());
-
-        router.addRoute("/xp/:guild/:user", new XPUserRoute());
-
-        router.addRoute("/db", (exchange, params) -> {
-            JsonObject json = new JsonObject();
-            json.addProperty("connectionCount", Database.connectionCount());
-            return json;
-        });
+        router.init();
 
         int port = 6679;
 
