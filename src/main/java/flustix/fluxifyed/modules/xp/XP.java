@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.sql.ResultSet;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 
 public class XP {
@@ -39,7 +40,7 @@ public class XP {
 
             ResultSet users = Database.executeQuery("SELECT * FROM xp WHERE guildid = '" + newGuild.getId() + "'");
 
-            while (users.next()) {
+            while (Objects.requireNonNull(users).next()) {
                 XPUser user = new XPUser(newGuild.getId(), users.getString("userid"));
                 user.setXP(users.getInt("xp"));
                 guild.addUser(user);

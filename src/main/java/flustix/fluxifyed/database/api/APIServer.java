@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class APIServer {
-    public static Logger LOGGER = LoggerFactory.getLogger("FluxifyedAPI");
+    public static final Logger LOGGER = LoggerFactory.getLogger("FluxifyedAPI");
 
     public static void main() throws Exception {
         Router router = new Router();

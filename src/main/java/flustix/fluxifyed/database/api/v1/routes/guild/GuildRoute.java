@@ -9,7 +9,7 @@ import flustix.fluxifyed.database.api.v1.types.Route;
 import java.util.HashMap;
 
 public class GuildRoute implements Route {
-    public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) throws Exception {
+    public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         String token = AuthUtils.getToken(exchange.getRequestHeaders());
         if (token.isEmpty())
             return new APIResponse(401, "No token given.", null);

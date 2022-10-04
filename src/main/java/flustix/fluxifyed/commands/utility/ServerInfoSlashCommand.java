@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 import java.time.temporal.ChronoField;
+import java.util.Objects;
 
 public class ServerInfoSlashCommand extends SlashCommand {
     public ServerInfoSlashCommand() {
@@ -15,12 +16,12 @@ public class ServerInfoSlashCommand extends SlashCommand {
 
     public void execute(SlashCommandInteraction interaction) {
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle(interaction.getGuild().getName())
+                .setTitle(Objects.requireNonNull(interaction.getGuild()).getName())
                 .setThumbnail(interaction.getGuild().getIconUrl())
                 .setColor(Main.accentColor);
 
         embed.addField(":1234: Server ID", interaction.getGuild().getId(), true);
-        embed.addField(":crown: Server Owner", interaction.getGuild().getOwner().getAsMention(), true);
+        embed.addField(":crown: Server Owner", Objects.requireNonNull(interaction.getGuild().getOwner()).getAsMention(), true);
         embed.addField(":busts_in_silhouette: Member Count", interaction.getGuild().getMemberCount() + "", true);
         embed.addField(":clock1: Server Creation Date", "<t:" + interaction.getGuild().getTimeCreated().getLong(ChronoField.INSTANT_SECONDS) + ":f>", true);
         embed.addField(":books: Channels",

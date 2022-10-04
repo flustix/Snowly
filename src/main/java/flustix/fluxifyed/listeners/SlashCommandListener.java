@@ -7,6 +7,8 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class SlashCommandListener extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
@@ -17,7 +19,7 @@ public class SlashCommandListener extends ListenerAdapter {
     public void onCommandAutoCompleteInteraction(@NotNull CommandAutoCompleteInteractionEvent event) {
         SlashCommand command = SlashCommandList.getCommands().getOrDefault(event.getName(), new SlashCommand("null", "null"));
         String option = event.getFocusedOption().getName();
-        String input = event.getOption(option).getAsString();
+        String input = Objects.requireNonNull(event.getOption(option)).getAsString();
 
         event.replyChoices(command.handleAutocomplete(option, input)).complete();
     }

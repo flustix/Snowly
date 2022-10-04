@@ -8,6 +8,8 @@ import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
+import java.util.Objects;
+
 public class ToggleLevelUPSlashCommand extends SlashCommand {
     public ToggleLevelUPSlashCommand() {
         super("togglelevelup", "Toggle level up messages globally.");
@@ -15,7 +17,7 @@ public class ToggleLevelUPSlashCommand extends SlashCommand {
 
     public void execute(SlashCommandInteraction interaction) {
         try {
-            UserSettings user = Settings.getUserSettings(interaction.getMember().getId());
+            UserSettings user = Settings.getUserSettings(Objects.requireNonNull(interaction.getMember()).getId());
 
             user.setLevelUpMessagesEnabled(!user.levelUpMessagesEnabled());
 

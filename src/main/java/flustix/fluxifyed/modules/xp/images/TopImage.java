@@ -12,9 +12,10 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Objects;
 
 public class TopImage {
-    public static File file = new File("top.png");
+    public static final File file = new File("top.png");
 
     public static boolean create(XPGuild guild) {
         try {
@@ -27,7 +28,7 @@ public class TopImage {
 
             BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
-            Font font = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/fonts/Lato-Bold.ttf"));
+            Font font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/fonts/Lato-Bold.ttf")));
 
             graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -49,7 +50,7 @@ public class TopImage {
                 Guild g = Main.getBot().getGuildById(guild.getID());
 
                 try {
-                    Member member = g.getMemberById(user.getID());
+                    Member member = Objects.requireNonNull(g).getMemberById(user.getID());
                     if (member == null)
                         member = g.retrieveMemberById(user.getID()).complete();
 

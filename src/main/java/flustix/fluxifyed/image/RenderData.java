@@ -11,10 +11,10 @@ import java.awt.*;
 import java.util.HashMap;
 
 public class RenderData {
-    Guild guild;
-    Member member;
+    final Guild guild;
+    final Member member;
 
-    HashMap<String, String> data = new HashMap<>();
+    final HashMap<String, String> data = new HashMap<>();
 
     public RenderData(Guild guild, Member member) {
         this.guild = guild;

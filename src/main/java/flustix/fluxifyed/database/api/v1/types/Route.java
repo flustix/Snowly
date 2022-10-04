@@ -5,5 +5,5 @@ import com.sun.net.httpserver.HttpExchange;
 import java.util.HashMap;
 
 public interface Route {
-    APIResponse execute(HttpExchange exchange, HashMap<String, String> params) throws Exception;
+    APIResponse execute(HttpExchange exchange, HashMap<String, String> params);
 }

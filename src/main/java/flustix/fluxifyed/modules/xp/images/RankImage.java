@@ -10,9 +10,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
+import java.util.Objects;
 
 public class RankImage {
-    public static File file = new File("rank.png");
+    public static final File file = new File("rank.png");
 
     public static boolean create(String pfp, String username, String servericon, String servername, int xp, int rank, Color color) {
         try {
@@ -20,7 +21,7 @@ public class RankImage {
 
             BufferedImage image = new BufferedImage(1200, 460, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
-            Font font = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/fonts/Lato-Bold.ttf"));
+            Font font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/fonts/Lato-Bold.ttf")));
 
             graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -91,8 +92,5 @@ public class RankImage {
             e.printStackTrace();
             return false;
         }
-
-//        ImagePlus imagePlus = new ImagePlus("test.png");
-//        imagePlus.show();
     }
 }

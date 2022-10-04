@@ -3,11 +3,11 @@ package flustix.fluxifyed.database.api.v1.components;
 import net.dv8tion.jda.api.entities.User;
 
 public class APIUser {
-    public String id;
-    public String name;
-    public String discriminator;
-    public String avatar;
-    public String banner;
+    public final String id;
+    public final String name;
+    public final String discriminator;
+    public final String avatar;
+    public final String banner;
 
     public APIUser(User user) {
         id = user.getId();

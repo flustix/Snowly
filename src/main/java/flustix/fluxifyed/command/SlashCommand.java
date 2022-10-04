@@ -12,11 +12,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SlashCommand {
-    String name;
-    String description;
+    final String name;
+    final String description;
     PermissionLevel permissionLevel = PermissionLevel.EVERYONE;
-    List<OptionData> options = new ArrayList<>();
-    HashMap<String, List<String>> optionAutocompletes = new HashMap<>();
+    final List<OptionData> options = new ArrayList<>();
+    final HashMap<String, List<String>> optionAutocompletes = new HashMap<>();
 
     public SlashCommand(String name, String desc) {
         this.name = name;

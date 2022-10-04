@@ -12,6 +12,7 @@ import net.dv8tion.jda.api.entities.Member;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AuthUtils {
     public static String getToken(Headers headers) {
@@ -26,7 +27,7 @@ public class AuthUtils {
         ResultSet rs = Database.executeQuery("SELECT userid FROM tokens WHERE token = '" + token + "'");
 
         try {
-            if (rs.next())
+            if (Objects.requireNonNull(rs).next())
                 return rs.getString("userid");
         } catch (Exception e) {
             e.printStackTrace();

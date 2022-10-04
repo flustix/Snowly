@@ -9,15 +9,16 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ReactionRoles {
-    static Map<String, ReactionRoleMessage> messages = new HashMap<>();
+    static final Map<String, ReactionRoleMessage> messages = new HashMap<>();
 
     public static void loadMessages() {
         ResultSet rs = Database.executeQuery("SELECT * FROM reactionRoles");
 
         try {
-            while (rs.next()) {
+            while (Objects.requireNonNull(rs).next()) {
                 String messageid = rs.getString("messageid");
                 Main.LOGGER.info("Loading reaction roles for message " + messageid);
                 messages.put(messageid, new ReactionRoleMessage(messageid, rs.getString("data")));

@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ClearSlashCommand extends SlashCommand {
     public ClearSlashCommand() {
@@ -20,7 +21,7 @@ public class ClearSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
-        int amount = interaction.getOption("amount").getAsInt();
+        int amount = Objects.requireNonNull(interaction.getOption("amount")).getAsInt();
 
         SlashCommandUtils.replyEphemeral(interaction, EmbedPresets.loading.build(), (hook) -> {
             try {

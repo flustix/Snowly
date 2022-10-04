@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.utils.FileUpload;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TopSlashCommand extends SlashCommand {
     public TopSlashCommand() {
@@ -19,7 +20,7 @@ public class TopSlashCommand extends SlashCommand {
 
     public void execute(SlashCommandInteraction interaction) {
         SlashCommandUtils.reply(interaction, EmbedPresets.loading.build(), (hook) -> {
-            XPGuild guild = XP.getGuild(interaction.getGuild().getId());
+            XPGuild guild = XP.getGuild(Objects.requireNonNull(interaction.getGuild()).getId());
             if (!Settings.getGuildSettings(interaction.getGuild().getId()).xpEnabled()) {
                 hook.editOriginal(":x: XP is disabled on this server!").complete();
                 hook.editOriginalEmbeds(new ArrayList<>()).complete();

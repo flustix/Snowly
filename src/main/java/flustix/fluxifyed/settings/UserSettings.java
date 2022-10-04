@@ -4,9 +4,10 @@ import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.Database;
 
 import java.sql.ResultSet;
+import java.util.Objects;
 
 public class UserSettings {
-    String userId;
+    final String userId;
 
     boolean levelUpMessages = true;
 
@@ -22,7 +23,7 @@ public class UserSettings {
         boolean found = false;
 
         try {
-            while (rs.next()) {
+            while (Objects.requireNonNull(rs).next()) {
                 found = true;
                 levelUpMessages = rs.getBoolean("levelup");
             }

@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandsRoute implements Route {
-    public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) throws Exception {
+    public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         JsonArray commands = new JsonArray();
 
         for (Map.Entry<String, SlashCommand> entry : SlashCommandList.getCommands().entrySet()) {

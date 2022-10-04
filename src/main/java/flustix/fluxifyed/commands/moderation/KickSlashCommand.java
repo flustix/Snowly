@@ -9,6 +9,8 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
+import java.util.Objects;
+
 public class KickSlashCommand extends SlashCommand {
     public KickSlashCommand() {
         super("kick", "Kicks a user from the server.");
@@ -20,7 +22,7 @@ public class KickSlashCommand extends SlashCommand {
         OptionMapping target = interaction.getOption("target");
 
         try {
-            interaction.getGuild().kick(target.getAsUser()).queue((v) -> {
+            Objects.requireNonNull(interaction.getGuild()).kick(Objects.requireNonNull(target).getAsUser()).queue((v) -> {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle(":white_check_mark: Kicked user!")
                         .addField(":bust_in_silhouette: User", target.getAsUser().getAsTag(), true)
@@ -40,7 +42,7 @@ public class KickSlashCommand extends SlashCommand {
         } catch (Exception e) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(":x: Failed to kick user!")
-                    .addField(":bust_in_silhouette: User", target.getAsUser().getAsTag(), true)
+                    .addField(":bust_in_silhouette: User", Objects.requireNonNull(target).getAsUser().getAsTag(), true)
                     .addField(":x: Error", e.getMessage(), false)
                     .setColor(Main.accentColor);
 

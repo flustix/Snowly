@@ -1,9 +1,9 @@
 package flustix.fluxifyed.image;
 
 public class RenderArgs {
-    public String template;
-    public String output;
-    public RenderData data;
+    public final String template;
+    public final String output;
+    public final RenderData data;
 
     public RenderArgs(String template, String output, RenderData data) {
         this.template = template;

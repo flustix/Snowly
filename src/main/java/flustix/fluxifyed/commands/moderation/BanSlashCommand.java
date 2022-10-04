@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class BanSlashCommand extends SlashCommand {
@@ -26,7 +27,7 @@ public class BanSlashCommand extends SlashCommand {
         String reasonText = reason == null ? "No reason" : reason.getAsString();
 
         try {
-            interaction.getGuild().ban(target.getAsUser(), 7, TimeUnit.DAYS).reason(reasonText).queue((v) -> {
+            Objects.requireNonNull(interaction.getGuild()).ban(Objects.requireNonNull(target).getAsUser(), 7, TimeUnit.DAYS).reason(reasonText).queue((v) -> {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle(":white_check_mark: Banned user!")
                         .addField(":bust_in_silhouette: User", target.getAsUser().getAsTag(), true)
@@ -47,7 +48,7 @@ public class BanSlashCommand extends SlashCommand {
         } catch (Exception e) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(":x: Failed to ban user!")
-                    .addField(":bust_in_silhouette: User", target.getAsUser().getAsTag(), true)
+                    .addField(":bust_in_silhouette: User", Objects.requireNonNull(target).getAsUser().getAsTag(), true)
                     .addField(":x: Error", e.getMessage(), false)
                     .setColor(Main.accentColor);
 

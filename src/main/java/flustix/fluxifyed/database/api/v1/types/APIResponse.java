@@ -5,9 +5,9 @@ import com.google.gson.JsonObject;
 import flustix.fluxifyed.utils.json.JSONUtils;
 
 public class APIResponse {
-    public int code;
-    public String message;
-    public JsonElement data;
+    public final int code;
+    public final String message;
+    public final JsonElement data;
 
     public APIResponse(int code, String message, Object data) {
         this.code = code;

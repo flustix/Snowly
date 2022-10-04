@@ -1,13 +1,13 @@
 package flustix.fluxifyed.utils.reddit.types;
 
 public class RedditPost {
-    String title;
-    String author;
-    String subreddit;
-    String url;
-    long created;
-    boolean nsfw;
-    int ups;
+    final String title;
+    final String author;
+    final String subreddit;
+    final String url;
+    final long created;
+    final boolean nsfw;
+    final int ups;
     boolean isText = false;
     String text;
     boolean isImage = false;

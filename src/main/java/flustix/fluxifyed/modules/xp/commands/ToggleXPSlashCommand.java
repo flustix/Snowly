@@ -9,6 +9,8 @@ import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
+import java.util.Objects;
+
 public class ToggleXPSlashCommand extends SlashCommand {
     public ToggleXPSlashCommand() {
         super("togglexp", "Toggle XP on the server.");
@@ -17,7 +19,7 @@ public class ToggleXPSlashCommand extends SlashCommand {
 
     public void execute(SlashCommandInteraction interaction) {
         try {
-            GuildSettings guild = Settings.getGuildSettings(interaction.getGuild().getId());
+            GuildSettings guild = Settings.getGuildSettings(Objects.requireNonNull(interaction.getGuild()).getId());
 
             guild.setXpEnabled(!guild.xpEnabled());
 

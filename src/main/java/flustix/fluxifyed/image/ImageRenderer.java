@@ -14,6 +14,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
+import java.util.Objects;
 
 public class ImageRenderer {
     public static boolean renderImage(RenderArgs args) {
@@ -22,7 +23,7 @@ public class ImageRenderer {
 
             BufferedImage image = new BufferedImage(data.get("w").getAsInt(), data.get("h").getAsInt(), BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
-            Font font = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/fonts/Lato-Bold.ttf")); // TODO: make font configurable
+            Font font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/fonts/Lato-Bold.ttf"))); // TODO: make font configurable
             graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             graphics.setFont(font.deriveFont(24f));
 
@@ -40,19 +41,19 @@ public class ImageRenderer {
 
     static void renderObject(JsonObject json, RenderData data, Graphics2D g2d) {
         switch (json.get("t").getAsString()) {
-            case "rect": {
+            case "rect" -> {
                 renderRect(json.getAsJsonObject("d"), data, g2d);
                 break;
             }
-            case "xpProgress": {
+            case "xpProgress" -> {
                 renderXpProgress(json.getAsJsonObject("d"), data, g2d);
                 break;
             }
-            case "image": {
+            case "image" -> {
                 renderImage(json.getAsJsonObject("d"), data, g2d);
                 break;
             }
-            case "text": {
+            case "text" -> {
                 renderText(json.getAsJsonObject("d"), data, g2d);
                 break;
             }
@@ -124,11 +125,11 @@ public class ImageRenderer {
 
         Alignment alignment = Alignment.LEFT;
         switch (a) {
-            case "c": {
+            case "c" -> {
                 alignment = Alignment.CENTER;
                 break;
             }
-            case "r": {
+            case "r" -> {
                 alignment = Alignment.RIGHT;
                 break;
             }

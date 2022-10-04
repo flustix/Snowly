@@ -14,6 +14,7 @@ import net.dv8tion.jda.api.utils.FileUpload;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class RankSlashCommand extends SlashCommand {
     public RankSlashCommand() {
@@ -22,10 +23,10 @@ public class RankSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
-        Member member = interaction.getOption("user") != null ? interaction.getOption("user").getAsMember() : interaction.getMember();
+        Member member = interaction.getOption("user") != null ? Objects.requireNonNull(interaction.getOption("user")).getAsMember() : interaction.getMember();
 
         SlashCommandUtils.reply(interaction, EmbedPresets.loading.build(), (hook) -> {
-            if (!Settings.getGuildSettings(interaction.getGuild().getId()).xpEnabled()) {
+            if (!Settings.getGuildSettings(Objects.requireNonNull(interaction.getGuild()).getId()).xpEnabled()) {
                 hook.editOriginal(":x: XP is disabled on this server!").complete();
                 hook.editOriginalEmbeds(new ArrayList<>()).complete();
                 return;

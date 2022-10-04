@@ -18,7 +18,7 @@ import java.nio.file.Path;
 import java.util.EnumSet;
 
 public class Main {
-    public static Logger LOGGER = LoggerFactory.getLogger("Fluxifyed");
+    public static final Logger LOGGER = LoggerFactory.getLogger("Fluxifyed");
     public static final int accentColor = 0xef6624;
 
     private static JDA bot;

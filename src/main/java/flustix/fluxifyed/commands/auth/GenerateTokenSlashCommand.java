@@ -11,10 +11,10 @@ public class GenerateTokenSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
-        String token = "";
+        StringBuilder token = new StringBuilder();
 
         for (int i = 0; i < 32; i++)
-            token += genRandomChar();
+            token.append(genRandomChar());
 
         try {
             Database.executeQuery("INSERT INTO tokens (token, userid) VALUES ('" + token + "', '" + interaction.getUser().getId() + "') ON DUPLICATE KEY UPDATE token = '" + token + "'");

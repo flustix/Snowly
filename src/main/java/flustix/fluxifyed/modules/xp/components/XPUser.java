@@ -7,6 +7,8 @@ import flustix.fluxifyed.utils.xp.XPUtils;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.utils.FileUpload;
 
+import java.util.Objects;
+
 public class XPUser {
     private int xp = 0;
     private final String id;
@@ -31,7 +33,7 @@ public class XPUser {
 
             if (Settings.getUserSettings(id).levelUpMessagesEnabled()) {
                 if (LevelUpImage.create(
-                        event.getMember().getEffectiveAvatarUrl() + "?size=256",
+                        Objects.requireNonNull(event.getMember()).getEffectiveAvatarUrl() + "?size=256",
                         event.getMember().getEffectiveName(),
                         level
                 )) {

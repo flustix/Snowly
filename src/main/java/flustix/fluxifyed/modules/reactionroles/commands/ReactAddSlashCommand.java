@@ -8,6 +8,8 @@ import net.dv8tion.jda.api.entities.emoji.RichCustomEmoji;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
+import java.util.Objects;
+
 public class ReactAddSlashCommand extends SlashCommand {
     public ReactAddSlashCommand() {
         super("reactadd", "Add a reaction role to a message");
@@ -20,7 +22,7 @@ public class ReactAddSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
-        ReactionRoleMessage message = ReactionRoles.getMessage(interaction.getOption("messageid").getAsString());
+        ReactionRoleMessage message = ReactionRoles.getMessage(Objects.requireNonNull(interaction.getOption("messageid")).getAsString());
 
         if (message == null) {
             interaction.reply("That message doesn't exist!").setEphemeral(true).queue();
@@ -29,15 +31,15 @@ public class ReactAddSlashCommand extends SlashCommand {
 
         RichCustomEmoji emoji;
         try {
-            String emojiName = interaction.getOption("emoji").getAsString().split(":")[1];
-            emoji = interaction.getGuild().getEmojisByName(emojiName, false).get(0);
+            String emojiName = Objects.requireNonNull(interaction.getOption("emoji")).getAsString().split(":")[1];
+            emoji = Objects.requireNonNull(interaction.getGuild()).getEmojisByName(emojiName, false).get(0);
         } catch (Exception e) {
             interaction.reply("That emoji doesn't exist / isn't from this server!").setEphemeral(true).queue();
             e.printStackTrace();
             return;
         }
 
-        message.addRole(emoji.getAsMention(), interaction.getOption("role").getAsRole().getId(), interaction.getOption("name").getAsString(), interaction.getOption("description").getAsString());
+        message.addRole(emoji.getAsMention(), Objects.requireNonNull(interaction.getOption("role")).getAsRole().getId(), Objects.requireNonNull(interaction.getOption("name")).getAsString(), Objects.requireNonNull(interaction.getOption("description")).getAsString());
         boolean successful = message.update(interaction);
 
         if (successful)

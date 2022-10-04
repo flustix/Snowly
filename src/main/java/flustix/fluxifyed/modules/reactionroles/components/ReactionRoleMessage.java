@@ -12,10 +12,11 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class ReactionRoleMessage {
-    HashMap<String, ReactionRole> roles = new HashMap<>();
-    String messageid;
+    final HashMap<String, ReactionRole> roles = new HashMap<>();
+    final String messageid;
     String title;
 
     public ReactionRoleMessage(String messageid, String data) {
@@ -61,14 +62,10 @@ public class ReactionRoleMessage {
         embed.setColor(Main.accentColor);
         embed.setDescription("React to this message to get a role!");
 
-        roles.forEach((emoji, role) -> {
-            embed.addField(role.emoji + " " + role.name, role.description, true);
-        });
+        roles.forEach((emoji, role) -> embed.addField(role.emoji + " " + role.name, role.description, true));
 
         try {
-            interaction.getChannel().retrieveMessageById(messageid).queue((message) -> {
-                message.editMessageEmbeds(embed.build()).queue();
-            });
+            interaction.getChannel().retrieveMessageById(messageid).queue((message) -> message.editMessageEmbeds(embed.build()).queue());
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,7 +85,7 @@ public class ReactionRoleMessage {
         if (role == null) return;
 
         try {
-            event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(role.roleid)).complete();
+            event.getGuild().addRoleToMember(Objects.requireNonNull(Objects.requireNonNull(event.getMember())), Objects.requireNonNull(Objects.requireNonNull(event.getGuild().getRoleById(role.roleid)))).complete();
         } catch (Exception e) {
             // dm guild owner or smth
         }
@@ -108,7 +105,7 @@ public class ReactionRoleMessage {
             Member member = event.getGuild().getMemberById(event.getUserId());
             if (member == null) member = event.getGuild().retrieveMemberById(event.getUserId()).complete();
 
-            event.getGuild().removeRoleFromMember(member, event.getGuild().getRoleById(role.roleid)).complete();
+            event.getGuild().removeRoleFromMember(member, Objects.requireNonNull(Objects.requireNonNull(event.getGuild().getRoleById(role.roleid)))).complete();
         } catch (Exception e) {
             // dm guild owner or smth
         }

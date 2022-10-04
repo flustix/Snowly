@@ -12,7 +12,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import java.util.HashMap;
 
 public class GuildsRoute implements Route {
-    public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) throws Exception {
+    public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         String token = AuthUtils.getToken(exchange.getRequestHeaders());
 
         if (token.isEmpty())

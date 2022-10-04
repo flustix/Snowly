@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.utils.messages.MessageEditBuilder;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class RedditSlashCommand extends SlashCommand {
     public RedditSlashCommand() {
@@ -19,7 +20,7 @@ public class RedditSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
-        String subreddit = interaction.getOption("subreddit").getAsString();
+        String subreddit = Objects.requireNonNull(interaction.getOption("subreddit")).getAsString();
 
         SlashCommandUtils.reply(interaction, "Getting a post from r/" + subreddit + "...", (hook) -> {
             RedditPost post = RedditUtils.getRandomPost(subreddit);

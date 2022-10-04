@@ -12,6 +12,8 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
+import java.util.Objects;
+
 public class ModifyXPSlashCommand extends SlashCommand {
     public ModifyXPSlashCommand() {
         super("modifyxp", "Give/Remove XP to/from a user.");
@@ -21,10 +23,10 @@ public class ModifyXPSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
-        User user = interaction.getOption("user").getAsUser();
-        int amount = interaction.getOption("amount").getAsInt();
+        User user = Objects.requireNonNull(interaction.getOption("user")).getAsUser();
+        int amount = Objects.requireNonNull(interaction.getOption("amount")).getAsInt();
 
-        XPGuild guild = XP.getGuild(interaction.getGuild().getId());
+        XPGuild guild = XP.getGuild(Objects.requireNonNull(interaction.getGuild()).getId());
 
         if (!Settings.getGuildSettings(interaction.getGuild().getId()).xpEnabled()) {
             SlashCommandUtils.replyEphemeral(interaction, ":x: XP is disabled on this server!");

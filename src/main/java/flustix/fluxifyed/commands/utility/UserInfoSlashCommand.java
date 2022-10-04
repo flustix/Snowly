@@ -13,6 +13,7 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class UserInfoSlashCommand extends SlashCommand {
     public UserInfoSlashCommand() {
@@ -38,7 +39,7 @@ public class UserInfoSlashCommand extends SlashCommand {
         embed.addField(":1234: ID", u.getId(), true);
         embed.addField(":clock1: Creation Date", "<t:" + u.getTimeCreated().toEpochSecond() + ":f>", true);
 
-        Member m = interaction.getGuild().getMemberById(u.getId());
+        Member m = Objects.requireNonNull(interaction.getGuild()).getMemberById(u.getId());
 
         if (m == null) {
             m = interaction.getGuild().retrieveMemberById(u.getId()).complete();

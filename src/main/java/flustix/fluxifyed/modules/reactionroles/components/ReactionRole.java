@@ -3,10 +3,10 @@ package flustix.fluxifyed.modules.reactionroles.components;
 import flustix.fluxifyed.Main;
 
 public class ReactionRole {
-    public String emoji;
-    public String roleid;
-    public String name;
-    public String description;
+    public final String emoji;
+    public final String roleid;
+    public final String name;
+    public final String description;
 
     public ReactionRole(String emoji, String roleid, String name, String description) {
         this.emoji = emoji;

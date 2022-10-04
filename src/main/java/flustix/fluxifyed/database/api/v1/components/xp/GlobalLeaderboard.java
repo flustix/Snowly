@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GlobalLeaderboard {
-    public List<GlobalLeaderboardEntry> entries;
+    public final List<GlobalLeaderboardEntry> entries;
 
     public GlobalLeaderboard() {
         entries = new ArrayList<>();
@@ -26,8 +26,8 @@ public class GlobalLeaderboard {
     }
 
     static class GlobalLeaderboardEntry {
-        String guildid;
-        int xp;
+        final String guildid;
+        final int xp;
 
         public GlobalLeaderboardEntry(String gid, int xp) {
             this.guildid = gid;

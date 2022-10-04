@@ -7,10 +7,11 @@ import net.dv8tion.jda.api.entities.Guild;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Settings {
-    static Map<String, GuildSettings> guilds = new HashMap<>();
-    static Map<String, UserSettings> users = new HashMap<>();
+    static final Map<String, GuildSettings> guilds = new HashMap<>();
+    static final Map<String, UserSettings> users = new HashMap<>();
 
     public static void loadGuild(Guild g) {
         ResultSet rs = Database.executeQuery("SELECT * FROM guilds WHERE guildid = " + g.getId());
@@ -18,7 +19,7 @@ public class Settings {
         GuildSettings guild = null;
 
         try {
-            while (rs.next()) {
+            while (Objects.requireNonNull(rs).next()) {
                 guild = new GuildSettings(rs.getString("guildid"));
                 guild.setXpEnabled(rs.getBoolean("xpModule"));
                 guild.setShopEnabled(rs.getBoolean("shopModule"));
