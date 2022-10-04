@@ -3,6 +3,7 @@ package flustix.fluxifyed.database.api.v1.routes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
+import flustix.fluxifyed.database.api.v1.types.APIResponse;
 import flustix.fluxifyed.database.api.v1.types.Route;
 import flustix.fluxifyed.command.SlashCommand;
 import flustix.fluxifyed.command.SlashCommandList;
@@ -12,9 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandsRoute implements Route {
-    public JsonObject execute(HttpExchange exchange, HashMap<String, String> params) throws Exception {
-        JsonObject json = new JsonObject();
-
+    public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) throws Exception {
         JsonArray commands = new JsonArray();
 
         for (Map.Entry<String, SlashCommand> entry : SlashCommandList.getCommands().entrySet()) {
@@ -38,7 +37,6 @@ public class CommandsRoute implements Route {
             commands.add(commandJson);
         }
 
-        json.add("commands", commands);
-        return json;
+        return new APIResponse(200, "OK", commands);
     }
 }

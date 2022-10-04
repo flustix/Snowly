@@ -6,8 +6,8 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import flustix.fluxifyed.database.api.v1.routes.*;
 import flustix.fluxifyed.database.api.v1.routes.guild.*;
-import flustix.fluxifyed.database.api.v1.routes.xp.*;
 import flustix.fluxifyed.database.api.v1.routes.xp.leaderboard.*;
+import flustix.fluxifyed.database.api.v1.types.APIResponse;
 import flustix.fluxifyed.database.api.v1.types.Route;
 
 import java.io.IOException;
@@ -27,12 +27,10 @@ public class Router implements HttpHandler {
         addRoute("/commands", new CommandsRoute());
 
         addRoute("/xp/leaderboard", new GlobalLeaderboardRoute());
-        addRoute("/xp/:guild/:user", new XPUserRoute());
     }
 
     public void handle(HttpExchange exchange) throws IOException {
         Headers headers = exchange.getResponseHeaders();
-        int responseCode = 200;
 
         JsonObject json = new JsonObject();
         json.addProperty("code", 0); // do this first so it is always at the top
@@ -63,9 +61,13 @@ public class Router implements HttpHandler {
                     if (match) {
                         notFound = false;
                         try {
-                            json.add("data", routeEntry.getValue().execute(exchange, params));
+                            APIResponse response = routeEntry.getValue().execute(exchange, params);
+                            json.addProperty("code", response.code);
+                            json.addProperty("message", response.message);
+                            json.add("data", response.data);
+
                         } catch (Exception e) {
-                            responseCode = 500;
+                            json.addProperty("code", 500);
                             json.addProperty("error", e.getMessage());
                         }
                         break;
@@ -75,11 +77,9 @@ public class Router implements HttpHandler {
         }
 
         if (notFound) {
-            responseCode = 404;
+            json.addProperty("code", 404);
             json.addProperty("error", "Not Found");
         }
-
-        json.addProperty("code", responseCode);
 
         headers.set("Content-Type", String.format("application/json; charset=%s", StandardCharsets.UTF_8));
         headers.set("Access-Control-Allow-Origin", "*");
