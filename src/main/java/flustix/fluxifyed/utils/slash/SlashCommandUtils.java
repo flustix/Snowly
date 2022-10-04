@@ -14,7 +14,8 @@ public class SlashCommandUtils {
     }
 
     public static void reply(SlashCommandInteraction interaction, MessageCreateData message) {
-        reply(interaction, message, (hook) -> {});
+        reply(interaction, message, (hook) -> {
+        });
     }
 
     public static void reply(SlashCommandInteraction interaction, MessageEmbed embed) {
@@ -43,7 +44,8 @@ public class SlashCommandUtils {
     }
 
     public static void replyEphemeral(SlashCommandInteraction interaction, MessageCreateData message) {
-        replyEphemeral(interaction, message, (hook) -> {});
+        replyEphemeral(interaction, message, (hook) -> {
+        });
     }
 
     public static void replyEphemeral(SlashCommandInteraction interaction, String content, Consumer<InteractionHook> callback) {

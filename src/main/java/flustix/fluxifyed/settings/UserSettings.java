@@ -26,7 +26,8 @@ public class UserSettings {
                 found = true;
                 levelUpMessages = rs.getBoolean("levelup");
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         if (!found) {
             Database.executeQuery("INSERT INTO users (userid, levelup) VALUES ('" + userId + "', " + levelUpMessages + ")");

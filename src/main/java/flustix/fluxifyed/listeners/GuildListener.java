@@ -1,8 +1,8 @@
 package flustix.fluxifyed.listeners;
 
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.modules.xp.XP;
+import flustix.fluxifyed.settings.Settings;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

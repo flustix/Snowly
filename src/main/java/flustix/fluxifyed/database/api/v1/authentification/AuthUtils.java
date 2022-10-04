@@ -45,7 +45,8 @@ public class AuthUtils {
 
                 if (PermissionUtils.checkLevel(member, PermissionLevel.ADMIN))
                     ids.add(guild);
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         });
 
         return ids;

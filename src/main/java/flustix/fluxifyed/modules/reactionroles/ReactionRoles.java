@@ -28,7 +28,7 @@ public class ReactionRoles {
     }
 
     public static void addMessage(String messageid, String data) {
-        Database.executeQuery("INSERT INTO reactionRoles (messageid, data) VALUES (" + messageid + ", '" + data +"')");
+        Database.executeQuery("INSERT INTO reactionRoles (messageid, data) VALUES (" + messageid + ", '" + data + "')");
         messages.put(messageid, new ReactionRoleMessage(messageid, data));
     }
 

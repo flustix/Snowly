@@ -34,9 +34,9 @@ public class ReactCreateSlashCommand extends SlashCommand {
             });
 
             hook.editOriginalEmbeds(new EmbedBuilder()
-                            .setTitle("Finished!")
-                            .setColor(Main.accentColor)
-                            .build()).queue();
+                    .setTitle("Finished!")
+                    .setColor(Main.accentColor)
+                    .build()).queue();
         });
     }
 }

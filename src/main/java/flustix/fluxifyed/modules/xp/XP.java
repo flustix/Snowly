@@ -2,9 +2,9 @@ package flustix.fluxifyed.modules.xp;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.Database;
-import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.modules.xp.components.XPUser;
+import flustix.fluxifyed.settings.Settings;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 

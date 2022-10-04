@@ -4,7 +4,6 @@ import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.database.api.v1.components.xp.GlobalLeaderboard;
 import flustix.fluxifyed.database.api.v1.types.APIResponse;
 import flustix.fluxifyed.database.api.v1.types.Route;
-import flustix.fluxifyed.utils.json.JSONUtils;
 
 import java.util.HashMap;
 

@@ -1,10 +1,15 @@
 package flustix.fluxifyed.command;
 
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.commands.*;
+import flustix.fluxifyed.commands.RedditSlashCommand;
 import flustix.fluxifyed.commands.auth.GenerateTokenSlashCommand;
-import flustix.fluxifyed.commands.moderation.*;
-import flustix.fluxifyed.commands.utility.*;
+import flustix.fluxifyed.commands.moderation.BanSlashCommand;
+import flustix.fluxifyed.commands.moderation.ClearSlashCommand;
+import flustix.fluxifyed.commands.moderation.KickSlashCommand;
+import flustix.fluxifyed.commands.utility.AboutSlashCommand;
+import flustix.fluxifyed.commands.utility.PingSlashCommand;
+import flustix.fluxifyed.commands.utility.ServerInfoSlashCommand;
+import flustix.fluxifyed.commands.utility.UserInfoSlashCommand;
 import flustix.fluxifyed.modules.reactionroles.commands.ReactAddSlashCommand;
 import flustix.fluxifyed.modules.reactionroles.commands.ReactCreateSlashCommand;
 import flustix.fluxifyed.modules.xp.commands.*;

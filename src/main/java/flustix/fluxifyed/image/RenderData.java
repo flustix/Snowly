@@ -6,7 +6,6 @@ import flustix.fluxifyed.modules.xp.components.XPUser;
 import flustix.fluxifyed.utils.xp.XPUtils;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
 
 import java.awt.*;
 import java.util.HashMap;

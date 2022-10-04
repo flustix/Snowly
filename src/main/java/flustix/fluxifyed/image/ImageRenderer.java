@@ -106,7 +106,8 @@ public class ImageRenderer {
             BufferedImage scaledImage = GraphicsUtils.scaleImage(image, w, h);
             BufferedImage roundedImage = GraphicsUtils.drawRoundedRect(scaledImage, r);
             g2d.drawImage(roundedImage, x, y, w, h, null);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
     static void renderText(JsonObject json, RenderData data, Graphics2D g2d) {

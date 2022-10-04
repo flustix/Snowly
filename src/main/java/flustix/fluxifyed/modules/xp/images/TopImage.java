@@ -1,10 +1,10 @@
 package flustix.fluxifyed.modules.xp.images;
 
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.utils.graphics.Alignment;
-import flustix.fluxifyed.utils.graphics.GraphicsUtils;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.modules.xp.components.XPUser;
+import flustix.fluxifyed.utils.graphics.Alignment;
+import flustix.fluxifyed.utils.graphics.GraphicsUtils;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 

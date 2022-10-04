@@ -2,9 +2,9 @@ package flustix.fluxifyed;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import flustix.fluxifyed.database.api.APIServer;
 import flustix.fluxifyed.command.SlashCommandList;
 import flustix.fluxifyed.database.Database;
+import flustix.fluxifyed.database.api.APIServer;
 import flustix.fluxifyed.listeners.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;

@@ -1,17 +1,14 @@
 package flustix.fluxifyed.database.api.v1.routes;
 
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.api.v1.authentification.AuthUtils;
 import flustix.fluxifyed.database.api.v1.components.APIUser;
 import flustix.fluxifyed.database.api.v1.types.APIResponse;
 import flustix.fluxifyed.database.api.v1.types.Route;
-import flustix.fluxifyed.utils.json.JSONUtils;
 import net.dv8tion.jda.api.entities.User;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class LoginRoute implements Route {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) throws Exception {

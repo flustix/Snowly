@@ -1,12 +1,12 @@
 package flustix.fluxifyed.modules.xp.commands;
 
 import flustix.fluxifyed.command.SlashCommand;
+import flustix.fluxifyed.modules.xp.XP;
+import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.modules.xp.images.TopImage;
 import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.presets.EmbedPresets;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
-import flustix.fluxifyed.modules.xp.XP;
-import flustix.fluxifyed.modules.xp.components.XPGuild;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.utils.FileUpload;
 

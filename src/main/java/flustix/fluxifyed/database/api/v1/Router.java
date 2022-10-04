@@ -4,9 +4,11 @@ import com.google.gson.JsonObject;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import flustix.fluxifyed.database.api.v1.routes.*;
-import flustix.fluxifyed.database.api.v1.routes.guild.*;
-import flustix.fluxifyed.database.api.v1.routes.xp.leaderboard.*;
+import flustix.fluxifyed.database.api.v1.routes.CommandsRoute;
+import flustix.fluxifyed.database.api.v1.routes.LoginRoute;
+import flustix.fluxifyed.database.api.v1.routes.guild.GuildRoute;
+import flustix.fluxifyed.database.api.v1.routes.guild.GuildsRoute;
+import flustix.fluxifyed.database.api.v1.routes.xp.leaderboard.GlobalLeaderboardRoute;
 import flustix.fluxifyed.database.api.v1.types.APIResponse;
 import flustix.fluxifyed.database.api.v1.types.Route;
 
