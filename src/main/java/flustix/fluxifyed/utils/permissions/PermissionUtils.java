@@ -5,36 +5,23 @@ import net.dv8tion.jda.api.entities.Member;
 
 public class PermissionUtils {
     public static boolean checkLevel(Member member, PermissionLevel level) {
-        switch (level) {
-            case CREATOR:
-                return member.getUser().getId().equals("386436194709274627");
-            case OWNER:
-                return member.isOwner();
-            case ADMIN:
-                return member.hasPermission(Permission.ADMINISTRATOR);
-            case MODERATOR:
-                return member.hasPermission(Permission.BAN_MEMBERS);
-            case EVERYONE:
-                return true;
-            default:
-                return false;
-        }
+        return switch (level) {
+            case CREATOR -> member.getUser().getId().equals("386436194709274627");
+            case OWNER -> member.isOwner();
+            case ADMIN -> member.hasPermission(Permission.ADMINISTRATOR);
+            case MODERATOR -> member.hasPermission(Permission.BAN_MEMBERS);
+            case EVERYONE -> true;
+        };
     }
 
     public static String getDescription(PermissionLevel level) {
-        switch (level) {
-            case CREATOR:
-                return "Bot Creator";
-            case OWNER:
-                return "Server Owner";
-            case ADMIN:
-                return "Administrator";
-            case MODERATOR:
-                return "Moderator (Able to ban people)";
-            case EVERYONE:
-                return "Everyone";
-        }
+        return switch (level) {
+            case CREATOR -> "Bot Creator";
+            case OWNER -> "Server Owner";
+            case ADMIN -> "Administrator";
+            case MODERATOR -> "Moderator (Able to ban people)";
+            case EVERYONE -> "Everyone";
+        };
 
-        return "";
     }
 }

@@ -6,19 +6,12 @@ import java.awt.image.BufferedImage;
 public class GraphicsUtils {
     public static void drawString(Graphics2D g2d, String str, int x, int y, Alignment align) {
         int width = g2d.getFontMetrics().stringWidth(str);
-        int finalX = 0;
 
-        switch (align) {
-            case LEFT:
-                finalX = x;
-                break;
-            case CENTER:
-                finalX = x - (width / 2);
-                break;
-            case RIGHT:
-                finalX = x - width;
-                break;
-        }
+        int finalX = switch (align) {
+            case LEFT -> x;
+            case CENTER -> x - (width / 2);
+            case RIGHT -> x - width;
+        };
 
         g2d.drawString(str, finalX, y + g2d.getFontMetrics().getHeight());
     }
