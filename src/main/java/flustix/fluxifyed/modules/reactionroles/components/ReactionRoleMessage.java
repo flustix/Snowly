@@ -92,7 +92,6 @@ public class ReactionRoleMessage {
     }
 
     public void onReactionRemove(MessageReactionRemoveEvent event) {
-        Main.LOGGER.info("reaction removed");
         String emoteString = event.getReaction().getEmoji().getAsReactionCode();
 
         ReactionRole role = roles.get(emoteString);
