@@ -1,6 +1,7 @@
 package flustix.fluxifyed.settings;
 
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.components.Module;
 import flustix.fluxifyed.database.Database;
 import net.dv8tion.jda.api.entities.Guild;
 
@@ -21,8 +22,13 @@ public class Settings {
         try {
             while (Objects.requireNonNull(rs).next()) {
                 guild = new GuildSettings(rs.getString("guildid"));
-                guild.setXpEnabled(rs.getBoolean("xpModule"));
-                guild.setShopEnabled(rs.getBoolean("shopModule"));
+
+                for (Module module : Main.getModules()) {
+                    try {
+                        guild.setModuleEnabled(module.id, rs.getBoolean(module.id + "Module"));
+                    } catch (Exception ignored) {}
+                }
+
                 guilds.put(g.getId(), guild);
             }
         } catch (Exception e) {

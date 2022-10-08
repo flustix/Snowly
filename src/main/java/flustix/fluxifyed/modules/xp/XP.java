@@ -27,7 +27,7 @@ public class XP {
             return;
         }
 
-        if (!Settings.getGuildSettings(event.getGuild().getId()).xpEnabled()) return;
+        if (!Settings.getGuildSettings(event.getGuild().getId()).moduleEnabled("xp")) return;
 
         XPUser user = guild.getUser(event.getAuthor().getId());
         int xp = new Random().nextInt(11) + 10;

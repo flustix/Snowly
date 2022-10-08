@@ -26,7 +26,7 @@ public class RankSlashCommand extends SlashCommand {
         Member member = interaction.getOption("user") != null ? Objects.requireNonNull(interaction.getOption("user")).getAsMember() : interaction.getMember();
 
         SlashCommandUtils.reply(interaction, EmbedPresets.loading.build(), (hook) -> {
-            if (!Settings.getGuildSettings(Objects.requireNonNull(interaction.getGuild()).getId()).xpEnabled()) {
+            if (!Settings.getGuildSettings(Objects.requireNonNull(interaction.getGuild()).getId()).moduleEnabled("xp")) {
                 hook.editOriginal(":x: XP is disabled on this server!").complete();
                 hook.editOriginalEmbeds(new ArrayList<>()).complete();
                 return;

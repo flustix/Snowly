@@ -21,7 +21,7 @@ public class TopSlashCommand extends SlashCommand {
     public void execute(SlashCommandInteraction interaction) {
         SlashCommandUtils.reply(interaction, EmbedPresets.loading.build(), (hook) -> {
             XPGuild guild = XP.getGuild(Objects.requireNonNull(interaction.getGuild()).getId());
-            if (!Settings.getGuildSettings(interaction.getGuild().getId()).xpEnabled()) {
+            if (!Settings.getGuildSettings(interaction.getGuild().getId()).moduleEnabled("xp")) {
                 hook.editOriginal(":x: XP is disabled on this server!").complete();
                 hook.editOriginalEmbeds(new ArrayList<>()).complete();
                 return;

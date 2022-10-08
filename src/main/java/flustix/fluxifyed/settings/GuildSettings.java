@@ -2,44 +2,43 @@ package flustix.fluxifyed.settings;
 
 import flustix.fluxifyed.database.Database;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 public class GuildSettings {
     private final String guildId;
 
-    // modules
-    private boolean xpModule = true;
-    private boolean shopModule = false;
+    private HashMap<String, Boolean> modules = new HashMap<>();
 
     public GuildSettings(String guildId) {
         this.guildId = guildId;
     }
 
     public void setup() {
-        Database.executeQuery("INSERT INTO guilds (guildid, xpModule, shopModule) VALUES ('" + guildId + "', " + xpModule + ", " + shopModule + ")");
+        Database.executeQuery("INSERT INTO guilds (guildid) VALUES ('" + guildId + "'");
     }
 
     void update() {
-        Database.executeQuery("UPDATE guilds SET xpModule = " + xpModule + ", shopModule = " + shopModule + " WHERE guildid = " + guildId);
+        List<String> moduleQueries = new ArrayList<>();
+
+        for (String module : modules.keySet())
+            moduleQueries.add(module + "Module = " + modules.get(module));
+
+        Database.executeQuery("UPDATE guilds SET " + String.join(", ", moduleQueries) + " WHERE guildid = " + guildId);
     }
 
     public String getGuildId() {
         return guildId;
     }
 
-    public boolean xpEnabled() {
-        return xpModule;
+    public boolean moduleEnabled(String module) {
+        return modules.getOrDefault(module, false);
     }
 
-    public boolean shopEnabled() {
-        return shopModule;
-    }
-
-    public void setXpEnabled(boolean enabled) {
-        xpModule = enabled;
-        update();
-    }
-
-    public void setShopEnabled(boolean enabled) {
-        shopModule = enabled;
+    public void setModuleEnabled(String module, boolean enabled) {
+        modules.put(module, enabled);
         update();
     }
 }
