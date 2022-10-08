@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import flustix.fluxifyed.database.api.v1.routes.CommandsRoute;
 import flustix.fluxifyed.database.api.v1.routes.LoginRoute;
+import flustix.fluxifyed.database.api.v1.routes.ModulesRoute;
 import flustix.fluxifyed.database.api.v1.routes.guild.GuildRoute;
 import flustix.fluxifyed.database.api.v1.routes.guild.GuildsRoute;
 import flustix.fluxifyed.database.api.v1.routes.xp.leaderboard.GlobalLeaderboardRoute;
@@ -27,6 +28,7 @@ public class Router implements HttpHandler {
         addRoute("/login", new LoginRoute());
 
         addRoute("/commands", new CommandsRoute());
+        addRoute("/modules", new ModulesRoute());
 
         addRoute("/xp/leaderboard", new GlobalLeaderboardRoute());
     }
