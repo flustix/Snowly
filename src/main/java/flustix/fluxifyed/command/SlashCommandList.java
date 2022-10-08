@@ -1,18 +1,7 @@
 package flustix.fluxifyed.command;
 
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.commands.RedditSlashCommand;
-import flustix.fluxifyed.commands.auth.GenerateTokenSlashCommand;
-import flustix.fluxifyed.commands.moderation.BanSlashCommand;
-import flustix.fluxifyed.commands.moderation.ClearSlashCommand;
-import flustix.fluxifyed.commands.moderation.KickSlashCommand;
-import flustix.fluxifyed.commands.utility.AboutSlashCommand;
-import flustix.fluxifyed.commands.utility.PingSlashCommand;
-import flustix.fluxifyed.commands.utility.ServerInfoSlashCommand;
-import flustix.fluxifyed.commands.utility.UserInfoSlashCommand;
-import flustix.fluxifyed.modules.reactionroles.commands.ReactAddSlashCommand;
-import flustix.fluxifyed.modules.reactionroles.commands.ReactCreateSlashCommand;
-import flustix.fluxifyed.modules.xp.commands.*;
+
 import flustix.fluxifyed.utils.permissions.PermissionUtils;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -21,35 +10,27 @@ import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
+import org.reflections.Reflections;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeMap;
 
 public class SlashCommandList {
     private static final TreeMap<String, SlashCommand> commands = new TreeMap<>();
 
     public static void initializeList() {
-        addCommand(new BanSlashCommand());
-        addCommand(new ClearSlashCommand());
-        addCommand(new KickSlashCommand());
+        Reflections reflections = new Reflections("flustix.fluxifyed");
+        Set<Class<? extends SlashCommand>> classes = reflections.getSubTypesOf(SlashCommand.class);
 
-        addCommand(new AboutSlashCommand());
-        addCommand(new PingSlashCommand());
-        addCommand(new ServerInfoSlashCommand());
-        addCommand(new UserInfoSlashCommand());
-
-        addCommand(new ModifyXPSlashCommand());
-        addCommand(new RankSlashCommand());
-        addCommand(new ToggleXPSlashCommand());
-        addCommand(new TopSlashCommand());
-        addCommand(new ToggleLevelUPSlashCommand());
-
-        addCommand(new ReactCreateSlashCommand());
-        addCommand(new ReactAddSlashCommand());
-
-        addCommand(new RedditSlashCommand());
-        addCommand(new GenerateTokenSlashCommand());
+        for (Class<? extends SlashCommand> c : classes) {
+            try {
+                addCommand(c.getConstructor().newInstance());
+            } catch (Exception e) {
+                Main.LOGGER.error("Error while initializing slash command " + c.getName(), e);
+            }
+        }
     }
 
     private static void addCommand(SlashCommand command) {
