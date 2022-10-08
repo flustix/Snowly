@@ -26,7 +26,11 @@ public class ReactionRoleMessage {
         title = json.get("name").getAsString();
         json.getAsJsonArray("roles").forEach(element -> {
             JsonObject role = element.getAsJsonObject();
-            roles.put(role.get("emoji").getAsString(), new ReactionRole(role.get("emoji").getAsString(), role.get("roleid").getAsString(), role.get("name").getAsString(), role.get("description").getAsString()));
+
+            String emoji = role.get("emoji").getAsString();
+            emoji = emoji.replace("<:", "").replace("<a:", "").replace(">", "");
+
+            roles.put(emoji, new ReactionRole(role.get("emoji").getAsString(), role.get("roleid").getAsString(), role.get("name").getAsString(), role.get("description").getAsString()));
         });
     }
 
@@ -77,10 +81,6 @@ public class ReactionRoleMessage {
     public void onReactionAdd(MessageReactionAddEvent event) {
         String emoteString = event.getReaction().getEmoji().getAsReactionCode();
 
-        if (emoteString.length() > 1) {
-            emoteString = emoteString.split(":")[1];
-        }
-
         ReactionRole role = roles.get(emoteString);
         if (role == null) return;
 
@@ -92,11 +92,8 @@ public class ReactionRoleMessage {
     }
 
     public void onReactionRemove(MessageReactionRemoveEvent event) {
+        Main.LOGGER.info("reaction removed");
         String emoteString = event.getReaction().getEmoji().getAsReactionCode();
-
-        if (emoteString.length() > 1) {
-            emoteString = emoteString.split(":")[1];
-        }
 
         ReactionRole role = roles.get(emoteString);
         if (role == null) return;
