@@ -54,7 +54,7 @@ public class SlashCommandList {
         String moduleID = commandMap.get(interaction.getName());
 
         if (commands.containsKey(moduleID)) {
-            if (commands.get(moduleID).containsKey(interaction.getName())) {
+            if (!commands.get(moduleID).containsKey(interaction.getName())) {
                 SlashCommandUtils.replyEphemeral(interaction, "This command is not implemented yet.");
                 return;
             }
