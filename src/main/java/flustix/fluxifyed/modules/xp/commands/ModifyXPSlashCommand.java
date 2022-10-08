@@ -1,7 +1,7 @@
 package flustix.fluxifyed.modules.xp.commands;
 
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.command.SlashCommand;
+import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.settings.Settings;

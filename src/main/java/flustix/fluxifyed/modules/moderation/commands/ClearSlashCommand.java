@@ -1,7 +1,7 @@
-package flustix.fluxifyed.commands.moderation;
+package flustix.fluxifyed.modules.moderation.commands;
 
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.command.SlashCommand;
+import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import flustix.fluxifyed.utils.presets.EmbedPresets;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;

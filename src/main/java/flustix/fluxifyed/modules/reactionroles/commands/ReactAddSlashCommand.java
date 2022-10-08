@@ -1,6 +1,6 @@
 package flustix.fluxifyed.modules.reactionroles.commands;
 
-import flustix.fluxifyed.command.SlashCommand;
+import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.modules.reactionroles.ReactionRoles;
 import flustix.fluxifyed.modules.reactionroles.components.ReactionRoleMessage;
 import flustix.fluxifyed.utils.permissions.PermissionLevel;

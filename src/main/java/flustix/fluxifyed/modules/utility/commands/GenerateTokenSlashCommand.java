@@ -1,6 +1,6 @@
-package flustix.fluxifyed.commands.auth;
+package flustix.fluxifyed.modules.utility.commands;
 
-import flustix.fluxifyed.command.SlashCommand;
+import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;

@@ -1,6 +1,6 @@
 package flustix.fluxifyed.modules.xp.commands;
 
-import flustix.fluxifyed.command.SlashCommand;
+import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.image.ImageRenderer;
 import flustix.fluxifyed.image.RenderArgs;
 import flustix.fluxifyed.image.RenderData;

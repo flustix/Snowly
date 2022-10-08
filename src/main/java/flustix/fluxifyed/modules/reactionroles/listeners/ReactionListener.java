@@ -1,4 +1,4 @@
-package flustix.fluxifyed.listeners;
+package flustix.fluxifyed.modules.reactionroles.listeners;
 
 import flustix.fluxifyed.modules.reactionroles.ReactionRoles;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
@@ -11,7 +11,6 @@ public class ReactionListener extends ListenerAdapter {
         ReactionRoles.onReactionAdd(event);
     }
 
-    @Override
     public void onMessageReactionRemove(@NotNull MessageReactionRemoveEvent event) {
         ReactionRoles.onReactionRemove(event);
     }

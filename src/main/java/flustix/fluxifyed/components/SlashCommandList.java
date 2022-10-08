@@ -1,4 +1,4 @@
-package flustix.fluxifyed.command;
+package flustix.fluxifyed.components;
 
 import flustix.fluxifyed.Main;
 
@@ -10,41 +10,36 @@ import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
-import org.reflections.Reflections;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeMap;
 
 public class SlashCommandList {
-    private static final TreeMap<String, SlashCommand> commands = new TreeMap<>();
+    private static final TreeMap<String, TreeMap<String, SlashCommand>> commands = new TreeMap<>();
+    private static final HashMap<String, String> commandMap = new HashMap<>(); // <command name, module id>
 
-    public static void initializeList() {
-        Reflections reflections = new Reflections("flustix.fluxifyed");
-        Set<Class<? extends SlashCommand>> classes = reflections.getSubTypesOf(SlashCommand.class);
+    public static void addModuleCommands(String moduleID, List<SlashCommand> moduleCommands) {
+        TreeMap<String, SlashCommand> moduleCommandMap = new TreeMap<>();
 
-        for (Class<? extends SlashCommand> c : classes) {
-            try {
-                addCommand(c.getConstructor().newInstance());
-            } catch (Exception e) {
-                Main.LOGGER.error("Error while initializing slash command " + c.getName(), e);
-            }
+        for (SlashCommand command : moduleCommands) {
+            moduleCommandMap.put(command.name, command);
+            commandMap.put(command.name, moduleID);
         }
-    }
 
-    private static void addCommand(SlashCommand command) {
-        commands.put(command.getName(), command);
-        Main.LOGGER.debug("Loaded slash command " + command.getName() + "!");
+        commands.put(moduleID, moduleCommandMap);
     }
 
     public static void registerCommands(ReadyEvent event) {
         List<CommandData> slashCommandList = new ArrayList<>();
 
-        commands.forEach((name, command) -> {
-            SlashCommandData commandData = Commands.slash(name, command.getDescription());
-            commandData.addOptions(command.getOptions());
-            slashCommandList.add(commandData);
+        commands.forEach((module, list) -> {
+            list.forEach((name, command) -> {
+                SlashCommandData commandData = Commands.slash(name, command.getDescription());
+                commandData.addOptions(command.getOptions());
+                slashCommandList.add(commandData);
+            });
         });
 
         event.getJDA().updateCommands().addCommands(slashCommandList).complete();
@@ -56,8 +51,16 @@ public class SlashCommandList {
             return;
         }
 
-        if (commands.containsKey(interaction.getName())) {
-            SlashCommand command = commands.get(interaction.getName());
+        String moduleID = commandMap.get(interaction.getName());
+
+        if (commands.containsKey(moduleID)) {
+            if (commands.get(moduleID).containsKey(interaction.getName())) {
+                SlashCommandUtils.replyEphemeral(interaction, "This command is not implemented yet.");
+                return;
+            }
+
+            SlashCommand command = commands.get(moduleID).get(interaction.getName());
+
             if (PermissionUtils.checkLevel(interaction.getMember(), command.getPermissionLevel())) {
                 command.execute(interaction);
             } else {
@@ -72,7 +75,20 @@ public class SlashCommandList {
             SlashCommandUtils.replyEphemeral(interaction, "This command is not implemented yet.");
     }
 
-    public static TreeMap<String, SlashCommand> getCommands() {
+    public static SlashCommand getCommand(String commandName) {
+        if (commandMap.containsKey(commandName)) {
+            String moduleID = commandMap.get(commandName);
+            return commands.get(moduleID).get(commandName);
+        }
+
+        return new SlashCommand("", "");
+    }
+
+    public static HashMap<String, String> getCommandMap() {
+        return commandMap;
+    }
+
+    public static TreeMap<String, TreeMap<String, SlashCommand>> getCommands() {
         return commands;
     }
 }

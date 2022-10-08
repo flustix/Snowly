@@ -1,7 +1,7 @@
-package flustix.fluxifyed.commands.utility;
+package flustix.fluxifyed.modules.utility.commands;
 
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.command.SlashCommand;
+import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;

@@ -1,7 +1,7 @@
-package flustix.fluxifyed.commands;
+package flustix.fluxifyed.modules.fun.commands;
 
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.command.SlashCommand;
+import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.utils.reddit.RedditUtils;
 import flustix.fluxifyed.utils.reddit.types.RedditPost;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;

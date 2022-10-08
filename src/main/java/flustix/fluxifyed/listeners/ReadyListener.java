@@ -1,7 +1,7 @@
 package flustix.fluxifyed.listeners;
 
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.command.SlashCommandList;
+import flustix.fluxifyed.components.SlashCommandList;
 import flustix.fluxifyed.modules.reactionroles.ReactionRoles;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.settings.Settings;

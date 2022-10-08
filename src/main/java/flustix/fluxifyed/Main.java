@@ -2,20 +2,24 @@ package flustix.fluxifyed;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import flustix.fluxifyed.command.SlashCommandList;
+import flustix.fluxifyed.components.Module;
 import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.database.api.APIServer;
 import flustix.fluxifyed.listeners.*;
+import flustix.fluxifyed.utils.module.ModuleUtils;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 
 public class Main {
     public static final Logger LOGGER = LoggerFactory.getLogger("Fluxifyed");
@@ -25,6 +29,7 @@ public class Main {
     private static JsonObject config;
     private static final String version = "2022.5.0";
     private static final long startTime = System.currentTimeMillis();
+    private static final List<Module> modules = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
         LOGGER.info("Starting Fluxifyed v" + version);
@@ -32,7 +37,6 @@ public class Main {
         config = JsonParser.parseString(Files.readString(Path.of("config.json"))).getAsJsonObject();
 
         Database.initializeDataSource();
-        SlashCommandList.initializeList();
 
         Thread apiThread = new Thread(() -> {
             try {
@@ -50,14 +54,32 @@ public class Main {
         JDABuilder builder = JDABuilder.createDefault(config.get("token").getAsString());
         builder.enableIntents(intents);
         builder.setActivity(Activity.listening("/help"));
+        initModules(builder);
+
         builder.addEventListeners(
-                new MessageListener(),
                 new ReadyListener(),
                 new SlashCommandListener(),
-                new GuildListener(),
-                new ReactionListener()
+                new GuildListener()
         );
         bot = builder.build();
+    }
+
+    static void initModules(JDABuilder builder) {
+        Reflections reflections = new Reflections("flustix.fluxifyed.modules");
+        reflections.getSubTypesOf(Module.class).forEach(m -> {
+            try {
+                Module module = m.getDeclaredConstructor().newInstance();
+
+                module.init();
+                ModuleUtils.loadCommands(module);
+                builder.addEventListeners(ModuleUtils.loadListeners(module).toArray());
+
+                modules.add(module);
+                LOGGER.info("Loaded module " + module.name + " (" + module.id + ")" + "!");
+            } catch (Exception e) {
+                LOGGER.error("Error while initializing module " + m.getName(), e);
+            }
+        });
     }
 
     public static JsonObject getConfig() {
@@ -74,5 +96,9 @@ public class Main {
 
     public static long getStartTime() {
         return startTime;
+    }
+
+    public static List<Module> getModules() {
+        return modules;
     }
 }

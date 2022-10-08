@@ -3,7 +3,7 @@ package flustix.fluxifyed.modules.reactionroles.commands;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.command.SlashCommand;
+import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.modules.reactionroles.ReactionRoles;
 import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import flustix.fluxifyed.utils.presets.EmbedPresets;
