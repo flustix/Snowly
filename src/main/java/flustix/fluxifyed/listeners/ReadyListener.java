@@ -5,8 +5,8 @@ import flustix.fluxifyed.command.SlashCommandList;
 import flustix.fluxifyed.modules.reactionroles.ReactionRoles;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.settings.Settings;
-import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
+import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
