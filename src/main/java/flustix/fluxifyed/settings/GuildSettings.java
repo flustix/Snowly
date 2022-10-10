@@ -17,7 +17,7 @@ public class GuildSettings {
     }
 
     public void setup() {
-        Database.executeQuery("INSERT INTO guilds (guildid) VALUES ('" + guildId + "'");
+        Database.executeQuery("INSERT INTO guilds (guildid) VALUES ('" + guildId + "')");
     }
 
     void update() {
