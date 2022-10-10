@@ -17,8 +17,6 @@ public class UserSettings {
     }
 
     void load() {
-        Main.LOGGER.info("Loading user settings for user '" + userId + "'");
-
         ResultSet rs = Database.executeQuery("SELECT * FROM users WHERE userid = " + userId);
         boolean found = false;
 
