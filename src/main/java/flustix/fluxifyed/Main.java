@@ -53,7 +53,7 @@ public class Main {
 
         JDABuilder builder = JDABuilder.createDefault(config.get("token").getAsString());
         builder.enableIntents(intents);
-        builder.setActivity(Activity.listening("/help"));
+        builder.setActivity(Activity.listening("music"));
         initModules(builder);
 
         builder.addEventListeners(
