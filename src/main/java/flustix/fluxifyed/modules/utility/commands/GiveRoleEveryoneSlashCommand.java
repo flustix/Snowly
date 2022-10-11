@@ -3,10 +3,10 @@ package flustix.fluxifyed.modules.utility.commands;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -20,21 +20,26 @@ public class GiveRoleEveryoneSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
-        AtomicInteger count = new AtomicInteger();
-
         interaction.reply("Starting...").complete();
 
         try {
             interaction.getGuild()
-                    .retrieveMembers(new ArrayList<>())
+                    .loadMembers()
                     .onSuccess(members -> {
+                        AtomicInteger i = new AtomicInteger();
+                        Message msg = interaction.getChannel().sendMessage("Giving " + members.size() + " members the role.").complete();
+
                         for (Member member : members) {
                             if (!member.getRoles().contains(interaction.getOption("role").getAsRole())) {
-                                interaction.getGuild().addRoleToMember(member, interaction.getOption("role").getAsRole()).queue();
+                                interaction.getGuild().addRoleToMember(member, interaction.getOption("role").getAsRole()).queue(done -> {
+                                    i.getAndIncrement();
+
+                                    if (i.get() % 10 == 0) {
+                                        msg.editMessage("Giving " + members.size() + " members the role. (" + i + " done)").complete();
+                                    }
+                                });
                             }
-                            count.getAndIncrement();
                         }
-                        interaction.getChannel().sendMessage("Giving " + count + " members the role.").complete();
                     }
             );
         } catch (Exception e) {
