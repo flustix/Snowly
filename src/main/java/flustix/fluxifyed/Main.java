@@ -51,8 +51,7 @@ public class Main {
         EnumSet<GatewayIntent> intents = EnumSet.allOf(GatewayIntent.class);
         intents.remove(GatewayIntent.MESSAGE_CONTENT);
 
-        JDABuilder builder = JDABuilder.createDefault(config.get("token").getAsString());
-        builder.enableIntents(intents);
+        JDABuilder builder = JDABuilder.create(config.get("token").getAsString(), intents);
         builder.setActivity(Activity.listening("music"));
         initModules(builder);
 
