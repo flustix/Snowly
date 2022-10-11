@@ -1,5 +1,7 @@
 package flustix.fluxifyed.components;
 
+import net.dv8tion.jda.api.entities.Guild;
+
 public class Module {
     public String name;
     public String description;
@@ -15,4 +17,9 @@ public class Module {
      * Called when the module is loaded.
      */
     public void init() {}
+
+    /**
+     * Called in the guild initialization.
+     */
+    public void onGuildInit(Guild guild) {}
 }

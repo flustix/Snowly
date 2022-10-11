@@ -1,6 +1,7 @@
 package flustix.fluxifyed.listeners;
 
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.components.Module;
 import flustix.fluxifyed.components.SlashCommandList;
 import flustix.fluxifyed.modules.reactionroles.ReactionRoles;
 import flustix.fluxifyed.modules.xp.XP;
@@ -25,6 +26,8 @@ public class ReadyListener extends ListenerAdapter {
         Main.LOGGER.info("Initializing guild '" + event.getGuild().getName() + "' (" + event.getGuild().getId() + ")");
 
         Settings.loadGuild(event.getGuild());
-        XP.initGuild(event.getGuild());
+
+        for (Module module : Main.getModules())
+            module.onGuildInit(event.getGuild());
     }
 }
