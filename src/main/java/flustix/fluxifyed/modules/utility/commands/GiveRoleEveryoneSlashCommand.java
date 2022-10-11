@@ -25,7 +25,8 @@ public class GiveRoleEveryoneSlashCommand extends SlashCommand {
         interaction.reply("Starting...").complete();
 
         try {
-            List<Member> members = interaction.getGuild().retrieveMembers(false, new ArrayList<>()).get();
+            interaction.getGuild().loadMembers().get();
+            List<Member> members = interaction.getGuild().getMembers();
 
             for (Member member : members) {
                 if (!member.getRoles().contains(interaction.getOption("role").getAsRole())) {
