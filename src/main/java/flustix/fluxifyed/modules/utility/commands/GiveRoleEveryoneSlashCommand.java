@@ -39,6 +39,10 @@ public class GiveRoleEveryoneSlashCommand extends SlashCommand {
                                     if (rolesGiven.get() % 10 == 0) {
                                         msg.editMessage("Processing... (" + rolesGiven.get() + "/" + total.get() + ")").queue();
                                     }
+
+                                    if (rolesGiven.get() == total.get()) {
+                                        msg.editMessage("Done! (" + rolesGiven.get() + "/" + total.get() + ")").queue();
+                                    }
                                 });
                             }
                         }
