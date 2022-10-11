@@ -3,6 +3,7 @@ package flustix.fluxifyed.modules.xp;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
+import flustix.fluxifyed.modules.xp.components.XPRole;
 import flustix.fluxifyed.modules.xp.components.XPUser;
 import flustix.fluxifyed.settings.Settings;
 import net.dv8tion.jda.api.entities.Guild;
@@ -10,7 +11,6 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.sql.ResultSet;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.Random;
 
 public class XP {
@@ -38,17 +38,39 @@ public class XP {
         try {
             XPGuild guild = new XPGuild(newGuild.getId());
 
-            ResultSet users = Database.executeQuery("SELECT * FROM xp WHERE guildid = '" + newGuild.getId() + "'");
-
-            while (Objects.requireNonNull(users).next()) {
-                XPUser user = new XPUser(newGuild.getId(), users.getString("userid"));
-                user.setXP(users.getInt("xp"));
-                guild.addUser(user);
-            }
+            initUsers(newGuild, guild);
+            initRoles(newGuild, guild);
 
             guilds.put(newGuild.getId(), guild);
         } catch (Exception e) {
             Main.LOGGER.error("Error while loading xp for guild  '" + newGuild.getName() + "' (" + newGuild.getId() + ")", e);
+        }
+    }
+
+    static void initUsers(Guild newGuild, XPGuild guild) throws Exception {
+        ResultSet users = Database.executeQuery("SELECT * FROM xp WHERE guildid = '" + newGuild.getId() + "'");
+
+        if (users == null) {
+            Main.LOGGER.warn("No users found for guild " + newGuild.getId());
+            return;
+        }
+
+        while (users.next()) {
+            XPUser user = new XPUser(newGuild.getId(), users.getString("userid"));
+            user.setXP(users.getInt("xp"));
+            guild.addUser(user);
+        }
+    }
+
+    static void initRoles(Guild newGuild, XPGuild guild) throws Exception {
+        ResultSet roles = Database.executeQuery("SELECT * FROM xpRoles WHERE guildid = '" + newGuild.getId() + "'");
+
+        if (roles == null)
+            return;
+
+        while (roles.next()) {
+            XPRole role = new XPRole(roles.getString("roleid"), roles.getInt("level"));
+            guild.addRole(role);
         }
     }
 
