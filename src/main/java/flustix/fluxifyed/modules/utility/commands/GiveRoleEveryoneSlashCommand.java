@@ -26,16 +26,18 @@ public class GiveRoleEveryoneSlashCommand extends SlashCommand {
             interaction.getGuild()
                     .loadMembers()
                     .onSuccess(members -> {
-                        AtomicInteger i = new AtomicInteger();
-                        Message msg = interaction.getChannel().sendMessage("Giving " + members.size() + " members the role.").complete();
+                        AtomicInteger total = new AtomicInteger();
+                        AtomicInteger rolesGiven = new AtomicInteger();
+                        Message msg = interaction.getChannel().sendMessage("Giving members the role.").complete();
 
                         for (Member member : members) {
                             if (!member.getRoles().contains(interaction.getOption("role").getAsRole())) {
+                                total.getAndIncrement();
                                 interaction.getGuild().addRoleToMember(member, interaction.getOption("role").getAsRole()).queue(done -> {
-                                    i.getAndIncrement();
+                                    rolesGiven.getAndIncrement();
 
-                                    if (i.get() % 10 == 0) {
-                                        msg.editMessage("Giving " + members.size() + " members the role. (" + i + " done)").queue();
+                                    if (rolesGiven.get() % 10 == 0) {
+                                        msg.editMessage("Processing... (" + rolesGiven.get() + "/" + total.get() + ")").queue();
                                     }
                                 });
                             }
