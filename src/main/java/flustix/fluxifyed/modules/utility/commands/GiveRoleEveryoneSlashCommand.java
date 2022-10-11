@@ -35,7 +35,7 @@ public class GiveRoleEveryoneSlashCommand extends SlashCommand {
                                     i.getAndIncrement();
 
                                     if (i.get() % 10 == 0) {
-                                        msg.editMessage("Giving " + members.size() + " members the role. (" + i + " done)").complete();
+                                        msg.editMessage("Giving " + members.size() + " members the role. (" + i + " done)").queue();
                                     }
                                 });
                             }
