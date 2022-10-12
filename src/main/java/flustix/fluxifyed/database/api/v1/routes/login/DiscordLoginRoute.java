@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.database.api.APIServer;
 import flustix.fluxifyed.database.api.v1.authentification.AuthUtils;
 import flustix.fluxifyed.database.api.v1.authentification.TokenGen;
 import flustix.fluxifyed.database.api.v1.components.APIUser;
@@ -37,6 +38,8 @@ public class DiscordLoginRoute implements Route {
                     .build();
 
             HttpResponse<String> res = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            APIServer.LOGGER.info("Discord Login Response: " + res.statusCode() + " " + res.body());
 
             if (res.statusCode() == 200) {
                 JsonObject json = JsonParser.parseString(res.body()).getAsJsonObject();
