@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import flustix.fluxifyed.database.api.APIServer;
 import flustix.fluxifyed.database.api.v1.routes.CommandsRoute;
 import flustix.fluxifyed.database.api.v1.routes.LoginRoute;
 import flustix.fluxifyed.database.api.v1.routes.ModulesRoute;
@@ -11,7 +12,9 @@ import flustix.fluxifyed.database.api.v1.routes.guild.GuildRoute;
 import flustix.fluxifyed.database.api.v1.routes.guild.GuildsRoute;
 import flustix.fluxifyed.database.api.v1.routes.xp.leaderboard.GlobalLeaderboardRoute;
 import flustix.fluxifyed.database.api.v1.types.APIResponse;
+import flustix.fluxifyed.database.api.v1.types.APIRoute;
 import flustix.fluxifyed.database.api.v1.types.Route;
+import org.reflections.Reflections;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -22,15 +25,16 @@ public class Router implements HttpHandler {
     private static final HashMap<String, Route> routes = new HashMap<>();
 
     public void init() {
-        addRoute("/guilds", new GuildsRoute());
-        addRoute("/guild/:id", new GuildRoute());
-
-        addRoute("/login", new LoginRoute());
-
-        addRoute("/commands", new CommandsRoute());
-        addRoute("/modules", new ModulesRoute());
-
-        addRoute("/xp/leaderboard", new GlobalLeaderboardRoute());
+        Reflections reflections = new Reflections("flustix.fluxifyed.database.api.v1.routes");
+        reflections.getTypesAnnotatedWith(APIRoute.class).forEach(clazz -> {
+            try {
+                APIRoute annotation = clazz.getAnnotation(APIRoute.class);
+                addRoute(annotation.method() + "|" + annotation.path(), (Route) clazz.getConstructor().newInstance());
+            } catch (Exception e) {
+                APIServer.LOGGER.error("Error while loading route: " + clazz.getName());
+                e.printStackTrace();
+            }
+        });
     }
 
     public void handle(HttpExchange exchange) throws IOException {
@@ -45,7 +49,15 @@ public class Router implements HttpHandler {
             return; // don't do anything if it's a HEAD request
         } else {
             for (Map.Entry<String, Route> routeEntry : routes.entrySet()) {
-                String[] pathSplit = routeEntry.getKey().split("/");
+                String[] route = routeEntry.getKey().split("\\|");
+                String method = route[0];
+                String path = route[1];
+
+                if (!exchange.getRequestMethod().equals(method)) {
+                    continue;
+                }
+
+                String[] pathSplit = path.split("/");
                 String[] requestSplit = exchange.getRequestURI().getPath().split("/");
 
                 if (pathSplit.length == requestSplit.length) {

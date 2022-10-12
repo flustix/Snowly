@@ -6,11 +6,13 @@ import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.Module;
 import flustix.fluxifyed.database.api.v1.types.APIResponse;
+import flustix.fluxifyed.database.api.v1.types.APIRoute;
 import flustix.fluxifyed.database.api.v1.types.Route;
 import flustix.fluxifyed.utils.json.JSONUtils;
 
 import java.util.HashMap;
 
+@APIRoute(path = "/modules")
 public class ModulesRoute implements Route {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         JsonArray modules = new JsonArray();
