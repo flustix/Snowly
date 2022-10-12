@@ -43,9 +43,7 @@ public class DiscordLoginRoute implements Route {
 
             if (res.statusCode() == 200) {
                 JsonObject json = JsonParser.parseString(res.body()).getAsJsonObject();
-                JsonObject userJson = json.getAsJsonObject("user");
-
-                userid = userJson.get("id").getAsString();
+                userid = json.get("id").getAsString();
 
                 User user = Main.getBot().getUserById(userid);
 
