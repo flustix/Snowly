@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,37 +24,43 @@ public class UserInfoSlashCommand extends SlashCommand {
 
     public void execute(SlashCommandInteraction interaction) {
         OptionMapping option = interaction.getOption("user");
-        User u;
-        if (option == null) {
-            u = interaction.getUser();
-        } else {
-            u = option.getAsUser();
-        }
-
-        EmbedBuilder embed = new EmbedBuilder()
-                .setTitle(u.getName())
-                .setThumbnail(u.getEffectiveAvatarUrl())
-                .setColor(Main.accentColor);
-
-        embed.addField(":abc: Tag", u.getAsTag(), true);
-        embed.addField(":1234: ID", u.getId(), true);
-        embed.addField(":clock1: Creation Date", "<t:" + u.getTimeCreated().toEpochSecond() + ":f>", true);
-
-        Member m = Objects.requireNonNull(interaction.getGuild()).getMemberById(u.getId());
+        Member m;
+        if (option == null) m = interaction.getMember();
+        else m = option.getAsMember();
 
         if (m == null) {
-            m = interaction.getGuild().retrieveMemberById(u.getId()).complete();
+            Main.LOGGER.warn("Guild Member intent is disabled!");
+            return;
         }
 
-        if (m != null) {
-            List<String> roles = new ArrayList<>();
-            for (Role role : m.getRoles()) {
-                roles.add(role.getAsMention());
-            }
+        String title = "";
+        if (m.getEffectiveName().equals(m.getUser().getName())) title = m.getUser().getAsTag();
+        else title = m.getEffectiveName() + " (" + m.getUser().getAsTag() + ")";
 
-            embed.addField(":clock1: Joined at", "<t:" + m.getTimeJoined().toEpochSecond() + ":f>", true);
-            embed.addField(":scroll: Roles", String.join(", ", roles), false);
+        Color color = m.getColor();
+        if (color == null) color = new Color(Main.accentColor);
+
+        EmbedBuilder embed = new EmbedBuilder()
+                .setTitle(title)
+                .setThumbnail(m.getEffectiveAvatarUrl())
+                .setColor(color);
+
+        embed.addField(":1234: ID", m.getUser().getId(), true);
+        embed.addField(":clock1: Creation Date", "<t:" + m.getUser().getTimeCreated().toEpochSecond() + ":f>", true);
+        embed.addField(":clock1: Joined at", "<t:" + m.getTimeJoined().toEpochSecond() + ":f>", true);
+
+        List<String> roles = new ArrayList<>();
+        for (Role role : m.getRoles()) {
+            roles.add(role.getAsMention());
         }
+        String rolesString = String.join(", ", roles);
+        if (rolesString.isEmpty()) rolesString = "None";
+
+        while (rolesString.length() > 1024) {
+            rolesString = rolesString.substring(0, rolesString.lastIndexOf(","));
+        }
+
+        embed.addField(":scroll: Roles", rolesString, false);
 
         SlashCommandUtils.reply(interaction, embed.build());
     }

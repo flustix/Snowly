@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Objects;
 
@@ -23,7 +24,14 @@ public class ImageRenderer {
 
             BufferedImage image = new BufferedImage(data.get("w").getAsInt(), data.get("h").getAsInt(), BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
-            Font font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/fonts/Lato-Bold.ttf"))); // TODO: make font configurable
+            InputStream stream = Main.class.getResourceAsStream("/fonts/Lato-Bold.ttf"); //TODO: make font configurable
+
+            if (stream == null) {
+                Main.LOGGER.error("Font not found!");
+                return false;
+            }
+
+            Font font = Font.createFont(Font.TRUETYPE_FONT, stream);
             graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             graphics.setFont(font.deriveFont(24f));
 

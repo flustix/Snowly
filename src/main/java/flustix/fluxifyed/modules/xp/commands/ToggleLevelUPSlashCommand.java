@@ -17,7 +17,7 @@ public class ToggleLevelUPSlashCommand extends SlashCommand {
 
     public void execute(SlashCommandInteraction interaction) {
         try {
-            UserSettings user = Settings.getUserSettings(Objects.requireNonNull(interaction.getMember()).getId());
+            UserSettings user = Settings.getUserSettings(interaction.getUser().getId());
 
             user.setLevelUpMessagesEnabled(!user.levelUpMessagesEnabled());
 

@@ -7,6 +7,7 @@ import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.Database;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
@@ -85,7 +86,10 @@ public class ReactionRoleMessage {
         if (role == null) return;
 
         try {
-            event.getGuild().addRoleToMember(Objects.requireNonNull(Objects.requireNonNull(event.getMember())), Objects.requireNonNull(Objects.requireNonNull(event.getGuild().getRoleById(role.roleid)))).complete();
+            Member member = event.getMember();
+            Role r = event.getGuild().getRoleById(role.roleid);
+            if (member == null || r == null) return;
+            event.getGuild().addRoleToMember(member, r).complete();
         } catch (Exception e) {
             // dm guild owner or smth
         }
@@ -99,9 +103,10 @@ public class ReactionRoleMessage {
 
         try {
             Member member = event.getGuild().getMemberById(event.getUserId());
-            if (member == null) member = event.getGuild().retrieveMemberById(event.getUserId()).complete();
+            Role r = event.getGuild().getRoleById(role.roleid);
+            if (member == null || r == null) return;
 
-            event.getGuild().removeRoleFromMember(member, Objects.requireNonNull(Objects.requireNonNull(event.getGuild().getRoleById(role.roleid)))).complete();
+            event.getGuild().removeRoleFromMember(member, r).complete();
         } catch (Exception e) {
             // dm guild owner or smth
         }

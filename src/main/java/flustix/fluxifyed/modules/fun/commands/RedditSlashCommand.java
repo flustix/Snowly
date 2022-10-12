@@ -6,6 +6,7 @@ import flustix.fluxifyed.utils.reddit.RedditUtils;
 import flustix.fluxifyed.utils.reddit.types.RedditPost;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.utils.messages.MessageEditBuilder;
@@ -20,7 +21,9 @@ public class RedditSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
-        String subreddit = Objects.requireNonNull(interaction.getOption("subreddit")).getAsString();
+        OptionMapping subredditMapping = interaction.getOption("subreddit");
+        if (subredditMapping == null) return; // how? its literally required
+        String subreddit = subredditMapping.getAsString();
 
         SlashCommandUtils.reply(interaction, "Getting a post from r/" + subreddit + "...", (hook) -> {
             RedditPost post = RedditUtils.getRandomPost(subreddit);

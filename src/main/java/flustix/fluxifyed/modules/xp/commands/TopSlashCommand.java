@@ -7,6 +7,7 @@ import flustix.fluxifyed.modules.xp.images.TopImage;
 import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.presets.EmbedPresets;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.utils.FileUpload;
 
@@ -19,14 +20,16 @@ public class TopSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
-        SlashCommandUtils.reply(interaction, EmbedPresets.loading.build(), (hook) -> {
-            XPGuild guild = XP.getGuild(Objects.requireNonNull(interaction.getGuild()).getId());
-            if (!Settings.getGuildSettings(interaction.getGuild().getId()).moduleEnabled("xp")) {
-                hook.editOriginal(":x: XP is disabled on this server!").complete();
-                hook.editOriginalEmbeds(new ArrayList<>()).complete();
-                return;
-            }
+        Guild g = interaction.getGuild();
+        if (g == null) return;
 
+        XPGuild guild = XP.getGuild(g.getId());
+        if (!Settings.getGuildSettings(interaction.getGuild().getId()).moduleEnabled("xp")) {
+            SlashCommandUtils.replyEphemeral(interaction, ":x: XP is disabled on this server!");
+            return;
+        }
+
+        SlashCommandUtils.reply(interaction, EmbedPresets.loading.build(), (hook) -> {
             if (TopImage.create(guild)) {
                 hook.editOriginal("").setFiles(FileUpload.fromData(TopImage.file)).complete();
                 hook.editOriginalEmbeds(new ArrayList<>()).complete();

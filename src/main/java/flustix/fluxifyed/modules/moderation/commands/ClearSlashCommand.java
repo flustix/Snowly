@@ -7,6 +7,7 @@ import flustix.fluxifyed.utils.presets.EmbedPresets;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
@@ -21,7 +22,10 @@ public class ClearSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
-        int amount = Objects.requireNonNull(interaction.getOption("amount")).getAsInt();
+        OptionMapping amountMapping = interaction.getOption("amount");
+        if (amountMapping == null) return;
+
+        int amount = amountMapping.getAsInt();
 
         SlashCommandUtils.replyEphemeral(interaction, EmbedPresets.loading.build(), (hook) -> {
             try {

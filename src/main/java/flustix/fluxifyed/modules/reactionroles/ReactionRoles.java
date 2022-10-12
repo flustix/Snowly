@@ -16,9 +16,10 @@ public class ReactionRoles {
 
     public static void loadMessages() {
         ResultSet rs = Database.executeQuery("SELECT * FROM reactionRoles");
+        if (rs == null) return;
 
         try {
-            while (Objects.requireNonNull(rs).next()) {
+            while (rs.next()) {
                 String messageid = rs.getString("messageid");
                 messages.put(messageid, new ReactionRoleMessage(messageid, rs.getString("data")));
             }

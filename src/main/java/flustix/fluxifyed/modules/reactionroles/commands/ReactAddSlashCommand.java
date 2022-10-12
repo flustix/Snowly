@@ -4,7 +4,9 @@ import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.modules.reactionroles.ReactionRoles;
 import flustix.fluxifyed.modules.reactionroles.components.ReactionRoleMessage;
 import flustix.fluxifyed.utils.permissions.PermissionLevel;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.emoji.RichCustomEmoji;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
@@ -22,7 +24,18 @@ public class ReactAddSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
-        ReactionRoleMessage message = ReactionRoles.getMessage(Objects.requireNonNull(interaction.getOption("messageid")).getAsString());
+        OptionMapping messageIdMapping = interaction.getOption("messageid");
+        OptionMapping emojiMapping = interaction.getOption("emoji");
+        OptionMapping roleMapping = interaction.getOption("role");
+        OptionMapping nameMapping = interaction.getOption("name");
+        OptionMapping descMapping = interaction.getOption("description");
+
+        Guild guild = interaction.getGuild();
+        if (guild == null) return;
+
+        if (messageIdMapping == null || emojiMapping == null || roleMapping == null || nameMapping == null || descMapping == null) return;
+
+        ReactionRoleMessage message = ReactionRoles.getMessage(messageIdMapping.getAsString());
 
         if (message == null) {
             interaction.reply("That message doesn't exist!").setEphemeral(true).queue();
@@ -31,18 +44,17 @@ public class ReactAddSlashCommand extends SlashCommand {
 
         RichCustomEmoji emoji;
         try {
-            String emojiName = Objects.requireNonNull(interaction.getOption("emoji")).getAsString().split(":")[1];
-            emoji = Objects.requireNonNull(interaction.getGuild()).getEmojisByName(emojiName, false).get(0);
+            String emojiName = emojiMapping.getAsString().split(":")[1];
+            emoji = guild.getEmojisByName(emojiName, false).get(0);
         } catch (Exception e) {
             interaction.reply("That emoji doesn't exist / isn't from this server!").setEphemeral(true).queue();
             e.printStackTrace();
             return;
         }
 
-        message.addRole(emoji.getAsMention(), Objects.requireNonNull(interaction.getOption("role")).getAsRole().getId(), Objects.requireNonNull(interaction.getOption("name")).getAsString(), Objects.requireNonNull(interaction.getOption("description")).getAsString());
+        message.addRole(emoji.getAsMention(), roleMapping.getAsRole().getId(), nameMapping.getAsString(), descMapping.getAsString());
         boolean successful = message.update(interaction);
 
-        if (successful)
-            interaction.reply("Added the reaction role!").setEphemeral(true).queue();
+        if (successful) interaction.reply("Added the reaction role!").setEphemeral(true).queue();
     }
 }

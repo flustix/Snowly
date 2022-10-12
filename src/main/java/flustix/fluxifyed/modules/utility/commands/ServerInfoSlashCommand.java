@@ -4,6 +4,8 @@ import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 import java.time.temporal.ChronoField;
@@ -15,13 +17,22 @@ public class ServerInfoSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
+        Guild guild = interaction.getGuild();
+        if (guild == null) return;
+
+        Member owner = guild.getOwner();
+        if (owner == null) {
+            Main.LOGGER.warn("Guild Member intent is not enabled!");
+            return;
+        }
+
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle(Objects.requireNonNull(interaction.getGuild()).getName())
+                .setTitle(guild.getName())
                 .setThumbnail(interaction.getGuild().getIconUrl())
                 .setColor(Main.accentColor);
 
         embed.addField(":1234: Server ID", interaction.getGuild().getId(), true);
-        embed.addField(":crown: Server Owner", Objects.requireNonNull(interaction.getGuild().getOwner()).getAsMention(), true);
+        embed.addField(":crown: Server Owner", owner.getAsMention(), true);
         embed.addField(":busts_in_silhouette: Member Count", interaction.getGuild().getMemberCount() + "", true);
         embed.addField(":clock1: Server Creation Date", "<t:" + interaction.getGuild().getTimeCreated().getLong(ChronoField.INSTANT_SECONDS) + ":f>", true);
         embed.addField(":books: Channels",

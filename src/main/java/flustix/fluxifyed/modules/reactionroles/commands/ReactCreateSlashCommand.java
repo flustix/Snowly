@@ -9,6 +9,7 @@ import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import flustix.fluxifyed.utils.presets.EmbedPresets;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
@@ -22,15 +23,18 @@ public class ReactCreateSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
+        OptionMapping nameMapping = interaction.getOption("name");
+        if (nameMapping == null) return;
+
         SlashCommandUtils.replyEphemeral(interaction, EmbedPresets.loading.build(), (hook) -> {
             EmbedBuilder reactEmbed = new EmbedBuilder()
-                    .setTitle(Objects.requireNonNull(interaction.getOption("name")).getAsString())
+                    .setTitle(nameMapping.getAsString())
                     .setColor(Main.accentColor)
                     .setDescription("React to this message to get a role!");
 
             interaction.getChannel().sendMessageEmbeds(reactEmbed.build()).queue((message) -> {
                 JsonObject data = new JsonObject();
-                data.addProperty("name", Objects.requireNonNull(interaction.getOption("name")).getAsString());
+                data.addProperty("name", nameMapping.getAsString());
                 data.add("roles", new JsonArray());
                 ReactionRoles.addMessage(message.getId(), data.toString());
             });

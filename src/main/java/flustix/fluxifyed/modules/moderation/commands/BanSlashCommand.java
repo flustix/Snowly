@@ -5,6 +5,7 @@ import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
@@ -24,10 +25,17 @@ public class BanSlashCommand extends SlashCommand {
         OptionMapping target = interaction.getOption("target");
         OptionMapping reason = interaction.getOption("reason");
 
+        if (target == null) {
+            Main.LOGGER.warn("Guild Member intent is not enabled!");
+            return;
+        }
+
         String reasonText = reason == null ? "No reason" : reason.getAsString();
 
         try {
-            Objects.requireNonNull(interaction.getGuild()).ban(Objects.requireNonNull(target).getAsUser(), 7, TimeUnit.DAYS).reason(reasonText).queue((v) -> {
+            Guild guild = interaction.getGuild();
+            if (guild == null) return; // you cant even use the commands in dms
+            guild.ban(target.getAsUser(), 7, TimeUnit.DAYS).reason(reasonText).queue((v) -> {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle(":white_check_mark: Banned user!")
                         .addField(":bust_in_silhouette: User", target.getAsUser().getAsTag(), true)
@@ -48,7 +56,7 @@ public class BanSlashCommand extends SlashCommand {
         } catch (Exception e) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(":x: Failed to ban user!")
-                    .addField(":bust_in_silhouette: User", Objects.requireNonNull(target).getAsUser().getAsTag(), true)
+                    .addField(":bust_in_silhouette: User", target.getAsUser().getAsTag(), true)
                     .addField(":x: Error", e.getMessage(), false)
                     .setColor(Main.accentColor);
 

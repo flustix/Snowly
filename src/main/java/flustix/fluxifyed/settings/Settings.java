@@ -16,11 +16,12 @@ public class Settings {
 
     public static void loadGuild(Guild g) {
         ResultSet rs = Database.executeQuery("SELECT * FROM guilds WHERE guildid = " + g.getId());
+        if (rs == null) return;
 
         GuildSettings guild = null;
 
         try {
-            while (Objects.requireNonNull(rs).next()) {
+            while (rs.next()) {
                 guild = new GuildSettings(rs.getString("guildid"));
 
                 for (Module module : Main.getModules()) {

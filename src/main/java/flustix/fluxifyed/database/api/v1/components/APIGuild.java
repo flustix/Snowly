@@ -5,6 +5,7 @@ import flustix.fluxifyed.components.Module;
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 
 import java.util.Objects;
 import java.util.TreeMap;
@@ -22,10 +23,16 @@ public class APIGuild {
     public APIGuild(Guild guild) {
         id = guild.getId();
         name = guild.getName();
-        owner = Objects.requireNonNull(guild.getOwner()).getUser().getId();
         icon = guild.getIconUrl();
         banner = guild.getBannerUrl();
         splash = guild.getSplashUrl();
+
+        if (guild.getOwner() != null) {
+            owner = guild.getOwner().getUser().getAsTag();
+        } else {
+            Main.LOGGER.warn("Guild Member intent is disabled!");
+            owner = "0";
+        }
 
         GuildSettings settings = Settings.getGuildSettings(guild.getId());
         for (Module module : Main.getModules()) {

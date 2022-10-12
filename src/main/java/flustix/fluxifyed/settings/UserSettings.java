@@ -20,8 +20,10 @@ public class UserSettings {
         ResultSet rs = Database.executeQuery("SELECT * FROM users WHERE userid = " + userId);
         boolean found = false;
 
+        if (rs == null) return;
+
         try {
-            while (Objects.requireNonNull(rs).next()) {
+            while (rs.next()) {
                 found = true;
                 levelUpMessages = rs.getBoolean("levelup");
             }

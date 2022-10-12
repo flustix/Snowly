@@ -1,5 +1,6 @@
 package flustix.fluxifyed.modules.xp.commands;
 
+import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.image.ImageRenderer;
 import flustix.fluxifyed.image.RenderArgs;
@@ -7,7 +8,9 @@ import flustix.fluxifyed.image.RenderData;
 import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.presets.EmbedPresets;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.utils.FileUpload;
@@ -23,16 +26,28 @@ public class RankSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
-        Member member = interaction.getOption("user") != null ? Objects.requireNonNull(interaction.getOption("user")).getAsMember() : interaction.getMember();
+        OptionMapping userOption = interaction.getOption("user");
+        Member member;
+
+        if (userOption == null) member = interaction.getMember();
+        else member = userOption.getAsMember();
+
+        if (member == null) {
+            Main.LOGGER.warn("Guild Member intent is disabled!");
+            return;
+        }
+
+        Guild guild = interaction.getGuild();
+        if (guild == null) return;
 
         SlashCommandUtils.reply(interaction, EmbedPresets.loading.build(), (hook) -> {
-            if (!Settings.getGuildSettings(Objects.requireNonNull(interaction.getGuild()).getId()).moduleEnabled("xp")) {
+            if (!Settings.getGuildSettings(guild.getId()).moduleEnabled("xp")) {
                 hook.editOriginal(":x: XP is disabled on this server!").complete();
                 hook.editOriginalEmbeds(new ArrayList<>()).complete();
                 return;
             }
 
-            if (ImageRenderer.renderImage(new RenderArgs("rank", "rank.png", new RenderData(interaction.getGuild(), member)))) {
+            if (ImageRenderer.renderImage(new RenderArgs("rank", "rank.png", new RenderData(guild, member)))) {
                 hook.editOriginal("").setFiles(FileUpload.fromData(new File("rank.png"))).complete();
                 hook.editOriginalEmbeds(new ArrayList<>()).complete();
             } else {

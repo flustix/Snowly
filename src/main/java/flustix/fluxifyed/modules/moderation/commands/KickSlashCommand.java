@@ -5,6 +5,7 @@ import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
@@ -21,8 +22,15 @@ public class KickSlashCommand extends SlashCommand {
     public void execute(SlashCommandInteraction interaction) {
         OptionMapping target = interaction.getOption("target");
 
+        if (target == null) {
+            Main.LOGGER.warn("Guild Member intent is not enabled!");
+            return;
+        }
+
         try {
-            Objects.requireNonNull(interaction.getGuild()).kick(Objects.requireNonNull(target).getAsUser()).queue((v) -> {
+            Guild guild = interaction.getGuild();
+            if (guild == null) return; // you cant even use the commands in dms
+            guild.kick(target.getAsUser()).queue((v) -> {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle(":white_check_mark: Kicked user!")
                         .addField(":bust_in_silhouette: User", target.getAsUser().getAsTag(), true)
@@ -42,7 +50,7 @@ public class KickSlashCommand extends SlashCommand {
         } catch (Exception e) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(":x: Failed to kick user!")
-                    .addField(":bust_in_silhouette: User", Objects.requireNonNull(target).getAsUser().getAsTag(), true)
+                    .addField(":bust_in_silhouette: User", target.getAsUser().getAsTag(), true)
                     .addField(":x: Error", e.getMessage(), false)
                     .setColor(Main.accentColor);
 

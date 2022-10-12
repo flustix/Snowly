@@ -25,9 +25,10 @@ public class AuthUtils {
 
     public static String getUserId(String token) {
         ResultSet rs = Database.executeQuery("SELECT userid FROM tokens WHERE token = '" + token + "'");
+        if (rs == null) return "";
 
         try {
-            if (Objects.requireNonNull(rs).next())
+            if (rs.next())
                 return rs.getString("userid");
         } catch (Exception e) {
             e.printStackTrace();

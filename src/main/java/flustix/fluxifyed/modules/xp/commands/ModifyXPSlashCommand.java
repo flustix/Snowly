@@ -8,7 +8,9 @@ import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
@@ -23,10 +25,17 @@ public class ModifyXPSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
-        User user = Objects.requireNonNull(interaction.getOption("user")).getAsUser();
-        int amount = Objects.requireNonNull(interaction.getOption("amount")).getAsInt();
+        OptionMapping userMapping = interaction.getOption("user");
+        OptionMapping amountMapping = interaction.getOption("amount");
+        if (userMapping == null || amountMapping == null) return;
 
-        XPGuild guild = XP.getGuild(Objects.requireNonNull(interaction.getGuild()).getId());
+        Guild g = interaction.getGuild();
+        if (g == null) return;
+
+        User user = userMapping.getAsUser();
+        int amount = amountMapping.getAsInt();
+
+        XPGuild guild = XP.getGuild(g.getId());
 
         if (!Settings.getGuildSettings(interaction.getGuild().getId()).moduleEnabled("xp")) {
             SlashCommandUtils.replyEphemeral(interaction, ":x: XP is disabled on this server!");
