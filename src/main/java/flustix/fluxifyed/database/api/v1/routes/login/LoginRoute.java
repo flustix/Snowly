@@ -1,4 +1,4 @@
-package flustix.fluxifyed.database.api.v1.routes;
+package flustix.fluxifyed.database.api.v1.routes.login;
 
 import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.Main;

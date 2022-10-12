@@ -2,6 +2,7 @@ package flustix.fluxifyed.modules.utility.commands;
 
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.database.Database;
+import flustix.fluxifyed.database.api.v1.authentification.TokenGen;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
@@ -11,22 +12,12 @@ public class GenerateTokenSlashCommand extends SlashCommand {
     }
 
     public void execute(SlashCommandInteraction interaction) {
-        StringBuilder token = new StringBuilder();
+        String token = TokenGen.generateToken(interaction.getUser().getId());
 
-        for (int i = 0; i < 32; i++)
-            token.append(genRandomChar());
-
-        try {
-            Database.executeQuery("INSERT INTO tokens (token, userid) VALUES ('" + token + "', '" + interaction.getUser().getId() + "') ON DUPLICATE KEY UPDATE token = '" + token + "'");
+        if (!token.isEmpty()) {
             SlashCommandUtils.replyEphemeral(interaction, "Your token is: `" + token + "`");
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
             SlashCommandUtils.replyEphemeral(interaction, "An error occurred while generating your token");
         }
-    }
-
-    String genRandomChar() {
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
-        return chars.charAt((int) (Math.random() * chars.length())) + "";
     }
 }
