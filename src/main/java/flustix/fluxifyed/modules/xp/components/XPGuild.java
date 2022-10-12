@@ -31,7 +31,6 @@ public class XPGuild {
     }
 
     public void addRole(XPRole role) {
-        Main.LOGGER.info("Adding role " + role.getID() + " to guild " + id + " with level " + role.getLevel());
         roles.add(role);
     }
 

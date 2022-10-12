@@ -13,7 +13,5 @@ public class ReactionRole {
         this.roleid = roleid;
         this.name = name;
         this.description = description;
-
-        Main.LOGGER.info("Loaded reaction role " + name + " with emoji " + emoji + " and roleid " + roleid);
     }
 }

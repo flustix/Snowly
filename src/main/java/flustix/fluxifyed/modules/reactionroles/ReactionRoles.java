@@ -20,7 +20,6 @@ public class ReactionRoles {
         try {
             while (Objects.requireNonNull(rs).next()) {
                 String messageid = rs.getString("messageid");
-                Main.LOGGER.info("Loading reaction roles for message " + messageid);
                 messages.put(messageid, new ReactionRoleMessage(messageid, rs.getString("data")));
             }
         } catch (Exception e) {

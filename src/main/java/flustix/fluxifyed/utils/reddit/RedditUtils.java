@@ -72,8 +72,6 @@ public class RedditUtils {
 
         if (data.get("selftext") != null) {
             post.setText(data.get("selftext").getAsString());
-        } else {
-            Main.LOGGER.info("no text found");
         }
 
         return post;
