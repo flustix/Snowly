@@ -1,7 +1,9 @@
 package flustix.fluxifyed.database.api.v1.components.xp;
 
+import flustix.fluxifyed.Main;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPUser;
+import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +29,23 @@ public class GlobalLeaderboard {
 
     static class GlobalLeaderboardEntry {
         final String guildid;
+        final String guildname;
+        final String icon;
         final int xp;
 
         public GlobalLeaderboardEntry(String gid, int xp) {
             this.guildid = gid;
             this.xp = xp;
+
+            Guild guild = Main.getBot().getGuildById(gid);
+
+            if (guild == null) {
+                this.guildname = "Unknown";
+                this.icon = "https://cdn.discordapp.com/embed/avatars/0.png";
+            } else {
+                this.guildname = guild.getName();
+                this.icon = guild.getIconUrl();
+            }
         }
 
         public int getXP() {
