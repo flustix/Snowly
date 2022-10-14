@@ -28,22 +28,22 @@ public class GlobalLeaderboard {
     }
 
     static class GlobalLeaderboardEntry {
-        final String guildid;
-        final String guildname;
+        final String id;
+        final String name;
         final String icon;
         final int xp;
 
         public GlobalLeaderboardEntry(String gid, int xp) {
-            this.guildid = gid;
+            this.id = gid;
             this.xp = xp;
 
             Guild guild = Main.getBot().getGuildById(gid);
 
             if (guild == null) {
-                this.guildname = "Unknown";
+                this.name = "Unknown";
                 this.icon = "https://cdn.discordapp.com/embed/avatars/0.png";
             } else {
-                this.guildname = guild.getName();
+                this.name = guild.getName();
                 this.icon = guild.getIconUrl();
             }
         }
