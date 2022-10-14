@@ -34,7 +34,7 @@ public class DiscordLoginRoute implements Route {
             HttpRequest request = HttpRequest.newBuilder(new URI("https://discord.com/api/users/@me"))
                     .header("Accept", "application/json, text/plain, /")
                     .header("Authorization", "Bearer " + token)
-                    .header("User-Agent", "Fluxifyed/" + Main.getVersion() + " (by Flustix#5433)")
+                    .header("User-Agent", "Fluxifyed/latest (by Flustix#5433)")
                     .build();
 
             HttpResponse<String> res = client.send(request, HttpResponse.BodyHandlers.ofString());

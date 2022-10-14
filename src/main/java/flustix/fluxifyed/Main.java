@@ -28,12 +28,11 @@ public class Main {
 
     private static JDA bot;
     private static JsonObject config;
-    private static final String version = "2022.5.0";
     private static final long startTime = System.currentTimeMillis();
     private static final List<Module> modules = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
-        LOGGER.info("Starting Fluxifyed v" + version);
+        LOGGER.info("Starting Fluxifyed...");
 
         config = JsonParser.parseString(Files.readString(Path.of("config.json"))).getAsJsonObject();
 
@@ -89,10 +88,6 @@ public class Main {
 
     public static JDA getBot() {
         return bot;
-    }
-
-    public static String getVersion() {
-        return version;
     }
 
     public static long getStartTime() {
