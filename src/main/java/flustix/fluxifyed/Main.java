@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +54,7 @@ public class Main {
 
         JDABuilder builder = JDABuilder.create(config.get("token").getAsString(), intents);
         builder.setActivity(Activity.listening("music"));
+        builder.setMemberCachePolicy(MemberCachePolicy.ALL);
         initModules(builder);
 
         builder.addEventListeners(

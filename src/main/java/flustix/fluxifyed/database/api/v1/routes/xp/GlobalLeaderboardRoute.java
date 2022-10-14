@@ -1,4 +1,4 @@
-package flustix.fluxifyed.database.api.v1.routes.xp.leaderboard;
+package flustix.fluxifyed.database.api.v1.routes.xp;
 
 import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.database.api.v1.components.xp.GlobalLeaderboard;
