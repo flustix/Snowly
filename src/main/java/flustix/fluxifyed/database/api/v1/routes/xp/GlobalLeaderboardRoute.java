@@ -8,7 +8,7 @@ import flustix.fluxifyed.database.api.v1.types.Route;
 
 import java.util.HashMap;
 
-@APIRoute(path = "/xp/leaderboard/global")
+@APIRoute(path = "/xp/global/")
 public class GlobalLeaderboardRoute implements Route {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         return new APIResponse(200, "OK", new GlobalLeaderboard());
