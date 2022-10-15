@@ -5,11 +5,17 @@
 [discord-shield]: https://img.shields.io/discord/553568657410883604?color=7289da&label=☕Flux'%20Café
 [license-shield]: https://img.shields.io/badge/License-MIT-white.svg
 
-<h1 align="center">Fluxifyed</h1>
-<p align="center">A powerful and feature-rich Discord bot</p>
+<img src="https://fluxifyed.foxes4life.net/assets/images/fluxifyed.png" width="200" height="200" align="left">
+
+<div align="center">
+
 [ ![codefactor-shield][] ][codefactor]
 [ ![discord-shield][] ][discord]
 [ ![license-shield][] ][license]
+</div>
+
+<h1 align="center">Fluxifyed</h1>
+<p align="center">A powerful and feature-rich Discord bot</p>
 
 ## Features
 - Moderation
