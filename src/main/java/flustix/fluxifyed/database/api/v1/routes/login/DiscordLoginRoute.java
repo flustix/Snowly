@@ -2,10 +2,8 @@ package flustix.fluxifyed.database.api.v1.routes.login;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.database.api.APIServer;
 import flustix.fluxifyed.database.api.v1.authentification.AuthUtils;
 import flustix.fluxifyed.database.api.v1.authentification.TokenGen;
 import flustix.fluxifyed.database.api.v1.components.APIUser;
@@ -27,7 +25,7 @@ public class DiscordLoginRoute implements Route {
         if (token.isEmpty())
             return new APIResponse(401, "No token given.", null);
 
-        String userid = "";
+        String userid;
 
         try {
             HttpClient client = HttpClient.newBuilder().followRedirects(HttpClient.Redirect.ALWAYS).build();
@@ -61,8 +59,8 @@ public class DiscordLoginRoute implements Route {
     }
 
     private static class APIUserToken {
-        public String token;
-        public APIUser user;
+        public final String token;
+        public final APIUser user;
 
         public APIUserToken(String token, APIUser user) {
             this.token = token;

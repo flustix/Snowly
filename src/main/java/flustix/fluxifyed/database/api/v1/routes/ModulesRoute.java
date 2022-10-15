@@ -1,7 +1,6 @@
 package flustix.fluxifyed.database.api.v1.routes;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.Module;

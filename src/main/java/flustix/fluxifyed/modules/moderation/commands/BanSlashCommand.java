@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class BanSlashCommand extends SlashCommand {

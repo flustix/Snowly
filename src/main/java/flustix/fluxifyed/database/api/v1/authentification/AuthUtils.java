@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.entities.Member;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class AuthUtils {
     public static String getToken(Headers headers) {

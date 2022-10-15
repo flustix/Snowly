@@ -5,9 +5,7 @@ import flustix.fluxifyed.components.Module;
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
 
-import java.util.Objects;
 import java.util.TreeMap;
 
 public class APIGuild {
@@ -18,7 +16,7 @@ public class APIGuild {
     public final String banner;
     public final String splash;
 
-    public TreeMap<String, Boolean> modules = new TreeMap<>();
+    public final TreeMap<String, Boolean> modules = new TreeMap<>();
 
     public APIGuild(Guild guild) {
         id = guild.getId();

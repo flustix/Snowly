@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class ReactionRoles {
     static final Map<String, ReactionRoleMessage> messages = new HashMap<>();

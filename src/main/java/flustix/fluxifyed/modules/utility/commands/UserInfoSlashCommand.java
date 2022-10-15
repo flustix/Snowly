@@ -6,7 +6,6 @@ import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
@@ -14,7 +13,6 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class UserInfoSlashCommand extends SlashCommand {
     public UserInfoSlashCommand() {
@@ -33,7 +31,7 @@ public class UserInfoSlashCommand extends SlashCommand {
             return;
         }
 
-        String title = "";
+        String title;
         if (m.getEffectiveName().equals(m.getUser().getName())) title = m.getUser().getAsTag();
         else title = m.getEffectiveName() + " (" + m.getUser().getAsTag() + ")";
 

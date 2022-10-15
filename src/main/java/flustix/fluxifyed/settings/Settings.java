@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.entities.Guild;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class Settings {
     static final Map<String, GuildSettings> guilds = new HashMap<>();

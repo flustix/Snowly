@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.utils.messages.MessageEditBuilder;
 
 import java.util.Date;
-import java.util.Objects;
 
 public class RedditSlashCommand extends SlashCommand {
     public RedditSlashCommand() {

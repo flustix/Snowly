@@ -3,14 +3,13 @@ package flustix.fluxifyed.settings;
 import flustix.fluxifyed.database.Database;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class GuildSettings {
     private final String guildId;
 
-    private HashMap<String, Boolean> modules = new HashMap<>();
+    private final HashMap<String, Boolean> modules = new HashMap<>();
 
     public GuildSettings(String guildId) {
         this.guildId = guildId;

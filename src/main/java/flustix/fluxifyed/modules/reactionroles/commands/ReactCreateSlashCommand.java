@@ -13,8 +13,6 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
-import java.util.Objects;
-
 public class ReactCreateSlashCommand extends SlashCommand {
     public ReactCreateSlashCommand() {
         super("reactcreate", "Create a reaction role message");

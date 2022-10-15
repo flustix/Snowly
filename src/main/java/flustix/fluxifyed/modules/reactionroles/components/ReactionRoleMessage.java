@@ -13,7 +13,6 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 public class ReactionRoleMessage {
     final HashMap<String, ReactionRole> roles = new HashMap<>();

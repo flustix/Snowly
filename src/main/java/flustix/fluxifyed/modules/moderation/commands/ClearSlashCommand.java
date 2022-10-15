@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ClearSlashCommand extends SlashCommand {
     public ClearSlashCommand() {

@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GuildLeaderboard {
-    public String name;
-    public String icon;
-    public String banner;
-    public List<LeaderboardUserEntry> entries = new ArrayList<>();
+    public final String name;
+    public final String icon;
+    public final String banner;
+    public final List<LeaderboardUserEntry> entries = new ArrayList<>();
 
     public GuildLeaderboard(Guild guild) {
         name = guild.getName();
@@ -37,10 +37,10 @@ public class GuildLeaderboard {
     }
 
     private static class LeaderboardUserEntry {
-        public String username;
-        public String discriminator;
-        public String avatar;
-        public int xp;
+        public final String username;
+        public final String discriminator;
+        public final String avatar;
+        public final int xp;
 
         public LeaderboardUserEntry(User user, XPUser xpUser) {
             username = user.getName();

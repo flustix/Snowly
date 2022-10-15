@@ -1,7 +1,5 @@
 package flustix.fluxifyed.components;
 
-import flustix.fluxifyed.Main;
-
 import flustix.fluxifyed.utils.permissions.PermissionUtils;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -34,13 +32,11 @@ public class SlashCommandList {
     public static void registerCommands(ReadyEvent event) {
         List<CommandData> slashCommandList = new ArrayList<>();
 
-        commands.forEach((module, list) -> {
-            list.forEach((name, command) -> {
-                SlashCommandData commandData = Commands.slash(name, command.getDescription());
-                commandData.addOptions(command.getOptions());
-                slashCommandList.add(commandData);
-            });
-        });
+        commands.forEach((module, list) -> list.forEach((name, command) -> {
+            SlashCommandData commandData = Commands.slash(name, command.getDescription());
+            commandData.addOptions(command.getOptions());
+            slashCommandList.add(commandData);
+        }));
 
         event.getJDA().updateCommands().addCommands(slashCommandList).complete();
     }

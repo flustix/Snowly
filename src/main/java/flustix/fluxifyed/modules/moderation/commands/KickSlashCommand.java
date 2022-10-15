@@ -10,8 +10,6 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
-import java.util.Objects;
-
 public class KickSlashCommand extends SlashCommand {
     public KickSlashCommand() {
         super("kick", "Kicks a user from the server.");

@@ -1,7 +1,5 @@
 package flustix.fluxifyed.modules.reactionroles.components;
 
-import flustix.fluxifyed.Main;
-
 public class ReactionRole {
     public final String emoji;
     public final String roleid;

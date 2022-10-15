@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 import java.time.temporal.ChronoField;
-import java.util.Objects;
 
 public class ServerInfoSlashCommand extends SlashCommand {
     public ServerInfoSlashCommand() {

@@ -1,10 +1,8 @@
 package flustix.fluxifyed.settings;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.Database;
 
 import java.sql.ResultSet;
-import java.util.Objects;
 
 public class UserSettings {
     final String userId;

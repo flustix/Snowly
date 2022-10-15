@@ -10,8 +10,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
-import java.util.Objects;
-
 public class ToggleXPSlashCommand extends SlashCommand {
     public ToggleXPSlashCommand() {
         super("togglexp", "Toggle XP on the server.");

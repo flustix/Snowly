@@ -11,8 +11,6 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.utils.FileUpload;
 
-import java.util.Objects;
-
 public class XPUser {
     private int xp = 0;
     private final String id;

@@ -15,7 +15,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Objects;
 
 public class ImageRenderer {
     public static boolean renderImage(RenderArgs args) {
@@ -49,22 +48,10 @@ public class ImageRenderer {
 
     static void renderObject(JsonObject json, RenderData data, Graphics2D g2d) {
         switch (json.get("t").getAsString()) {
-            case "rect" -> {
-                renderRect(json.getAsJsonObject("d"), data, g2d);
-                break;
-            }
-            case "xpProgress" -> {
-                renderXpProgress(json.getAsJsonObject("d"), data, g2d);
-                break;
-            }
-            case "image" -> {
-                renderImage(json.getAsJsonObject("d"), data, g2d);
-                break;
-            }
-            case "text" -> {
-                renderText(json.getAsJsonObject("d"), data, g2d);
-                break;
-            }
+            case "rect" -> renderRect(json.getAsJsonObject("d"), data, g2d);
+            case "xpProgress" -> renderXpProgress(json.getAsJsonObject("d"), data, g2d);
+            case "image" -> renderImage(json.getAsJsonObject("d"), data, g2d);
+            case "text" -> renderText(json.getAsJsonObject("d"), data, g2d);
         }
     }
 
@@ -133,14 +120,8 @@ public class ImageRenderer {
 
         Alignment alignment = Alignment.LEFT;
         switch (a) {
-            case "c" -> {
-                alignment = Alignment.CENTER;
-                break;
-            }
-            case "r" -> {
-                alignment = Alignment.RIGHT;
-                break;
-            }
+            case "c" -> alignment = Alignment.CENTER;
+            case "r" -> alignment = Alignment.RIGHT;
         }
 
         g2d.setColor(ColorUtils.hexToRGBA(c));

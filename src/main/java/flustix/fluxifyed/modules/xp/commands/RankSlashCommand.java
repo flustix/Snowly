@@ -17,7 +17,6 @@ import net.dv8tion.jda.api.utils.FileUpload;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class RankSlashCommand extends SlashCommand {
     public RankSlashCommand() {

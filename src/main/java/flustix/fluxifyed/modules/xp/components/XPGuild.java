@@ -1,7 +1,5 @@
 package flustix.fluxifyed.modules.xp.components;
 
-import flustix.fluxifyed.Main;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
