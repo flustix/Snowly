@@ -17,6 +17,8 @@
 <h1 align="center">Fluxifyed</h1>
 <p align="center">A powerful and feature-rich Discord bot</p>
 
+<br>
+
 ## Features
 - Moderation
   - Ban 
