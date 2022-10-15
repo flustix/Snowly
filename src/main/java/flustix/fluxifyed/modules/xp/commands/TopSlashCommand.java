@@ -1,20 +1,12 @@
 package flustix.fluxifyed.modules.xp.commands;
 
 import flustix.fluxifyed.components.SlashCommand;
-import flustix.fluxifyed.modules.xp.XP;
-import flustix.fluxifyed.modules.xp.components.XPGuild;
-import flustix.fluxifyed.modules.xp.images.TopImage;
 import flustix.fluxifyed.settings.Settings;
-import flustix.fluxifyed.utils.presets.EmbedPresets;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
-import net.dv8tion.jda.api.utils.FileUpload;
 import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
-
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class TopSlashCommand extends SlashCommand {
     public TopSlashCommand() {
