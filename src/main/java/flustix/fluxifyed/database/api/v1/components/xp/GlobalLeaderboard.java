@@ -27,7 +27,7 @@ public class GlobalLeaderboard {
         entries.sort((a, b) -> b.getXP() - a.getXP());
     }
 
-    static class GlobalLeaderboardEntry {
+    private static class GlobalLeaderboardEntry {
         final String id;
         final String name;
         final String icon;
