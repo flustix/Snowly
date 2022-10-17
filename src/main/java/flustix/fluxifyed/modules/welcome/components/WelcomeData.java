@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.Database;
 import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 
 import java.sql.ResultSet;
@@ -42,7 +43,9 @@ public class WelcomeData {
         if (message == null) return;
 
         try {
-            Main.getBot().getTextChannelById(channelId).sendMessage(message.build(event)).queue();
+            TextChannel channel = event.getGuild().getTextChannelById(channelId);
+            if (channel == null) return;
+            channel.sendMessage(message.build(event)).queue();
         } catch (Exception ex) {
             Main.LOGGER.error("Error while sending welcome message for guild " + guildId, ex);
         }
