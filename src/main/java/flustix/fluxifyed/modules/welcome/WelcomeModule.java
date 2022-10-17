@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WelcomeModule extends Module {
-    private static Map<String, WelcomeData> welcomeDataMap = new HashMap<>();
+    private static final Map<String, WelcomeData> welcomeDataMap = new HashMap<>();
 
     public WelcomeModule() {
         super("welcome", "Welcome", "Customizable welcome messages for new members.");
