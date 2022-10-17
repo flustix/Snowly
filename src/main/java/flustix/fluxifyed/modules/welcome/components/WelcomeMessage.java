@@ -29,7 +29,9 @@ public class WelcomeMessage {
         return content.replace("{member.name}", event.getMember().getEffectiveName())
                 .replace("{member.avatar}", event.getMember().getEffectiveAvatarUrl())
                 .replace("{member.tag}", event.getMember().getUser().getAsTag())
-                .replace("{member.ping}", event.getMember().getAsMention());
+                .replace("{member.ping}", event.getMember().getAsMention())
+                .replace("{member.discriminator}", event.getMember().getUser().getDiscriminator())
+                .replace("{member.id}", event.getMember().getId());
     }
 
     private static class EmbedData {
