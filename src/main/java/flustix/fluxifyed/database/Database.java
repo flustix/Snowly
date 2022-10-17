@@ -29,6 +29,7 @@ public class Database {
 
     public static ResultSet executeQuery(String query) {
         try {
+            query = query.replace("\"", "\\").replace("'", "\\'").replace("`", "\\`");
             Connection connection = dataSource.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
