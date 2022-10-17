@@ -51,7 +51,7 @@ public class WelcomeData {
     }
 
     private void addRoles(GuildMemberJoinEvent event) {
-        if (message == null) return;
+        if (roles == null) return;
 
         try {
             for (JsonElement roleJson : roles) {
