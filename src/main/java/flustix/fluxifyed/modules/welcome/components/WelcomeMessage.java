@@ -35,11 +35,11 @@ public class WelcomeMessage {
     }
 
     private static class EmbedData {
-        public String title;
-        public String description;
-        public String color;
-        public String thumbnail;
-        public String image;
+        public final String title;
+        public final String description;
+        public final String color;
+        public final String thumbnail;
+        public final String image;
 
         public EmbedData(JsonObject data) {
             title = data.get("title").getAsString();
