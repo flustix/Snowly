@@ -8,6 +8,8 @@ import flustix.fluxifyed.Main;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.List;
 
 public class Database {
     static HikariDataSource dataSource;
@@ -29,7 +31,6 @@ public class Database {
 
     public static ResultSet executeQuery(String query) {
         try {
-            // query = query.replace("\"", "\\\"").replace("'", "\\'").replace("`", "\\`");
             Connection connection = dataSource.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
@@ -39,6 +40,22 @@ public class Database {
             Main.LOGGER.error("Failed to execute query: " + query, ex);
             return null;
         }
+    }
+
+    public static ResultSet executeQuery(String query, List<String> replaceables) {
+        for (String replaceable : replaceables) {
+            query = query.replaceFirst("\\?", replaceable);
+        }
+
+        return executeQuery(query);
+    }
+
+    public static ResultSet executeQuery(String query, String... replaceables) {
+        return executeQuery(query, Arrays.stream(replaceables).toList());
+    }
+
+    public static String escape(String str) {
+        return str.replace("\"", "\\\"").replace("'", "\\'").replace("`", "\\`");
     }
 
     public static int connectionCount() {

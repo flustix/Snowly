@@ -2,6 +2,7 @@ package flustix.fluxifyed.modules.moderation.commands;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -10,6 +11,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
+import java.time.temporal.ChronoField;
 import java.util.concurrent.TimeUnit;
 
 public class BanSlashCommand extends SlashCommand {
@@ -43,6 +45,7 @@ public class BanSlashCommand extends SlashCommand {
                         .setColor(Main.accentColor);
 
                 interaction.replyEmbeds(embed.build()).queue();
+                Database.executeQuery("INSERT INTO infractions (guildid, userid, modid, type, content, time) VALUES (?, ?, ?, '?', '?', ?)", guild.getId(), target.getAsUser().getId(), interaction.getUser().getId(), "ban", Database.escape(reasonText), interaction.getTimeCreated().getLong(ChronoField.INSTANT_SECONDS) + "");
             }, (error) -> {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle(":x: Failed to ban user!")
