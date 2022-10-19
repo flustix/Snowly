@@ -45,7 +45,7 @@ public class GuildLeaderboard {
         public LeaderboardUserEntry(User user, XPUser xpUser) {
             username = user.getName();
             discriminator = user.getDiscriminator();
-            avatar = user.getAvatarUrl();
+            avatar = user.getEffectiveAvatarUrl();
             this.xp = xpUser.getXP();
         }
 
