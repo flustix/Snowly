@@ -68,7 +68,7 @@ public class InfractionsSlashCommand extends SlashCommand {
                     String time = rs.getString("time");
 
                     embed.addField(getInfractionType(infractionType) + " <t:" + time + ":f>", "Reason: " + content + "" +
-                            " | Moderator: " + moderator, false);
+                            " | Moderator: <@" + moderator + ">", false);
                 }
             }
 
