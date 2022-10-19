@@ -1,4 +1,4 @@
-package flustix.fluxifyed.utils.reddit.types;
+package flustix.fluxifyed.modules.fun.utils.reddit.components;
 
 public class RedditPost {
     final String title;

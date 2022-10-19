@@ -1,16 +1,67 @@
-package flustix.fluxifyed.utils.reddit;
+package flustix.fluxifyed.modules.fun.utils.reddit;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.utils.reddit.types.RedditPost;
+import flustix.fluxifyed.modules.fun.utils.reddit.components.RedditMessage;
+import flustix.fluxifyed.modules.fun.utils.reddit.components.RedditPost;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import net.dv8tion.jda.api.utils.messages.MessageEditBuilder;
+import net.dv8tion.jda.api.utils.messages.MessageEditData;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Date;
 
 public class RedditUtils {
+    public static RedditMessage getRedditPost(String subreddit, boolean channelNSFW) {
+        RedditPost post = RedditUtils.getRandomPost(subreddit);
+
+        EmbedBuilder embed = new EmbedBuilder()
+                .setTitle(post.getTitle())
+                .setDescription("[Original Post](https://reddit.com" + post.getUrl() + ")")
+                .setColor(Main.accentColor);
+
+        if (post.isNsfw() && channelNSFW) {
+            embed.addField(":underage: NSFW", "This post is NSFW", false);
+        }
+
+        Date created = new Date(post.getCreated());
+        embed.setFooter("Posted " + created, "https://flustix.foxes4life.net/assets/twemoji/clock1.png"); // so i cant use discord's original svgs here?
+
+        embed.addField(":bust_in_silhouette: Author", post.getAuthor(), true);
+        embed.addField(":books: Subreddit", "r/" + post.getSubreddit(), true);
+        embed.addField("<:upvote:711192739433152573> Upvotes", post.getUps() + "", true);
+
+        if (post.isImage()) {
+            embed.setImage(post.getImageUrl());
+        }
+        if (post.isText()) {
+            String text = post.getText().replace("\n\n", "\n");
+            if (text.length() > 1024) {
+                text = text.substring(0, 1021) + "...";
+            }
+            if (!text.isEmpty())
+                embed.addField(":pencil: Text", text, false);
+        }
+
+        if (post.isNsfw() && !channelNSFW) {
+            embed = new EmbedBuilder()
+                    .setTitle("This post is NSFW")
+                    .setDescription("NSFW post can only be viewed in NSFW channels!")
+                    .setColor(0xFF5555);
+        }
+
+        return new RedditMessage(new MessageEditBuilder()
+                .setContent("")
+                .setEmbeds(embed.build())
+                .setActionRow(Button.primary("reddit:next", "Next"))
+                .build(), post.getSubreddit(), post.isNsfw());
+    }
+
     public static RedditPost getRandomPost(String subreddit) {
         String url = "https://www.reddit.com/r/" + subreddit + "/random.json";
 
