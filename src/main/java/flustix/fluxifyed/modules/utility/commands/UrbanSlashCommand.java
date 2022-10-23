@@ -1,6 +1,5 @@
 package flustix.fluxifyed.modules.utility.commands;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.modules.utility.utils.urban.UrbanUtils;
 import flustix.fluxifyed.modules.utility.utils.urban.components.UrbanDefinition;
@@ -11,8 +10,6 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class UrbanSlashCommand extends SlashCommand {
     public UrbanSlashCommand() {
