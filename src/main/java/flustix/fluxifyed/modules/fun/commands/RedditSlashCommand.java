@@ -1,5 +1,6 @@
 package flustix.fluxifyed.modules.fun.commands;
 
+import flustix.fluxifyed.components.Autocomplete;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.modules.fun.utils.reddit.RedditUtils;
 import flustix.fluxifyed.modules.fun.utils.reddit.components.RedditMessage;
@@ -27,7 +28,7 @@ public class RedditSlashCommand extends SlashCommand {
 
         SlashCommandUtils.reply(interaction, "Getting a post from r/" + subreddit + "...", (hook) -> {
             RedditMessage message = RedditUtils.getRedditPost(subreddit, interaction.getChannel().asTextChannel().isNSFW());
-            if (!message.nsfw) addAutocomplete("subreddit", subreddit);
+            if (!message.nsfw) addAutocomplete("subreddit", new Autocomplete("r/" + message.subreddit, message.subreddit));
             Message sentMsg = hook.editOriginal(message.message).complete();
             messages.put(sentMsg.getId(), subreddit);
         });

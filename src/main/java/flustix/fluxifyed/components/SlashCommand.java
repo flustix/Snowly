@@ -16,7 +16,7 @@ public class SlashCommand {
     final String description;
     final List<Permission> requiredPermissions = new ArrayList<>();
     final List<OptionData> options = new ArrayList<>();
-    final HashMap<String, List<String>> optionAutocompletes = new HashMap<>();
+    final HashMap<String, List<Autocomplete>> optionAutocompletes = new HashMap<>();
     final boolean guildOnly;
 
     public SlashCommand(String name, String description) {
@@ -35,15 +35,15 @@ public class SlashCommand {
         options.add(new OptionData(type, name, description, required, autocomplete));
     }
 
-    public void addAutocomplete(String option, String... autocompletes) {
+    public void addAutocomplete(String option, Autocomplete... autocompletes) {
         if (optionAutocompletes.containsKey(option)) {
-            for (String autocomplete : autocompletes) {
+            for (Autocomplete autocomplete : autocompletes) {
                 if (!optionAutocompletes.get(option).contains(autocomplete)) {
                     optionAutocompletes.get(option).add(autocomplete);
                 }
             }
         } else {
-            List<String> list = new ArrayList<>(Arrays.asList(autocompletes));
+            List<Autocomplete> list = new ArrayList<>(Arrays.asList(autocompletes));
             optionAutocompletes.put(option, list);
         }
     }
@@ -59,9 +59,9 @@ public class SlashCommand {
     public List<Command.Choice> handleAutocomplete(String option, String input) {
         List<Command.Choice> choices = new ArrayList<>();
 
-        for (String choice : optionAutocompletes.getOrDefault(option, new ArrayList<>())) {
-            if (choice.toLowerCase().startsWith(input.toLowerCase())) {
-                choices.add(new Command.Choice(choice, choice));
+        for (Autocomplete choice : optionAutocompletes.getOrDefault(option, new ArrayList<>())) {
+            if (choice.getValue().toLowerCase().startsWith(input.toLowerCase())) {
+                choices.add(new Command.Choice(choice.getName(), choice.getValue()));
             }
         }
 
@@ -88,7 +88,7 @@ public class SlashCommand {
         return requiredPermissions;
     }
 
-    public HashMap<String, List<String>> getOptionAutocompletes() {
+    public HashMap<String, List<Autocomplete>> getOptionAutocompletes() {
         return optionAutocompletes;
     }
 }

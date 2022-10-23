@@ -1,6 +1,7 @@
 package flustix.fluxifyed.modules.moderation.commands;
 
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.components.Autocomplete;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.database.Database;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -22,7 +23,7 @@ public class InfractionsSlashCommand extends SlashCommand {
         addOption(OptionType.USER, "target", "The user to show the infractions of.", true, false);
         addOption(OptionType.STRING, "type", "The type of infractions to show.", false, true);
         addOption(OptionType.INTEGER, "page", "The page of infractions to show.", false, false);
-        addAutocomplete("type", "note", "warn", "kick", "ban");
+        addAutocomplete("type", new Autocomplete("Warn", "warn"), new Autocomplete("Note", "note"), new Autocomplete("Kick", "kick"), new Autocomplete("Ban", "ban"));
     }
 
     public void execute(SlashCommandInteraction interaction) {
