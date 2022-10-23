@@ -4,6 +4,7 @@ import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.database.Database;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
@@ -15,6 +16,7 @@ import java.time.temporal.ChronoField;
 public class NoteSlashCommand extends SlashCommand {
     public NoteSlashCommand() {
         super("note", "Adds a note to a user.");
+        addPermissions(Permission.MODERATE_MEMBERS);
         addOption(OptionType.USER, "user", "The user to add a note to.", true, false);
         addOption(OptionType.STRING, "note", "The note.", true, false);
     }

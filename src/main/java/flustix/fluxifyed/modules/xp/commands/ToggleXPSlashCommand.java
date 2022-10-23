@@ -4,16 +4,16 @@ import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
-import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 public class ToggleXPSlashCommand extends SlashCommand {
     public ToggleXPSlashCommand() {
         super("togglexp", "Toggle XP on the server.");
-        setPermissionLevel(PermissionLevel.ADMIN);
+        addPermissions(Permission.MANAGE_SERVER);
     }
 
     public void execute(SlashCommandInteraction interaction) {

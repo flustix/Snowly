@@ -3,8 +3,8 @@ package flustix.fluxifyed.modules.moderation.commands;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.database.Database;
-import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
@@ -16,7 +16,7 @@ import java.time.temporal.ChronoField;
 public class WarnSlashCommand extends SlashCommand {
     public WarnSlashCommand() {
         super("warn", "Warn a user.");
-        setPermissionLevel(PermissionLevel.MODERATOR);
+        addPermissions(Permission.MODERATE_MEMBERS);
         addOption(OptionType.USER, "user", "The user to warn.", true, false);
         addOption(OptionType.STRING, "reason", "The reason for the warning.", true, false);
     }

@@ -8,6 +8,7 @@ import flustix.fluxifyed.components.SlashCommandList;
 import flustix.fluxifyed.database.api.v1.types.APIResponse;
 import flustix.fluxifyed.database.api.v1.types.APIRoute;
 import flustix.fluxifyed.database.api.v1.types.Route;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 import java.util.HashMap;
@@ -40,7 +41,11 @@ public class CommandsRoute implements Route {
                 }
                 commandJson.add("options", options);
 
-                commandJson.addProperty("permissionLevel", slashCommand.getPermissionLevel().toString());
+                JsonArray permissions = new JsonArray();
+                for (Permission permission : slashCommand.getPermissions()) {
+                    permissions.add(permission.toString());
+                }
+                commandJson.add("permissions", permissions);
                 moduleCommands.add(commandJson);
             }
 

@@ -1,6 +1,6 @@
 package flustix.fluxifyed.components;
 
-import flustix.fluxifyed.utils.permissions.PermissionLevel;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
@@ -14,7 +14,7 @@ import java.util.List;
 public class SlashCommand {
     final String name;
     final String description;
-    PermissionLevel permissionLevel = PermissionLevel.EVERYONE;
+    final List<Permission> requiredPermissions = new ArrayList<>();
     final List<OptionData> options = new ArrayList<>();
     final HashMap<String, List<String>> optionAutocompletes = new HashMap<>();
 
@@ -40,8 +40,8 @@ public class SlashCommand {
         }
     }
 
-    public void setPermissionLevel(PermissionLevel level) {
-        this.permissionLevel = level;
+    public void addPermissions(Permission... perm) {
+        requiredPermissions.addAll(Arrays.asList(perm));
     }
 
     public void execute(SlashCommandInteraction interaction) {
@@ -72,8 +72,8 @@ public class SlashCommand {
         return options;
     }
 
-    public PermissionLevel getPermissionLevel() {
-        return permissionLevel;
+    public List<Permission> getPermissions() {
+        return requiredPermissions;
     }
 
     public HashMap<String, List<String>> getOptionAutocompletes() {

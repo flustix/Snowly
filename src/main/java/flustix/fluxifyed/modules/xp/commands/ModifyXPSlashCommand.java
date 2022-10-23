@@ -5,9 +5,9 @@ import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.settings.Settings;
-import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
@@ -17,7 +17,7 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 public class ModifyXPSlashCommand extends SlashCommand {
     public ModifyXPSlashCommand() {
         super("modifyxp", "Give/Remove XP to/from a user.");
-        setPermissionLevel(PermissionLevel.MODERATOR);
+        addPermissions(Permission.ADMINISTRATOR);
         addOption(OptionType.USER, "user", "The user to give/remove XP.", true, false);
         addOption(OptionType.INTEGER, "amount", "The amount of XP to give/remove. (Use negative values to remove xp)", true, false);
     }

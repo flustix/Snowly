@@ -3,7 +3,7 @@ package flustix.fluxifyed.modules.reactionroles.commands;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.modules.reactionroles.ReactionRoles;
 import flustix.fluxifyed.modules.reactionroles.components.ReactionRoleMessage;
-import flustix.fluxifyed.utils.permissions.PermissionLevel;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.emoji.RichCustomEmoji;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
@@ -13,7 +13,7 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 public class ReactAddSlashCommand extends SlashCommand {
     public ReactAddSlashCommand() {
         super("reactadd", "Add a reaction role to a message");
-        setPermissionLevel(PermissionLevel.MODERATOR);
+        addPermissions(Permission.MANAGE_SERVER);
         addOption(OptionType.STRING, "messageid", "The ID of the message to add the reaction role to.", true, false);
         addOption(OptionType.STRING, "emoji", "The emoji to react with.", true, false);
         addOption(OptionType.ROLE, "role", "The role to give.", true, false);

@@ -3,8 +3,8 @@ package flustix.fluxifyed.modules.moderation.commands;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.database.Database;
-import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
@@ -18,7 +18,7 @@ import java.util.List;
 public class InfractionsSlashCommand extends SlashCommand {
     public InfractionsSlashCommand() {
         super("infractions", "Shows the infractions of a user.");
-        setPermissionLevel(PermissionLevel.MODERATOR);
+        addPermissions(Permission.MODERATE_MEMBERS);
         addOption(OptionType.USER, "target", "The user to show the infractions of.", true, false);
         addOption(OptionType.STRING, "type", "The type of infractions to show.", false, true);
         addOption(OptionType.INTEGER, "page", "The page of infractions to show.", false, false);

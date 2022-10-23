@@ -3,9 +3,9 @@ package flustix.fluxifyed.modules.moderation.commands;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.database.Database;
-import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -16,7 +16,7 @@ import java.time.temporal.ChronoField;
 public class KickSlashCommand extends SlashCommand {
     public KickSlashCommand() {
         super("kick", "Kicks a user from the server.");
-        setPermissionLevel(PermissionLevel.MODERATOR);
+        addPermissions(Permission.KICK_MEMBERS);
         addOption(OptionType.USER, "target", "The user to kick", true, false);
         addOption(OptionType.STRING, "reason", "The reason for the ban", false, false);
     }

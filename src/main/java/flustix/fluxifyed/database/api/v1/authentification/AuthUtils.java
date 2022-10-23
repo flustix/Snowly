@@ -4,8 +4,7 @@ import com.sun.net.httpserver.Headers;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.database.api.v1.components.APIGuild;
-import flustix.fluxifyed.utils.permissions.PermissionLevel;
-import flustix.fluxifyed.utils.permissions.PermissionUtils;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 
@@ -44,7 +43,7 @@ public class AuthUtils {
                 Member member = guild.retrieveMemberById(userid).complete();
                 if (member == null) member = guild.retrieveMemberById(userid).complete();
 
-                if (PermissionUtils.checkLevel(member, PermissionLevel.ADMIN))
+                if (member.hasPermission(Permission.ADMINISTRATOR))
                     ids.add(guild);
             } catch (Exception ignored) {
             }
@@ -60,7 +59,7 @@ public class AuthUtils {
         Member member = guild.retrieveMemberById(userid).complete();
         if (member == null) member = guild.retrieveMemberById(userid).complete();
 
-        if (PermissionUtils.checkLevel(member, PermissionLevel.ADMIN))
+        if (member.hasPermission(Permission.ADMINISTRATOR))
             return new APIGuild(guild);
 
         return null;

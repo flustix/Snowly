@@ -5,10 +5,10 @@ import com.google.gson.JsonObject;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.modules.reactionroles.ReactionRoles;
-import flustix.fluxifyed.utils.permissions.PermissionLevel;
 import flustix.fluxifyed.utils.presets.EmbedPresets;
 import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
@@ -16,7 +16,7 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 public class ReactCreateSlashCommand extends SlashCommand {
     public ReactCreateSlashCommand() {
         super("reactcreate", "Create a reaction role message");
-        setPermissionLevel(PermissionLevel.MODERATOR);
+        addPermissions(Permission.MANAGE_SERVER);
         addOption(OptionType.STRING, "name", "The title for the message.", true, false);
     }
 
