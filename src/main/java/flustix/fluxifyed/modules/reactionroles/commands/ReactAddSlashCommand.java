@@ -12,7 +12,7 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 public class ReactAddSlashCommand extends SlashCommand {
     public ReactAddSlashCommand() {
-        super("reactadd", "Add a reaction role to a message");
+        super("reactadd", "Add a reaction role to a message", true);
         addPermissions(Permission.MANAGE_SERVER);
         addOption(OptionType.STRING, "messageid", "The ID of the message to add the reaction role to.", true, false);
         addOption(OptionType.STRING, "emoji", "The emoji to react with.", true, false);

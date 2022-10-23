@@ -15,7 +15,7 @@ import java.time.temporal.ChronoField;
 
 public class NoteSlashCommand extends SlashCommand {
     public NoteSlashCommand() {
-        super("note", "Adds a note to a user.");
+        super("note", "Adds a note to a user.", true);
         addPermissions(Permission.MODERATE_MEMBERS);
         addOption(OptionType.USER, "user", "The user to add a note to.", true, false);
         addOption(OptionType.STRING, "note", "The note.", true, false);

@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 
 public class TopSlashCommand extends SlashCommand {
     public TopSlashCommand() {
-        super("top", "Shows the top 10 users in the server");
+        super("top", "Shows the top 10 users in the server", true);
     }
 
     public void execute(SlashCommandInteraction interaction) {

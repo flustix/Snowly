@@ -12,7 +12,7 @@ import java.time.temporal.ChronoField;
 
 public class ServerInfoSlashCommand extends SlashCommand {
     public ServerInfoSlashCommand() {
-        super("serverinfo", "Get information about the server");
+        super("serverinfo", "Get information about the server", true);
     }
 
     public void execute(SlashCommandInteraction interaction) {

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class RankSlashCommand extends SlashCommand {
     public RankSlashCommand() {
-        super("rank", "Show your rank on the current server.");
+        super("rank", "Show your rank on the current server.", true);
         addOption(OptionType.USER, "user", "The user to show the rank of.", false, false);
     }
 

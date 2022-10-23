@@ -17,10 +17,18 @@ public class SlashCommand {
     final List<Permission> requiredPermissions = new ArrayList<>();
     final List<OptionData> options = new ArrayList<>();
     final HashMap<String, List<String>> optionAutocompletes = new HashMap<>();
+    final boolean guildOnly;
 
-    public SlashCommand(String name, String desc) {
+    public SlashCommand(String name, String description) {
+        this.name = name;
+        this.description = description;
+        guildOnly = false;
+    }
+
+    public SlashCommand(String name, String desc, boolean guildOnly) {
         this.name = name;
         this.description = desc;
+        this.guildOnly = guildOnly;
     }
 
     public void addOption(OptionType type, String name, String description, boolean required, boolean autocomplete) {
@@ -62,6 +70,10 @@ public class SlashCommand {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isGuildOnly() {
+        return guildOnly;
     }
 
     public String getDescription() {

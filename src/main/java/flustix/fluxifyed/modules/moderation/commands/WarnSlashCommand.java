@@ -15,7 +15,7 @@ import java.time.temporal.ChronoField;
 
 public class WarnSlashCommand extends SlashCommand {
     public WarnSlashCommand() {
-        super("warn", "Warn a user.");
+        super("warn", "Warn a user.", true);
         addPermissions(Permission.MODERATE_MEMBERS);
         addOption(OptionType.USER, "user", "The user to warn.", true, false);
         addOption(OptionType.STRING, "reason", "The reason for the warning.", true, false);

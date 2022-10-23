@@ -16,7 +16,7 @@ import java.util.List;
 
 public class UserInfoSlashCommand extends SlashCommand {
     public UserInfoSlashCommand() {
-        super("userinfo", "Get information about a user");
+        super("userinfo", "Get information about a user", true);
         this.addOption(OptionType.USER, "user", "The user to get information about", false, false);
     }
 

@@ -12,7 +12,7 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 public class ToggleXPSlashCommand extends SlashCommand {
     public ToggleXPSlashCommand() {
-        super("togglexp", "Toggle XP on the server.");
+        super("togglexp", "Toggle XP on the server.", true);
         addPermissions(Permission.MANAGE_SERVER);
     }
 

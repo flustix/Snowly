@@ -15,7 +15,7 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 public class ReactCreateSlashCommand extends SlashCommand {
     public ReactCreateSlashCommand() {
-        super("reactcreate", "Create a reaction role message");
+        super("reactcreate", "Create a reaction role message", true);
         addPermissions(Permission.MANAGE_SERVER);
         addOption(OptionType.STRING, "name", "The title for the message.", true, false);
     }

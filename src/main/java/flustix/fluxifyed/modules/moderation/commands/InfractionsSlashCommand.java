@@ -17,7 +17,7 @@ import java.util.List;
 
 public class InfractionsSlashCommand extends SlashCommand {
     public InfractionsSlashCommand() {
-        super("infractions", "Shows the infractions of a user.");
+        super("infractions", "Shows the infractions of a user.", true);
         addPermissions(Permission.MODERATE_MEMBERS);
         addOption(OptionType.USER, "target", "The user to show the infractions of.", true, false);
         addOption(OptionType.STRING, "type", "The type of infractions to show.", false, true);

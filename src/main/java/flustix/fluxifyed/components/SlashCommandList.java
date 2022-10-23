@@ -35,6 +35,7 @@ public class SlashCommandList {
             SlashCommandData commandData = Commands.slash(name, command.getDescription());
             commandData.addOptions(command.getOptions());
             commandData.setDefaultPermissions(DefaultMemberPermissions.enabledFor(command.getPermissions()));
+            commandData.setGuildOnly(command.isGuildOnly());
             slashCommandList.add(commandData);
         }));
 
@@ -42,11 +43,6 @@ public class SlashCommandList {
     }
 
     public static void execute(SlashCommandInteractionEvent interaction) {
-        if (!interaction.isFromGuild()) {
-            SlashCommandUtils.replyEphemeral(interaction, "Commands can only be used in a guild!");
-            return;
-        }
-
         String moduleID = commandMap.get(interaction.getName());
 
         if (commands.containsKey(moduleID)) {

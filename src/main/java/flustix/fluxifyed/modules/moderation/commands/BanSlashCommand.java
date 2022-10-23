@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 public class BanSlashCommand extends SlashCommand {
     public BanSlashCommand() {
-        super("ban", "Bans a user from the server.");
+        super("ban", "Bans a user from the server.", true);
         addPermissions(Permission.BAN_MEMBERS);
         addOption(OptionType.USER, "target", "The user to ban", true, false);
         addOption(OptionType.STRING, "reason", "The reason for the ban", false, false);

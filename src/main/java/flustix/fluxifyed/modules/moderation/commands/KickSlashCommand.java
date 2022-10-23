@@ -15,7 +15,7 @@ import java.time.temporal.ChronoField;
 
 public class KickSlashCommand extends SlashCommand {
     public KickSlashCommand() {
-        super("kick", "Kicks a user from the server.");
+        super("kick", "Kicks a user from the server.", true);
         addPermissions(Permission.KICK_MEMBERS);
         addOption(OptionType.USER, "target", "The user to kick", true, false);
         addOption(OptionType.STRING, "reason", "The reason for the ban", false, false);

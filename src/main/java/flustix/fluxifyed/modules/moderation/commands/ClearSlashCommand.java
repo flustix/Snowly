@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ClearSlashCommand extends SlashCommand {
     public ClearSlashCommand() {
-        super("clear", "Clears the chat.");
+        super("clear", "Clears the chat.", true);
         addPermissions(Permission.MESSAGE_MANAGE);
         addOption(OptionType.INTEGER, "amount", "The amount of messages to clear.", true, false);
     }
