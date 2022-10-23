@@ -38,8 +38,10 @@ public class SlashCommand {
     public void addAutocomplete(String option, Autocomplete... autocompletes) {
         if (optionAutocompletes.containsKey(option)) {
             for (Autocomplete autocomplete : autocompletes) {
-                if (!optionAutocompletes.get(option).contains(autocomplete)) {
-                    optionAutocompletes.get(option).add(autocomplete);
+                for (Autocomplete existingAutocomplete : optionAutocompletes.get(option)) {
+                    if (!existingAutocomplete.getName().equals(autocomplete.getName())) {
+                        optionAutocompletes.get(option).add(autocomplete);
+                    }
                 }
             }
         } else {
