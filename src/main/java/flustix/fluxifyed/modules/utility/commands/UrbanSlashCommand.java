@@ -11,6 +11,9 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UrbanSlashCommand extends SlashCommand {
     public UrbanSlashCommand() {
         super("urban", "Searches the Urban Dictionary for a definition of a word.");
@@ -32,9 +35,9 @@ public class UrbanSlashCommand extends SlashCommand {
 
         EmbedBuilder embedBuilder = new EmbedBuilder()
                 .setTitle(definition.getWord())
-                .setDescription(definition.getDefinition())
+                .setDescription(definition.getDefinition().replace("[", "**").replace("]", "**"))
                 .setColor(0x1b2936)
-                .addField(":star: Example", definition.getExample(), false)
+                .addField(":star: Example", definition.getExample().replace("[", "**").replace("]", "**"), false)
                 .addField(":bust_in_silhouette: Author", definition.getAuthor(), true)
                 .addField(":arrow_up: Thumbs Up", String.valueOf(definition.getThumbsUp()), true)
                 .addField(":arrow_down: Thumbs Down", String.valueOf(definition.getThumbsDown()), true)
