@@ -12,7 +12,7 @@ public class WelcomeModule extends Module {
     private static final Map<String, WelcomeData> welcomeDataMap = new HashMap<>();
 
     public WelcomeModule() {
-        super("welcome", "Welcome", "Customizable welcome messages for new members.");
+        super("welcome", "Welcome", "Customizable welcome messages for new members.", true);
     }
 
     @Override

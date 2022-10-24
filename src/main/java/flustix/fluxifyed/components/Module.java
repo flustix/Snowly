@@ -6,11 +6,16 @@ public class Module {
     public final String name;
     public final String description;
     public final String id;
+    /**
+     * If true, the module has changable settings.
+     */
+    public final boolean configurable;
 
-    public Module(String id, String name, String description) {
+    public Module(String id, String name, String description, boolean configurable) {
         this.name = name;
         this.description = description;
         this.id = id;
+        this.configurable = configurable;
     }
 
     /**
