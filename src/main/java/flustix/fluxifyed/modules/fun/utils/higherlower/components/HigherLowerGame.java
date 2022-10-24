@@ -24,42 +24,60 @@ public class HigherLowerGame {
     public void answer(ButtonInteractionEvent event) {
         String[] split = event.getComponentId().split(":");
 
-        if (split[1].equals("answer")) {
-            HigherLowerRound curRound = rounds.get(this.round);
-            boolean correct = Integer.parseInt(split[2]) == curRound.getCorrectOption();
-            EmbedBuilder embed;
+        switch (split[1]) {
+            case "answer": {
+                HigherLowerRound curRound = rounds.get(this.round);
+                boolean correct = Integer.parseInt(split[2]) == curRound.getCorrectOption();
+                EmbedBuilder embed;
 
-            if (correct) {
-                this.correct++;
-                embed = new EmbedBuilder()
-                        .setTitle("Higher or Lower")
-                        .setDescription("Correct!\nYou got it right!")
-                        .setColor(0x55FF55);
-            } else {
-                embed = new EmbedBuilder()
-                        .setTitle("Higher or Lower")
-                        .setDescription("Incorrect!\nYou got it wrong!")
-                        .setColor(0xFF5555);
+                if (correct) {
+                    this.correct++;
+                    embed = new EmbedBuilder()
+                            .setTitle("Higher or Lower")
+                            .setDescription("Correct!\nYou got it right!")
+                            .setColor(0x55FF55);
+                } else {
+                    embed = new EmbedBuilder()
+                            .setTitle("Higher or Lower")
+                            .setDescription("Incorrect!\nYou got it wrong!")
+                            .setColor(0xFF5555);
+                }
+
+                embed.addField(curRound.getOption1().getName(), curRound.getOption1().getValue() + " Searches", true);
+                embed.addField(curRound.getOption2().getName(), curRound.getOption2().getValue() + " Searches", true);
+
+                event.editMessage(new MessageEditBuilder()
+                        .setEmbeds(embed.build())
+                        .setActionRow(
+                                Button.primary("higherlower:next", "Next Round"),
+                                Button.danger("higherlower:stop", "Stop Game")
+                        ).build()).complete();
+                break;
             }
+            case "next":
+                if (!isFinished()) {
+                    HigherLowerRound nextRound = rounds.get(this.round);
+                    event.editMessage(createMessage(nextRound.getOption1(), nextRound.getOption2()).build()).complete();
+                } else {
+                    EmbedBuilder embed = new EmbedBuilder()
+                            .setTitle("Game Over")
+                            .setColor(Main.accentColor)
+                            .setDescription("You got " + this.correct + " out of " + this.rounds.size() + " correct!");
 
-            embed.addField(curRound.getOption1().getName(), curRound.getOption1().getValue() + " Searches", true);
-            embed.addField(curRound.getOption2().getName(), curRound.getOption2().getValue() + " Searches", true);
+                    event.getInteraction().editMessage(new MessageEditBuilder()
+                            .setEmbeds(embed.build())
+                            .build()).complete();
 
-            event.editMessage(new MessageEditBuilder()
-                    .setEmbeds(embed.build())
-                    .setActionRow(
-                            Button.primary("higherlower:next", "Next Round"),
-                            Button.danger("higherlower:stop", "Stop Game")
-                    ).build()).complete();
-        } else if (split[1].equals("next")) {
-            if (!isFinished()) {
-                HigherLowerRound nextRound = rounds.get(this.round);
-                event.editMessage(createMessage(nextRound.getOption1(), nextRound.getOption2()).build()).complete();
-            } else {
+                    event.getInteraction().getMessage().editMessageComponents().complete();
+
+                    HigherLowerUtils.endGame(event.getUser().getId());
+                }
+                break;
+            case "stop": {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("Game Over")
                         .setColor(Main.accentColor)
-                        .setDescription("You got " + this.correct + " out of " + this.rounds.size() + " correct!");
+                        .setDescription("You stopped the game!");
 
                 event.getInteraction().editMessage(new MessageEditBuilder()
                         .setEmbeds(embed.build())
@@ -68,20 +86,8 @@ public class HigherLowerGame {
                 event.getInteraction().getMessage().editMessageComponents().complete();
 
                 HigherLowerUtils.endGame(event.getUser().getId());
+                break;
             }
-        } else if (split[1].equals("stop")) {
-            EmbedBuilder embed = new EmbedBuilder()
-                    .setTitle("Game Over")
-                    .setColor(Main.accentColor)
-                    .setDescription("You stopped the game!");
-
-            event.getInteraction().editMessage(new MessageEditBuilder()
-                    .setEmbeds(embed.build())
-                    .build()).complete();
-
-            event.getInteraction().getMessage().editMessageComponents().complete();
-
-            HigherLowerUtils.endGame(event.getUser().getId());
         }
     }
 

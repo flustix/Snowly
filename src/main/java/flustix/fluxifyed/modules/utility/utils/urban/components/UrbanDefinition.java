@@ -1,13 +1,13 @@
 package flustix.fluxifyed.modules.utility.utils.urban.components;
 
 public class UrbanDefinition {
-    String word;
-    String definition;
-    String example;
-    String author;
-    String permalink;
-    int thumbsUp;
-    int thumbsDown;
+    final String word;
+    final String definition;
+    final String example;
+    final String author;
+    final String permalink;
+    final int thumbsUp;
+    final int thumbsDown;
 
     public UrbanDefinition(String word, String definition, String example, String author, String permalink, int thumbsUp, int thumbsDown) {
         this.word = word;

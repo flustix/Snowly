@@ -8,7 +8,6 @@ import flustix.fluxifyed.modules.fun.utils.reddit.components.RedditPost;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.utils.messages.MessageEditBuilder;
-import net.dv8tion.jda.api.utils.messages.MessageEditData;
 
 import java.net.URI;
 import java.net.http.HttpClient;

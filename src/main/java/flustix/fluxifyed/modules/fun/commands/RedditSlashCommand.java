@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RedditSlashCommand extends SlashCommand {
-    public static Map<String, RedditInteraction> messages = new HashMap<>(); // <messageId, interaction>
+    public static final Map<String, RedditInteraction> messages = new HashMap<>(); // <messageId, interaction>
 
     public RedditSlashCommand() {
         super("reddit", "Get a reddit post");

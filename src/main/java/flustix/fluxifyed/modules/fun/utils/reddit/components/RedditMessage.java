@@ -3,9 +3,9 @@ package flustix.fluxifyed.modules.fun.utils.reddit.components;
 import net.dv8tion.jda.api.utils.messages.MessageEditData;
 
 public class RedditMessage {
-    public MessageEditData message;
-    public String subreddit;
-    public boolean nsfw;
+    public final MessageEditData message;
+    public final String subreddit;
+    public final boolean nsfw;
 
     public RedditMessage(MessageEditData message, String subreddit, boolean nsfw) {
         this.message = message;

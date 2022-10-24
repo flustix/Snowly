@@ -1,11 +1,5 @@
 package flustix.fluxifyed.modules.fun.utils.higherlower.components;
 
-import flustix.fluxifyed.Main;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.interactions.InteractionHook;
-import net.dv8tion.jda.api.interactions.components.buttons.Button;
-import net.dv8tion.jda.api.utils.messages.MessageEditBuilder;
-
 public class HigherLowerRound {
     private final HigherLowerOption option1;
     private final HigherLowerOption option2;

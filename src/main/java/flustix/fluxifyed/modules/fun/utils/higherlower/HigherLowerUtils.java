@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class HigherLowerUtils {
-    private static HashMap<String, HigherLowerGame> games = new HashMap<>(); // <user id, game>
+    private static final HashMap<String, HigherLowerGame> games = new HashMap<>(); // <user id, game>
     private static List<HigherLowerOption> options;
 
     public static void startGame(InteractionHook hook) {
@@ -44,7 +44,7 @@ public class HigherLowerUtils {
 
         try {
             HttpClient client = HttpClient.newBuilder().followRedirects(HttpClient.Redirect.ALWAYS).build();
-            HttpRequest req = HttpRequest.newBuilder(URI.create("http://www.higherlowergame.com/questions/get/general"))
+            HttpRequest req = HttpRequest.newBuilder(URI.create("https://www.higherlowergame.com/questions/get/general"))
                     .header("Accept", "application/json")
                     .build();
 
