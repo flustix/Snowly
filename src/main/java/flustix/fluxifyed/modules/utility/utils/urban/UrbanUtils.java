@@ -5,9 +5,11 @@ import com.google.gson.JsonParser;
 import flustix.fluxifyed.modules.utility.utils.urban.components.UrbanDefinition;
 
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class UrbanUtils {
@@ -21,7 +23,7 @@ public class UrbanUtils {
             return definitions.get(word);
         } else {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(URBAN_API_URL + word))
+                    .uri(URI.create(URBAN_API_URL + URLEncoder.encode(word, StandardCharsets.UTF_8)))
                     .build();
 
             String response;
