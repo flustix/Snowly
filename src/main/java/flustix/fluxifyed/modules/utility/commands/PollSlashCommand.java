@@ -40,9 +40,9 @@ public class PollSlashCommand extends SlashCommand {
 
         MessageCreateBuilder message = new MessageCreateBuilder()
                 .setEmbeds(embed.build())
-                .addActionRow(Button.primary("poll:1", option1))
-                .addActionRow(Button.primary("poll:2", option2))
-                .addActionRow(Button.danger("poll:end", "End Poll"));
+                .addActionRow(Button.primary("poll:1", option1),
+                        Button.primary("poll:2", option2),
+                        Button.danger("poll:end", "End Poll"));
 
         interaction.getChannel().sendMessage(message.build()).queue(msg -> {
             interaction.reply("Poll created!").setEphemeral(true).queue();
