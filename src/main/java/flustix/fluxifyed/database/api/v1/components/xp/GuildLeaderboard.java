@@ -26,7 +26,7 @@ public class GuildLeaderboard {
         int i = 0;
 
         for (XPUser xpUser : xpGuild.getTop()) {
-            if (i == limit) break;
+            if (i == limit + offset) break;
 
             if (i >= offset) {
                 User user = guild.getJDA().getUserById(xpUser.getID());
