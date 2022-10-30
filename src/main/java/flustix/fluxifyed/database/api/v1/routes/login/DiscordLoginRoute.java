@@ -53,7 +53,7 @@ public class DiscordLoginRoute implements Route {
                 ResultSet rs = Database.executeQuery("SELECT token FROM tokens WHERE userid = '" + userid + "'");
 
                 if (rs != null && rs.next()) {
-                    userToken = rs.getString("userid");
+                    userToken = rs.getString("token");
                 } else {
                     userToken = TokenGen.generateToken(userid);
                 }
