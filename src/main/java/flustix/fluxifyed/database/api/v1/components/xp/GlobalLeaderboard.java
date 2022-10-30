@@ -3,6 +3,8 @@ package flustix.fluxifyed.database.api.v1.components.xp;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPUser;
+import flustix.fluxifyed.settings.GuildSettings;
+import flustix.fluxifyed.settings.Settings;
 import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.ArrayList;
@@ -20,15 +22,18 @@ public class GlobalLeaderboard {
         XP.getGuilds().forEach((guildId, guild) -> {
             if (i.get() == limit) return;
 
-
             if (i.get() >= offset) {
-                int xp = 0;
+                GuildSettings settings = Settings.getGuildSettings(guildId);
 
-                for (XPUser user : guild.getTop()) {
-                    xp += user.getXP();
+                if (settings.moduleEnabled("xp")) {
+                    int xp = 0;
+
+                    for (XPUser user : guild.getTop()) {
+                        xp += user.getXP();
+                    }
+
+                    entries.add(new GlobalLeaderboardEntry(guildId, xp));
                 }
-
-                entries.add(new GlobalLeaderboardEntry(guildId, xp));
             }
 
             i.getAndIncrement();
