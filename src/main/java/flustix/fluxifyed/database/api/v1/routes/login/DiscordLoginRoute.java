@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.database.api.v1.authentification.AuthUtils;
 import flustix.fluxifyed.database.api.v1.authentification.TokenGen;
 import flustix.fluxifyed.database.api.v1.components.APIUser;
@@ -16,6 +17,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.sql.ResultSet;
 import java.util.HashMap;
 
 @APIRoute(path = "/login/discord")
@@ -46,9 +48,17 @@ public class DiscordLoginRoute implements Route {
                 if (user == null)
                     user = Main.getBot().retrieveUserById(userid).complete();
 
-                String newToken = TokenGen.generateToken(userid);
+                String userToken;
 
-                return new APIResponse(200, "OK", new APIUserToken(newToken, new APIUser(user)));
+                ResultSet rs = Database.executeQuery("SELECT token FROM tokens WHERE userid = '" + userid + "'");
+
+                if (rs != null && rs.next()) {
+                    userToken = rs.getString("userid");
+                } else {
+                    userToken = TokenGen.generateToken(userid);
+                }
+
+                return new APIResponse(200, "OK", new APIUserToken(userToken, new APIUser(user)));
             } else {
                 return new APIResponse(401, "Invalid Token.", null);
             }
