@@ -16,23 +16,30 @@ public class GuildLeaderboard {
     public final String banner;
     public final List<LeaderboardUserEntry> entries = new ArrayList<>();
 
-    public GuildLeaderboard(Guild guild) {
+    public GuildLeaderboard(Guild guild, int limit, int offset) {
         name = guild.getName();
         icon = guild.getIconUrl();
         banner = guild.getBannerUrl();
 
         XPGuild xpGuild = XP.getGuild(guild.getId());
 
-        for (XPUser xpUser : xpGuild.getTop()) {
-            User user = guild.getJDA().getUserById(xpUser.getID());
+        int i = 0;
 
-            try {
-                if (user == null) user = Main.getBot().retrieveUserById(xpUser.getID()).complete();
-                entries.add(new LeaderboardUserEntry(user, xpUser));
-            } catch (NullPointerException e) {
-                entries.add(new LeaderboardUserEntry(xpUser));
+        for (XPUser xpUser : xpGuild.getTop()) {
+            if (i == limit) break;
+
+            if (i >= offset) {
+                User user = guild.getJDA().getUserById(xpUser.getID());
+
+                try {
+                    if (user == null) user = Main.getBot().retrieveUserById(xpUser.getID()).complete();
+                    entries.add(new LeaderboardUserEntry(user, xpUser));
+                } catch (NullPointerException e) {
+                    entries.add(new LeaderboardUserEntry(xpUser));
+                }
             }
 
+            i++;
         }
     }
 

@@ -7,21 +7,31 @@ import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GlobalLeaderboard {
     public final List<GlobalLeaderboardEntry> entries;
 
-    public GlobalLeaderboard() {
+    public GlobalLeaderboard(int limit, int offset) {
         entries = new ArrayList<>();
 
-        XP.getGuilds().forEach((guildId, guild) -> {
-            int xp = 0;
+        AtomicInteger i = new AtomicInteger();
 
-            for (XPUser user : guild.getTop()) {
-                xp += user.getXP();
+        XP.getGuilds().forEach((guildId, guild) -> {
+            if (i.get() == limit) return;
+
+
+            if (i.get() >= offset) {
+                int xp = 0;
+
+                for (XPUser user : guild.getTop()) {
+                    xp += user.getXP();
+                }
+
+                entries.add(new GlobalLeaderboardEntry(guildId, xp));
             }
 
-            entries.add(new GlobalLeaderboardEntry(guildId, xp));
+            i.getAndIncrement();
         });
 
         entries.sort((a, b) -> b.getXP() - a.getXP());
