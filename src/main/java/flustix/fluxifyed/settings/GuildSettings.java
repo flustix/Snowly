@@ -1,5 +1,7 @@
 package flustix.fluxifyed.settings;
 
+import flustix.fluxifyed.Main;
+import flustix.fluxifyed.components.Module;
 import flustix.fluxifyed.database.Database;
 
 import java.util.ArrayList;
@@ -22,8 +24,10 @@ public class GuildSettings {
     void update() {
         List<String> moduleQueries = new ArrayList<>();
 
-        for (String module : modules.keySet())
-            moduleQueries.add(module + "Module = " + modules.get(module));
+        for (Module module : Main.getModules()) {
+            if (module.configurable)
+                moduleQueries.add(module.id + "Module = " + modules.getOrDefault(module.id, false));
+        }
 
         Database.executeQuery("UPDATE guilds SET " + String.join(", ", moduleQueries) + " WHERE guildid = " + guildId);
     }

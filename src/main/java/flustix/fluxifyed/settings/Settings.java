@@ -25,7 +25,8 @@ public class Settings {
 
                 for (Module module : Main.getModules()) {
                     try {
-                        guild.setModuleEnabled(module.id, rs.getBoolean(module.id + "Module"));
+                        if (module.configurable)
+                            guild.setModuleEnabled(module.id, rs.getBoolean(module.id + "Module"));
                     } catch (Exception ignored) {}
                 }
 
