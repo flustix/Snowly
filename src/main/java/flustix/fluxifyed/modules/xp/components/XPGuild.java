@@ -24,6 +24,10 @@ public class XPGuild {
         return user;
     }
 
+    public boolean hasUser(String id) {
+        return users.containsKey(id);
+    }
+
     public void addUser(XPUser user) {
         users.put(user.getID(), user);
     }
