@@ -19,7 +19,7 @@ public class StatTask {
             for (XPGuild guild : XP.getGuilds().values()) {
                 int i = 1;
                 for (XPUser user : guild.getTop()) {
-                    String userQuery = "INSERT INTO xpStats (guildid, userid, rank, xp, time) VALUES ('" + guild.getID() + "', '" + user.getID() + "', " + i + ", " + user.getXP() + ", '" + System.currentTimeMillis() + "');";
+                    String userQuery = "INSERT INTO xpStats (guildid, userid, rank, xp, time) VALUES ('" + guild.getID() + "', '" + user.getID() + "', " + i + ", " + user.getXP() + ", " + System.currentTimeMillis() + ");";
                     query.append(userQuery);
                     i++;
                 }
