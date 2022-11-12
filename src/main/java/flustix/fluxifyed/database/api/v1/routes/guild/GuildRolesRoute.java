@@ -35,7 +35,7 @@ public class GuildRolesRoute implements Route {
         JsonArray json = new JsonArray();
 
         for (Role role : guild.getRoles()) {
-            if (!role.getName().equals("@everyone")) {
+            if (!role.getName().equals("@everyone") && !role.isManaged()) {
                 json.add(JSONUtils.toJson(new GuildRole(role)));
             }
         }
