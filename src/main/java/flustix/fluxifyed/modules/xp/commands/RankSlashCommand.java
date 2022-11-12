@@ -46,11 +46,11 @@ public class RankSlashCommand extends SlashCommand {
             }
 
             if (ImageRenderer.renderImage(new RenderArgs("rank", "rank.png", new RenderData(guild, member)))) {
-                hook.editOriginal("").setFiles(FileUpload.fromData(new File("rank.png"))).complete();
-                hook.editOriginalEmbeds(new ArrayList<>()).complete();
+                hook.editOriginal("").setFiles(FileUpload.fromData(new File("rank.png"))).queue();
+                hook.editOriginalEmbeds(new ArrayList<>()).queue();
             } else {
-                hook.editOriginal("An error occurred!").complete();
-                hook.editOriginalEmbeds(new ArrayList<>()).complete();
+                hook.editOriginal("An error occurred!").queue();
+                hook.editOriginalEmbeds(new ArrayList<>()).queue();
             }
         });
     }

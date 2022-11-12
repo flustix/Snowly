@@ -34,12 +34,12 @@ public class ReactCreateSlashCommand extends SlashCommand {
                 data.addProperty("name", nameMapping.getAsString());
                 data.add("roles", new JsonArray());
                 ReactionRoles.addMessage(message.getId(), data.toString());
-            });
 
-            hook.editOriginalEmbeds(new EmbedBuilder()
-                    .setTitle("Finished!")
-                    .setColor(Main.accentColor)
-                    .build()).queue();
+                hook.editOriginalEmbeds(new EmbedBuilder()
+                        .setTitle("Finished!")
+                        .setColor(Main.accentColor)
+                        .build()).queue();
+            });
         });
     }
 }

@@ -29,8 +29,9 @@ public class RedditSlashCommand extends SlashCommand {
         interaction.reply("Getting a post from r/" + subreddit + "...").queue((hook) -> {
             RedditMessage message = RedditUtils.getRedditPost(subreddit, interaction.getChannel().asTextChannel().isNSFW());
             if (!message.nsfw) addAutocomplete("subreddit", new Autocomplete("r/" + message.subreddit, message.subreddit));
-            Message sentMsg = hook.editOriginal(message.message).complete();
-            messages.put(sentMsg.getId(), new RedditInteraction(message.subreddit, interaction.getUser().getId()));
+            hook.editOriginal(message.message).queue(
+                    (msg) -> messages.put(msg.getId(), new RedditInteraction(message.subreddit, interaction.getUser().getId()))
+            );
         });
     }
 }

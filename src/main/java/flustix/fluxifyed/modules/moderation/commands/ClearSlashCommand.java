@@ -39,14 +39,14 @@ public class ClearSlashCommand extends SlashCommand {
                         .setTitle("Done!")
                         .setColor(Main.accentColor);
 
-                hook.editOriginalEmbeds(successEmbed.build()).complete();
-                interaction.getChannel().sendMessageEmbeds(infoEmbed.build()).complete();
+                hook.editOriginalEmbeds(successEmbed.build()).queue();
+                interaction.getChannel().sendMessageEmbeds(infoEmbed.build()).queue();
             } catch (Exception e) {
                 EmbedBuilder errorEmbed = new EmbedBuilder()
                         .setTitle("Something went wrong!")
                         .setColor(Main.accentColor);
 
-                hook.editOriginalEmbeds(errorEmbed.build()).complete();
+                hook.editOriginalEmbeds(errorEmbed.build()).queue();
                 Main.LOGGER.error("Something went wrong while clearing messages!", e);
             }
         });
