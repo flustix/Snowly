@@ -52,6 +52,20 @@ public class AuthUtils {
         return ids;
     }
 
+    public static boolean hasAccess(String userid, String guildid) {
+        Guild guild = Main.getBot().getGuildById(guildid);
+        if (guild == null) return false;
+
+        Member member = guild.retrieveMemberById(userid).complete();
+        try {
+            if (member == null) member = guild.retrieveMemberById(userid).complete();
+        } catch (Exception ignored) {
+            return false;
+        }
+
+        return member.hasPermission(Permission.ADMINISTRATOR);
+    }
+
     public static APIGuild getGuild(String userid, String guildid) {
         Guild guild = Main.getBot().getGuildById(guildid);
         if (guild == null) return null;

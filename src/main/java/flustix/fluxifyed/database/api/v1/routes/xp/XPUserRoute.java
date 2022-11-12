@@ -12,7 +12,7 @@ import flustix.fluxifyed.modules.xp.components.XPUser;
 
 import java.util.HashMap;
 
-@APIRoute(path = "/xp/stats/:guild/:user")
+@APIRoute(path = "/modules/xp/stats/:guild/:user")
 public class XPUserRoute implements Route {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         String guildid = params.get("guild");

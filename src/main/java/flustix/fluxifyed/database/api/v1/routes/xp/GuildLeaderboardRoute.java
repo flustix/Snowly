@@ -2,7 +2,6 @@ package flustix.fluxifyed.database.api.v1.routes.xp;
 
 import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.database.api.APIServer;
 import flustix.fluxifyed.database.api.utils.QueryUtils;
 import flustix.fluxifyed.database.api.v1.components.xp.GuildLeaderboard;
 import flustix.fluxifyed.database.api.v1.types.APIResponse;
@@ -12,7 +11,7 @@ import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.HashMap;
 
-@APIRoute(path = "/xp/leaderboard/:guild")
+@APIRoute(path = "/modules/xp/leaderboard/:guild")
 public class GuildLeaderboardRoute implements Route {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         HashMap<String, String> query = QueryUtils.getQuery(exchange.getRequestURI().getQuery());
