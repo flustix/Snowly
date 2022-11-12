@@ -5,7 +5,6 @@ import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.modules.fun.utils.reddit.RedditUtils;
 import flustix.fluxifyed.modules.fun.utils.reddit.components.RedditInteraction;
 import flustix.fluxifyed.modules.fun.utils.reddit.components.RedditMessage;
-import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -27,7 +26,7 @@ public class RedditSlashCommand extends SlashCommand {
         if (subredditMapping == null) return;
         String subreddit = subredditMapping.getAsString();
 
-        SlashCommandUtils.reply(interaction, "Getting a post from r/" + subreddit + "...", (hook) -> {
+        interaction.reply("Getting a post from r/" + subreddit + "...").queue((hook) -> {
             RedditMessage message = RedditUtils.getRedditPost(subreddit, interaction.getChannel().asTextChannel().isNSFW());
             if (!message.nsfw) addAutocomplete("subreddit", new Autocomplete("r/" + message.subreddit, message.subreddit));
             Message sentMsg = hook.editOriginal(message.message).complete();

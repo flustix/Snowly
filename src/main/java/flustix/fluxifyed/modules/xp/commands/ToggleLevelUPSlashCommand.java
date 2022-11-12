@@ -4,7 +4,6 @@ import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.settings.UserSettings;
-import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
@@ -24,9 +23,9 @@ public class ToggleLevelUPSlashCommand extends SlashCommand {
                     .addField(":1234: Level Up Messages", user.levelUpMessagesEnabled() ? "Enabled" : "Disabled", true)
                     .setColor(Main.accentColor);
 
-            SlashCommandUtils.replyEphemeral(interaction, embed.build());
+            interaction.replyEmbeds(embed.build()).queue();
         } catch (Exception e) {
-            SlashCommandUtils.replyEphemeral(interaction, "An error occurred while toggling level up messages.");
+            interaction.reply("An error occurred while toggling level up messages.").setEphemeral(true).queue();
         }
     }
 }

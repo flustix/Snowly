@@ -2,7 +2,6 @@ package flustix.fluxifyed.modules.utility.commands;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
-import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -60,6 +59,6 @@ public class UserInfoSlashCommand extends SlashCommand {
 
         embed.addField(":scroll: Roles", rolesString, false);
 
-        SlashCommandUtils.reply(interaction, embed.build());
+        interaction.replyEmbeds(embed.build()).queue();
     }
 }

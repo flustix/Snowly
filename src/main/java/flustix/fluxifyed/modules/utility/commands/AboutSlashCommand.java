@@ -2,7 +2,6 @@ package flustix.fluxifyed.modules.utility.commands;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
-import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
@@ -28,6 +27,6 @@ public class AboutSlashCommand extends SlashCommand {
                 .addField(":link: API", "[Click here](https://api.fluxifyed.foxes4life.net)", true)
                 .addField(":link: API Documentation", "[Click here](https://fluxifyed.foxes4life.net/api/docs/)", true);
 
-        SlashCommandUtils.reply(interaction, embed.build());
+        interaction.replyEmbeds(embed.build()).queue();
     }
 }

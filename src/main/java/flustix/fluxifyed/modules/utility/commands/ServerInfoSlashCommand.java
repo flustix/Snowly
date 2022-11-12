@@ -2,7 +2,6 @@ package flustix.fluxifyed.modules.utility.commands;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
-import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -42,6 +41,6 @@ public class ServerInfoSlashCommand extends SlashCommand {
         embed.addField(":moyai: Emojis", interaction.getGuild().getEmojis().size() + "", true);
         embed.addField(":scroll: Roles", interaction.getGuild().getRoles().size() + "", true);
 
-        SlashCommandUtils.reply(interaction, embed.build());
+        interaction.replyEmbeds(embed.build()).queue();
     }
 }

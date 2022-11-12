@@ -3,7 +3,6 @@ package flustix.fluxifyed.modules.moderation.commands;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.database.Database;
-import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
@@ -62,7 +61,7 @@ public class BanSlashCommand extends SlashCommand {
                     .addField(":x: Error", e.getMessage(), false)
                     .setColor(Main.accentColor);
 
-            SlashCommandUtils.replyEphemeral(interaction, embed.build());
+            interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
         }
     }
 }

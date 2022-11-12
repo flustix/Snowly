@@ -3,7 +3,6 @@ package flustix.fluxifyed.modules.moderation.commands;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.utils.presets.EmbedPresets;
-import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
@@ -26,7 +25,7 @@ public class ClearSlashCommand extends SlashCommand {
 
         int amount = amountMapping.getAsInt();
 
-        SlashCommandUtils.replyEphemeral(interaction, EmbedPresets.loading.build(), (hook) -> {
+        interaction.replyEmbeds(EmbedPresets.loading.build()).queue((hook) -> {
             try {
                 List<Message> messages = interaction.getChannel().getHistory().retrievePast(amount).complete();
                 interaction.getChannel().purgeMessages(messages);

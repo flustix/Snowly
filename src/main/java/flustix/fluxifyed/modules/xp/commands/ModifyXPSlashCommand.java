@@ -5,7 +5,6 @@ import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.settings.Settings;
-import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
@@ -36,7 +35,7 @@ public class ModifyXPSlashCommand extends SlashCommand {
         XPGuild guild = XP.getGuild(g.getId());
 
         if (!Settings.getGuildSettings(interaction.getGuild().getId()).moduleEnabled("xp")) {
-            SlashCommandUtils.replyEphemeral(interaction, ":x: XP is disabled on this server!");
+            interaction.reply(":x: XP is disabled on this server!").queue();
             return;
         }
 
@@ -48,6 +47,6 @@ public class ModifyXPSlashCommand extends SlashCommand {
                 .addField(":1234: XP", amount + "", true)
                 .setColor(Main.accentColor);
 
-        SlashCommandUtils.reply(interaction, embed.build());
+        interaction.replyEmbeds(embed.build()).queue();
     }
 }

@@ -7,7 +7,6 @@ import flustix.fluxifyed.image.RenderArgs;
 import flustix.fluxifyed.image.RenderData;
 import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.presets.EmbedPresets;
-import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
@@ -39,7 +38,7 @@ public class RankSlashCommand extends SlashCommand {
         Guild guild = interaction.getGuild();
         if (guild == null) return;
 
-        SlashCommandUtils.reply(interaction, EmbedPresets.loading.build(), (hook) -> {
+        interaction.replyEmbeds(EmbedPresets.loading.build()).queue((hook) -> {
             if (!Settings.getGuildSettings(guild.getId()).moduleEnabled("xp")) {
                 hook.editOriginal(":x: XP is disabled on this server!").complete();
                 hook.editOriginalEmbeds(new ArrayList<>()).complete();

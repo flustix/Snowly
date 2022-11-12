@@ -6,7 +6,6 @@ import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.modules.reactionroles.ReactionRoles;
 import flustix.fluxifyed.utils.presets.EmbedPresets;
-import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
@@ -24,7 +23,7 @@ public class ReactCreateSlashCommand extends SlashCommand {
         OptionMapping nameMapping = interaction.getOption("name");
         if (nameMapping == null) return;
 
-        SlashCommandUtils.replyEphemeral(interaction, EmbedPresets.loading.build(), (hook) -> {
+        interaction.replyEmbeds(EmbedPresets.loading.build()).queue((hook) -> {
             EmbedBuilder reactEmbed = new EmbedBuilder()
                     .setTitle(nameMapping.getAsString())
                     .setColor(Main.accentColor)

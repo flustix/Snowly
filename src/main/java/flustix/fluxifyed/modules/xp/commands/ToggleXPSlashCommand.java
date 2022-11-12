@@ -4,7 +4,6 @@ import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
-import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
@@ -29,9 +28,9 @@ public class ToggleXPSlashCommand extends SlashCommand {
                     .addField(":1234: XP", guild.moduleEnabled("xp") ? "Enabled" : "Disabled", true)
                     .setColor(Main.accentColor);
 
-            SlashCommandUtils.reply(interaction, embed.build());
+            interaction.replyEmbeds(embed.build()).queue();
         } catch (Exception e) {
-            SlashCommandUtils.replyEphemeral(interaction, "An error occurred while toggling xp.");
+            interaction.reply("An error occurred while toggling xp.").setEphemeral(true).queue();
         }
     }
 }

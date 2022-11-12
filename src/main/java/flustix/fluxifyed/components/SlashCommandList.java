@@ -1,6 +1,5 @@
 package flustix.fluxifyed.components;
 
-import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
@@ -47,14 +46,14 @@ public class SlashCommandList {
 
         if (commands.containsKey(moduleID)) {
             if (!commands.get(moduleID).containsKey(interaction.getName())) {
-                SlashCommandUtils.replyEphemeral(interaction, "This command is not implemented yet.");
+                interaction.reply("This command is not implemented!").setEphemeral(true).queue();
                 return;
             }
 
             SlashCommand command = commands.get(moduleID).get(interaction.getName());
             command.execute(interaction);
         } else
-            SlashCommandUtils.replyEphemeral(interaction, "This command is not implemented yet.");
+            interaction.reply("This command is not implemented!").setEphemeral(true).queue();
     }
 
     public static SlashCommand getCommand(String commandName) {

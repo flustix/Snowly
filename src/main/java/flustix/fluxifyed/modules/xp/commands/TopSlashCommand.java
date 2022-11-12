@@ -2,7 +2,6 @@ package flustix.fluxifyed.modules.xp.commands;
 
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.settings.Settings;
-import flustix.fluxifyed.utils.slash.SlashCommandUtils;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
@@ -18,13 +17,13 @@ public class TopSlashCommand extends SlashCommand {
         if (g == null) return;
 
         if (!Settings.getGuildSettings(interaction.getGuild().getId()).moduleEnabled("xp")) {
-            SlashCommandUtils.replyEphemeral(interaction, ":x: XP is disabled on this server!");
+            interaction.reply(":x: XP is disabled on this server.").setEphemeral(true).queue();
             return;
         }
 
         MessageCreateBuilder builder = new MessageCreateBuilder();
         builder.setContent("Here you go!");
         builder.addActionRow(Button.link("https://fluxifyed.foxes4life.net/leaderboard/" + g.getId(), "View on website"));
-        SlashCommandUtils.reply(interaction, builder.build());
+        interaction.reply(builder.build()).queue();
     }
 }
