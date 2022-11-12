@@ -14,7 +14,7 @@ import net.dv8tion.jda.api.entities.Role;
 
 import java.util.HashMap;
 
-@APIRoute(path = "/guilds/:guild/roles")
+@APIRoute(path = "/guild/:guild/roles")
 public class GuildRolesRoute implements Route {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         String token = AuthUtils.getToken(exchange.getRequestHeaders());
