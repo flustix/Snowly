@@ -93,6 +93,8 @@ public class Router implements HttpHandler {
 
         headers.set("Content-Type", String.format("application/json; charset=%s", StandardCharsets.UTF_8));
         headers.set("Access-Control-Allow-Origin", "*");
+        headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
         final byte[] rawResponse = json.toString().getBytes(StandardCharsets.UTF_8);
         exchange.sendResponseHeaders(200, rawResponse.length);
         exchange.getResponseBody().write(rawResponse);
