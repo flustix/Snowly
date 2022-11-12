@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.concurrent.TimeUnit;
 
-
 public class XPModule extends Module {
     public XPModule() {
         super("xp", "XP", "Reward your members for chatting and being active.", true);

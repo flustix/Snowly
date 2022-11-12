@@ -14,19 +14,14 @@ public class StatTask {
         if (canRun()) {
             Main.LOGGER.info("Running stat task...");
 
-            StringBuilder query = new StringBuilder();
-
             for (XPGuild guild : XP.getGuilds().values()) {
                 int i = 1;
                 for (XPUser user : guild.getTop()) {
-                    String userQuery = "INSERT INTO xpStats (guildid, userid, rank, xp, time) VALUES ('" + guild.getID() + "', '" + user.getID() + "', " + i + ", " + user.getXP() + ", " + System.currentTimeMillis() + ");";
-                    query.append(userQuery);
+                    Database.executeQuery("INSERT INTO `xpStats` (`guildid`, `userid`, `rank`, `xp`, `time`) VALUES ('" + guild.getID() + "', '" + user.getID() + "', " + i + ", " + user.getXP() + ", " + System.currentTimeMillis() + ")");
                     i++;
                 }
             }
 
-            Main.LOGGER.info("Collected all stats, executing query...");
-            Database.executeQuery(query.toString());
             Main.LOGGER.info("Uploaded stats to database. Deleting stats older than 30 days...");
             Database.executeQuery("DELETE FROM xpStats WHERE time < " + (System.currentTimeMillis() - TimeUnit.DAYS.toMillis(30)));
             Main.LOGGER.info("Done!");
