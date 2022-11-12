@@ -13,7 +13,9 @@ import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.modules.xp.components.XPRole;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @APIRoute(path = "/modules/xp/levelroles/:guild", method = "POST")
 public class LevelRolesPOSTRoute implements Route {
@@ -36,13 +38,15 @@ public class LevelRolesPOSTRoute implements Route {
             String body = new String(exchange.getRequestBody().readAllBytes());
             JsonArray json = JsonParser.parseString(body).getAsJsonArray();
 
-            guild.getRoles().clear(); // Clear the roles
+            List<XPRole> roles = new ArrayList<>();
 
             for (JsonElement role : json) {
                 JsonObject roleJson = role.getAsJsonObject();
                 XPRole xpRole = new XPRole(roleJson.get("id").getAsString(), roleJson.get("level").getAsInt());
-                guild.addRole(xpRole);
+                roles.add(xpRole);
             }
+
+            guild.rebuildRoles(roles);
         } catch (Exception e) {
             return new APIResponse(400, "Invalid body.", null);
         }

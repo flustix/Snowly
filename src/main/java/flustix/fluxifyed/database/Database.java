@@ -42,15 +42,15 @@ public class Database {
         }
     }
 
-    public static ResultSet executeQuery(String query, List<String> replaceables) {
-        for (String replaceable : replaceables) {
-            query = query.replaceFirst("\\?", replaceable);
+    public static ResultSet executeQuery(String query, List<Object> replaceables) {
+        for (Object replaceable : replaceables) {
+            query = query.replaceFirst("\\?", replaceable.toString());
         }
 
         return executeQuery(query);
     }
 
-    public static ResultSet executeQuery(String query, String... replaceables) {
+    public static ResultSet executeQuery(String query, Object... replaceables) {
         return executeQuery(query, Arrays.stream(replaceables).toList());
     }
 
