@@ -27,20 +27,21 @@ public class ClearSlashCommand extends SlashCommand {
 
         interaction.replyEmbeds(EmbedPresets.loading.build()).queue((hook) -> {
             try {
-                List<Message> messages = interaction.getChannel().getHistory().retrievePast(amount).complete();
-                interaction.getChannel().purgeMessages(messages);
+                interaction.getChannel().getHistory().retrievePast(amount).queue((messages)-> {
+                    interaction.getChannel().purgeMessages(messages);
 
-                EmbedBuilder infoEmbed = new EmbedBuilder()
-                        .setAuthor(interaction.getUser().getAsTag(), null, interaction.getUser().getAvatarUrl())
-                        .setTitle("Cleared " + amount + " messages")
-                        .setColor(Main.accentColor);
+                    EmbedBuilder infoEmbed = new EmbedBuilder()
+                            .setAuthor(interaction.getUser().getAsTag(), null, interaction.getUser().getAvatarUrl())
+                            .setTitle("Cleared " + amount + " messages")
+                            .setColor(Main.accentColor);
 
-                EmbedBuilder successEmbed = new EmbedBuilder()
-                        .setTitle("Done!")
-                        .setColor(Main.accentColor);
+                    EmbedBuilder successEmbed = new EmbedBuilder()
+                            .setTitle("Done!")
+                            .setColor(Main.accentColor);
 
-                hook.editOriginalEmbeds(successEmbed.build()).queue();
-                interaction.getChannel().sendMessageEmbeds(infoEmbed.build()).queue();
+                    hook.editOriginalEmbeds(successEmbed.build()).queue();
+                    interaction.getChannel().sendMessageEmbeds(infoEmbed.build()).queue();
+                });
             } catch (Exception e) {
                 EmbedBuilder errorEmbed = new EmbedBuilder()
                         .setTitle("Something went wrong!")
