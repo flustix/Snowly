@@ -29,7 +29,6 @@ public class ReactRoles {
             while (rs.next()) {
                 ReactMessage reactMessage = new ReactMessage(JsonParser.parseString(rs.getString("data")).getAsJsonObject(), false);
                 reactMessages.put(reactMessage.messageid, reactMessage);
-                Main.LOGGER.info("Loaded reaction role message " + reactMessage.messageid + " for guild " + guild.getId());
             }
         } catch (Exception ex) {
             Main.LOGGER.error("Failed to load reaction roles for guild " + guild.getName(), ex);
@@ -46,8 +45,6 @@ public class ReactRoles {
 
         ReactMessage reactMessage = reactMessages.get(event.getMessageId());
         if (reactMessage == null) return;
-
-        Main.LOGGER.info("Reacted to message " + event.getMessageId());
 
         reactMessage.roles.forEach(reactRole -> {
             if (reactRole.emoji.equals(extractID(event.getEmoji()))) {
@@ -68,8 +65,6 @@ public class ReactRoles {
 
         ReactMessage reactMessage = reactMessages.get(event.getMessageId());
         if (reactMessage == null) return;
-
-        Main.LOGGER.info("Removing reaction role for " + user.getName());
 
         reactMessage.roles.forEach(reactRole -> {
             if (reactRole.emoji.equals(extractID(event.getEmoji()))) {
