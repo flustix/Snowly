@@ -3,7 +3,6 @@ package flustix.fluxifyed.listeners;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.Module;
 import flustix.fluxifyed.components.SlashCommandList;
-import flustix.fluxifyed.modules.reactionroles.ReactionRoles;
 import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.time.TimeUtils;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
@@ -17,7 +16,6 @@ public class ReadyListener extends ListenerAdapter {
         Main.LOGGER.info("Everything Ready! Took " + TimeUtils.format(System.currentTimeMillis() - Main.getStartTime()) + " to start");
 
         SlashCommandList.registerCommands(event);
-        ReactionRoles.loadMessages();
     }
 
     public void onGuildReady(@NotNull GuildReadyEvent event) {

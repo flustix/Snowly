@@ -55,7 +55,10 @@ public class Database {
     }
 
     public static String escape(String str) {
-        return str.replace("\"", "\\\"").replace("'", "\\'").replace("`", "\\`");
+        return str.replace("\"", "\\\"")
+                .replace("'", "\\'")
+                .replace("`", "\\`")
+                .replace("=", "\\=");
     }
 
     public static int connectionCount() {
