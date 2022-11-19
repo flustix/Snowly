@@ -8,6 +8,7 @@ public class APIUser {
     public final String discriminator;
     public final String avatar;
     public final String banner;
+    public final APIColor accentColor;
 
     public APIUser(User user) {
         id = user.getId();
@@ -17,5 +18,6 @@ public class APIUser {
 
         User.Profile profile = user.retrieveProfile().complete();
         banner = profile.getBannerUrl();
+        accentColor = new APIColor(profile.getAccentColor());
     }
 }

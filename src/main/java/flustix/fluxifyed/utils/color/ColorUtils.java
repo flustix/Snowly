@@ -34,4 +34,8 @@ public class ColorUtils {
                 Integer.valueOf(colorStr.substring(6, 8), 16)
         );
     }
+
+    public static String rgbaToHex(Color color) {
+        return String.format("#%02x%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+    }
 }
