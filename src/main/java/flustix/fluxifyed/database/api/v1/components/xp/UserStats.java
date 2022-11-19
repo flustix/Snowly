@@ -2,6 +2,7 @@ package flustix.fluxifyed.database.api.v1.components.xp;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.Database;
+import flustix.fluxifyed.database.api.v1.components.APIUser;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.modules.xp.components.XPUser;
 import flustix.fluxifyed.utils.xp.XPUtils;
@@ -13,10 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserStats {
-    public String username;
-    public String discriminator;
-    public String avatar;
-    public String id;
+    public APIUser user;
     public int level;
     public int xp;
     public int rank;
@@ -24,7 +22,6 @@ public class UserStats {
     public List<UserStatsChartEntry> chartEntries;
 
     public UserStats(XPUser xuser, XPGuild xguild) {
-        this.id = xuser.getID();
         this.level = XPUtils.calculateLevel(xuser.getXP());
         this.xp = xuser.getXP();
         this.rank = xguild.getTop().indexOf(xuser) + 1;
@@ -38,18 +35,12 @@ public class UserStats {
         }
 
         if (user != null) {
-            this.username = user.getName();
-            this.discriminator = user.getDiscriminator();
-            this.avatar = user.getAvatarUrl();
-        } else { // user still wasn't found, use placeholder
-            this.username = "Unknown";
-            this.discriminator = "0000";
-            this.avatar = "https://cdn.discordapp.com/embed/avatars/0.png";
+            this.user = new APIUser(user);
         }
 
         chartEntries = new ArrayList<>();
 
-        ResultSet rs = Database.executeQuery("SELECT * FROM xpStats WHERE userid = '" + id + "' AND guildid = '" + xguild.getID() + "' ORDER BY time DESC");
+        ResultSet rs = Database.executeQuery("SELECT * FROM xpStats WHERE userid = '" + xuser.getID() + "' AND guildid = '" + xguild.getID() + "' ORDER BY time DESC");
 
         if (rs != null) {
             try {
