@@ -6,6 +6,7 @@ import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.images.LevelUpImage;
 import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.xp.XPUtils;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -33,7 +34,7 @@ public class XPUser {
         if (XPUtils.calculateLevel(this.xp) > level) {
             updateLevel();
 
-            if (Settings.getUserSettings(id).levelUpMessagesEnabled()) {
+            if (Settings.getUserSettings(id).levelUpMessagesEnabled() && Settings.getGuildSettings(gid).levelUpMessagesEnabled()) {
                 Member member = event.getMember();
 
                 if (member == null) {

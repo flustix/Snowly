@@ -12,6 +12,7 @@ public class GuildSettings {
     private final String guildId;
 
     private final HashMap<String, Boolean> modules = new HashMap<>();
+    private boolean xpLevelUpMessages = true; // TODO: make a better system for this
 
     public GuildSettings(String guildId) {
         this.guildId = guildId;
@@ -29,6 +30,8 @@ public class GuildSettings {
                 moduleQueries.add(module.id + "Module = " + modules.getOrDefault(module.id, false));
         }
 
+        moduleQueries.add("xpLevelUpMessages = " + xpLevelUpMessages);
+
         Database.executeQuery("UPDATE guilds SET " + String.join(", ", moduleQueries) + " WHERE guildid = " + guildId);
     }
 
@@ -42,6 +45,15 @@ public class GuildSettings {
 
     public void setModuleEnabled(String module, boolean enabled) {
         modules.put(module, enabled);
+        update();
+    }
+
+    public boolean levelUpMessagesEnabled() {
+        return xpLevelUpMessages;
+    }
+
+    public void setLevelUpMessagesEnabled(boolean enabled) {
+        xpLevelUpMessages = enabled;
         update();
     }
 }
