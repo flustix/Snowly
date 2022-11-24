@@ -12,7 +12,9 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.utils.FileUpload;
+import net.dv8tion.jda.api.utils.messages.MessageEditBuilder;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -46,7 +48,9 @@ public class RankSlashCommand extends SlashCommand {
             }
 
             if (ImageRenderer.renderImage(new RenderArgs("rank", "rank.png", new RenderData(guild, member)))) {
-                hook.editOriginal("").setFiles(FileUpload.fromData(new File("rank.png"))).queue();
+                hook.editOriginal("")
+                        .setFiles(FileUpload.fromData(new File("rank.png")))
+                        .setActionRow(Button.link("https://fluxifyed.foxes4life.net/leaderboard/" + guild.getId() + "/" + member.getId(), "View on website")).queue();
                 hook.editOriginalEmbeds(new ArrayList<>()).queue();
             } else {
                 hook.editOriginal("An error occurred!").queue();
