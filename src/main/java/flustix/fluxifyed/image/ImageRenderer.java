@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
 
 public class ImageRenderer {
     public static boolean renderImage(RenderArgs args) {
@@ -23,7 +24,7 @@ public class ImageRenderer {
 
             BufferedImage image = new BufferedImage(data.get("w").getAsInt(), data.get("h").getAsInt(), BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
-            InputStream stream = Main.class.getResourceAsStream("/fonts/Lato-Bold.ttf"); //TODO: make font configurable
+            InputStream stream = Main.class.getResourceAsStream("/fonts/Quicksand-SemiBold.ttf"); //TODO: make font configurable
 
             if (stream == null) {
                 Main.LOGGER.error("Font not found!");
@@ -80,7 +81,7 @@ public class ImageRenderer {
         f = replaceVars(f, data);
 
         float xp = Integer.parseInt(replaceVars("{xp.xp}", data));
-        float xpLeft = Integer.parseInt(replaceVars("{xp.xpleft}", data));
+        float xpLeft = Integer.parseInt(replaceVars("{xp.left}", data));
         w = (int) (w * (xp / (xp + xpLeft)));
 
         g2d.setColor(ColorUtils.hexToRGBA(f));
@@ -129,6 +130,14 @@ public class ImageRenderer {
     }
 
     static String replaceVars(String s, RenderData data) {
+        while (!data.loaded) {
+            try {
+                Thread.sleep(100); // wait for data to load
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         for (String key : data.getKeys().keySet())
             s = s.replace("{" + key + "}", data.getKeys().get(key));
 

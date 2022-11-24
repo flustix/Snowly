@@ -3,9 +3,11 @@ package flustix.fluxifyed.image;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.modules.xp.components.XPUser;
+import flustix.fluxifyed.utils.color.ColorUtils;
 import flustix.fluxifyed.utils.xp.XPUtils;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -15,6 +17,7 @@ public class RenderData {
     final Member member;
 
     final HashMap<String, String> data = new HashMap<>();
+    public boolean loaded = false;
 
     public RenderData(Guild guild, Member member) {
         this.guild = guild;
@@ -49,11 +52,25 @@ public class RenderData {
         int xp = xpUser.getXP();
         int level = XPUtils.calculateLevel(xp);
         int xpLeft = XPUtils.calculateXP(level + 1) - xp;
+        float xpPercent = (float) xp / XPUtils.calculateXP(level + 1) * 100;
 
         data.put("xp.xp", xp + "");
-        data.put("xp.xpleft", xpLeft + "");
+        data.put("xp.left", xpLeft + "");
+        data.put("xp.progress", Math.round(xpPercent * 100) / 100f + "");
         data.put("xp.level", level + "");
         data.put("xp.rank", xpGuild.getTop().indexOf(xpUser) + 1 + "");
+
+        // user.-
+        member.getUser().retrieveProfile().queue((profile) -> {
+            Color profileAccentColor = profile.getAccentColor();
+            data.put("user.name", member.getUser().getName());
+            data.put("user.discriminator", member.getUser().getDiscriminator());
+            data.put("user.avatar", member.getUser().getEffectiveAvatarUrl());
+            data.put("user.id", member.getId());
+            data.put("user.banner", profile.getBannerUrl());
+            data.put("user.accentColor", profileAccentColor == null ? "#ffffff" : ColorUtils.rgbaToHex(profileAccentColor));
+            loaded = true;
+        });
     }
 
     public HashMap<String, String> getKeys() {
