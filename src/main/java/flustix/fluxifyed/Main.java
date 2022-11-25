@@ -9,6 +9,7 @@ import flustix.fluxifyed.listeners.*;
 import flustix.fluxifyed.utils.module.ModuleUtils;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
@@ -30,6 +31,7 @@ public class Main {
     private static JsonObject config;
     private static final long startTime = System.currentTimeMillis();
     private static final List<Module> modules = new ArrayList<>();
+    private static List<Permission> requiredPermissions = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
         LOGGER.info("Starting Fluxifyed...");
@@ -47,6 +49,8 @@ public class Main {
         });
         apiThread.setName("API Server");
         apiThread.start();
+
+        initReqPerms();
 
         EnumSet<GatewayIntent> intents = EnumSet.allOf(GatewayIntent.class);
         intents.remove(GatewayIntent.MESSAGE_CONTENT);
@@ -82,6 +86,22 @@ public class Main {
         });
     }
 
+    private static void initReqPerms() {
+        requiredPermissions.add(Permission.MANAGE_ROLES);
+        requiredPermissions.add(Permission.KICK_MEMBERS);
+        requiredPermissions.add(Permission.BAN_MEMBERS);
+        requiredPermissions.add(Permission.VIEW_CHANNEL);
+        requiredPermissions.add(Permission.MODERATE_MEMBERS);
+        requiredPermissions.add(Permission.MESSAGE_SEND);
+        requiredPermissions.add(Permission.MESSAGE_SEND_IN_THREADS);
+        requiredPermissions.add(Permission.MESSAGE_MANAGE);
+        requiredPermissions.add(Permission.MESSAGE_EMBED_LINKS);
+        requiredPermissions.add(Permission.MESSAGE_ATTACH_FILES);
+        requiredPermissions.add(Permission.MESSAGE_HISTORY);
+        requiredPermissions.add(Permission.MESSAGE_EXT_EMOJI);
+        requiredPermissions.add(Permission.MESSAGE_ADD_REACTION);
+    }
+
     public static JsonObject getConfig() {
         return config;
     }
@@ -96,5 +116,9 @@ public class Main {
 
     public static List<Module> getModules() {
         return modules;
+    }
+
+    public static List<Permission> getRequiredPermissions() {
+        return requiredPermissions;
     }
 }

@@ -20,7 +20,7 @@ public class AboutSlashCommand extends SlashCommand {
                 .setColor(Main.accentColor)
                 .addField(":bust_in_silhouette: Author", "Flustix#5433", true)
                 .addField(":scroll: Source Code", "[GitHub](https://github.com/Fluxifyed/Fluxifyed)", true)
-                .addField(":link: Invite Link", "[Click here](" + interaction.getJDA().getInviteUrl(Permission.ADMINISTRATOR) + ")", true)
+                .addField(":link: Invite Link", "[Click here](" + interaction.getJDA().getInviteUrl(Main.getRequiredPermissions()) + ")", true)
                 .addField(":link: Support Server", "[Click here](https://discord.gg/GaKKeWg)", true)
                 .addField(":link: Website", "[Click here](https://fluxifyed.foxes4life.net)", true)
                 .addField(":link: Documentation", "[Click here](https://fluxifyed.foxes4life.net/docs)", true)

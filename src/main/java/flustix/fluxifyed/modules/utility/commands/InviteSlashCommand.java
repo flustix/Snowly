@@ -15,7 +15,7 @@ public class InviteSlashCommand extends SlashCommand {
     public void execute(SlashCommandInteraction interaction) {
         MessageCreateBuilder message = new MessageCreateBuilder()
                 .setContent("Here you go!")
-                .addActionRow(Button.link(Main.getBot().getInviteUrl(Permission.ADMINISTRATOR), "Invite to guild..."));
+                .addActionRow(Button.link(Main.getBot().getInviteUrl(Main.getRequiredPermissions()), "Invite to guild..."));
 
         interaction.reply(message.build()).queue();
     }
