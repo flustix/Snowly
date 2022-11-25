@@ -15,7 +15,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.HashMap;
 
 public class ImageRenderer {
     public static boolean renderImage(RenderArgs args) {
@@ -138,8 +137,11 @@ public class ImageRenderer {
             }
         }
 
-        for (String key : data.getKeys().keySet())
-            s = s.replace("{" + key + "}", data.getKeys().get(key));
+        for (String key : data.getKeys().keySet()) {
+            String replacement = data.getKeys().get(key);
+            if (replacement == null) replacement = "";
+            s = s.replace("{" + key + "}", replacement);
+        }
 
         return s;
     }
