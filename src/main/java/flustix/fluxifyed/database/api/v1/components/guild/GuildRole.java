@@ -1,23 +1,16 @@
 package flustix.fluxifyed.database.api.v1.components.guild;
 
+import flustix.fluxifyed.database.api.v1.components.APIColor;
 import net.dv8tion.jda.api.entities.Role;
 
 public class GuildRole {
     public String id;
     public String name;
-    public int color;
-    public String colorString;
+    public APIColor color;
 
     public GuildRole(Role role) {
-        this.id = role.getId();
-        this.name = role.getName();
-
-        if (role.getColor() != null) {
-            this.color = role.getColorRaw();
-            this.colorString = String.format("#%02x%02x%02x", role.getColor().getRed(), role.getColor().getGreen(), role.getColor().getBlue());
-        } else {
-            this.color = 0xffffff;
-            this.colorString = "#ffffff";
-        }
+        id = role.getId();
+        name = role.getName();
+        color = new APIColor(role.getColor());
     }
 }

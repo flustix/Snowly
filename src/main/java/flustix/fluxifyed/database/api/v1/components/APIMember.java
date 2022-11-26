@@ -13,7 +13,7 @@ public class APIMember extends APIUser {
 
         nickname = member.getNickname();
         onlineStatus = member.getOnlineStatus().getKey();
-        this.color = new APIColor(member.getColor());
+        color = new APIColor(member.getColor());
         owner = member.isOwner();
     }
 }
