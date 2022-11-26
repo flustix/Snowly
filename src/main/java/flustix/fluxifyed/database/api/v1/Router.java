@@ -88,7 +88,7 @@ public class Router implements HttpHandler {
 
         if (notFound) {
             json.addProperty("code", 404);
-            json.addProperty("error", "Not Found");
+            json.addProperty("error", "We couldn't find the route you were looking for. T^T");
         }
 
         headers.set("Content-Type", String.format("application/json; charset=%s", StandardCharsets.UTF_8));
