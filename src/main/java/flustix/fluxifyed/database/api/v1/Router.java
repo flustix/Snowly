@@ -1,5 +1,6 @@
 package flustix.fluxifyed.database.api.v1;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
@@ -78,7 +79,13 @@ public class Router implements HttpHandler {
 
                         } catch (Exception e) {
                             json.addProperty("code", 500);
-                            json.addProperty("error", e.getMessage());
+                            json.addProperty("message", "Something went very wrong. Please report this to the developer.");
+
+                            JsonArray stackTrace = new JsonArray();
+                            for (StackTraceElement element : e.getStackTrace()) {
+                                stackTrace.add(element.toString());
+                            }
+                            json.add("stack", stackTrace);
                         }
                         break;
                     }
@@ -88,7 +95,7 @@ public class Router implements HttpHandler {
 
         if (notFound) {
             json.addProperty("code", 404);
-            json.addProperty("error", "We couldn't find the route you were looking for. T^T");
+            json.addProperty("message", "We couldn't find the route you were looking for. T^T");
         }
 
         headers.set("Content-Type", String.format("application/json; charset=%s", StandardCharsets.UTF_8));
