@@ -79,7 +79,7 @@ public class Router implements HttpHandler {
 
                         } catch (Exception e) {
                             json.addProperty("code", 500);
-                            json.addProperty("message", "Something went very wrong. Please report this to the developer.");
+                            json.addProperty("message", "Something went very wrong >-<'. Please report this to the developer.");
 
                             JsonArray stackTrace = new JsonArray();
                             for (StackTraceElement element : e.getStackTrace()) {
