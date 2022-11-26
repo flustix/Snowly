@@ -49,8 +49,6 @@ public class CommandsRoute implements Route {
                 moduleCommands.add(commandJson);
             }
 
-
-
             moduleObject.addProperty("name", module.getKey());
             moduleObject.add("commands", moduleCommands);
 
