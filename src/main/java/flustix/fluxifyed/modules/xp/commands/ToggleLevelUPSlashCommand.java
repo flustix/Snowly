@@ -23,7 +23,7 @@ public class ToggleLevelUPSlashCommand extends SlashCommand {
                     .addField(":1234: Level Up Messages", user.levelUpMessagesEnabled() ? "Enabled" : "Disabled", true)
                     .setColor(Main.accentColor);
 
-            interaction.replyEmbeds(embed.build()).queue();
+            interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
         } catch (Exception e) {
             interaction.reply("An error occurred while toggling level up messages.").setEphemeral(true).queue();
         }
