@@ -1,10 +1,14 @@
 package flustix.fluxifyed.database.api.v1.authentification;
 
 import flustix.fluxifyed.database.Database;
+import java.util.Base64;
 
 public class TokenGen {
     public static String generateToken(String userid) {
         StringBuilder token = new StringBuilder();
+
+        token.append(new String(Base64.getEncoder().encode(userid.getBytes())));
+        token.append(".");
 
         for (int i = 0; i < 32; i++)
             token.append(genRandomChar());
