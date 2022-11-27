@@ -1,6 +1,7 @@
 package flustix.fluxifyed.listeners;
 
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.activity.ActivityUpdater;
 import flustix.fluxifyed.components.Module;
 import flustix.fluxifyed.components.SlashCommandList;
 import flustix.fluxifyed.settings.Settings;
@@ -16,6 +17,7 @@ public class ReadyListener extends ListenerAdapter {
         Main.LOGGER.info("Everything Ready! Took " + TimeUtils.format(System.currentTimeMillis() - Main.getStartTime()) + " to start");
 
         SlashCommandList.registerCommands(event);
+        ActivityUpdater.start();
     }
 
     public void onGuildReady(@NotNull GuildReadyEvent event) {

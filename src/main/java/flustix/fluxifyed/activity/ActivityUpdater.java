@@ -19,7 +19,7 @@ public class ActivityUpdater {
         }).start();
     }
 
-    public static void update() {
+    private static void update() {
         int guildCount = 0;
         int memberCount = 0;
 

@@ -10,7 +10,6 @@ import flustix.fluxifyed.utils.module.ModuleUtils;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import org.reflections.Reflections;
@@ -31,7 +30,7 @@ public class Main {
     private static JsonObject config;
     private static final long startTime = System.currentTimeMillis();
     private static final List<Module> modules = new ArrayList<>();
-    private static List<Permission> requiredPermissions = new ArrayList<>();
+    private static final List<Permission> requiredPermissions = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
         LOGGER.info("Starting Fluxifyed...");
@@ -56,7 +55,6 @@ public class Main {
         intents.remove(GatewayIntent.MESSAGE_CONTENT);
 
         JDABuilder builder = JDABuilder.create(config.get("token").getAsString(), intents);
-        builder.setActivity(Activity.listening("music"));
         builder.setMemberCachePolicy(MemberCachePolicy.ALL);
         initModules(builder);
 
