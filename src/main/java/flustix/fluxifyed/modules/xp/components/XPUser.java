@@ -6,7 +6,6 @@ import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.images.LevelUpImage;
 import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.xp.XPUtils;
-import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -47,8 +46,11 @@ public class XPUser {
                         event.getMember().getEffectiveName(),
                         level
                 )) {
-
-                    event.getChannel().sendFiles(FileUpload.fromData(LevelUpImage.file)).complete();
+                    if (level == 1) {
+                        event.getChannel().sendMessage("*You can disable this message for youself using </togglelevelup:1023272930295169156> (Toggles this on all servers using this bot)*").addFiles(FileUpload.fromData(LevelUpImage.file)).complete();
+                    } else {
+                        event.getChannel().sendFiles(FileUpload.fromData(LevelUpImage.file)).complete();
+                    }
                 } else {
                     event.getChannel().sendMessage("Congrats " + event.getAuthor().getAsMention() + " you leveled up to level " + level + "!").complete();
                 }
