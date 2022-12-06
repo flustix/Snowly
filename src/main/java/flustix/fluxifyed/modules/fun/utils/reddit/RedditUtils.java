@@ -16,6 +16,11 @@ import java.net.http.HttpResponse;
 import java.util.Date;
 
 public class RedditUtils {
+    /**
+     *  <a href="https://github.com/reddit-archive/reddit/blob/master/r2/r2/models/subreddit.py#L114">Original regex</a>
+     */
+    private static final String subRx = "/[A-Za-z0-9][A-Za-z0-9_]{2,20}/";
+
     public static RedditMessage getRedditPost(String subreddit, boolean channelNSFW) {
         RedditPost post = RedditUtils.getRandomPost(subreddit);
 
@@ -125,5 +130,9 @@ public class RedditUtils {
         }
 
         return post;
+    }
+
+    public static boolean validateSubreddit(String subreddit) {
+        return subreddit.matches(subRx);
     }
 }

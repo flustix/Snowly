@@ -5,6 +5,7 @@ import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.modules.fun.utils.reddit.RedditUtils;
 import flustix.fluxifyed.modules.fun.utils.reddit.components.RedditInteraction;
 import flustix.fluxifyed.modules.fun.utils.reddit.components.RedditMessage;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
@@ -25,9 +26,14 @@ public class RedditSlashCommand extends SlashCommand {
         if (subredditMapping == null) return;
         String subreddit = subredditMapping.getAsString();
 
-        if (subreddit.contains("@")) {
-            interaction.reply("Nice try but subreddit names dont contain that character <:fingerguns:978623860125597756>")
-                    .setEphemeral(true).queue();
+        if (!RedditUtils.validateSubreddit(subreddit)) {
+            EmbedBuilder invalidSubredditEmbed = new EmbedBuilder()
+                    .setTitle("The subreddit you requested contains invalid characters")
+                    .setDescription("Valid characters are: a-z, A-Z, 0-9 and underscores")
+                    .addField("Requested subreddit", subreddit, false)
+                    .setColor(0xFF5555);
+            interaction.replyEmbeds(invalidSubredditEmbed.build()).setEphemeral(true).queue();
+
             return;
         }
 
