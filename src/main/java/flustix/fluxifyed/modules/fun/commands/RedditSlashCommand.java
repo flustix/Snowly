@@ -5,7 +5,6 @@ import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.modules.fun.utils.reddit.RedditUtils;
 import flustix.fluxifyed.modules.fun.utils.reddit.components.RedditInteraction;
 import flustix.fluxifyed.modules.fun.utils.reddit.components.RedditMessage;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
@@ -25,6 +24,12 @@ public class RedditSlashCommand extends SlashCommand {
         OptionMapping subredditMapping = interaction.getOption("subreddit");
         if (subredditMapping == null) return;
         String subreddit = subredditMapping.getAsString();
+
+        if (subreddit.contains("@")) {
+            interaction.reply("Nice try but subreddit names dont contain that character <:fingerguns:978623860125597756>")
+                    .setEphemeral(true).queue();
+            return;
+        }
 
         interaction.reply("Getting a post from r/" + subreddit + "...").queue((hook) -> {
             RedditMessage message = RedditUtils.getRedditPost(subreddit, interaction.getChannel().asTextChannel().isNSFW());
