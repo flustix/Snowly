@@ -5,7 +5,9 @@ import com.google.gson.JsonParser;
 import flustix.fluxifyed.components.Module;
 import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.database.api.APIServer;
-import flustix.fluxifyed.listeners.*;
+import flustix.fluxifyed.listeners.GuildListener;
+import flustix.fluxifyed.listeners.ReadyListener;
+import flustix.fluxifyed.listeners.SlashCommandListener;
 import flustix.fluxifyed.utils.module.ModuleUtils;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -30,7 +32,7 @@ public class Main {
     private static JsonObject config;
     private static final long startTime = System.currentTimeMillis();
     private static final List<Module> modules = new ArrayList<>();
-    private static final List<Permission> requiredPermissions = new ArrayList<>();
+    private static List<Permission> requiredPermissions;
 
     public static void main(String[] args) throws Exception {
         LOGGER.info("Starting Fluxifyed...");
@@ -38,41 +40,26 @@ public class Main {
         config = JsonParser.parseString(Files.readString(Path.of("config.json"))).getAsJsonObject();
 
         Database.initializeDataSource();
-
-        Thread apiThread = new Thread(() -> {
-            try {
-                APIServer.main();
-            } catch (Exception e) {
-                LOGGER.error("Error while starting API Server", e);
-            }
-        });
-        apiThread.setName("API Server");
-        apiThread.start();
-
-        initReqPerms();
+        APIServer.main();
 
         EnumSet<GatewayIntent> intents = EnumSet.allOf(GatewayIntent.class);
         intents.remove(GatewayIntent.MESSAGE_CONTENT);
+        initReqPerms();
 
         JDABuilder builder = JDABuilder.create(config.get("token").getAsString(), intents);
         builder.setMemberCachePolicy(MemberCachePolicy.ALL);
+        builder.addEventListeners(new ReadyListener(), new SlashCommandListener(), new GuildListener());
         initModules(builder);
-
-        builder.addEventListeners(
-                new ReadyListener(),
-                new SlashCommandListener(),
-                new GuildListener()
-        );
         bot = builder.build();
     }
 
-    static void initModules(JDABuilder builder) {
+    private static void initModules(JDABuilder builder) {
         Reflections reflections = new Reflections("flustix.fluxifyed.modules");
         reflections.getSubTypesOf(Module.class).forEach(m -> {
             try {
                 Module module = m.getDeclaredConstructor().newInstance();
-
                 module.init();
+
                 ModuleUtils.loadCommands(module);
                 builder.addEventListeners(ModuleUtils.loadListeners(module).toArray());
 
@@ -85,19 +72,20 @@ public class Main {
     }
 
     private static void initReqPerms() {
-        requiredPermissions.add(Permission.MANAGE_ROLES);
-        requiredPermissions.add(Permission.KICK_MEMBERS);
-        requiredPermissions.add(Permission.BAN_MEMBERS);
-        requiredPermissions.add(Permission.VIEW_CHANNEL);
-        requiredPermissions.add(Permission.MODERATE_MEMBERS);
-        requiredPermissions.add(Permission.MESSAGE_SEND);
-        requiredPermissions.add(Permission.MESSAGE_SEND_IN_THREADS);
-        requiredPermissions.add(Permission.MESSAGE_MANAGE);
-        requiredPermissions.add(Permission.MESSAGE_EMBED_LINKS);
-        requiredPermissions.add(Permission.MESSAGE_ATTACH_FILES);
-        requiredPermissions.add(Permission.MESSAGE_HISTORY);
-        requiredPermissions.add(Permission.MESSAGE_EXT_EMOJI);
-        requiredPermissions.add(Permission.MESSAGE_ADD_REACTION);
+        requiredPermissions = List.of(
+                Permission.MANAGE_ROLES,
+                Permission.KICK_MEMBERS,
+                Permission.BAN_MEMBERS,
+                Permission.VIEW_CHANNEL,
+                Permission.MODERATE_MEMBERS,
+                Permission.MESSAGE_SEND,
+                Permission.MESSAGE_SEND_IN_THREADS,
+                Permission.MESSAGE_MANAGE,
+                Permission.MESSAGE_EMBED_LINKS,
+                Permission.MESSAGE_ATTACH_FILES,
+                Permission.MESSAGE_HISTORY,
+                Permission.MESSAGE_EXT_EMOJI,
+                Permission.MESSAGE_ADD_REACTION);
     }
 
     public static JsonObject getConfig() {
