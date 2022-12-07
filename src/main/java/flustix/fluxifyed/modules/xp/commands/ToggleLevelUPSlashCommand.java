@@ -1,7 +1,7 @@
 package flustix.fluxifyed.modules.xp.commands;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.settings.UserSettings;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -21,7 +21,7 @@ public class ToggleLevelUPSlashCommand extends SlashCommand {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Toggled Level Up Messages")
                     .addField(":1234: Level Up Messages", user.levelUpMessagesEnabled() ? "Enabled" : "Disabled", true)
-                    .setColor(Main.accentColor);
+                    .setColor(Colors.ACCENT);
 
             interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
         } catch (Exception e) {

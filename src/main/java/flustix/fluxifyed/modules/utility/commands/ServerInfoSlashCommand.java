@@ -2,6 +2,7 @@ package flustix.fluxifyed.modules.utility.commands;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -27,7 +28,7 @@ public class ServerInfoSlashCommand extends SlashCommand {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(guild.getName())
                 .setThumbnail(interaction.getGuild().getIconUrl())
-                .setColor(Main.accentColor);
+                .setColor(Colors.ACCENT);
 
         embed.addField(":1234: Server ID", interaction.getGuild().getId(), true);
         embed.addField(":crown: Server Owner", owner.getAsMention(), true);

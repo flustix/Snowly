@@ -26,7 +26,6 @@ import java.util.List;
 
 public class Main {
     public static final Logger LOGGER = LoggerFactory.getLogger("Fluxifyed");
-    public static final int accentColor = 0xef6624;
 
     private static JDA bot;
     private static JsonObject config;

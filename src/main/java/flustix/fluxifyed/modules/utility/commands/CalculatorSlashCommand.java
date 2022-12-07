@@ -1,7 +1,7 @@
 package flustix.fluxifyed.modules.utility.commands;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -30,14 +30,14 @@ public class CalculatorSlashCommand extends SlashCommand {
                     .setTitle("Calculator")
                     .addField(":asterisk: Equation", equationMapping.getAsString(), false)
                     .addField(":1234: Result", resultString, false)
-                    .setColor(Main.accentColor);
+                    .setColor(Colors.ACCENT);
 
             interaction.replyEmbeds(embed.build()).queue();
         } catch (Exception e) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Calculator")
                     .addField(":x: Error", "Invalid equation", false)
-                    .setColor(0xFF5555);
+                    .setColor(Colors.ERROR);
 
             interaction.replyEmbeds(embed.build()).queue();
         }

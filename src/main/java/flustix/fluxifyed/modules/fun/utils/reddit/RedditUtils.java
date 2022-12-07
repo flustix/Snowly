@@ -3,6 +3,7 @@ package flustix.fluxifyed.modules.fun.utils.reddit;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.modules.fun.utils.reddit.components.RedditMessage;
 import flustix.fluxifyed.modules.fun.utils.reddit.components.RedditPost;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -27,7 +28,7 @@ public class RedditUtils {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(post.getTitle())
                 .setDescription("[Original Post](https://reddit.com" + post.getUrl() + ")")
-                .setColor(Main.accentColor);
+                .setColor(Colors.REDDIT);
 
         if (post.isNsfw() && channelNSFW) {
             embed.addField(":underage: NSFW", "This post is NSFW", false);
@@ -56,7 +57,7 @@ public class RedditUtils {
             embed = new EmbedBuilder()
                     .setTitle("This post is NSFW")
                     .setDescription("NSFW post can only be viewed in NSFW channels!")
-                    .setColor(0xFF5555);
+                    .setColor(Colors.ERROR);
         }
 
         return new RedditMessage(new MessageEditBuilder()

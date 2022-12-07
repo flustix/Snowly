@@ -2,8 +2,8 @@ package flustix.fluxifyed.modules.utility.commands;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 public class AboutSlashCommand extends SlashCommand {
@@ -17,7 +17,7 @@ public class AboutSlashCommand extends SlashCommand {
                 .setTitle("About Fluxifyed")
                 .setDescription("A powerful and feature-rich Discord bot (soon) with a lot of customization.")
                 .setThumbnail(interaction.getJDA().getSelfUser().getAvatarUrl())
-                .setColor(Main.accentColor)
+                .setColor(Colors.ACCENT)
                 .addField(":bust_in_silhouette: Author", "Flustix#5433", true)
                 .addField(":scroll: Source Code", "[GitHub](https://github.com/Fluxifyed/Fluxifyed)", true)
                 .addField(":link: Invite Link", "[Click here](" + interaction.getJDA().getInviteUrl(Main.getRequiredPermissions()) + ")", true)

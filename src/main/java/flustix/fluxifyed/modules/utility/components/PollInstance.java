@@ -1,6 +1,6 @@
 package flustix.fluxifyed.modules.utility.components;
 
-import flustix.fluxifyed.Main;
+import flustix.fluxifyed.constants.Colors;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.utils.messages.MessageEditBuilder;
@@ -39,7 +39,7 @@ public class PollInstance {
 
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(question)
-                .setColor(Main.accentColor)
+                .setColor(Colors.ACCENT)
                 .addField(option1,  option1Votes + " votes", true)
                 .addField(option2, option2Votes + " votes", true);
 
@@ -49,7 +49,7 @@ public class PollInstance {
     public void end(ButtonInteractionEvent event) {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(question)
-                .setColor(Main.accentColor)
+                .setColor(Colors.ACCENT)
                 .addField(option1,  option1Votes + " votes", true)
                 .addField(option2, option2Votes + " votes", true)
                 .setFooter("This poll has ended!");

@@ -1,7 +1,7 @@
 package flustix.fluxifyed.modules.utility.commands;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.modules.utility.components.PollInstance;
 import flustix.fluxifyed.modules.utility.listeners.PollListener;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -34,7 +34,7 @@ public class PollSlashCommand extends SlashCommand {
 
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(question)
-                .setColor(Main.accentColor)
+                .setColor(Colors.ACCENT)
                 .addField(option1, "0 votes", true)
                 .addField(option2, "0 votes", true);
 

@@ -2,6 +2,7 @@ package flustix.fluxifyed.modules.fun.commands;
 
 import flustix.fluxifyed.components.Autocomplete;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.modules.fun.utils.reddit.RedditUtils;
 import flustix.fluxifyed.modules.fun.utils.reddit.components.RedditInteraction;
 import flustix.fluxifyed.modules.fun.utils.reddit.components.RedditMessage;
@@ -31,7 +32,7 @@ public class RedditSlashCommand extends SlashCommand {
                     .setTitle("The subreddit you requested contains invalid characters")
                     .setDescription("Valid characters are: a-z, A-Z, 0-9 and underscores")
                     .addField("Requested subreddit", subreddit, false)
-                    .setColor(0xFF5555);
+                    .setColor(Colors.ERROR);
             interaction.replyEmbeds(invalidSubredditEmbed.build()).setEphemeral(true).queue();
 
             return;

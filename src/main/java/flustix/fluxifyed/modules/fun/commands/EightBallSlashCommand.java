@@ -1,7 +1,7 @@
 package flustix.fluxifyed.modules.fun.commands;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -49,7 +49,7 @@ public class EightBallSlashCommand extends SlashCommand {
 
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Magic 8ball")
-                .setColor(Main.accentColor)
+                .setColor(Colors.ACCENT)
                 .addField(":question: Question", question.getAsString(), false)
                 .addField(emoji + " Answer", answer, false);
 

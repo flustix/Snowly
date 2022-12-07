@@ -1,7 +1,7 @@
 package flustix.fluxifyed.modules.xp.commands;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -26,7 +26,7 @@ public class ToggleXPSlashCommand extends SlashCommand {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Toggled XP")
                     .addField(":1234: XP", guild.moduleEnabled("xp") ? "Enabled" : "Disabled", true)
-                    .setColor(Main.accentColor);
+                    .setColor(Colors.ACCENT);
 
             interaction.replyEmbeds(embed.build()).queue();
         } catch (Exception e) {

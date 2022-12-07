@@ -2,6 +2,7 @@ package flustix.fluxifyed.modules.utility.commands;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -35,7 +36,7 @@ public class UserInfoSlashCommand extends SlashCommand {
         else title = m.getEffectiveName() + " (" + m.getUser().getAsTag() + ")";
 
         Color color = m.getColor();
-        if (color == null) color = new Color(Main.accentColor);
+        if (color == null) color = new Color(Colors.ACCENT);
 
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(title)

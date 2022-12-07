@@ -1,6 +1,6 @@
 package flustix.fluxifyed.modules.fun.utils.higherlower.components;
 
-import flustix.fluxifyed.Main;
+import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.modules.fun.utils.higherlower.HigherLowerUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
@@ -25,7 +25,7 @@ public class HigherLowerGame {
         String[] split = event.getComponentId().split(":");
 
         switch (split[1]) {
-            case "answer": {
+            case "answer" -> {
                 HigherLowerRound curRound = rounds.get(this.round);
                 boolean correct = Integer.parseInt(split[2]) == curRound.getCorrectOption();
                 EmbedBuilder embed;
@@ -35,12 +35,12 @@ public class HigherLowerGame {
                     embed = new EmbedBuilder()
                             .setTitle("Higher or Lower")
                             .setDescription("Correct!\nYou got it right!")
-                            .setColor(0x55FF55);
+                            .setColor(Colors.SUCCESS);
                 } else {
                     embed = new EmbedBuilder()
                             .setTitle("Higher or Lower")
                             .setDescription("Incorrect!\nYou got it wrong!")
-                            .setColor(0xFF5555);
+                            .setColor(Colors.ERROR);
                 }
 
                 embed.addField(curRound.getOption1().getName(), curRound.getOption1().getValue() + " Searches", true);
@@ -52,16 +52,15 @@ public class HigherLowerGame {
                                 Button.primary("higherlower:next", "Next Round"),
                                 Button.danger("higherlower:stop", "Stop Game")
                         ).build()).complete();
-                break;
             }
-            case "next":
+            case "next" -> {
                 if (!isFinished()) {
                     HigherLowerRound nextRound = rounds.get(this.round);
                     event.editMessage(createMessage(nextRound.getOption1(), nextRound.getOption2()).build()).complete();
                 } else {
                     EmbedBuilder embed = new EmbedBuilder()
                             .setTitle("Game Over")
-                            .setColor(Main.accentColor)
+                            .setColor(Colors.ACCENT)
                             .setDescription("You got " + this.correct + " out of " + this.rounds.size() + " correct!");
 
                     event.getInteraction().editMessage(new MessageEditBuilder()
@@ -72,11 +71,11 @@ public class HigherLowerGame {
 
                     HigherLowerUtils.endGame(event.getUser().getId());
                 }
-                break;
-            case "stop": {
+            }
+            case "stop" -> {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("Game Over")
-                        .setColor(Main.accentColor)
+                        .setColor(Colors.ACCENT)
                         .setDescription("You stopped the game!");
 
                 event.getInteraction().editMessage(new MessageEditBuilder()
@@ -86,7 +85,6 @@ public class HigherLowerGame {
                 event.getInteraction().getMessage().editMessageComponents().complete();
 
                 HigherLowerUtils.endGame(event.getUser().getId());
-                break;
             }
         }
     }
@@ -99,7 +97,7 @@ public class HigherLowerGame {
     private MessageEditBuilder createMessage(HigherLowerOption option1, HigherLowerOption option2) {
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Higher or Lower")
-                .setColor(Main.accentColor)
+                .setColor(Colors.ACCENT)
                 .setDescription("Which one has more results on google?")
                 .addField("Option 1", option1.getName(), true)
                 .addField("Option 2", option2.getName(), true)

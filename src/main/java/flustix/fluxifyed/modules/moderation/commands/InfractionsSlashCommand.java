@@ -1,8 +1,8 @@
 package flustix.fluxifyed.modules.moderation.commands;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.Autocomplete;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.database.Database;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -57,7 +57,7 @@ public class InfractionsSlashCommand extends SlashCommand {
             EmbedBuilder embed = new EmbedBuilder()
                     .setAuthor(target.getAsTag(), null, target.getAvatarUrl())
                     .setTitle("Infractions")
-                    .setColor(Main.accentColor);
+                    .setColor(Colors.ACCENT);
 
             ResultSet rs = Database.executeQuery(query, params);
             if (rs != null) {
@@ -83,7 +83,7 @@ public class InfractionsSlashCommand extends SlashCommand {
                     .setTitle(":x: Failed to show infractions!")
                     .addField(":bust_in_silhouette: User", target.getAsTag(), true)
                     .addField(":x: Error", ex.getMessage(), false)
-                    .setColor(Main.accentColor);
+                    .setColor(Colors.ACCENT);
 
             interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
         }

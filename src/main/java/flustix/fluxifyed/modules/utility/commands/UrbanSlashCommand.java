@@ -1,6 +1,7 @@
 package flustix.fluxifyed.modules.utility.commands;
 
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.modules.utility.utils.urban.UrbanUtils;
 import flustix.fluxifyed.modules.utility.utils.urban.components.UrbanDefinition;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -29,7 +30,7 @@ public class UrbanSlashCommand extends SlashCommand {
             EmbedBuilder embedBuilder = new EmbedBuilder()
                     .setTitle("Urban Dictionary")
                     .setDescription("No definition found for **" + word + "**.")
-                    .setColor(0xFF5555);
+                    .setColor(Colors.ERROR);
 
             interaction.replyEmbeds(embedBuilder.build()).setEphemeral(true).queue();
             return;
@@ -38,7 +39,7 @@ public class UrbanSlashCommand extends SlashCommand {
         EmbedBuilder embedBuilder = new EmbedBuilder()
                 .setTitle(definition.getWord())
                 .setDescription(definition.getDefinition().replace("[", "**").replace("]", "**"))
-                .setColor(0x1b2936)
+                .setColor(Colors.URBAN)
                 .addField(":star: Example", definition.getExample().replace("[", "**").replace("]", "**"), false)
                 .addField(":bust_in_silhouette: Author", definition.getAuthor(), true)
                 .addField(":arrow_up: Thumbs Up", String.valueOf(definition.getThumbsUp()), true)

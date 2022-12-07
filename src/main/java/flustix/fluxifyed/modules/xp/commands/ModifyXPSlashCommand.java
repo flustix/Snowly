@@ -1,7 +1,7 @@
 package flustix.fluxifyed.modules.xp.commands;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.settings.Settings;
@@ -45,7 +45,7 @@ public class ModifyXPSlashCommand extends SlashCommand {
                 .setAuthor(interaction.getUser().getAsTag(), null, interaction.getUser().getAvatarUrl())
                 .setTitle("Gave XP to " + user.getAsTag())
                 .addField(":1234: XP", amount + "", true)
-                .setColor(Main.accentColor);
+                .setColor(Colors.ACCENT);
 
         interaction.replyEmbeds(embed.build()).queue();
     }

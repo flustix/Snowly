@@ -1,7 +1,7 @@
 package flustix.fluxifyed.modules.fun.commands;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
@@ -15,7 +15,7 @@ public class CoinflipSlashCommand extends SlashCommand {
 
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle("Coinflip")
-                .setColor(Main.accentColor)
+                .setColor(Colors.ACCENT)
                 .setDescription("The coin landed on **" + result + "**!");
 
         interaction.replyEmbeds(embed.build()).queue();

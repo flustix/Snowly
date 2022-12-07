@@ -1,7 +1,7 @@
 package flustix.fluxifyed.modules.xp.commands;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -27,7 +27,7 @@ public class ToggleServerLevelUpSlashCommand extends SlashCommand {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Toggled Server Level Up Messages")
                     .addField(":1234: Level Up Messages", guild.levelUpMessagesEnabled() ? "Enabled" : "Disabled", true)
-                    .setColor(Main.accentColor);
+                    .setColor(Colors.ACCENT);
 
             interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
         } catch (Exception e) {

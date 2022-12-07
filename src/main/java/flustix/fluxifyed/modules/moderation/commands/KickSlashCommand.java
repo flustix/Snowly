@@ -2,6 +2,7 @@ package flustix.fluxifyed.modules.moderation.commands;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.database.Database;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -40,7 +41,7 @@ public class KickSlashCommand extends SlashCommand {
                         .addField(":bust_in_silhouette: User", target.getAsUser().getAsTag(), true)
                         .addField(":hammer: Kicked by", interaction.getUser().getAsTag(), true)
                         .addField(":scroll: Reason", reasonText, false)
-                        .setColor(Main.accentColor);
+                        .setColor(Colors.ACCENT);
 
                 interaction.replyEmbeds(embed.build()).queue();
                 Database.executeQuery("INSERT INTO infractions (guildid, userid, modid, type, content, time) VALUES (?, ?, ?, '?', '?', ?)", guild.getId(), target.getAsUser().getId(), interaction.getUser().getId(), "kick", Database.escape(reasonText), interaction.getTimeCreated().getLong(ChronoField.INSTANT_SECONDS) + "");
@@ -49,7 +50,7 @@ public class KickSlashCommand extends SlashCommand {
                         .setTitle(":x: Failed to kick user!")
                         .addField(":bust_in_silhouette: User", target.getAsUser().getAsTag(), true)
                         .addField(":x: Error", error.getMessage(), false)
-                        .setColor(Main.accentColor);
+                        .setColor(Colors.ACCENT);
 
                 interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
             });
@@ -58,7 +59,7 @@ public class KickSlashCommand extends SlashCommand {
                     .setTitle(":x: Failed to kick user!")
                     .addField(":bust_in_silhouette: User", target.getAsUser().getAsTag(), true)
                     .addField(":x: Error", e.getMessage(), false)
-                    .setColor(Main.accentColor);
+                    .setColor(Colors.ACCENT);
 
             interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
         }

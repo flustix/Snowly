@@ -2,15 +2,13 @@ package flustix.fluxifyed.modules.moderation.commands;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.utils.presets.EmbedPresets;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
-
-import java.util.List;
 
 public class ClearSlashCommand extends SlashCommand {
     public ClearSlashCommand() {
@@ -33,11 +31,11 @@ public class ClearSlashCommand extends SlashCommand {
                     EmbedBuilder infoEmbed = new EmbedBuilder()
                             .setAuthor(interaction.getUser().getAsTag(), null, interaction.getUser().getAvatarUrl())
                             .setTitle("Cleared " + amount + " messages")
-                            .setColor(Main.accentColor);
+                            .setColor(Colors.ACCENT);
 
                     EmbedBuilder successEmbed = new EmbedBuilder()
                             .setTitle("Done!")
-                            .setColor(Main.accentColor);
+                            .setColor(Colors.ACCENT);
 
                     hook.editOriginalEmbeds(successEmbed.build()).queue();
                     interaction.getChannel().sendMessageEmbeds(infoEmbed.build()).queue();
@@ -45,7 +43,7 @@ public class ClearSlashCommand extends SlashCommand {
             } catch (Exception e) {
                 EmbedBuilder errorEmbed = new EmbedBuilder()
                         .setTitle("Something went wrong!")
-                        .setColor(Main.accentColor);
+                        .setColor(Colors.ACCENT);
 
                 hook.editOriginalEmbeds(errorEmbed.build()).queue();
                 Main.LOGGER.error("Something went wrong while clearing messages!", e);

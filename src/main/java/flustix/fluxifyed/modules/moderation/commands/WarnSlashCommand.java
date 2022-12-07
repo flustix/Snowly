@@ -1,7 +1,7 @@
 package flustix.fluxifyed.modules.moderation.commands;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.database.Database;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -41,7 +41,7 @@ public class WarnSlashCommand extends SlashCommand {
                     .addField(":bust_in_silhouette: Moderator", interaction.getUser().getAsMention(), true)
                     .addField(":scroll: Reason", reason, false)
                     .setFooter("ID: " + user.getId())
-                    .setColor(Main.accentColor);
+                    .setColor(Colors.ACCENT);
 
             interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
         } catch (Exception ex) {
@@ -49,7 +49,7 @@ public class WarnSlashCommand extends SlashCommand {
                     .setTitle(":x: Failed to warn user!")
                     .addField(":bust_in_silhouette: User", user.getAsTag(), true)
                     .addField(":x: Error", ex.toString(), false)
-                    .setColor(Main.accentColor);
+                    .setColor(Colors.ACCENT);
 
             interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
         }

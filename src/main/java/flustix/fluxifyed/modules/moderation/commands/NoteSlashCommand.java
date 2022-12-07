@@ -1,7 +1,7 @@
 package flustix.fluxifyed.modules.moderation.commands;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
+import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.database.Database;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -40,14 +40,14 @@ public class NoteSlashCommand extends SlashCommand {
                     .setTitle(":information_source: Added note to user " + user.getAsTag() + "")
                     .addField(":scroll: Note", note, false)
                     .setFooter("ID: " + user.getId())
-                    .setColor(Main.accentColor);
+                    .setColor(Colors.ACCENT);
 
             interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
         } catch (Exception ex) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(":x: Failed to add note to user!")
                     .addField(":x: Error", ex.toString(), false)
-                    .setColor(Main.accentColor);
+                    .setColor(Colors.ACCENT);
 
             interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
         }
