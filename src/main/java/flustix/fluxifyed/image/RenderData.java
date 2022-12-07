@@ -7,7 +7,6 @@ import flustix.fluxifyed.utils.color.ColorUtils;
 import flustix.fluxifyed.utils.xp.XPUtils;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -43,7 +42,7 @@ public class RenderData {
         // role.-
         Color color = member.getColor();
         data.put("role.color", color == null ? "#ffffff" : String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue()));
-        data.put("role.name", member.getRoles().get(0).getName());
+        data.put("role.name", member.getRoles().size() == 0 ? "" : member.getRoles().get(0).getName());
 
         // xp.-
         XPGuild xpGuild = XP.getGuild(guild.getId());

@@ -1,5 +1,8 @@
 package flustix.fluxifyed.components;
 
+import flustix.fluxifyed.constants.Colors;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
@@ -51,6 +54,19 @@ public class SlashCommandList {
             }
 
             SlashCommand command = commands.get(moduleID).get(interaction.getName());
+
+            // check if the bot has the required permissions
+            Guild guild = interaction.getGuild();
+            if (guild != null && !guild.getSelfMember().hasPermission(command.getPermissions())) {
+                EmbedBuilder embed = new EmbedBuilder()
+                        .setTitle("Missing Permissions")
+                        .setDescription("The bot is missing the following permissions: " + command.getPermissions().toString())
+                        .setColor(Colors.ERROR);
+
+                interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
+                return;
+            }
+
             command.execute(interaction);
         } else
             interaction.reply("This command is not implemented!").setEphemeral(true).queue();

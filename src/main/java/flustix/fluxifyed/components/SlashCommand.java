@@ -15,6 +15,10 @@ public class SlashCommand {
     final String name;
     final String description;
     final List<Permission> requiredPermissions = new ArrayList<>();
+    /**
+     * The permissions required for the bot to execute the command.
+     */
+    final List<Permission> botPermissions = new ArrayList<>();
     final List<OptionData> options = new ArrayList<>();
     final HashMap<String, List<Autocomplete>> optionAutocompletes = new HashMap<>();
     final boolean guildOnly;
@@ -52,6 +56,10 @@ public class SlashCommand {
 
     public void addPermissions(Permission... perm) {
         requiredPermissions.addAll(Arrays.asList(perm));
+    }
+
+    public void addBotPermissions(Permission... perm) {
+        botPermissions.addAll(Arrays.asList(perm));
     }
 
     public void execute(SlashCommandInteraction interaction) {

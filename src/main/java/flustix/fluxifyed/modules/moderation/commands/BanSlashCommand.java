@@ -20,6 +20,7 @@ public class BanSlashCommand extends SlashCommand {
         addPermissions(Permission.BAN_MEMBERS);
         addOption(OptionType.USER, "target", "The user to ban", true, false);
         addOption(OptionType.STRING, "reason", "The reason for the ban", false, false);
+        addBotPermissions(Permission.BAN_MEMBERS);
     }
 
     public void execute(SlashCommandInteraction interaction) {

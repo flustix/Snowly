@@ -15,6 +15,7 @@ public class ClearSlashCommand extends SlashCommand {
         super("clear", "Clears the chat.", true);
         addPermissions(Permission.MESSAGE_MANAGE);
         addOption(OptionType.INTEGER, "amount", "The amount of messages to clear.", true, false);
+        addBotPermissions(Permission.MESSAGE_MANAGE);
     }
 
     public void execute(SlashCommandInteraction interaction) {

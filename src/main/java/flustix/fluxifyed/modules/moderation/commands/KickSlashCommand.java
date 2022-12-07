@@ -19,6 +19,7 @@ public class KickSlashCommand extends SlashCommand {
         addPermissions(Permission.KICK_MEMBERS);
         addOption(OptionType.USER, "target", "The user to kick", true, false);
         addOption(OptionType.STRING, "reason", "The reason for the ban", false, false);
+        addBotPermissions(Permission.KICK_MEMBERS);
     }
 
     public void execute(SlashCommandInteraction interaction) {
