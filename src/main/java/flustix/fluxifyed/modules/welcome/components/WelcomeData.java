@@ -32,7 +32,6 @@ public class WelcomeData {
                 channelId = rs.getString("channelid");
                 message = new WelcomeMessage(JsonParser.parseString(rs.getString("message")).getAsJsonObject());
                 roles = JsonParser.parseString(rs.getString("roles")).getAsJsonArray();
-                Main.LOGGER.info("Loaded welcome data for guild " + guildId + ".");
             }
         } catch (Exception ex) {
             Main.LOGGER.error("Error while loading welcome data for guild " + guildId + "!", ex);

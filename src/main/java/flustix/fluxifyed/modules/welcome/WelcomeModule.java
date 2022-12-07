@@ -17,8 +17,6 @@ public class WelcomeModule extends Module {
 
     @Override
     public void onGuildInit(Guild guild) {
-        super.onGuildInit(guild);
-
         welcomeDataMap.put(guild.getId(), new WelcomeData(guild.getId()));
     }
 
