@@ -28,7 +28,7 @@ public class UrbanSlashCommand extends SlashCommand {
         if (definition == null) {
             EmbedBuilder embedBuilder = new EmbedBuilder()
                     .setTitle("Urban Dictionary")
-                    .setDescription("No definition found for " + word + ".")
+                    .setDescription("No definition found for **" + word + "**.")
                     .setColor(0xFF5555);
 
             interaction.replyEmbeds(embedBuilder.build()).setEphemeral(true).queue();
