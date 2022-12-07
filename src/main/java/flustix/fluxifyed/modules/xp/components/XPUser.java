@@ -2,14 +2,18 @@ package flustix.fluxifyed.modules.xp.components;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.Database;
+import flustix.fluxifyed.image.ImageRenderer;
+import flustix.fluxifyed.image.RenderArgs;
+import flustix.fluxifyed.image.RenderData;
 import flustix.fluxifyed.modules.xp.XP;
-import flustix.fluxifyed.modules.xp.images.LevelUpImage;
 import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.xp.XPUtils;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.utils.FileUpload;
+
+import java.io.File;
 
 public class XPUser {
     private int xp = 0;
@@ -41,15 +45,11 @@ public class XPUser {
                     return;
                 }
 
-                if (LevelUpImage.create(
-                        member.getEffectiveAvatarUrl() + "?size=256",
-                        event.getMember().getEffectiveName(),
-                        level
-                )) {
+                if (ImageRenderer.renderImage(new RenderArgs("levelup", "levelup.png", new RenderData(member.getGuild(), member)))) {
                     if (level == 1) {
-                        event.getChannel().sendMessage("*You can disable this message for youself using </togglelevelup:1023272930295169156> (Toggles this on all servers using this bot)*").addFiles(FileUpload.fromData(LevelUpImage.file)).complete();
+                        event.getChannel().sendMessage("*You can disable this message for yourself using </togglelevelup:1023272930295169156> (Toggles this on all servers using this bot)*").addFiles(FileUpload.fromData(new File("levelup.png"))).complete();
                     } else {
-                        event.getChannel().sendFiles(FileUpload.fromData(LevelUpImage.file)).complete();
+                        event.getChannel().sendFiles(FileUpload.fromData(new File("levelup.png"))).complete();
                     }
                 } else {
                     event.getChannel().sendMessage("Congrats " + event.getAuthor().getAsMention() + " you leveled up to level " + level + "!").complete();
