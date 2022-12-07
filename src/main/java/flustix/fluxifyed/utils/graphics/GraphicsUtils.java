@@ -54,20 +54,23 @@ public class GraphicsUtils {
         Graphics2D graphics2D = scaledImage.createGraphics();
         graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
-        if (image.getWidth() < image.getHeight()) {
-            float factor = (float) width / image.getWidth();
-            int newHeight = (int) (image.getHeight() * factor);
-            int y = (height - newHeight) / 2;
+        float imageRatio = (float) image.getWidth() / image.getHeight();
+        float targetRatio = (float) width / height;
+        int targetWidth;
+        int targetHeight;
 
-            graphics2D.drawImage(image, 0, y, width, newHeight, null);
+        if (targetRatio > imageRatio) {
+            targetWidth = width;
+            targetHeight = (int) (width / imageRatio);
         } else {
-            float factor = (float) height / image.getHeight();
-            int newWidth = (int) (image.getWidth() * factor);
-            int x = (width - newWidth) / 2;
-
-            graphics2D.drawImage(image, x, 0, newWidth, height, null);
+            targetWidth = (int) (height * imageRatio);
+            targetHeight = height;
         }
 
+        int x = (width - targetWidth) / 2;
+        int y = (height - targetHeight) / 2;
+
+        graphics2D.drawImage(image, x, y, targetWidth, targetHeight, null);
         graphics2D.dispose();
         return scaledImage;
     }
