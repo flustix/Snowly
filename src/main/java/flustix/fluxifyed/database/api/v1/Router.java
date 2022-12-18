@@ -102,6 +102,7 @@ public class Router implements HttpHandler {
         headers.set("Access-Control-Allow-Origin", "*");
         headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        setSecurityHeaders(headers);
         final byte[] rawResponse = json.toString().getBytes(StandardCharsets.UTF_8);
         exchange.sendResponseHeaders(200, rawResponse.length);
         exchange.getResponseBody().write(rawResponse);
@@ -110,5 +111,13 @@ public class Router implements HttpHandler {
 
     public void addRoute(String path, Route route) {
         routes.put(path, route);
+    }
+
+    private void setSecurityHeaders(Headers headers) {
+        headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self';");
+        headers.set("X-Content-Type-Options", "nosniff");
+        headers.set("X-Frame-Options", "DENY");
+        headers.set("X-XSS-Protection", "1; mode=block");
+        headers.set("Referrer-Policy", "no-referrer");
     }
 }
