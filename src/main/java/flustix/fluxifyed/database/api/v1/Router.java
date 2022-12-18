@@ -119,5 +119,6 @@ public class Router implements HttpHandler {
         headers.set("X-Frame-Options", "DENY");
         headers.set("X-XSS-Protection", "1; mode=block");
         headers.set("Referrer-Policy", "no-referrer");
+        headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
     }
 }
