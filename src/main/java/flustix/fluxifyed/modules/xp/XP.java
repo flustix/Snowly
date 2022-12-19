@@ -5,6 +5,7 @@ import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.modules.xp.components.XPRole;
 import flustix.fluxifyed.modules.xp.components.XPUser;
+import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -27,10 +28,15 @@ public class XP {
             return;
         }
 
-        if (!Settings.getGuildSettings(event.getGuild().getId()).getBoolean("xp.enabled", true)) return;
+        GuildSettings settings = Settings.getGuildSettings(event.getGuild().getId());
+
+        if (!settings.getBoolean("xp.enabled", true)) return;
 
         XPUser user = guild.getUser(event.getAuthor().getId());
         int xp = new Random().nextInt(11) + 10;
+
+        xp *= settings.getInt("xp.multiplier", 1);
+
         user.addXP(xp, event);
     }
 
