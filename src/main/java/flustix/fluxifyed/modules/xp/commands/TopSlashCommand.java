@@ -16,7 +16,7 @@ public class TopSlashCommand extends SlashCommand {
         Guild g = interaction.getGuild();
         if (g == null) return;
 
-        if (!Settings.getGuildSettings(interaction.getGuild().getId()).moduleEnabled("xp")) {
+        if (!Settings.getGuildSettings(interaction.getGuild().getId()).getBoolean("xp.enabled", true)) {
             interaction.reply(":x: XP is disabled on this server.").setEphemeral(true).queue();
             return;
         }

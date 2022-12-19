@@ -1,7 +1,6 @@
 package flustix.fluxifyed.settings;
 
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.components.Module;
 import flustix.fluxifyed.database.Database;
 import net.dv8tion.jda.api.entities.Guild;
 
@@ -17,39 +16,20 @@ public class Settings {
         ResultSet rs = Database.executeQuery("SELECT * FROM guilds WHERE guildid = " + g.getId());
         if (rs == null) return;
 
-        GuildSettings guild = null;
-
         try {
             while (rs.next()) {
-                guild = new GuildSettings(rs.getString("guildid"));
-
-                for (Module module : Main.getModules()) {
-                    try {
-                        if (module.configurable)
-                            guild.setModuleEnabled(module.id, rs.getBoolean(module.id + "Module"));
-                    } catch (Exception ignored) {}
-                }
-
-                guilds.put(g.getId(), guild);
+                guilds.put(g.getId(), new GuildSettings(rs.getString("guildid")));
             }
         } catch (Exception e) {
             Main.LOGGER.error("Error while loading guild settings for guild '" + g.getName() + "' (" + g.getId() + ")", e);
-        }
-
-        if (guild == null) {
-            guild = new GuildSettings(g.getId());
-            guild.setup();
-            guilds.put(g.getId(), guild);
         }
     }
 
     public static GuildSettings getGuildSettings(String guildId) {
         GuildSettings guild = guilds.get(guildId);
 
-        if (guild == null) {
+        if (guild == null)
             guild = new GuildSettings(guildId);
-            guild.setup();
-        }
 
         return guild;
     }

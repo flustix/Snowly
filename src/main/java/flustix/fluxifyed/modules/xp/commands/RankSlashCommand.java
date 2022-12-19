@@ -14,7 +14,6 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.utils.FileUpload;
-import net.dv8tion.jda.api.utils.messages.MessageEditBuilder;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ public class RankSlashCommand extends SlashCommand {
         if (guild == null) return;
 
         interaction.replyEmbeds(EmbedPresets.loading.build()).queue((hook) -> {
-            if (!Settings.getGuildSettings(guild.getId()).moduleEnabled("xp")) {
+            if (!Settings.getGuildSettings(guild.getId()).getBoolean("xp.enabled", true)) {
                 hook.editOriginal(":x: XP is disabled on this server!").complete();
                 hook.editOriginalEmbeds(new ArrayList<>()).complete();
                 return;

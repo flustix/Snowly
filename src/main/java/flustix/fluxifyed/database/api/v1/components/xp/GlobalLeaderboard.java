@@ -25,7 +25,7 @@ public class GlobalLeaderboard {
             if (i.get() >= offset) {
                 GuildSettings settings = Settings.getGuildSettings(guildId);
 
-                if (settings.moduleEnabled("xp")) {
+                if (settings.getBoolean("xp.enabled", true)) {
                     int xp = 0;
 
                     for (XPUser user : guild.getTop()) {

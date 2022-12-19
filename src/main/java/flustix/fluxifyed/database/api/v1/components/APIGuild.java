@@ -34,7 +34,7 @@ public class APIGuild {
 
         GuildSettings settings = Settings.getGuildSettings(guild.getId());
         for (Module module : Main.getModules()) {
-            modules.put(module.id, settings.moduleEnabled(module.id));
+            modules.put(module.id, settings.getBoolean("xp.enabled", true));
         }
     }
 }

@@ -34,7 +34,7 @@ public class ModifyXPSlashCommand extends SlashCommand {
 
         XPGuild guild = XP.getGuild(g.getId());
 
-        if (!Settings.getGuildSettings(interaction.getGuild().getId()).moduleEnabled("xp")) {
+        if (!Settings.getGuildSettings(interaction.getGuild().getId()).getBoolean("xp.enabled", true)) {
             interaction.reply(":x: XP is disabled on this server!").queue();
             return;
         }

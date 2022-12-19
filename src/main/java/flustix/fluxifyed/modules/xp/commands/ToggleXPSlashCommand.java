@@ -21,11 +21,11 @@ public class ToggleXPSlashCommand extends SlashCommand {
             if (g == null) return;
             GuildSettings guild = Settings.getGuildSettings(g.getId());
 
-            guild.setModuleEnabled("xp", !guild.moduleEnabled("xp"));
+            guild.setSetting("xp.enabled", !guild.getBoolean("xp.enabled", true));
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Toggled XP")
-                    .addField(":1234: XP", guild.moduleEnabled("xp") ? "Enabled" : "Disabled", true)
+                    .addField(":1234: XP", guild.getBoolean("xp.enabled", true) ? "Enabled" : "Disabled", true)
                     .setColor(Colors.ACCENT);
 
             interaction.replyEmbeds(embed.build()).queue();

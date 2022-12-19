@@ -37,7 +37,7 @@ public class XPUser {
         if (XPUtils.calculateLevel(this.xp) > level) {
             updateLevel();
 
-            if (Settings.getUserSettings(id).levelUpMessagesEnabled() && Settings.getGuildSettings(gid).levelUpMessagesEnabled()) {
+            if (Settings.getUserSettings(id).levelUpMessagesEnabled() && Settings.getGuildSettings(gid).getBoolean("xp.levelup", true)) {
                 Member member = event.getMember();
 
                 if (member == null) {

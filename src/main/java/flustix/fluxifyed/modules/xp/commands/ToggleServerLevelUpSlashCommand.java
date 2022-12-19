@@ -22,11 +22,11 @@ public class ToggleServerLevelUpSlashCommand extends SlashCommand {
             if (g == null) return;
             GuildSettings guild = Settings.getGuildSettings(g.getId());
 
-            guild.setLevelUpMessagesEnabled(!guild.levelUpMessagesEnabled());
+            guild.setSetting("xp.levelup", !guild.getBoolean("xp.levelup", true));
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Toggled Server Level Up Messages")
-                    .addField(":1234: Level Up Messages", guild.levelUpMessagesEnabled() ? "Enabled" : "Disabled", true)
+                    .addField(":1234: Level Up Messages", guild.getBoolean("xp.levelup", true) ? "Enabled" : "Disabled", true)
                     .setColor(Colors.ACCENT);
 
             interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
