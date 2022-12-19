@@ -41,8 +41,8 @@ public class RankSlashCommand extends SlashCommand {
 
         interaction.replyEmbeds(EmbedPresets.loading.build()).queue((hook) -> {
             if (!Settings.getGuildSettings(guild.getId()).getBoolean("xp.enabled", true)) {
-                hook.editOriginal(":x: XP is disabled on this server!").complete();
-                hook.editOriginalEmbeds(new ArrayList<>()).complete();
+                hook.editOriginal(":x: XP is disabled on this server!").queue();
+                hook.editOriginalEmbeds(new ArrayList<>()).queue();
                 return;
             }
 
