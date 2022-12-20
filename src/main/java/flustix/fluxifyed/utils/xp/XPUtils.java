@@ -11,7 +11,7 @@ public class XPUtils {
     public static int calculateLevel(int xp, String formula) {
         switch (formula) {
             case "amari" -> {
-                return (int) Math.sqrt(xp / 20f - 35);
+                return (int) Math.sqrt((xp - 35) / 20f) + 1;
             }
             default -> {
                 return (int) Math.floor(Math.sqrt(xp / 100f));
@@ -29,7 +29,7 @@ public class XPUtils {
     public static int calculateXP(int level, String formula) {
         switch (formula) {
             case "amari" -> {
-                return (int) (20 * Math.pow(level, 2) + 35);
+                return (int)(20 * Math.pow(level - 1, 2) + 35);
             }
             default -> {
                 return 100 * (level * level);

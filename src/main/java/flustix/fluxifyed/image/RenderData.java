@@ -57,7 +57,7 @@ public class RenderData {
         int level = XPUtils.calculateLevel(xp, levelMode);
         int xpToNextLevel = XPUtils.calculateXP(level + 1, levelMode);
         int xpLeft = xpToNextLevel - xp;
-        float xpPercent = xp / (float) xpToNextLevel;
+        float xpPercent = (xp / (float) xpToNextLevel) * 100;
 
         data.put("xp.xp", xp + "");
         data.put("xp.left", xpLeft + "");
