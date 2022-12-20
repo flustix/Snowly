@@ -3,6 +3,8 @@ package flustix.fluxifyed.image;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.modules.xp.components.XPUser;
+import flustix.fluxifyed.settings.GuildSettings;
+import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.color.ColorUtils;
 import flustix.fluxifyed.utils.xp.XPUtils;
 import net.dv8tion.jda.api.entities.Guild;
@@ -48,10 +50,14 @@ public class RenderData {
         XPGuild xpGuild = XP.getGuild(guild.getId());
         XPUser xpUser = xpGuild.getUser(member.getId());
 
+        GuildSettings settings = Settings.getGuildSettings(guild.getId());
+        String levelMode = settings.getString("xp.levelMode", "default");
+
         int xp = xpUser.getXP();
-        int level = XPUtils.calculateLevel(xp);
-        int xpLeft = XPUtils.calculateXP(level + 1) - xp;
-        float xpPercent = (float) xp / XPUtils.calculateXP(level + 1) * 100;
+        int level = XPUtils.calculateLevel(xp, levelMode);
+        int xpToNextLevel = XPUtils.calculateXP(level + 1, levelMode);
+        int xpLeft = xpToNextLevel - xp;
+        float xpPercent = xp / (float) xpToNextLevel;
 
         data.put("xp.xp", xp + "");
         data.put("xp.left", xpLeft + "");
