@@ -6,10 +6,12 @@ import flustix.fluxifyed.image.ImageRenderer;
 import flustix.fluxifyed.image.RenderArgs;
 import flustix.fluxifyed.image.RenderData;
 import flustix.fluxifyed.modules.xp.XP;
+import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.xp.XPUtils;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.utils.FileUpload;
 
@@ -37,7 +39,20 @@ public class XPUser {
         if (XPUtils.calculateLevel(this.xp) > level) {
             updateLevel();
 
-            if (Settings.getUserSettings(id).levelUpMessagesEnabled() && Settings.getGuildSettings(gid).getBoolean("xp.levelup", true)) {
+            GuildSettings settings = Settings.getGuildSettings(gid);
+
+            if (Settings.getUserSettings(id).levelUpMessagesEnabled() && settings.getBoolean("xp.levelup", true)) {
+                String channelid = settings.getString("xp.channel", "");
+
+                if (channelid.isEmpty())
+                    channelid = event.getChannel().getId();
+
+                TextChannel channel = event.getGuild().getTextChannelById(channelid);
+
+                // backup if we cant find it with the id
+                if (channel == null)
+                    channel = event.getChannel().asTextChannel();
+
                 Member member = event.getMember();
 
                 if (member == null) {
@@ -47,12 +62,12 @@ public class XPUser {
 
                 if (ImageRenderer.renderImage(new RenderArgs("levelup", "levelup.png", new RenderData(member.getGuild(), member)))) {
                     if (level == 1) {
-                        event.getChannel().sendMessage("*You can disable this message for yourself using </togglelevelup:1023272930295169156> (Toggles this on all servers using this bot)*").addFiles(FileUpload.fromData(new File("levelup.png"))).complete();
+                        channel.sendMessage("*You can disable this message for yourself using </togglelevelup:1023272930295169156> (Toggles this on all servers using this bot)*").addFiles(FileUpload.fromData(new File("levelup.png"))).complete();
                     } else {
-                        event.getChannel().sendFiles(FileUpload.fromData(new File("levelup.png"))).complete();
+                        channel.sendFiles(FileUpload.fromData(new File("levelup.png"))).complete();
                     }
                 } else {
-                    event.getChannel().sendMessage("Congrats " + event.getAuthor().getAsMention() + " you leveled up to level " + level + "!").complete();
+                    channel.sendMessage("Congrats " + event.getAuthor().getAsMention() + " you leveled up to level " + level + "!").complete();
                 }
             }
         }
