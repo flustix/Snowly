@@ -44,7 +44,7 @@ public class XPUser {
 
         // check if the random value is in the range
         // if not, use the default values
-        if (randomXpMin - randomXpMax + 1 <= 0) {
+        if (randomXpMax - randomXpMin + 1 <= 0) {
             Main.LOGGER.error("Invalid xp range for guild " + gid);
             randomXpMin = 10;
             randomXpMax = 20;
