@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.sql.ResultSet;
 import java.util.HashMap;
-import java.util.Random;
 
 public class XP {
     private static final HashMap<String, XPGuild> guilds = new HashMap<>();
@@ -29,15 +28,10 @@ public class XP {
         }
 
         GuildSettings settings = Settings.getGuildSettings(event.getGuild().getId());
-
         if (!settings.getBoolean("xp.enabled", true)) return;
 
         XPUser user = guild.getUser(event.getAuthor().getId());
-        int xp = new Random().nextInt(11) + 10;
-
-        xp *= settings.getInt("xp.multiplier", 1);
-
-        user.addXP(xp, event);
+        user.addXP(event);
     }
 
     public static void initGuild(Guild newGuild) {

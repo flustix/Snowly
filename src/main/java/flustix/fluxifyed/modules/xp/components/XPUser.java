@@ -16,6 +16,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.utils.FileUpload;
 
 import java.io.File;
+import java.util.Random;
 
 public class XPUser {
     private int xp = 0;
@@ -30,16 +31,31 @@ public class XPUser {
         this.gid = gid;
     }
 
-    public void addXP(int xp, MessageReceivedEvent event) {
-        if (lastUpdate + 60000 > System.currentTimeMillis())
+    public void addXP(MessageReceivedEvent event) {
+        GuildSettings settings = Settings.getGuildSettings(gid);
+
+        int cooldown = settings.getInt("xp.cooldown", 60);
+        int randomXpMin = settings.getInt("xp.randomMin", 10);
+        int randomXpMax = settings.getInt("xp.randomMax", 20);
+        float multiplier = settings.getFloat("xp.multiplier", 1.0f);
+
+        if (lastUpdate + (cooldown * 1000f) > System.currentTimeMillis())
             return;
 
-        this.xp += xp;
+        // check if the random value is in the range
+        // if not, use the default values
+        if (randomXpMin - randomXpMax + 1 <= 0) {
+            Main.LOGGER.error("Invalid xp range for guild " + gid);
+            randomXpMin = 10;
+            randomXpMax = 20;
+        }
+
+        int xpToAdd = new Random().nextInt(randomXpMax - randomXpMin + 1) + randomXpMin;
+        xpToAdd *= multiplier;
+        this.xp += xpToAdd;
 
         if (XPUtils.calculateLevel(this.xp) > level) {
             updateLevel();
-
-            GuildSettings settings = Settings.getGuildSettings(gid);
 
             if (Settings.getUserSettings(id).levelUpMessagesEnabled() && settings.getBoolean("xp.levelup", true)) {
                 String channelid = settings.getString("xp.channel", "");
