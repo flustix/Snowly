@@ -80,7 +80,7 @@ public class ImageRenderer {
         f = replaceVars(f, data);
 
         float progress = Float.parseFloat(replaceVars("{xp.xp}", data));
-        w = (int) (w * progress);
+        w = (int) (w * (progress / 100f));
 
         g2d.setColor(ColorUtils.hexToRGBA(f));
         g2d.fillRoundRect(x, y, w, h, r, r);
