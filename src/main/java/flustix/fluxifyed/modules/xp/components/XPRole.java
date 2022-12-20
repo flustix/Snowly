@@ -1,19 +1,22 @@
 package flustix.fluxifyed.modules.xp.components;
 
+/**
+ * Used for both leveling up and multipliers
+ */
 public class XPRole {
     private final String id;
-    private final int level;
+    private final int value;
 
     public XPRole(String id, int level) {
         this.id = id;
-        this.level = level;
+        this.value = level;
     }
 
     public String getID() {
         return id;
     }
 
-    public int getLevel() {
-        return level;
+    public int getValue() {
+        return value;
     }
 }

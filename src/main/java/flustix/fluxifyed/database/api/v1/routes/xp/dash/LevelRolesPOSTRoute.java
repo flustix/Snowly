@@ -46,7 +46,7 @@ public class LevelRolesPOSTRoute implements Route {
                 roles.add(xpRole);
             }
 
-            guild.rebuildRoles(roles);
+            guild.rebuildLevelRoles(roles);
         } catch (Exception e) {
             return new APIResponse(400, "Invalid body.", null);
         }

@@ -56,7 +56,7 @@ public class XP {
         }
 
         while (users.next()) {
-            XPUser user = new XPUser(newGuild.getId(), users.getString("userid"));
+            XPUser user = new XPUser(guild, users.getString("userid"));
             user.setXP(users.getInt("xp"));
             guild.addUser(user);
         }
@@ -69,8 +69,13 @@ public class XP {
             return;
 
         while (roles.next()) {
-            XPRole role = new XPRole(roles.getString("roleid"), roles.getInt("level"));
-            guild.addRole(role);
+            String type = roles.getString("type");
+            XPRole role = new XPRole(roles.getString("roleid"), roles.getInt("value"));
+
+            switch (type) {
+                case "level" -> guild.addLevelRole(role);
+                case "multiplier" -> guild.addMultiplier(role);
+            }
         }
     }
 

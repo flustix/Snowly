@@ -5,7 +5,6 @@ import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.image.ImageRenderer;
 import flustix.fluxifyed.image.RenderArgs;
 import flustix.fluxifyed.image.RenderData;
-import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.xp.XPUtils;
@@ -16,23 +15,24 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.utils.FileUpload;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class XPUser {
     private int xp = 0;
-    private final String id;
-    private final String gid;
     private int level = 0;
-
+    private final String id;
+    private final XPGuild guild;
     private long lastUpdate = 0;
 
-    public XPUser(String gid, String id) {
+    public XPUser(XPGuild guild, String id) {
+        this.guild = guild;
         this.id = id;
-        this.gid = gid;
     }
 
     public void addXP(MessageReceivedEvent event) {
-        GuildSettings settings = Settings.getGuildSettings(gid);
+        GuildSettings settings = Settings.getGuildSettings(guild.getID());
 
         int cooldown = settings.getInt("xp.cooldown", 60);
         int randomXpMin = settings.getInt("xp.randomMin", 10);
@@ -45,13 +45,20 @@ public class XPUser {
         // check if the random value is in the range
         // if not, use the default values
         if (randomXpMax - randomXpMin + 1 <= 0) {
-            Main.LOGGER.error("Invalid xp range for guild " + gid);
+            Main.LOGGER.error("Invalid xp range for guild " + guild.getID());
             randomXpMin = 10;
             randomXpMax = 20;
         }
 
+        Member member = event.getMember();
+
+        if (member == null) {
+            Main.LOGGER.warn("Member is null?? (XPUser.addXP:LevelUPMessage) (" + guild.getID() + ":" + id + ")");
+            return;
+        }
+
         int xpToAdd = new Random().nextInt(randomXpMax - randomXpMin + 1) + randomXpMin;
-        xpToAdd *= multiplier;
+        xpToAdd *= getMultiplier(event, event.getMember().getRoles());
         this.xp += xpToAdd;
 
         if (XPUtils.calculateLevel(this.xp) > level) {
@@ -68,13 +75,6 @@ public class XPUser {
                 // backup if we cant find it with the id
                 if (channel == null)
                     channel = event.getChannel();
-
-                Member member = event.getMember();
-
-                if (member == null) {
-                    Main.LOGGER.warn("Member is null?? (XPUser.addXP:LevelUPMessage) (" + gid + ":" + id + ")");
-                    return;
-                }
 
                 try {
                     if (ImageRenderer.renderImage(new RenderArgs("levelup", "levelup.png", new RenderData(member.getGuild(), member)))) {
@@ -94,15 +94,8 @@ public class XPUser {
             }
         }
 
-        for (XPRole role : XP.getGuild(gid).getRoles()) {
-            if (level >= role.getLevel()) {
-                Member member = event.getMember();
-
-                if (member == null) {
-                    Main.LOGGER.warn("Member is null?? (XPUser.addXP:RoleCheck) (" + gid + ":" + id + ")");
-                    return;
-                }
-
+        for (XPRole role : guild.getLevelRoles()) {
+            if (level >= role.getValue()) {
                 Role r = event.getGuild().getRoleById(role.getID());
 
                 if (r == null) return; // doesn't exist anymore i think
@@ -128,12 +121,51 @@ public class XPUser {
         updateLevel();
     }
 
+    public float getMultiplier(MessageReceivedEvent event, List<Role> roles) {
+        GuildSettings settings = Settings.getGuildSettings(guild.getID());
+        float multiplier = settings.getFloat("xp.multiplier", 1.0f);
+
+        // multiply: multiply all multipliers together
+        // add: add all multipliers together
+        // max: use the highest multiplier
+        String mode = settings.getString("xp.multiplyMode", "add");
+
+        List<XPRole> hasRoles = new ArrayList<>();
+
+        for (XPRole role : guild.getMultipliers()) {
+            if (roles.contains(event.getGuild().getRoleById(role.getID()))) {
+                hasRoles.add(role);
+            }
+        }
+
+        switch (mode) {
+            case "multiply" -> {
+                for (XPRole role : hasRoles) {
+                    multiplier *= role.getValue();
+                }
+            }
+            case "add" -> {
+                for (XPRole role : hasRoles) {
+                    multiplier += role.getValue();
+                }
+            }
+            case "max" -> {
+                for (XPRole role : hasRoles) {
+                    multiplier = Math.max(multiplier, role.getValue());
+                }
+            }
+            default -> Main.LOGGER.error("Invalid xp multiply mode for guild " + guild.getID());
+        }
+
+        return multiplier;
+    }
+
     void updateLevel() {
         level = XPUtils.calculateLevel(xp);
     }
 
     public void updateXP() {
-        Database.executeQuery("INSERT INTO xp (guildid, userid, xp) VALUES ('" + gid + "', '" + id + "', " + xp + ") ON DUPLICATE KEY UPDATE xp = " + this.xp);
+        Database.executeQuery("INSERT INTO xp (guildid, userid, xp) VALUES ('" + guild.getID() + "', '" + id + "', " + xp + ") ON DUPLICATE KEY UPDATE xp = " + xp);
     }
 
     public int getXP() {
@@ -145,6 +177,6 @@ public class XPUser {
     }
 
     public String getGuildID() {
-        return gid;
+        return guild.getID();
     }
 }

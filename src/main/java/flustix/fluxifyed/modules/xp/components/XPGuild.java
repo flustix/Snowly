@@ -9,7 +9,8 @@ import java.util.List;
 public class XPGuild {
     private final String id;
     private final HashMap<String, XPUser> users = new HashMap<>();
-    private final List<XPRole> roles = new ArrayList<>();
+    private final List<XPRole> levelRoles = new ArrayList<>();
+    private final List<XPRole> multipliers = new ArrayList<>();
 
     public XPGuild(String id) {
         this.id = id;
@@ -19,7 +20,7 @@ public class XPGuild {
         XPUser user = users.get(id);
 
         if (user == null) {
-            user = new XPUser(this.id, id);
+            user = new XPUser(this, id);
             users.put(id, user);
         }
 
@@ -34,21 +35,25 @@ public class XPGuild {
         users.put(user.getID(), user);
     }
 
-    public void addRole(XPRole role) {
-        roles.add(role);
+    public void addLevelRole(XPRole role) {
+        levelRoles.add(role);
+    }
+
+    public void addMultiplier(XPRole role) {
+        multipliers.add(role);
     }
 
     /**
      * Removes all xp roles from the guild and adds the new ones
      */
-    public void rebuildRoles(List<XPRole> roles) {
-        this.roles.clear();
-        Database.executeQuery("DELETE FROM xpRoles WHERE guildid = ?", id);
+    public void rebuildLevelRoles(List<XPRole> newRoles) {
+        levelRoles.clear();
+        Database.executeQuery("DELETE FROM xpRoles WHERE guildid = ? AND type = 'level'", id);
 
-        this.roles.addAll(roles);
+        levelRoles.addAll(newRoles);
 
-        for (XPRole role : roles) {
-            Database.executeQuery("INSERT INTO xpRoles VALUES (?, ?, ?)", id, role.getID(), role.getLevel());
+        for (XPRole role : newRoles) {
+            Database.executeQuery("INSERT INTO xpRoles (guildid, roleid, value, type) VALUES (?, ?, ?, 'level')", id, role.getID(), role.getValue());
         }
     }
 
@@ -62,7 +67,11 @@ public class XPGuild {
         return id;
     }
 
-    public List<XPRole> getRoles() {
-        return roles;
+    public List<XPRole> getLevelRoles() {
+        return levelRoles;
+    }
+
+    public List<XPRole> getMultipliers() {
+        return multipliers;
     }
 }

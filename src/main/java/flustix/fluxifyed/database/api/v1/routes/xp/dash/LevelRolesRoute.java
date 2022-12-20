@@ -32,10 +32,10 @@ public class LevelRolesRoute implements Route {
 
         JsonArray json = new JsonArray();
 
-        for (XPRole role : guild.getRoles()) {
+        for (XPRole role : guild.getLevelRoles()) {
             JsonObject roleJson = new JsonObject();
             roleJson.addProperty("id", role.getID());
-            roleJson.addProperty("level", role.getLevel());
+            roleJson.addProperty("level", role.getValue());
             json.add(roleJson);
         }
 
