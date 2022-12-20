@@ -11,7 +11,7 @@ import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.xp.XPUtils;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.utils.FileUpload;
 
@@ -63,11 +63,11 @@ public class XPUser {
                 if (channelid.isEmpty())
                     channelid = event.getChannel().getId();
 
-                TextChannel channel = event.getGuild().getTextChannelById(channelid);
+                MessageChannel channel = event.getGuild().getTextChannelById(channelid);
 
                 // backup if we cant find it with the id
                 if (channel == null)
-                    channel = event.getChannel().asTextChannel();
+                    channel = event.getChannel();
 
                 Member member = event.getMember();
 
