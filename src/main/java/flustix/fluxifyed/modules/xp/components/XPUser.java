@@ -60,15 +60,21 @@ public class XPUser {
                     return;
                 }
 
-                if (ImageRenderer.renderImage(new RenderArgs("levelup", "levelup.png", new RenderData(member.getGuild(), member)))) {
-                    if (level == 1) {
-                        channel.sendMessage("*You can disable this message for yourself using </togglelevelup:1023272930295169156> (Toggles this on all servers using this bot)*").addFiles(FileUpload.fromData(new File("levelup.png"))).complete();
+                try {
+                    if (ImageRenderer.renderImage(new RenderArgs("levelup", "levelup.png", new RenderData(member.getGuild(), member)))) {
+                        if (level == 1) {
+                            channel.sendMessage("*You can disable this message for yourself using </togglelevelup:1023272930295169156> (Toggles this on all servers using this bot)*").addFiles(FileUpload.fromData(new File("levelup.png"))).complete();
+                        } else {
+                            channel.sendFiles(FileUpload.fromData(new File("levelup.png"))).complete();
+                        }
                     } else {
-                        channel.sendFiles(FileUpload.fromData(new File("levelup.png"))).complete();
+                        channel.sendMessage("Congrats " + event.getAuthor().getAsMention() + " you leveled up to level " + level + "!").complete();
                     }
-                } else {
-                    channel.sendMessage("Congrats " + event.getAuthor().getAsMention() + " you leveled up to level " + level + "!").complete();
+                } catch (Exception ex) {
+                    // probably cant send a message in that channel
+                    // todo: notify the guild owner
                 }
+
             }
         }
 
