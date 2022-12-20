@@ -59,7 +59,7 @@ public class XPGuild {
 
     public List<XPUser> getTop() {
         List<XPUser> top = new ArrayList<>(users.values().stream().toList());
-        top.sort((a, b) -> b.getXP() - a.getXP());
+        top.sort((a, b) -> (int) (b.getXP() - a.getXP()));
         return top;
     }
 

@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Random;
 
 public class XPUser {
-    private int xp = 0;
-    private int level = 0;
+    private long xp = 0;
+    private long level = 0;
     private final String id;
     private final XPGuild guild;
     private long lastUpdate = 0;
@@ -168,7 +168,7 @@ public class XPUser {
         Database.executeQuery("INSERT INTO xp (guildid, userid, xp) VALUES ('" + guild.getID() + "', '" + id + "', " + xp + ") ON DUPLICATE KEY UPDATE xp = " + xp);
     }
 
-    public int getXP() {
+    public long getXP() {
         return xp;
     }
 

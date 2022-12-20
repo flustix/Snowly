@@ -53,11 +53,11 @@ public class RenderData {
         GuildSettings settings = Settings.getGuildSettings(guild.getId());
         String levelMode = settings.getString("xp.levelMode", "default");
 
-        int xp = xpUser.getXP();
-        int level = XPUtils.calculateLevel(xp, levelMode);
-        int xpNeededForLevel = XPUtils.calculateXP(level, levelMode);
-        int xpToNextLevel = XPUtils.calculateXP(level + 1, levelMode);
-        int xpLeft = xpToNextLevel - xp;
+        long xp = xpUser.getXP();
+        long level = XPUtils.calculateLevel(xp, levelMode);
+        long xpNeededForLevel = XPUtils.calculateXP(level, levelMode);
+        long xpToNextLevel = XPUtils.calculateXP(level + 1, levelMode);
+        long xpLeft = xpToNextLevel - xp;
         float xpPercent = ((xp - xpNeededForLevel) / (float) (xpToNextLevel - xpNeededForLevel)) * 100;
 
         data.put("xp.xp", xp + "");

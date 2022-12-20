@@ -47,7 +47,7 @@ public class GuildLeaderboard {
         public final String username;
         public final String discriminator;
         public final String avatar;
-        public final int xp;
+        public final long xp;
 
         public LeaderboardUserEntry(User user, XPUser xpUser) {
             username = user.getName();

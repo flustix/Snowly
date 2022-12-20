@@ -15,8 +15,8 @@ import java.util.List;
 
 public class UserStats {
     public APIMember member;
-    public int level;
-    public int xp;
+    public long level;
+    public long xp;
     public int rank;
     public UserStatsGuild guild;
     public List<UserStatsChartEntry> chartEntries;
@@ -56,8 +56,8 @@ public class UserStats {
     }
 
     private static class UserStatsChartEntry {
-        public int level;
-        public int xp;
+        public long level;
+        public long xp;
         public int rank;
         public long time;
 
