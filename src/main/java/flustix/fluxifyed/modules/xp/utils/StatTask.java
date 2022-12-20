@@ -12,8 +12,6 @@ import java.util.concurrent.TimeUnit;
 public class StatTask {
     public static void run() {
         if (canRun()) {
-            Main.LOGGER.info("Running stat task...");
-
             for (XPGuild guild : XP.getGuilds().values()) {
                 int i = 1;
                 for (XPUser user : guild.getTop()) {
@@ -22,9 +20,8 @@ public class StatTask {
                 }
             }
 
-            Main.LOGGER.info("Uploaded stats to database. Deleting stats older than 30 days...");
-            Database.executeQuery("DELETE FROM xpStats WHERE time < " + (System.currentTimeMillis() - TimeUnit.DAYS.toMillis(30)));
-            Main.LOGGER.info("Done!");
+            Database.executeQuery("DELETE FROM xpStats WHERE time < " + (System.currentTimeMillis() - TimeUnit.DAYS.toMillis(90)));
+            Main.LOGGER.info("Updated xp stats!");
         }
     }
 
