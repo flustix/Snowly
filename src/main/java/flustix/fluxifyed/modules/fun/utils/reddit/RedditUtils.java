@@ -20,7 +20,7 @@ public class RedditUtils {
     /**
      *  <a href="https://github.com/reddit-archive/reddit/blob/master/r2/r2/models/subreddit.py#L114">Original regex</a>
      */
-    private static final String subRx = "/[A-Za-z0-9][A-Za-z0-9_]{2,20}/";
+    private static final String subRx = "[A-Za-z\\d]\\w{1,19}";
 
     public static RedditMessage getRedditPost(String subreddit, boolean channelNSFW) {
         RedditPost post = RedditUtils.getRandomPost(subreddit);
