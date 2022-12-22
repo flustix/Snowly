@@ -1,0 +1,30 @@
+plugins {
+    id 'application'
+    id "com.github.johnrengelman.shadow" version "5.2.0"
+}
+
+group = 'flustix'
+version = '2022.5.0'
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+mainClassName = 'flustix.fluxified.Main'
+
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+dependencies {
+    implementation 'net.dv8tion:JDA:5.0.+'
+    implementation 'com.google.code.gson:gson:2.10'
+    implementation 'ch.qos.logback:logback-classic:1.2.11'
+    implementation 'com.zaxxer:HikariCP:5.0.+'
+    implementation 'org.reflections:reflections:0.10.2'
+    implementation 'net.objecthunter:exp4j:0.4.8'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
