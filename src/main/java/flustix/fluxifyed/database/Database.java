@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import flustix.fluxifyed.Main;
+import org.intellij.lang.annotations.Language;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -29,7 +30,7 @@ public class Database {
         }
     }
 
-    public static ResultSet executeQuery(String query) {
+    public static ResultSet executeQuery(@Language("mysql") String query) {
         try {
             Connection connection = dataSource.getConnection();
             Statement statement = connection.createStatement();
@@ -42,7 +43,7 @@ public class Database {
         }
     }
 
-    public static ResultSet executeQuery(String query, List<Object> replaceables) {
+    public static ResultSet executeQuery(@Language("mysql") String query, List<Object> replaceables) {
         for (Object replaceable : replaceables) {
             query = query.replaceFirst("\\?", replaceable.toString());
         }
@@ -50,11 +51,11 @@ public class Database {
         return executeQuery(query);
     }
 
-    public static ResultSet executeQuery(String query, Object... replaceables) {
+    public static ResultSet executeQuery(@Language("mysql") String query, Object... replaceables) {
         return executeQuery(query, Arrays.stream(replaceables).toList());
     }
 
-    public static String escape(String str) {
+    public static String escape(@Language("mysql") String str) {
         return str.replace("\"", "\\\"")
                 .replace("'", "\\'")
                 .replace("`", "\\`")
