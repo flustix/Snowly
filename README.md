@@ -27,17 +27,18 @@
 - Utility
   - Server Info 
   - User Info 
+  - Welcome Messages
 - XP
   - Ranks
   - Leveling
   - Leaderboard
+  - Role Rewards
+  - Multipliers
 - Fun
   - Reddit
 
 ## Planned Features
 - A lot of customization
-- Welcome Messages
-- XP Role Rewards & Multipliers
 - More Moderation (Warns, Notes, Muting)
 - Server currency system with shops (for roles, and more)
 
