@@ -162,7 +162,7 @@ public class XPUser {
     }
 
     void updateLevel() {
-        String levelMode = Settings.getGuild(guild.getID()).getString("xp.levelMode", "default");
+        String levelMode = Settings.getGuildSettings(guild.getID()).getString("xp.levelMode", "default");
         level = XPUtils.calculateLevel(xp, levelMode);
     }
 
