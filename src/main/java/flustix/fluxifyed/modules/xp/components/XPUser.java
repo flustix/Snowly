@@ -38,6 +38,7 @@ public class XPUser {
         int randomXpMin = settings.getInt("xp.randomMin", 10);
         int randomXpMax = settings.getInt("xp.randomMax", 20);
         float multiplier = settings.getFloat("xp.multiplier", 1.0f);
+        String levelMode = settings.getString("xp.levelMode", "default");
 
         if (lastUpdate + (cooldown * 1000f) > System.currentTimeMillis())
             return;
@@ -61,7 +62,7 @@ public class XPUser {
         xpToAdd *= getMultiplier(event, event.getMember().getRoles());
         this.xp += xpToAdd;
 
-        if (XPUtils.calculateLevel(this.xp) > level) {
+        if (XPUtils.calculateLevel(this.xp, levelMode) > level) {
             updateLevel();
 
             if (Settings.getUserSettings(id).levelUpMessagesEnabled() && settings.getBoolean("xp.levelup", true)) {
@@ -161,7 +162,8 @@ public class XPUser {
     }
 
     void updateLevel() {
-        level = XPUtils.calculateLevel(xp);
+        String levelMode = Settings.getGuild(guild.getID()).getString("xp.levelMode", "default");
+        level = XPUtils.calculateLevel(xp, levelMode);
     }
 
     public void updateXP() {
