@@ -1,45 +1,21 @@
-[codefactor]: https://www.codefactor.io/repository/github/fluxifyed/fluxifyed
-[discord]: https://discord.gg/GaKKeWg
-[license]: https://github.com/Fluxifyed/Fluxifyed/blob/main/LICENSE
-[codefactor-shield]: https://www.codefactor.io/repository/github/fluxifyed/fluxifyed/badge
-[discord-shield]: https://img.shields.io/discord/553568657410883604?color=7289da&label=☕Flux'%20Café
-[license-shield]: https://img.shields.io/badge/License-MIT-white.svg
+<img src="https://fluxifyed.foxes4life.net/assets/images/fluxifyed.png" width="300">
 
-<img src="https://fluxifyed.foxes4life.net/assets/images/fluxifyed.png" width="200" height="200" align="left">
+# Fluxifyed
+A powerful, multi-purpose and feature-rich Discord bot designed to be very customizable and easy-to-use.
 
-<div align="center">
+## Commands
+Fluxifyed uses Discord's slash commands, which allows for easier customization of permissions and allowed channels. A full list of commands can be found on the [website](https://fluxifyed.foxes4life.net/commands).
 
-[ ![codefactor-shield][] ][codefactor]
-[ ![discord-shield][] ][discord]
-[ ![license-shield][] ][license]
-</div>
+Most common permissions (Send Messages, Attach Files, etc.) arent required when using slash commands, but if the bot requires an extra permission the user will be notified.
 
-<h1 align="center">Fluxifyed</h1>
-<p align="center">A powerful and feature-rich Discord bot</p>
+## Adding the bot
+The bot can be added using [this](https://fluxifyed.foxes4life.net/invite) link. This will only add it with the required permissions as giving bots the Administrator permission is not a good idea. (this counts for any bot)
 
-<br>
+## License
+This project is licensed under the [MIT License](/LICENSE).
 
-## Features
-- Moderation
-  - Ban 
-  - Kick
-  - Clear
-- Utility
-  - Server Info 
-  - User Info 
-  - Welcome Messages
-- XP
-  - Ranks
-  - Leveling
-  - Leaderboard
-  - Role Rewards
-  - Multipliers
-- Fun
-  - Reddit
-
-## Planned Features
-- A lot of customization
-- More Moderation (Warns, Notes, Muting)
-- Server currency system with shops (for roles, and more)
+## Useful Links
+- [Support Server](https://discord.gg/GaKKeWg)
+- [Documentation](https://fluxifyed.foxes4life.net/docs)
 
 ###### Copyright (C) 2022 Flustix
