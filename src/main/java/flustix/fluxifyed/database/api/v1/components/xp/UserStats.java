@@ -1,6 +1,7 @@
 package flustix.fluxifyed.database.api.v1.components.xp;
 
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.settings.*;
 import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.database.api.v1.components.APIMember;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
@@ -17,13 +18,16 @@ public class UserStats {
     public APIMember member;
     public long level;
     public long xp;
+    public long xpLeft;
     public int rank;
     public UserStatsGuild guild;
     public List<UserStatsChartEntry> chartEntries;
 
     public UserStats(XPUser xuser, XPGuild xguild) {
-        this.level = XPUtils.calculateLevel(xuser.getXP());
+    	GuildSettings settings = Settings.getGuildSettings(xguild.getID());
+        this.level = XPUtils.calculateLevel(xuser.getXP(), settings.getString("xp.levelMode", "default"));
         this.xp = xuser.getXP();
+        this.xpLeft = XPUtils.calculateXP(this.level + 1, settings.getString("xp.levelMode", "default")) - this.xp;
         this.rank = xguild.getTop().indexOf(xuser) + 1;
         this.guild = new UserStatsGuild(Main.getBot().getGuildById(xguild.getID()));
 
