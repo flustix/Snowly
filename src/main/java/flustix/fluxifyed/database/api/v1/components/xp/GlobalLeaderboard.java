@@ -5,6 +5,7 @@ import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPUser;
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
+import flustix.fluxifyed.utils.AvatarUtils;
 import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.ArrayList;
@@ -43,10 +44,10 @@ public class GlobalLeaderboard {
     }
 
     private static class GlobalLeaderboardEntry {
-        final String id;
-        final String name;
-        final String icon;
-        final int xp;
+        public final String id;
+        public final String name;
+        public final String icon;
+        public final int xp;
 
         public GlobalLeaderboardEntry(String gid, int xp) {
             this.id = gid;
@@ -56,7 +57,7 @@ public class GlobalLeaderboard {
 
             if (guild == null) {
                 this.name = "Unknown";
-                this.icon = "https://cdn.discordapp.com/embed/avatars/0.png";
+                this.icon = AvatarUtils.getDefaultAvatar();
             } else {
                 this.name = guild.getName();
                 this.icon = guild.getIconUrl();

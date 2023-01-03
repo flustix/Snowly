@@ -1,12 +1,14 @@
 package flustix.fluxifyed.database.api.v1.components.xp;
 
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.database.api.v1.components.APIMember;
 import flustix.fluxifyed.settings.*;
 import flustix.fluxifyed.utils.xp.XPUtils;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.modules.xp.components.XPUser;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 
 import java.util.ArrayList;
@@ -33,11 +35,11 @@ public class GuildLeaderboard {
             if (i == limit + offset) break;
 
             if (i >= offset) {
-                User user = guild.getJDA().getUserById(xpUser.getID());
+                Member member = guild.getMemberById(xpUser.getID());
 
                 try {
-                    if (user == null) user = Main.getBot().retrieveUserById(xpUser.getID()).complete();
-                    entries.add(new LeaderboardUserEntry(user, xpUser, levelMode));
+                    if (member == null) member = guild.retrieveMemberById(xpUser.getID()).complete();
+                    entries.add(new LeaderboardUserEntry(member, xpUser, levelMode));
                 } catch (NullPointerException e) {
                     entries.add(new LeaderboardUserEntry(xpUser, levelMode));
                 }
@@ -48,26 +50,20 @@ public class GuildLeaderboard {
     }
 
     private static class LeaderboardUserEntry {
-        public final String username;
-        public final String discriminator;
-        public final String avatar;
+        public final APIMember member;
         public final long xp;
         public final long level;
         public final long xpLeft;
 
-        public LeaderboardUserEntry(User user, XPUser xpUser, String levelMode) {
-            username = user.getName();
-            discriminator = user.getDiscriminator();
-            avatar = user.getEffectiveAvatarUrl();
+        public LeaderboardUserEntry(Member guildMember, XPUser xpUser, String levelMode) {
+            member = new APIMember(guildMember);
             xp = xpUser.getXP();
             level = XPUtils.calculateLevel(xp, levelMode);
             xpLeft = XPUtils.calculateXP(level + 1, levelMode) - xp;
         }
 
         public LeaderboardUserEntry(XPUser xpUser, String levelMode) {
-            username = "Unknown";
-            discriminator = "0000";
-            avatar = "https://cdn.discordapp.com/embed/avatars/0.png";
+            member = new APIMember(xpUser.getID());
             xp = xpUser.getXP();
             level = XPUtils.calculateLevel(xp, levelMode);
             xpLeft = XPUtils.calculateXP(level + 1, levelMode) - xp;

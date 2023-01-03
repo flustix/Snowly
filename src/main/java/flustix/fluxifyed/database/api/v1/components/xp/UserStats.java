@@ -19,24 +19,28 @@ public class UserStats {
     public long level;
     public long xp;
     public long xpLeft;
+    public long xpNeededForLevel;
     public int rank;
     public UserStatsGuild guild;
     public List<UserStatsChartEntry> chartEntries;
 
-    public UserStats(XPUser xuser, XPGuild xguild) {
-    	GuildSettings settings = Settings.getGuildSettings(xguild.getID());
-        this.level = XPUtils.calculateLevel(xuser.getXP(), settings.getString("xp.levelMode", "default"));
-        this.xp = xuser.getXP();
-        this.xpLeft = XPUtils.calculateXP(this.level + 1, settings.getString("xp.levelMode", "default")) - this.xp;
-        this.rank = xguild.getTop().indexOf(xuser) + 1;
-        this.guild = new UserStatsGuild(Main.getBot().getGuildById(xguild.getID()));
+    public UserStats(XPUser xpUser, XPGuild xpGuild) {
+    	GuildSettings settings = Settings.getGuildSettings(xpGuild.getID());
+        String levelMode = settings.getString("xp.levelMode", "default");
 
-        Guild guild = Main.getBot().getGuildById(xguild.getID());
+        this.level = XPUtils.calculateLevel(xpUser.getXP(), levelMode);
+        this.xp = xpUser.getXP();
+        this.xpLeft = XPUtils.calculateXP(this.level + 1, levelMode) - this.xp;
+        this.xpNeededForLevel = XPUtils.calculateXP(this.level, levelMode);
+        this.rank = xpGuild.getTop().indexOf(xpUser) + 1;
+        this.guild = new UserStatsGuild(Main.getBot().getGuildById(xpGuild.getID()));
+
+        Guild guild = Main.getBot().getGuildById(xpGuild.getID());
         if (guild != null) {
-            Member member = guild.getMemberById(xuser.getID());
+            Member member = guild.getMemberById(xpUser.getID());
             if (member == null) {
                 try { // user was not cached, fetch from discord
-                    member = guild.retrieveMemberById(xuser.getID()).complete();
+                    member = guild.retrieveMemberById(xpUser.getID()).complete();
                 } catch (Exception ignored) {}
             }
             if (member != null) {
@@ -46,12 +50,12 @@ public class UserStats {
 
         chartEntries = new ArrayList<>();
 
-        ResultSet rs = Database.executeQuery("SELECT * FROM xpStats WHERE userid = '" + xuser.getID() + "' AND guildid = '" + xguild.getID() + "' ORDER BY time DESC");
+        ResultSet rs = Database.executeQuery("SELECT * FROM xpStats WHERE userid = '" + xpUser.getID() + "' AND guildid = '" + xpGuild.getID() + "' ORDER BY time DESC");
 
         if (rs != null) {
             try {
                 while (rs.next()) {
-                    chartEntries.add(new UserStatsChartEntry(rs.getInt("xp"), rs.getInt("rank"), rs.getLong("time")));
+                    chartEntries.add(new UserStatsChartEntry(rs.getInt("xp"), rs.getInt("rank"), rs.getLong("time"), levelMode));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -65,8 +69,8 @@ public class UserStats {
         public int rank;
         public long time;
 
-        public UserStatsChartEntry(int xp, int rank, long time) {
-            this.level = XPUtils.calculateLevel(xp);
+        public UserStatsChartEntry(int xp, int rank, long time, String levelMode) {
+            this.level = XPUtils.calculateLevel(xp, levelMode);
             this.xp = xp;
             this.rank = rank;
             this.time = time;
