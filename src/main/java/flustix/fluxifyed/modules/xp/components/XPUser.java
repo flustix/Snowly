@@ -1,6 +1,7 @@
 package flustix.fluxifyed.modules.xp.components;
 
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.image.ImageRenderer;
 import flustix.fluxifyed.image.RenderArgs;
@@ -8,6 +9,7 @@ import flustix.fluxifyed.image.RenderData;
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
 import flustix.fluxifyed.utils.xp.XPUtils;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
@@ -22,9 +24,9 @@ import java.util.Random;
 public class XPUser {
     private long xp = 0;
     private long level = 0;
+    private long lastUpdate = 0;
     private final String id;
     private final XPGuild guild;
-    private long lastUpdate = 0;
 
     public XPUser(XPGuild guild, String id) {
         this.guild = guild;
@@ -38,10 +40,8 @@ public class XPUser {
         int randomXpMin = settings.getInt("xp.randomMin", 10);
         int randomXpMax = settings.getInt("xp.randomMax", 20);
         float multiplier = settings.getFloat("xp.multiplier", 1.0f);
-        String levelMode = settings.getString("xp.levelMode", "default");
 
-        if (lastUpdate + (cooldown * 1000f) > System.currentTimeMillis())
-            return;
+        if (lastUpdate + (cooldown * 1000f) > System.currentTimeMillis()) return;
 
         // check if the random value is in the range
         // if not, use the default values
@@ -62,30 +62,32 @@ public class XPUser {
         xpToAdd *= getMultiplier(event, event.getMember().getRoles());
         this.xp += xpToAdd;
 
-        if (XPUtils.calculateLevel(this.xp, levelMode) > level) {
+        if (calculateLevel() > level) {
             updateLevel();
 
-            if (Settings.getUserSettings(id).levelUpMessagesEnabled() && settings.getBoolean("xp.levelup", true)) {
-                String channelid = settings.getString("xp.channel", "");
+            String channelid = settings.getString("xp.channel", event.getChannel().getId());
+            MessageChannel channel = event.getGuild().getTextChannelById(channelid);
 
-                if (channelid.isEmpty())
-                    channelid = event.getChannel().getId();
+            // backup if we cant find it with the id
+            if (channel == null) channel = event.getChannel();
 
-                MessageChannel channel = event.getGuild().getTextChannelById(channelid);
+            boolean sameChannel = channel.getId().equals(event.getChannel().getId());
+            boolean showLevelUp = Settings.getUserSettings(id).levelUpMessagesEnabled() && settings.getBoolean("xp.levelup", true) || !sameChannel;
+            boolean showTooltip = level == 1 && sameChannel;
 
-                // backup if we cant find it with the id
-                if (channel == null)
-                    channel = event.getChannel();
-
+            if (showLevelUp) {
                 try {
                     if (ImageRenderer.renderImage(new RenderArgs("levelup", "levelup.png", new RenderData(member.getGuild(), member)))) {
-                        if (level == 1) {
+                        if (showTooltip) {
                             channel.sendMessage("*You can disable this message for yourself using </togglelevelup:1023272930295169156> (Toggles this on all servers using this bot)*").addFiles(FileUpload.fromData(new File("levelup.png"))).complete();
                         } else {
                             channel.sendFiles(FileUpload.fromData(new File("levelup.png"))).complete();
                         }
                     } else {
-                        channel.sendMessage("Congrats " + event.getAuthor().getAsMention() + " you leveled up to level " + level + "!").complete();
+                        // fallback if the image renderer fails
+                        EmbedBuilder builder = new EmbedBuilder().setTitle("Level up!").setDescription(member.getAsMention() + " has reached level " + level + "!").setColor(Colors.ACCENT).setThumbnail(member.getUser().getEffectiveAvatarUrl());
+
+                        channel.sendMessageEmbeds(builder.build()).complete();
                     }
                 } catch (Exception ex) {
                     // probably cant send a message in that channel
@@ -162,8 +164,12 @@ public class XPUser {
     }
 
     void updateLevel() {
+        level = calculateLevel();
+    }
+
+    private long calculateLevel() {
         String levelMode = Settings.getGuildSettings(guild.getID()).getString("xp.levelMode", "default");
-        level = XPUtils.calculateLevel(xp, levelMode);
+        return XPUtils.calculateLevel(xp, levelMode);
     }
 
     public void updateXP() {
