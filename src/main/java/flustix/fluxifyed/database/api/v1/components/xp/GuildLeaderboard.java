@@ -1,15 +1,13 @@
 package flustix.fluxifyed.database.api.v1.components.xp;
 
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.api.v1.components.APIMember;
 import flustix.fluxifyed.settings.*;
-import flustix.fluxifyed.utils.xp.XPUtils;
+import flustix.fluxifyed.modules.xp.utils.XPUtils;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.modules.xp.components.XPUser;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;

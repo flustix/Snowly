@@ -1,4 +1,4 @@
-package flustix.fluxifyed.utils.time;
+package flustix.fluxifyed.utils;
 
 public class TimeUtils {
     public static String format(long time) {

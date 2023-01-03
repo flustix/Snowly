@@ -1,6 +1,6 @@
 package flustix.fluxifyed.database.api.v1.components;
 
-import flustix.fluxifyed.utils.color.ColorUtils;
+import flustix.fluxifyed.utils.ColorUtils;
 
 import java.awt.*;
 

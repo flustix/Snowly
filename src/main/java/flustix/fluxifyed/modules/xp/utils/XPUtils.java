@@ -1,4 +1,4 @@
-package flustix.fluxifyed.utils.xp;
+package flustix.fluxifyed.modules.xp.utils;
 
 public class XPUtils {
     public static long calculateLevel(long xp) {

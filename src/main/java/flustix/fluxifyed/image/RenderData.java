@@ -5,8 +5,8 @@ import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.modules.xp.components.XPUser;
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
-import flustix.fluxifyed.utils.color.ColorUtils;
-import flustix.fluxifyed.utils.xp.XPUtils;
+import flustix.fluxifyed.utils.ColorUtils;
+import flustix.fluxifyed.modules.xp.utils.XPUtils;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 

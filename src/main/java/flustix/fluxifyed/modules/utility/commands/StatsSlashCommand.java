@@ -3,7 +3,7 @@ package flustix.fluxifyed.modules.utility.commands;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.constants.Colors;
-import flustix.fluxifyed.utils.time.TimeUtils;
+import flustix.fluxifyed.utils.TimeUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 

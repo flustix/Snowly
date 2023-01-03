@@ -1,4 +1,4 @@
-package flustix.fluxifyed.utils.module;
+package flustix.fluxifyed.utils;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.Module;

@@ -4,8 +4,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import flustix.fluxifyed.Main;
-import flustix.fluxifyed.utils.color.ColorUtils;
-import flustix.fluxifyed.utils.file.FileUtils;
+import flustix.fluxifyed.utils.ColorUtils;
+import flustix.fluxifyed.utils.FileUtils;
 import flustix.fluxifyed.utils.graphics.Alignment;
 import flustix.fluxifyed.utils.graphics.GraphicsUtils;
 

@@ -2,7 +2,7 @@ package flustix.fluxifyed.database.api.v1.types;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import flustix.fluxifyed.utils.json.JSONUtils;
+import flustix.fluxifyed.utils.JSONUtils;
 
 public class APIResponse {
     public final int code;

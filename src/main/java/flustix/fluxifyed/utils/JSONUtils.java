@@ -1,4 +1,4 @@
-package flustix.fluxifyed.utils.json;
+package flustix.fluxifyed.utils;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;

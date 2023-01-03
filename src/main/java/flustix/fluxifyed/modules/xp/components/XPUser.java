@@ -8,7 +8,7 @@ import flustix.fluxifyed.image.RenderArgs;
 import flustix.fluxifyed.image.RenderData;
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
-import flustix.fluxifyed.utils.xp.XPUtils;
+import flustix.fluxifyed.modules.xp.utils.XPUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;

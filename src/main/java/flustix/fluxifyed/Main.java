@@ -8,7 +8,7 @@ import flustix.fluxifyed.database.api.APIServer;
 import flustix.fluxifyed.listeners.GuildListener;
 import flustix.fluxifyed.listeners.ReadyListener;
 import flustix.fluxifyed.listeners.SlashCommandListener;
-import flustix.fluxifyed.utils.module.ModuleUtils;
+import flustix.fluxifyed.utils.ModuleUtils;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.Permission;

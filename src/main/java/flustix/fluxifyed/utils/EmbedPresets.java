@@ -1,4 +1,4 @@
-package flustix.fluxifyed.utils.presets;
+package flustix.fluxifyed.utils;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.constants.Colors;

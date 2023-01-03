@@ -1,4 +1,4 @@
-package flustix.fluxifyed.utils.file;
+package flustix.fluxifyed.utils;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;

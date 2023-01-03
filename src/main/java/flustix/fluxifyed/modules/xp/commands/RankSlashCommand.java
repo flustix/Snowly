@@ -6,7 +6,7 @@ import flustix.fluxifyed.image.ImageRenderer;
 import flustix.fluxifyed.image.RenderArgs;
 import flustix.fluxifyed.image.RenderData;
 import flustix.fluxifyed.settings.Settings;
-import flustix.fluxifyed.utils.presets.EmbedPresets;
+import flustix.fluxifyed.utils.EmbedPresets;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;

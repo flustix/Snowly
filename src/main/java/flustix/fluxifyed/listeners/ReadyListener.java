@@ -5,7 +5,7 @@ import flustix.fluxifyed.activity.ActivityUpdater;
 import flustix.fluxifyed.components.Module;
 import flustix.fluxifyed.components.SlashCommandList;
 import flustix.fluxifyed.settings.Settings;
-import flustix.fluxifyed.utils.time.TimeUtils;
+import flustix.fluxifyed.utils.TimeUtils;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

@@ -7,7 +7,7 @@ import flustix.fluxifyed.components.Module;
 import flustix.fluxifyed.database.api.v1.types.APIResponse;
 import flustix.fluxifyed.database.api.v1.types.APIRoute;
 import flustix.fluxifyed.database.api.v1.types.Route;
-import flustix.fluxifyed.utils.json.JSONUtils;
+import flustix.fluxifyed.utils.JSONUtils;
 
 import java.util.HashMap;
 

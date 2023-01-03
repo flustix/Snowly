@@ -1,4 +1,4 @@
-package flustix.fluxifyed.utils.color;
+package flustix.fluxifyed.utils;
 
 import java.awt.*;
 

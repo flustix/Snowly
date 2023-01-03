@@ -6,7 +6,7 @@ import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.database.api.v1.components.APIMember;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.modules.xp.components.XPUser;
-import flustix.fluxifyed.utils.xp.XPUtils;
+import flustix.fluxifyed.modules.xp.utils.XPUtils;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 

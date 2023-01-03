@@ -7,7 +7,7 @@ import flustix.fluxifyed.database.api.v1.components.APIGuild;
 import flustix.fluxifyed.database.api.v1.types.APIResponse;
 import flustix.fluxifyed.database.api.v1.types.APIRoute;
 import flustix.fluxifyed.database.api.v1.types.Route;
-import flustix.fluxifyed.utils.json.JSONUtils;
+import flustix.fluxifyed.utils.JSONUtils;
 import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.HashMap;
