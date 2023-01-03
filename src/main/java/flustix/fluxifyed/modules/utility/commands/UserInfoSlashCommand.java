@@ -6,6 +6,7 @@ import flustix.fluxifyed.constants.Colors;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
@@ -22,33 +23,33 @@ public class UserInfoSlashCommand extends SlashCommand {
 
     public void execute(SlashCommandInteraction interaction) {
         OptionMapping option = interaction.getOption("user");
-        Member m;
-        if (option == null) m = interaction.getMember();
-        else m = option.getAsMember();
+        Member member;
+        if (option == null) member = interaction.getMember();
+        else member = option.getAsMember();
 
-        if (m == null) {
+        if (member == null) {
             Main.LOGGER.warn("Guild Member intent is disabled!");
             return;
         }
 
         String title;
-        if (m.getEffectiveName().equals(m.getUser().getName())) title = m.getUser().getAsTag();
-        else title = m.getEffectiveName() + " (" + m.getUser().getAsTag() + ")";
+        if (member.getEffectiveName().equals(member.getUser().getName())) title = member.getUser().getAsTag();
+        else title = member.getEffectiveName() + " (" + member.getUser().getAsTag() + ")";
 
-        Color color = m.getColor();
+        Color color = member.getColor();
         if (color == null) color = new Color(Colors.ACCENT);
 
         EmbedBuilder embed = new EmbedBuilder()
                 .setTitle(title)
-                .setThumbnail(m.getEffectiveAvatarUrl())
+                .setThumbnail(member.getEffectiveAvatarUrl())
                 .setColor(color);
 
-        embed.addField(":1234: ID", m.getUser().getId(), true);
-        embed.addField(":clock1: Creation Date", "<t:" + m.getUser().getTimeCreated().toEpochSecond() + ":f>", true);
-        embed.addField(":clock1: Joined at", "<t:" + m.getTimeJoined().toEpochSecond() + ":f>", true);
+        embed.addField(":1234: ID", member.getUser().getId(), true);
+        embed.addField(":clock1: Creation Date", "<t:" + member.getUser().getTimeCreated().toEpochSecond() + ":f>", true);
+        embed.addField(":clock1: Joined at", "<t:" + member.getTimeJoined().toEpochSecond() + ":f>", true);
 
         List<String> roles = new ArrayList<>();
-        for (Role role : m.getRoles()) {
+        for (Role role : member.getRoles()) {
             roles.add(role.getAsMention());
         }
         String rolesString = String.join(", ", roles);
@@ -59,6 +60,10 @@ public class UserInfoSlashCommand extends SlashCommand {
         }
 
         embed.addField(":scroll: Roles", rolesString, false);
+
+        User.Profile profile = member.getUser().retrieveProfile().complete();
+
+        if (profile.getBannerUrl() != null) embed.setImage(profile.getBannerUrl() + "?size=2048");
 
         interaction.replyEmbeds(embed.build()).queue();
     }
