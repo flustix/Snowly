@@ -73,11 +73,11 @@ public class GuildSettings {
         Database.executeQuery("INSERT INTO guilds (guildid, data) VALUES ('" + guildId + "', '" + escaped + "') ON DUPLICATE KEY UPDATE data = '" + escaped + "'");
     }
 
-    public JsonElement getSetting(String setting) {
+    public JsonElement get(String setting) {
         return settings.getOrDefault(setting, null);
     }
 
-    public void setSetting(String setting, Object value) {
+    public void set(String setting, Object value) {
         JsonElement element;
 
         if (value instanceof String) {
@@ -95,7 +95,7 @@ public class GuildSettings {
     }
 
     public boolean getBoolean(String setting, boolean defaultValue) {
-        JsonElement element = getSetting(setting);
+        JsonElement element = get(setting);
         if (element == null) return defaultValue;
 
         try {
@@ -106,7 +106,7 @@ public class GuildSettings {
     }
 
     public String getString(String setting, String defaultValue) {
-        JsonElement element = getSetting(setting);
+        JsonElement element = get(setting);
         if (element == null) return defaultValue;
 
         try {
@@ -117,7 +117,7 @@ public class GuildSettings {
     }
 
     public int getInt(String setting, int defaultValue) {
-        JsonElement element = getSetting(setting);
+        JsonElement element = get(setting);
         if (element == null) return defaultValue;
 
         try {
@@ -128,7 +128,7 @@ public class GuildSettings {
     }
 
     public long getLong(String setting, long defaultValue) {
-        JsonElement element = getSetting(setting);
+        JsonElement element = get(setting);
         if (element == null) return defaultValue;
 
         try {
@@ -139,7 +139,7 @@ public class GuildSettings {
     }
 
     public double getDouble(String setting, double defaultValue) {
-        JsonElement element = getSetting(setting);
+        JsonElement element = get(setting);
         if (element == null) return defaultValue;
 
         try {
@@ -150,7 +150,7 @@ public class GuildSettings {
     }
 
     public float getFloat(String setting, float defaultValue) {
-        JsonElement element = getSetting(setting);
+        JsonElement element = get(setting);
         if (element == null) return defaultValue;
 
         try {

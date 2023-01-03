@@ -22,7 +22,7 @@ public class ToggleServerLevelUpSlashCommand extends SlashCommand {
             if (g == null) return;
             GuildSettings guild = Settings.getGuildSettings(g.getId());
 
-            guild.setSetting("xp.levelup", !guild.getBoolean("xp.levelup", true));
+            guild.set("xp.levelup", !guild.getBoolean("xp.levelup", true));
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Toggled Server Level Up Messages")
