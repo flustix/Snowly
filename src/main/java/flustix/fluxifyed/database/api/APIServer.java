@@ -1,7 +1,6 @@
 package flustix.fluxifyed.database.api;
 
 import com.sun.net.httpserver.HttpServer;
-import flustix.fluxifyed.database.api.v1.Router;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
