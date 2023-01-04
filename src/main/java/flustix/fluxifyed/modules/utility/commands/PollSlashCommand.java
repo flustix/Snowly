@@ -15,7 +15,6 @@ import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 public class PollSlashCommand extends SlashCommand {
     public PollSlashCommand() {
         super("poll", "Create a poll", true);
-        addPermissions(Permission.MANAGE_CHANNEL);
         addOption(OptionType.STRING, "question", "The question to ask", true, false);
         addOption(OptionType.STRING, "option1", "The first option", true, false);
         addOption(OptionType.STRING, "option2", "The second option", true, false);
@@ -36,17 +35,18 @@ public class PollSlashCommand extends SlashCommand {
                 .setTitle(question)
                 .setColor(Colors.ACCENT)
                 .addField(option1, "0 votes", true)
-                .addField(option2, "0 votes", true);
+                .addField(option2, "0 votes", true)
+                .setFooter("Poll created by " + interaction.getUser().getAsTag());
 
         MessageCreateBuilder message = new MessageCreateBuilder()
                 .setEmbeds(embed.build())
                 .addActionRow(Button.primary("poll:1", option1),
-                        Button.primary("poll:2", option2),
+                        Button.secondary("poll:2", option2),
                         Button.danger("poll:end", "End Poll"));
 
         interaction.getChannel().sendMessage(message.build()).queue(msg -> {
             interaction.reply("Poll created!").setEphemeral(true).queue();
-            PollListener.addPoll(msg.getId(), new PollInstance(question, option1, option2));
+            PollListener.addPoll(msg.getId(), new PollInstance(interaction.getUser().getId(), question, option1, option2));
         });
     }
 }

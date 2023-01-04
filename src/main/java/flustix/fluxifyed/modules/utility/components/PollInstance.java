@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PollInstance {
+    private final String creator;
     private final String question;
     private final String option1;
     private final String option2;
@@ -17,7 +18,8 @@ public class PollInstance {
     private int option1Votes = 0;
     private int option2Votes = 0;
 
-    public PollInstance(String question, String option1, String option2) {
+    public PollInstance(String creator, String question, String option1, String option2) {
+        this.creator = creator;
         this.question = question;
         this.option1 = option1;
         this.option2 = option2;
@@ -59,5 +61,9 @@ public class PollInstance {
 
         event.editMessage(message.build()).queue();
         event.getInteraction().getMessage().editMessageComponents().queue();
+    }
+
+    public String getCreator() {
+        return creator;
     }
 }

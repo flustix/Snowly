@@ -28,7 +28,7 @@ public class PollListener extends ListenerAdapter {
                     return;
                 }
 
-                if (event.getMember().hasPermission(Permission.MANAGE_CHANNEL)) {
+                if (event.getMember().hasPermission(Permission.MANAGE_CHANNEL) || poll.getCreator().equals(event.getUser().getId())) {
                     poll.end(event);
                     polls.remove(event.getMessageId());
                 } else {
