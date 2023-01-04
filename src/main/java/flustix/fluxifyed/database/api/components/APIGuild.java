@@ -24,13 +24,7 @@ public class APIGuild {
         icon = guild.getIconUrl();
         banner = guild.getBannerUrl();
         splash = guild.getSplashUrl();
-
-        if (guild.getOwner() != null) {
-            owner = guild.getOwner().getUser().getAsTag();
-        } else {
-            Main.LOGGER.warn("Guild Member intent is disabled!");
-            owner = "0";
-        }
+        owner = guild.getOwnerId();
 
         GuildSettings settings = Settings.getGuildSettings(guild.getId());
         for (Module module : Main.getModules()) {

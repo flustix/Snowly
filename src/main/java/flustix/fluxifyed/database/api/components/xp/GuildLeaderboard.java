@@ -51,6 +51,7 @@ public class GuildLeaderboard {
         public final APIMember member;
         public final long xp;
         public final long level;
+        public final long xpNeededForLevel;
         public final long xpLeft;
 
         public LeaderboardUserEntry(Member guildMember, XPUser xpUser, String levelMode) {
@@ -58,6 +59,7 @@ public class GuildLeaderboard {
             xp = xpUser.getXP();
             level = XPUtils.calculateLevel(xp, levelMode);
             xpLeft = XPUtils.calculateXP(level + 1, levelMode) - xp;
+            xpNeededForLevel = XPUtils.calculateXP(level, levelMode);
         }
 
         public LeaderboardUserEntry(XPUser xpUser, String levelMode) {
@@ -65,6 +67,7 @@ public class GuildLeaderboard {
             xp = xpUser.getXP();
             level = XPUtils.calculateLevel(xp, levelMode);
             xpLeft = XPUtils.calculateXP(level + 1, levelMode) - xp;
+            xpNeededForLevel = XPUtils.calculateXP(level, levelMode);
         }
     }
 }
