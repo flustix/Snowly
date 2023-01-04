@@ -45,31 +45,49 @@ public class SlashCommandList {
     }
 
     public static void execute(SlashCommandInteractionEvent interaction) {
-        String moduleID = commandMap.get(interaction.getName());
+        try {String moduleID = commandMap.get(interaction.getName());
 
-        if (commands.containsKey(moduleID)) {
-            if (!commands.get(moduleID).containsKey(interaction.getName())) {
+            if (commands.containsKey(moduleID)) {
+                if (!commands.get(moduleID).containsKey(interaction.getName())) {
+                    interaction.reply("This command is not implemented!").setEphemeral(true).queue();
+                    return;
+                }
+
+                SlashCommand command = commands.get(moduleID).get(interaction.getName());
+
+                // check if the bot has the required permissions
+                Guild guild = interaction.getGuild();
+                if (guild != null && !guild.getSelfMember().hasPermission(command.getPermissions())) {
+                    EmbedBuilder embed = new EmbedBuilder()
+                            .setTitle("Missing Permissions")
+                            .setDescription("The bot is missing the following permissions: " + command.getPermissions().toString())
+                            .setColor(Colors.ERROR);
+
+                    interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
+                    return;
+                }
+
+                command.execute(interaction);
+            } else
                 interaction.reply("This command is not implemented!").setEphemeral(true).queue();
-                return;
-            }
+        } catch (Exception e) {
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle("An error occurred!")
+                    .setDescription("Please report this to the developer!")
+                    .setColor(Colors.ERROR);
 
-            SlashCommand command = commands.get(moduleID).get(interaction.getName());
+            StringBuilder stackTrace = new StringBuilder(e + "\n");
+            for (StackTraceElement element : e.getStackTrace())
+                stackTrace.append("    ").append(element.toString()).append("\n");
 
-            // check if the bot has the required permissions
-            Guild guild = interaction.getGuild();
-            if (guild != null && !guild.getSelfMember().hasPermission(command.getPermissions())) {
-                EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("Missing Permissions")
-                        .setDescription("The bot is missing the following permissions: " + command.getPermissions().toString())
-                        .setColor(Colors.ERROR);
+            if (stackTrace.length() > 1000)
+                stackTrace = new StringBuilder(stackTrace.substring(0, 997)).append("...");
 
-                interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
-                return;
-            }
+            embed.addField("Stack Trace", "```" + stackTrace + "```", false);
 
-            command.execute(interaction);
-        } else
-            interaction.reply("This command is not implemented!").setEphemeral(true).queue();
+            interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
+        }
+
     }
 
     public static SlashCommand getCommand(String commandName) {
