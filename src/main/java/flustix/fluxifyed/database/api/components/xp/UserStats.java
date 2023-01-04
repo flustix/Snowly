@@ -48,6 +48,10 @@ public class UserStats {
             }
         }
 
+        if (member == null) {
+            member = new APIMember(xpUser.getID());
+        }
+
         chartEntries = new ArrayList<>();
 
         ResultSet rs = Database.executeQuery("SELECT * FROM xpStats WHERE userid = '" + xpUser.getID() + "' AND guildid = '" + xpGuild.getID() + "' ORDER BY time DESC");
