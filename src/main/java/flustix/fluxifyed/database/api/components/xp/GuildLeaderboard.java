@@ -38,7 +38,7 @@ public class GuildLeaderboard {
                 try {
                     if (member == null) member = guild.retrieveMemberById(xpUser.getID()).complete();
                     entries.add(new LeaderboardUserEntry(member, xpUser, levelMode));
-                } catch (NullPointerException e) {
+                } catch (Exception e) {
                     entries.add(new LeaderboardUserEntry(xpUser, levelMode));
                 }
             }
