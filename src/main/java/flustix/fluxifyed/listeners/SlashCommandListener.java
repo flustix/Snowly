@@ -5,8 +5,11 @@ import flustix.fluxifyed.components.SlashCommandList;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class SlashCommandListener extends ListenerAdapter {
     @Override
@@ -23,6 +26,8 @@ public class SlashCommandListener extends ListenerAdapter {
         if (optionMapping == null) return; // shouldn't that return "" if its empty?
         String input = optionMapping.getAsString();
 
-        event.replyChoices(command.handleAutocomplete(option, input)).complete();
+        List<Command.Choice> choices = command.handleAutocomplete(event, option, input);
+        if (choices == null) choices = List.of();
+        event.replyChoices(choices).complete();
     }
 }

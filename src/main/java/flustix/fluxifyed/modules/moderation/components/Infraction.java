@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.util.Date;
 
 public class Infraction {
-    private String id;
+    private int id;
     private final InfractionType type;
 
     private final String guild;
@@ -34,18 +34,22 @@ public class Infraction {
 
         try {
             if (rs.next()) {
-                setId(rs.getString("id"));
+                setId(rs.getInt("id"));
             }
         } catch (Exception e) {
             Main.LOGGER.error("Error while retrieving infraction id from database", e);
         }
     }
 
-    public void setId(String id) {
+    public void removeFromDatabase() {
+        Database.executeQuery("DELETE FROM infractions WHERE id = '?'", id);
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

@@ -37,7 +37,7 @@ public class ModerationModule extends Module {
                         rs.getString("content"),
                         rs.getLong("time")
                 );
-                infraction.setId(rs.getString("id"));
+                infraction.setId(rs.getInt("id"));
                 infractions.add(infraction);
             }
         } catch (Exception e) {
@@ -64,5 +64,9 @@ public class ModerationModule extends Module {
 
     public static List<Infraction> getInfractions(String guild, String user, InfractionType type) {
         return infractions.stream().filter(infraction -> infraction.getGuild().equals(guild) && infraction.getUser().equals(user) && infraction.getType().equals(type)).collect(Collectors.toList());
+    }
+
+    public static Infraction getInfraction(int id) {
+        return infractions.stream().filter(infraction -> infraction.getId() == id).findFirst().orElse(null);
     }
 }

@@ -1,6 +1,7 @@
 package flustix.fluxifyed.components;
 
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
@@ -66,7 +67,7 @@ public class SlashCommand {
         interaction.reply("This command is not implemented yet.").complete();
     }
 
-    public List<Command.Choice> handleAutocomplete(String option, String input) {
+    public List<Command.Choice> handleAutocomplete(CommandAutoCompleteInteractionEvent event, String option, String input) {
         List<Command.Choice> choices = new ArrayList<>();
 
         for (Autocomplete choice : optionAutocompletes.getOrDefault(option, new ArrayList<>())) {
