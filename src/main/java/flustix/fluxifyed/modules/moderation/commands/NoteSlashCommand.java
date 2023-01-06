@@ -2,7 +2,8 @@ package flustix.fluxifyed.modules.moderation.commands;
 
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.constants.Colors;
-import flustix.fluxifyed.database.Database;
+import flustix.fluxifyed.modules.moderation.ModerationModule;
+import flustix.fluxifyed.modules.moderation.components.Infraction;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
@@ -10,8 +11,6 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
-
-import java.time.temporal.ChronoField;
 
 public class NoteSlashCommand extends SlashCommand {
     public NoteSlashCommand() {
@@ -34,7 +33,8 @@ public class NoteSlashCommand extends SlashCommand {
         if (guild == null) return;
 
         try {
-            Database.executeQuery("INSERT INTO infractions (guildid, userid, modid, type, content, time) VALUES (?, ?, ?, '?', '?', ?)", guild.getId(), user.getId(), interaction.getUser().getId(), "note", Database.escape(note), interaction.getTimeCreated().getLong(ChronoField.INSTANT_SECONDS) + "");
+            Infraction infraction = new Infraction(guild.getId(), user.getId(), interaction.getUser().getId(), "note", note, System.currentTimeMillis());
+            ModerationModule.addInfraction(infraction);
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(":information_source: Added note to user " + user.getAsTag() + "")

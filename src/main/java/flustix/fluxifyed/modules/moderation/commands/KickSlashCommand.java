@@ -3,15 +3,14 @@ package flustix.fluxifyed.modules.moderation.commands;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.constants.Colors;
-import flustix.fluxifyed.database.Database;
+import flustix.fluxifyed.modules.moderation.ModerationModule;
+import flustix.fluxifyed.modules.moderation.components.Infraction;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
-
-import java.time.temporal.ChronoField;
 
 public class KickSlashCommand extends SlashCommand {
     public KickSlashCommand() {
@@ -45,7 +44,9 @@ public class KickSlashCommand extends SlashCommand {
                         .setColor(Colors.ACCENT);
 
                 interaction.replyEmbeds(embed.build()).queue();
-                Database.executeQuery("INSERT INTO infractions (guildid, userid, modid, type, content, time) VALUES (?, ?, ?, '?', '?', ?)", guild.getId(), target.getAsUser().getId(), interaction.getUser().getId(), "kick", Database.escape(reasonText), interaction.getTimeCreated().getLong(ChronoField.INSTANT_SECONDS) + "");
+
+                Infraction infraction = new Infraction(guild.getId(), target.getAsUser().getId(), interaction.getUser().getId(), "kick", reasonText, System.currentTimeMillis());
+                ModerationModule.addInfraction(infraction);
             }, (error) -> {
                 EmbedBuilder embed = new EmbedBuilder()
                         .setTitle(":x: Failed to kick user!")

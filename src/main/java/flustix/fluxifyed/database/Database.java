@@ -55,7 +55,7 @@ public class Database {
         return executeQuery(query, Arrays.stream(replaceables).toList());
     }
 
-    public static String escape(@Language("mysql") String str) {
+    public static String escape(String str) {
         return str.replace("\"", "\\\"")
                 .replace("'", "\\'")
                 .replace("`", "\\`")

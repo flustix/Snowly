@@ -3,27 +3,25 @@ package flustix.fluxifyed.modules.moderation.commands;
 import flustix.fluxifyed.components.Autocomplete;
 import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.constants.Colors;
-import flustix.fluxifyed.database.Database;
+import flustix.fluxifyed.modules.moderation.ModerationModule;
+import flustix.fluxifyed.modules.moderation.components.Infraction;
+import flustix.fluxifyed.modules.moderation.types.InfractionType;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 public class InfractionsSlashCommand extends SlashCommand {
     public InfractionsSlashCommand() {
         super("infractions", "Shows the infractions of a user.", true);
-        addPermissions(Permission.MODERATE_MEMBERS);
         addOption(OptionType.USER, "target", "The user to show the infractions of.", true, false);
         addOption(OptionType.STRING, "type", "The type of infractions to show.", false, true);
         addOption(OptionType.INTEGER, "page", "The page of infractions to show.", false, false);
-        addAutocomplete("type", new Autocomplete("Warn", "warn"), new Autocomplete("Note", "note"), new Autocomplete("Kick", "kick"), new Autocomplete("Ban", "ban"));
+        addAutocomplete("type", new Autocomplete("Warn", "warn"), new Autocomplete("Note", "note"), new Autocomplete("Kick", "kick"), new Autocomplete("Ban", "ban"), new Autocomplete("Mute", "mute"));
     }
 
     public void execute(SlashCommandInteraction interaction) {
@@ -39,42 +37,38 @@ public class InfractionsSlashCommand extends SlashCommand {
         if (guild == null) return;
 
         try {
-            List<String> params = new ArrayList<>();
-            params.add(guild.getId());
-            params.add(target.getId());
-
-            String query = "SELECT * FROM infractions WHERE guildid = ? AND userid = ?";
-            if (!type.isEmpty()) {
-                query += " AND type = '?'";
-                params.add(type);
-            }
-            query += " ORDER BY time DESC LIMIT 10 OFFSET ?";
-
-            params.add((page - 1) * 10 + "");
-
-            int count = 0;
-
             EmbedBuilder embed = new EmbedBuilder()
                     .setAuthor(target.getAsTag(), null, target.getAvatarUrl())
                     .setTitle("Infractions")
                     .setColor(Colors.ACCENT);
 
-            ResultSet rs = Database.executeQuery(query, params);
-            if (rs != null) {
-                while (rs.next()) {
-                    count++;
-                    String infractionType = rs.getString("type");
-                    String content = rs.getString("content");
-                    String moderator = rs.getString("modid");
-                    String time = rs.getString("time");
+            List<Infraction> infractions;
 
-                    embed.addField(getInfractionType(infractionType) + " <t:" + time + ":f>", "Reason: " + content + "" +
-                            " | Moderator: <@" + moderator + ">", false);
-                }
+            if (type.isEmpty()) {
+                infractions = ModerationModule.getInfractions(guild.getId(), target.getId());
+            } else {
+                infractions = ModerationModule.getInfractions(guild.getId(), target.getId(), InfractionType.fromString(type));
             }
 
-            if (count == 0) {
-                embed.setDescription("No infractions found.");
+            int pages = (int) Math.ceil(infractions.size() / 10.0);
+            page = Math.min(page, pages);
+
+            if (infractions.size() == 0) {
+                if (type.isEmpty())
+                    embed.setDescription("No infractions found.");
+                else
+                    embed.setDescription("No infractions of type **" + type + "** found.");
+            } else {
+                embed.setFooter("Page " + page + "/" + pages);
+            }
+
+            int index = 0;
+
+            for (Infraction infraction : infractions) {
+                if (index >= (page - 1) * 10 && index < page * 10) {
+                    embed.addField(getInfractionType(infraction.getType()) + " <t:" + (infraction.getTime() / 1000) + ":f>", "**Reason** " + infraction.getReason() + "\n**Moderator** <@" + infraction.getModerator() + ">", true);
+                }
+                index++;
             }
 
             interaction.replyEmbeds(embed.build()).queue();
@@ -89,13 +83,13 @@ public class InfractionsSlashCommand extends SlashCommand {
         }
     }
 
-    static String getInfractionType(String type) {
+    static String getInfractionType(InfractionType type) {
         return switch (type) {
-            case "note" -> ":information_source: Note";
-            case "warn" -> ":warning: Warning";
-            case "kick" -> ":boot: Kick";
-            case "ban" -> ":hammer: Ban";
-            default -> "Unknown";
+            case NOTE -> ":information_source: Note";
+            case WARN -> ":warning: Warning";
+            case KICK -> ":boot: Kick";
+            case BAN -> ":hammer: Ban";
+            case MUTE -> ":mute: Mute";
         };
     }
 }
