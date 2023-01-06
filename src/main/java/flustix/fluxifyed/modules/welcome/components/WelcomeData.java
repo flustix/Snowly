@@ -1,20 +1,25 @@
 package flustix.fluxifyed.modules.welcome.components;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.components.message.MessageData;
 import flustix.fluxifyed.database.Database;
+import flustix.fluxifyed.image.RenderData;
+import flustix.fluxifyed.utils.CustomMessageUtils;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 
 import java.sql.ResultSet;
+import java.util.Map;
 
 public class WelcomeData {
     private final String guildId;
     private String channelId;
-    private WelcomeMessage message;
+    private String messageRaw;
     private JsonArray roles;
 
     public WelcomeData(String guildId) {
@@ -30,7 +35,7 @@ public class WelcomeData {
         try {
             while (rs.next()) {
                 channelId = rs.getString("channelid");
-                message = new WelcomeMessage(JsonParser.parseString(rs.getString("message")).getAsJsonObject());
+                messageRaw = rs.getString("message");
                 roles = JsonParser.parseString(rs.getString("roles")).getAsJsonArray();
             }
         } catch (Exception ex) {
@@ -39,12 +44,23 @@ public class WelcomeData {
     }
 
     public void sendMessage(GuildMemberJoinEvent event) {
-        if (message == null) return;
+        if (messageRaw == null) return;
 
         try {
             TextChannel channel = event.getGuild().getTextChannelById(channelId);
             if (channel == null) return;
-            channel.sendMessage(message.build(event)).queue();
+
+            // use this so we can use the replaceable variables
+            RenderData renderData = new RenderData(event.getGuild(), event.getMember());
+
+            for (Map.Entry<String, String> entry : renderData.getKeys().entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+
+                messageRaw = messageRaw.replace(key, value);
+            }
+
+            channel.sendMessage(CustomMessageUtils.create(new Gson().fromJson(messageRaw, MessageData.class))).queue();
         } catch (Exception ex) {
             Main.LOGGER.error("Error while sending welcome message for guild " + guildId, ex);
         }
