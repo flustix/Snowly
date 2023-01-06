@@ -37,6 +37,7 @@ public class RemoveInfractionSlashCommand extends SlashCommand {
                 return;
             }
 
+            infraction.removeFromDatabase();
             ModerationModule.getInfractions().remove(infraction);
             interaction.reply("Removed infraction #" + id + " from <@" + infraction.getUser() + ">.").setEphemeral(true).queue();
         } catch (Exception e) {
