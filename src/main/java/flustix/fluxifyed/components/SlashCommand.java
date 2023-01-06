@@ -98,6 +98,10 @@ public class SlashCommand {
         return requiredPermissions;
     }
 
+    public List<Permission> getBotPermissions() {
+        return botPermissions;
+    }
+
     public HashMap<String, List<Autocomplete>> getOptionAutocompletes() {
         return optionAutocompletes;
     }

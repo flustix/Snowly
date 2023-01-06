@@ -57,10 +57,10 @@ public class SlashCommandList {
 
                 // check if the bot has the required permissions
                 Guild guild = interaction.getGuild();
-                if (guild != null && !guild.getSelfMember().hasPermission(command.getPermissions())) {
+                if (guild != null && !guild.getSelfMember().hasPermission(command.getBotPermissions())) {
                     EmbedBuilder embed = new EmbedBuilder()
                             .setTitle("Missing Permissions")
-                            .setDescription("The bot is missing the following permissions: " + command.getPermissions().toString())
+                            .setDescription("The bot is missing the following permissions: " + command.getBotPermissions().toString())
                             .setColor(Colors.ERROR);
 
                     interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
