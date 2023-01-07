@@ -19,36 +19,36 @@ public class CustomMessageUtils {
         if (message.embed != null) {
             EmbedBuilder embed = new EmbedBuilder();
 
-            if (!message.embed.title.isEmpty()) {
-                if (!message.embed.url.isEmpty())
+            if (message.embed.title != null && !message.embed.title.isEmpty()) {
+                if (message.embed.url != null && !message.embed.url.isEmpty())
                     embed.setTitle(message.embed.title, message.embed.url);
                 else
                     embed.setTitle(message.embed.title);
             }
 
-            if (!message.embed.title.isEmpty())
+            if (message.embed.description != null && !message.embed.description.isEmpty())
                 embed.setDescription(message.embed.description);
 
-            if (!message.embed.color.isEmpty())
+            if (message.embed.color != null && !message.embed.color.isEmpty())
                 embed.setColor(Color.decode(message.embed.color));
 
-            if (!message.embed.image.isEmpty())
+            if (message.embed.image != null && !message.embed.image.isEmpty())
                 embed.setImage(message.embed.image);
 
-            if (!message.embed.thumbnail.isEmpty())
+            if (message.embed.thumbnail != null && !message.embed.thumbnail.isEmpty())
                 embed.setThumbnail(message.embed.thumbnail);
 
             if (message.embed.fields != null) {
                 for (FieldData field : message.embed.fields) {
-                    if (!field.name.isEmpty() && !field.value.isEmpty())
+                    if (field.name != null && field.value != null && !field.name.isEmpty() && !field.value.isEmpty())
                         embed.addField(field.name, field.value, field.inline);
                 }
             }
 
             if (message.embed.author != null) {
-                if (!message.embed.author.name.isEmpty()) {
-                    if (!message.embed.author.url.isEmpty()) {
-                        if (!message.embed.author.icon.isEmpty())
+                if (message.embed.author.name != null && !message.embed.author.name.isEmpty()) {
+                    if (message.embed.author.url != null && !message.embed.author.url.isEmpty()) {
+                        if (message.embed.author.icon != null && !message.embed.author.icon.isEmpty())
                             embed.setAuthor(message.embed.author.name, message.embed.author.url, message.embed.author.icon);
                         else
                             embed.setAuthor(message.embed.author.name, message.embed.author.url);
@@ -59,8 +59,8 @@ public class CustomMessageUtils {
             }
 
             if (message.embed.footer != null) {
-                if (!message.embed.footer.text.isEmpty()) {
-                    if (!message.embed.footer.icon.isEmpty()) {
+                if (message.embed.footer.text != null && !message.embed.footer.text.isEmpty()) {
+                    if (message.embed.footer.icon != null && !message.embed.footer.icon.isEmpty()) {
                         embed.setFooter(message.embed.footer.text, message.embed.footer.icon);
                     } else {
                         embed.setFooter(message.embed.footer.text);
