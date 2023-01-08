@@ -8,6 +8,8 @@ import com.sun.net.httpserver.HttpHandler;
 import flustix.fluxifyed.database.api.types.APIResponse;
 import flustix.fluxifyed.database.api.types.APIRoute;
 import flustix.fluxifyed.database.api.types.Route;
+import flustix.fluxifyed.database.api.utils.ratelimit.RateLimitData;
+import flustix.fluxifyed.database.api.utils.ratelimit.RateLimitUtils;
 import org.reflections.Reflections;
 
 import java.io.IOException;
@@ -17,6 +19,7 @@ import java.util.Map;
 
 public class Router implements HttpHandler {
     private static final HashMap<String, Route> routes = new HashMap<>();
+    private static final HashMap<String, Integer> rateLimits = new HashMap<>();
 
     public void init() {
         Reflections reflections = new Reflections("flustix.fluxifyed.database.api.routes");
@@ -24,6 +27,7 @@ public class Router implements HttpHandler {
             try {
                 APIRoute annotation = clazz.getAnnotation(APIRoute.class);
                 addRoute(annotation.method() + "|" + annotation.path(), (Route) clazz.getConstructor().newInstance());
+                rateLimits.put(annotation.path(), annotation.rateLimit());
             } catch (Exception e) {
                 APIServer.LOGGER.error("Error while loading route: " + clazz.getName());
                 e.printStackTrace();
@@ -32,16 +36,7 @@ public class Router implements HttpHandler {
     }
 
     public void handle(HttpExchange exchange) throws IOException {
-        Headers headers = exchange.getResponseHeaders();
-
-        JsonObject json = new JsonObject();
-        json.addProperty("code", 0); // do this first so it is always at the top
-
-        boolean notFound = true;
-
-        if (exchange.getRequestMethod().equals("HEAD")) {
-            return; // don't do anything if it's a HEAD request
-        } else {
+        if (!exchange.getRequestMethod().equals("HEAD")) {
             for (Map.Entry<String, Route> routeEntry : routes.entrySet()) {
                 String[] route = routeEntry.getKey().split("\\|");
                 String method = route[0];
@@ -69,31 +64,53 @@ public class Router implements HttpHandler {
                         }
                     }
                     if (match) {
-                        notFound = false;
-                        try {
-                            APIResponse response = routeEntry.getValue().execute(exchange, params);
-                            json.addProperty("code", response.code);
-                            json.addProperty("message", response.message);
-                            json.add("data", response.data);
-
-                        } catch (Exception e) {
-                            json.addProperty("code", 500);
-                            json.addProperty("message", "Something went very wrong >-<'. Please report this to the developer.");
-                            json.addProperty("error", e.toString());
-
-                            JsonArray stackTrace = new JsonArray();
-                            for (StackTraceElement element : e.getStackTrace()) {
-                                stackTrace.add(element.toString());
-                            }
-                            json.add("stack", stackTrace);
-                        }
-                        break;
+                        sendResponse(exchange, path, routeEntry.getValue(), params, true);
+                        return;
                     }
                 }
             }
         }
 
-        if (notFound) {
+        sendResponse(exchange, null, null, null, false);
+    }
+
+    private void sendResponse(HttpExchange exchange, String path, Route route, HashMap<String, String> params, boolean found) throws IOException {
+        Headers headers = exchange.getResponseHeaders();
+
+        JsonObject json = new JsonObject();
+        json.addProperty("code", 0); // do this first so it is always at the top
+
+        if (found) {
+            String ip = exchange.getRemoteAddress().getAddress().getHostAddress();
+            int rateLimit = rateLimits.getOrDefault(path, 10);
+            RateLimitData rateLimitData = RateLimitUtils.isRateLimited(ip, path, rateLimit);
+
+            if (rateLimitData.requestsLeft != 0) {
+                RateLimitUtils.addRateLimit(ip, path);
+
+                try {
+                    APIResponse response = route.execute(exchange, params);
+                    json.addProperty("code", response.code);
+                    json.addProperty("message", response.message);
+                    json.add("data", response.data);
+                    json.addProperty("requestsLeft", rateLimitData.requestsLeft);
+                } catch (Exception e) {
+                    json.addProperty("code", 500);
+                    json.addProperty("message", "Something went very wrong >-<'. Please report this to the developer.");
+                    json.addProperty("error", e.toString());
+
+                    JsonArray stackTrace = new JsonArray();
+                    for (StackTraceElement element : e.getStackTrace()) {
+                        stackTrace.add(element.toString());
+                    }
+                    json.add("stack", stackTrace);
+                }
+            } else {
+                json.addProperty("code", 429);
+                json.addProperty("message", "You are being rate limited. Please wait a bit before trying again.");
+                json.addProperty("seconds", rateLimitData.secondsLeft);
+            }
+        } else {
             json.addProperty("code", 404);
             json.addProperty("message", "We couldn't find the route you were looking for. T^T");
         }
@@ -120,5 +137,13 @@ public class Router implements HttpHandler {
         headers.set("X-XSS-Protection", "1; mode=block");
         headers.set("Referrer-Policy", "no-referrer");
         headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+    }
+
+    public static HashMap<String, Integer> getRateLimits() {
+        return rateLimits;
+    }
+
+    public static Integer getRateLimit(String path) {
+        return rateLimits.get(path);
     }
 }

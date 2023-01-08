@@ -7,4 +7,5 @@ import java.lang.annotation.RetentionPolicy;
 public @interface APIRoute {
     String path();
     String method() default "GET";
+    int rateLimit() default 10;
 }
