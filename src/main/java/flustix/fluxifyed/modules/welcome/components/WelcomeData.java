@@ -53,11 +53,15 @@ public class WelcomeData {
             // use this so we can use the replaceable variables
             RenderData renderData = new RenderData(event.getGuild(), event.getMember());
 
+            while (!renderData.loaded) {
+                Thread.sleep(10); // wait until the data is loaded
+            }
+
             for (Map.Entry<String, String> entry : renderData.getKeys().entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
 
-                messageRaw = messageRaw.replace(key, value);
+                messageRaw = messageRaw.replace("{" + key + "}", value);
             }
 
             channel.sendMessage(CustomMessageUtils.create(new Gson().fromJson(messageRaw, MessageData.class))).queue();
