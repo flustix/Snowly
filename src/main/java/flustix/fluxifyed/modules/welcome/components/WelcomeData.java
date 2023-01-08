@@ -52,6 +52,7 @@ public class WelcomeData {
 
             // use this so we can use the replaceable variables
             RenderData renderData = new RenderData(event.getGuild(), event.getMember());
+            String message = messageRaw;
 
             while (!renderData.loaded) {
                 Thread.sleep(10); // wait until the data is loaded
@@ -61,10 +62,12 @@ public class WelcomeData {
                 String key = entry.getKey();
                 String value = entry.getValue();
 
-                messageRaw = messageRaw.replace("{" + key + "}", value);
+                if (value == null) continue;
+
+                message = message.replace("{" + key + "}", value);
             }
 
-            channel.sendMessage(CustomMessageUtils.create(new Gson().fromJson(messageRaw, MessageData.class))).queue();
+            channel.sendMessage(CustomMessageUtils.create(new Gson().fromJson(message, MessageData.class))).queue();
         } catch (Exception ex) {
             Main.LOGGER.error("Error while sending welcome message for guild " + guildId, ex);
         }
