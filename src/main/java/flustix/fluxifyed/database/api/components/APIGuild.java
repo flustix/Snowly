@@ -9,6 +9,7 @@ public class APIGuild {
     public final String icon;
     public final String banner;
     public final String splash;
+    public final int memberCount;
 
     public APIGuild(Guild guild) {
         if (guild == null) {
@@ -18,6 +19,7 @@ public class APIGuild {
             icon = "";
             banner = "";
             splash = "";
+            memberCount = 0;
             return;
         }
 
@@ -27,6 +29,7 @@ public class APIGuild {
         banner = guild.getBannerUrl();
         splash = guild.getSplashUrl();
         owner = guild.getOwnerId();
+        memberCount = guild.getMemberCount();
     }
 
     public APIGuild(String id) {
@@ -36,5 +39,6 @@ public class APIGuild {
         icon = "";
         banner = "";
         splash = "";
+        memberCount = 0;
     }
 }
