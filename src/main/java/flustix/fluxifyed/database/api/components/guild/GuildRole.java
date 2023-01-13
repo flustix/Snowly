@@ -13,4 +13,10 @@ public class GuildRole {
         name = role.getName();
         color = new APIColor(role.getColor());
     }
+
+    public GuildRole(String id) {
+        this.id = id;
+        this.name = "Unknown";
+        this.color = new APIColor(null);
+    }
 }
