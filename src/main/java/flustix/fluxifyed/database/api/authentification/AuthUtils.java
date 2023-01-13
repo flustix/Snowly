@@ -3,7 +3,7 @@ package flustix.fluxifyed.database.api.authentification;
 import com.sun.net.httpserver.Headers;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.Database;
-import flustix.fluxifyed.database.api.components.APIGuild;
+import flustix.fluxifyed.database.api.components.guild.APIGuildDashboard;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -66,7 +66,7 @@ public class AuthUtils {
         return member.hasPermission(Permission.ADMINISTRATOR);
     }
 
-    public static APIGuild getGuild(String userid, String guildid) {
+    public static APIGuildDashboard getGuild(String userid, String guildid) {
         Guild guild = Main.getBot().getGuildById(guildid);
         if (guild == null) return null;
 
@@ -74,7 +74,7 @@ public class AuthUtils {
         if (member == null) member = guild.retrieveMemberById(userid).complete();
 
         if (member.hasPermission(Permission.ADMINISTRATOR))
-            return new APIGuild(guild);
+            return new APIGuildDashboard(guild);
 
         return null;
     }

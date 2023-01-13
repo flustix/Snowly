@@ -1,6 +1,7 @@
 package flustix.fluxifyed.database.api.components.xp;
 
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.database.api.components.APIGuild;
 import flustix.fluxifyed.settings.*;
 import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.database.api.components.APIMember;
@@ -21,7 +22,7 @@ public class UserStats {
     public long xpLeft;
     public long xpNeededForLevel;
     public int rank;
-    public UserStatsGuild guild;
+    public APIGuild guild;
     public List<UserStatsChartEntry> chartEntries;
 
     public UserStats(XPUser xpUser, XPGuild xpGuild) {
@@ -33,19 +34,22 @@ public class UserStats {
         this.xpLeft = XPUtils.calculateXP(this.level + 1, levelMode) - this.xp;
         this.xpNeededForLevel = XPUtils.calculateXP(this.level, levelMode);
         this.rank = xpGuild.getTop().indexOf(xpUser) + 1;
-        this.guild = new UserStatsGuild(Main.getBot().getGuildById(xpGuild.getID()));
 
         Guild guild = Main.getBot().getGuildById(xpGuild.getID());
         if (guild != null) {
+            this.guild = new APIGuild(guild);
             Member member = guild.getMemberById(xpUser.getID());
             if (member == null) {
                 try { // user was not cached, fetch from discord
                     member = guild.retrieveMemberById(xpUser.getID()).complete();
                 } catch (Exception ignored) {}
             }
+
             if (member != null) {
                 this.member = new APIMember(member);
             }
+        } else {
+            this.guild = new APIGuild(xpGuild.getID());
         }
 
         if (member == null) {
@@ -78,20 +82,6 @@ public class UserStats {
             this.xp = xp;
             this.rank = rank;
             this.time = time;
-        }
-    }
-
-    private static class UserStatsGuild {
-        public String name;
-        public String icon;
-        public String id;
-
-        public UserStatsGuild(Guild guild) {
-            if (guild == null) return;
-
-            this.name = guild.getName();
-            this.icon = guild.getIconUrl();
-            this.id = guild.getId();
         }
     }
 }

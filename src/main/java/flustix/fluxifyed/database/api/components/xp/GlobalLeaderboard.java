@@ -1,11 +1,11 @@
 package flustix.fluxifyed.database.api.components.xp;
 
 import flustix.fluxifyed.Main;
+import flustix.fluxifyed.database.api.components.APIGuild;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPUser;
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
-import flustix.fluxifyed.utils.AvatarUtils;
 import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.ArrayList;
@@ -27,13 +27,14 @@ public class GlobalLeaderboard {
                 GuildSettings settings = Settings.getGuildSettings(guildId);
 
                 if (settings.getBoolean("xp.enabled", true)) {
+
                     int xp = 0;
 
                     for (XPUser user : guild.getTop()) {
                         xp += user.getXP();
                     }
 
-                    entries.add(new GlobalLeaderboardEntry(guildId, xp));
+                    entries.add(new GlobalLeaderboardEntry(Main.getBot().getGuildById(guildId), xp));
                 }
             }
 
@@ -44,24 +45,12 @@ public class GlobalLeaderboard {
     }
 
     private static class GlobalLeaderboardEntry {
-        public final String id;
-        public final String name;
-        public final String icon;
+        public final APIGuild guild;
         public final int xp;
 
-        public GlobalLeaderboardEntry(String gid, int xp) {
-            this.id = gid;
+        public GlobalLeaderboardEntry(Guild guild, int xp) {
+            this.guild = new APIGuild(guild);
             this.xp = xp;
-
-            Guild guild = Main.getBot().getGuildById(gid);
-
-            if (guild == null) {
-                this.name = "Unknown";
-                this.icon = AvatarUtils.getDefaultAvatar();
-            } else {
-                this.name = guild.getName();
-                this.icon = guild.getIconUrl();
-            }
         }
 
         public int getXP() {

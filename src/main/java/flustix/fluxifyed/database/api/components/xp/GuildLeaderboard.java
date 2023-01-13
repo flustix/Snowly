@@ -1,5 +1,6 @@
 package flustix.fluxifyed.database.api.components.xp;
 
+import flustix.fluxifyed.database.api.components.APIGuild;
 import flustix.fluxifyed.database.api.components.APIMember;
 import flustix.fluxifyed.settings.*;
 import flustix.fluxifyed.modules.xp.utils.XPUtils;
@@ -13,15 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GuildLeaderboard {
-    public final String name;
-    public final String icon;
-    public final String banner;
+    public APIGuild guild;
     public final List<LeaderboardUserEntry> entries = new ArrayList<>();
 
     public GuildLeaderboard(Guild guild, int limit, int offset) {
-        name = guild.getName();
-        icon = guild.getIconUrl();
-        banner = guild.getBannerUrl();
+        this.guild = new APIGuild(guild);
 
         XPGuild xpGuild = XP.getGuild(guild.getId());
         GuildSettings settings = Settings.getGuildSettings(guild.getId());

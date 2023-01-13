@@ -1,12 +1,6 @@
 package flustix.fluxifyed.database.api.components;
 
-import flustix.fluxifyed.Main;
-import flustix.fluxifyed.components.Module;
-import flustix.fluxifyed.settings.GuildSettings;
-import flustix.fluxifyed.settings.Settings;
 import net.dv8tion.jda.api.entities.Guild;
-
-import java.util.TreeMap;
 
 public class APIGuild {
     public final String id;
@@ -16,20 +10,23 @@ public class APIGuild {
     public final String banner;
     public final String splash;
 
-    public final TreeMap<String, Boolean> modules = new TreeMap<>();
-
     public APIGuild(Guild guild) {
+        if (guild == null) {
+            id = "";
+            name = "Unknown";
+            owner = "0";
+            icon = "";
+            banner = "";
+            splash = "";
+            return;
+        }
+
         id = guild.getId();
         name = guild.getName();
         icon = guild.getIconUrl();
         banner = guild.getBannerUrl();
         splash = guild.getSplashUrl();
         owner = guild.getOwnerId();
-
-        GuildSettings settings = Settings.getGuildSettings(guild.getId());
-        for (Module module : Main.getModules()) {
-            modules.put(module.id, settings.getBoolean(module.id + ".enabled", true));
-        }
     }
 
     public APIGuild(String id) {
