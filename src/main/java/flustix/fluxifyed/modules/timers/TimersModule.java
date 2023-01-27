@@ -33,8 +33,8 @@ public class TimersModule extends Module {
         new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(1000);
                     timedMessages.forEach(TimedMessage::send);
+                    Thread.sleep(1000);
                 } catch (Exception ignored) {}
             }
         }).start();

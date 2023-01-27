@@ -32,9 +32,8 @@ public class TimedMessage {
         String[] timeSplit = time.split(":");
         int hour = Integer.parseInt(timeSplit[0]);
         int minute = Integer.parseInt(timeSplit[1]);
-        int second = Integer.parseInt(timeSplit[2]);
 
-        if (calendar.get(Calendar.HOUR_OF_DAY) != hour && calendar.get(Calendar.MINUTE) != minute && calendar.get(Calendar.SECOND) != second)
+        if (calendar.get(Calendar.HOUR_OF_DAY) != hour && calendar.get(Calendar.MINUTE) != minute)
             return;
 
         TextChannel channel = Main.getBot().getTextChannelById(channelId);
