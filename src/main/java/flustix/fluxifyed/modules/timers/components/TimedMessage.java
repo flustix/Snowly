@@ -19,6 +19,8 @@ public class TimedMessage {
     private final JsonArray random;
     private final String time;
 
+    private boolean sent = false;
+
     public TimedMessage(String guildId, String channelId, String message, String time, String random) {
         this.guildId = guildId;
         this.channelId = channelId;
@@ -33,8 +35,13 @@ public class TimedMessage {
         int hour = Integer.parseInt(timeSplit[0]);
         int minute = Integer.parseInt(timeSplit[1]);
 
-        if (calendar.get(Calendar.HOUR_OF_DAY) != hour && calendar.get(Calendar.MINUTE) != minute)
+        if (calendar.get(Calendar.HOUR_OF_DAY) != hour && calendar.get(Calendar.MINUTE) != minute) {
+            sent = false;
             return;
+        } else {
+            if (sent) return;
+            sent = true;
+        }
 
         TextChannel channel = Main.getBot().getTextChannelById(channelId);
         if (channel == null) return;
