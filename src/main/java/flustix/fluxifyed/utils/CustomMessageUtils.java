@@ -1,11 +1,14 @@
 package flustix.fluxifyed.utils;
 
+import com.google.gson.Gson;
+import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.message.FieldData;
 import flustix.fluxifyed.components.message.MessageData;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 import net.dv8tion.jda.api.utils.messages.MessageEditData;
+import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 
@@ -76,5 +79,15 @@ public class CustomMessageUtils {
 
     public static MessageEditData createEdit(MessageData message) {
         return MessageEditData.fromCreateData(create(message));
+    }
+
+    @Nullable
+    public static MessageData parseMessage(String message) {
+        try {
+            return new Gson().fromJson(message, MessageData.class);
+        } catch (Exception e) {
+            Main.LOGGER.error("Failed to parse message: " + message);
+            return null;
+        }
     }
 }
