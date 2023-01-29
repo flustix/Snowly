@@ -35,12 +35,12 @@ public class TimedMessage {
         int hour = Integer.parseInt(timeSplit[0]);
         int minute = Integer.parseInt(timeSplit[1]);
 
-        if (calendar.get(Calendar.HOUR_OF_DAY) != hour && calendar.get(Calendar.MINUTE) != minute) {
-            sent = false;
-            return;
-        } else {
+        if (calendar.get(Calendar.HOUR_OF_DAY) == hour && calendar.get(Calendar.MINUTE) == minute) {
             if (sent) return;
             sent = true;
+        } else {
+            sent = false;
+            return;
         }
 
         TextChannel channel = Main.getBot().getTextChannelById(channelId);
