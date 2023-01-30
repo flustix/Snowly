@@ -78,4 +78,14 @@ public class AuthUtils {
 
         return null;
     }
+
+    public static boolean isOnGuild(String userid, String guildid) {
+        Guild guild = Main.getBot().getGuildById(guildid);
+        if (guild == null) return false;
+
+        Member member = guild.retrieveMemberById(userid).complete();
+        if (member == null) member = guild.retrieveMemberById(userid).complete();
+
+        return member != null;
+    }
 }

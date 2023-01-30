@@ -44,4 +44,8 @@ public class Settings {
 
         return user;
     }
+
+    public static boolean hasSettings(String id) {
+        return guilds.containsKey(id) || users.containsKey(id);
+    }
 }
