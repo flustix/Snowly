@@ -6,9 +6,9 @@ import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.image.ImageRenderer;
 import flustix.fluxifyed.image.RenderArgs;
 import flustix.fluxifyed.image.RenderData;
+import flustix.fluxifyed.modules.xp.utils.XPUtils;
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
-import flustix.fluxifyed.modules.xp.utils.XPUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -93,24 +93,70 @@ public class XPUser {
                     // probably cant send a message in that channel
                     // todo: notify the guild owner
                 }
-
             }
         }
 
+        updateRoles(event, settings, member);
+        updateXP();
+        lastUpdate = System.currentTimeMillis();
+    }
+
+    private void updateRoles(MessageReceivedEvent event, GuildSettings settings, Member member) {
+        List<XPRole> roles = new ArrayList<>();
+
         for (XPRole role : guild.getLevelRoles()) {
-            if (level >= role.getValue()) {
-                Role r = event.getGuild().getRoleById(role.getID());
+            if (role.getValue() <= level) {
+                roles.add(role);
+            }
+        }
 
-                if (r == null) return; // doesn't exist anymore i think
+        // possible options:
+        // stack - keep all roles
+        // highest - keep only the highest role
+        String levelRoleMode = settings.getString("xp.levelRoleMode", "stack");
+        boolean isHighestMode = levelRoleMode.equals("highest");
 
-                if (!member.getRoles().contains(r)) {
-                    event.getGuild().addRoleToMember(member, r).complete();
+        // if we are in highest mode, remove all roles except the highest one
+        if (isHighestMode) {
+            roles.sort((o1, o2) -> (o2.getValue() - o1.getValue()));
+
+            if (roles.size() > 0) {
+                roles = List.of(roles.get(0));
+            }
+        }
+
+        List<Role> memberRoles = member.getRoles();
+
+        // remove all roles that are not in the list
+        for (Role role : memberRoles) {
+            XPRole xpRole = null;
+
+            for (XPRole x : guild.getLevelRoles()) {
+                if (role.getId().equals(x.getID())) {
+                    xpRole = x;
+                    break;
+                }
+            }
+
+            if (xpRole != null) {
+                // the role is a level role
+                // check if it should be removed
+                if (!roles.contains(xpRole)) {
+                    member.getGuild().removeRoleFromMember(member, role).complete();
                 }
             }
         }
 
-        updateXP();
-        lastUpdate = System.currentTimeMillis();
+        // finally, add all remaining roles
+        for (XPRole xpRole : roles) {
+            Role role = event.getGuild().getRoleById(xpRole.getID());
+
+            if (role != null) {
+                if (!memberRoles.contains(role)) {
+                    member.getGuild().addRoleToMember(member, role).complete();
+                }
+            }
+        }
     }
 
     public void giveXP(int xp) {
