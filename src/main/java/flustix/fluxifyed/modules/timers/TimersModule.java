@@ -6,11 +6,10 @@ import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.modules.timers.components.TimedMessage;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class TimersModule extends Module {
-    private static final List<TimedMessage> timedMessages = new ArrayList<>();
+    private static final HashMap<Integer, TimedMessage> timedMessages = new HashMap<>();
 
     public TimersModule() {
         super("timers", "Timers", "Send custom messages at a set interval.", true);
@@ -24,7 +23,7 @@ public class TimersModule extends Module {
 
         try {
             while (rs.next()) {
-                timedMessages.add(new TimedMessage(rs.getString("guildid"), rs.getString("channelid"), rs.getString("message"), rs.getString("time"), rs.getString("random")));
+                timedMessages.put(rs.getInt("id"), new TimedMessage(rs.getString("guildid"), rs.getString("channelid"), rs.getString("message"), rs.getString("time"), rs.getString("random")));
             }
         } catch (Exception ex) {
             Main.LOGGER.error("Error while loading timers!", ex);
@@ -33,10 +32,14 @@ public class TimersModule extends Module {
         new Thread(() -> {
             while (true) {
                 try {
-                    timedMessages.forEach(TimedMessage::send);
+                    timedMessages.forEach((id, message) -> message.send());
                     Thread.sleep(1000);
                 } catch (Exception ignored) {}
             }
         }).start();
+    }
+
+    public static TimedMessage getTimer(int id) {
+        return timedMessages.get(id);
     }
 }
