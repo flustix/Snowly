@@ -30,18 +30,25 @@ public class TimedMessage {
     }
 
     public void send() {
-        Calendar calendar = Calendar.getInstance();
-        String[] timeSplit = time.split(":");
-        int hour = Integer.parseInt(timeSplit[0]);
-        int minute = Integer.parseInt(timeSplit[1]);
+        send(false);
+    }
 
-        if (calendar.get(Calendar.HOUR_OF_DAY) == hour && calendar.get(Calendar.MINUTE) == minute) {
-            if (sent) return;
-            sent = true;
-        } else {
-            sent = false;
-            return;
+    public void send(boolean force) {
+        if (!force) {
+            Calendar calendar = Calendar.getInstance();
+            String[] timeSplit = time.split(":");
+            int hour = Integer.parseInt(timeSplit[0]);
+            int minute = Integer.parseInt(timeSplit[1]);
+
+            if (calendar.get(Calendar.HOUR_OF_DAY) == hour && calendar.get(Calendar.MINUTE) == minute) {
+                if (sent) return;
+                sent = true;
+            } else {
+                sent = false;
+                return;
+            }
         }
+
 
         TextChannel channel = Main.getBot().getTextChannelById(channelId);
         if (channel == null) return;

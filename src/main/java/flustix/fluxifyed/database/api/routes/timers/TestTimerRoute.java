@@ -26,6 +26,8 @@ public class TestTimerRoute implements Route {
         if (!AuthUtils.hasAccess(userid, message.getGuildId()))
             return new APIResponse(403, "You don't have access to this guild.", null);
 
+        message.send(true);
+
         return new APIResponse(200, "OK", null);
     }
 }
