@@ -1,4 +1,4 @@
-package flustix.fluxifyed.database.api.routes.xp;
+package flustix.fluxifyed.database.api.routes.modules.xp.leaderboard;
 
 import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.database.api.utils.QueryUtils;
@@ -9,7 +9,7 @@ import flustix.fluxifyed.database.api.types.Route;
 
 import java.util.HashMap;
 
-@APIRoute(path = "/modules/xp/global/")
+@APIRoute(path = "/modules/xp/leaderboard/global")
 public class GlobalLeaderboardRoute implements Route {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         HashMap<String, String> query = QueryUtils.getQuery(exchange.getRequestURI().getQuery());

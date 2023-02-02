@@ -1,20 +1,21 @@
-package flustix.fluxifyed.database.api.routes.xp;
+package flustix.fluxifyed.database.api.routes.modules.xp;
+
 
 import com.sun.net.httpserver.HttpExchange;
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.api.authentification.AuthUtils;
-import flustix.fluxifyed.database.api.utils.QueryUtils;
-import flustix.fluxifyed.database.api.components.xp.GuildLeaderboard;
+import flustix.fluxifyed.database.api.components.xp.UserStats;
 import flustix.fluxifyed.database.api.types.APIResponse;
 import flustix.fluxifyed.database.api.types.APIRoute;
 import flustix.fluxifyed.database.api.types.Route;
+import flustix.fluxifyed.modules.xp.XP;
+import flustix.fluxifyed.modules.xp.components.XPGuild;
+import flustix.fluxifyed.modules.xp.components.XPUser;
 import flustix.fluxifyed.settings.Settings;
-import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.HashMap;
 
-@APIRoute(path = "/modules/xp/leaderboard/:guild")
-public class GuildLeaderboardRoute implements Route {
+@APIRoute(path = "/modules/xp/stats/:guild/:user")
+public class XPUserStatsRoute implements Route {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         if (Settings.hasSettings(params.get("guild"))) {
             if (Settings.getGuildSettings(params.get("guild")).getBoolean("xp.requireAuth", false)) {
@@ -32,15 +33,16 @@ public class GuildLeaderboardRoute implements Route {
             }
         }
 
-        HashMap<String, String> query = QueryUtils.getQuery(exchange.getRequestURI().getQuery());
+        String guildid = params.get("guild");
+        String userid = params.get("user");
 
-        int limit = query.containsKey("limit") ? Integer.parseInt(query.get("limit")) : 20;
-        int offset = query.containsKey("offset") ? Integer.parseInt(query.get("offset")) : 0;
-
-        Guild guild = Main.getBot().getGuildById(params.get("guild"));
-
+        XPGuild guild = XP.getGuild(guildid);
         if (guild == null) return new APIResponse(404, "Guild not found", null);
 
-        return new APIResponse(200, "OK", new GuildLeaderboard(guild, limit, offset));
+        if (!guild.hasUser(userid)) return new APIResponse(404, "User not found", null);
+
+        XPUser user = guild.getUser(userid);
+
+        return new APIResponse(200, "OK", new UserStats(user, guild));
     }
 }

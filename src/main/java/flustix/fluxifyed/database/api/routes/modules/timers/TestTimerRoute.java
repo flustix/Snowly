@@ -1,4 +1,4 @@
-package flustix.fluxifyed.database.api.routes.timers;
+package flustix.fluxifyed.database.api.routes.modules.timers;
 
 import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.database.api.authentification.AuthUtils;

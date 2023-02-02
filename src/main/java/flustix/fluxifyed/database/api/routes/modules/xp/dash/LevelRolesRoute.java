@@ -1,4 +1,4 @@
-package flustix.fluxifyed.database.api.routes.xp.dash;
+package flustix.fluxifyed.database.api.routes.modules.xp.dash;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

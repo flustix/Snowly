@@ -8,7 +8,7 @@ import flustix.fluxifyed.database.api.types.Route;
 import java.util.HashMap;
 
 @APIRoute(path = "/testing/exception")
-public class ExceptionTestRoute implements Route {
+public class ExceptionRoute implements Route {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         throw new RuntimeException("Forced test exception");
     }

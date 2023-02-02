@@ -9,9 +9,15 @@ public class GuildRole {
     public APIColor color;
 
     public GuildRole(Role role) {
-        id = role.getId();
-        name = role.getName();
-        color = new APIColor(role.getColor());
+        if (role == null) {
+            id = "0";
+            name = "Unknown";
+            color = new APIColor(null);
+        } else {
+            id = role.getId();
+            name = role.getName();
+            color = new APIColor(role.getColor());
+        }
     }
 
     public GuildRole(String id) {

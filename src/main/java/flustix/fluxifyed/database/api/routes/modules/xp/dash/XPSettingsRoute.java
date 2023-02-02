@@ -1,18 +1,17 @@
-package flustix.fluxifyed.database.api.routes.login;
+package flustix.fluxifyed.database.api.routes.modules.xp.dash;
 
 import com.sun.net.httpserver.HttpExchange;
-import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.api.authentification.AuthUtils;
-import flustix.fluxifyed.database.api.components.APIUser;
 import flustix.fluxifyed.database.api.types.APIResponse;
 import flustix.fluxifyed.database.api.types.APIRoute;
 import flustix.fluxifyed.database.api.types.Route;
-import net.dv8tion.jda.api.entities.User;
+import flustix.fluxifyed.settings.GuildSettings;
+import flustix.fluxifyed.settings.Settings;
 
 import java.util.HashMap;
 
-@APIRoute(path = "/login")
-public class LoginRoute implements Route {
+@APIRoute(path = "/modules/xp/settings/:guild")
+public class XPSettingsRoute implements Route {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         String token = AuthUtils.getToken(exchange.getRequestHeaders());
         if (token.isEmpty())
@@ -23,16 +22,11 @@ public class LoginRoute implements Route {
         if (userid.isEmpty())
             return new APIResponse(401, "Invalid Token.", null);
 
-        try {
-            User user = Main.getBot().getUserById(userid);
+        if (!AuthUtils.hasAccess(userid, params.get("guild")))
+            return new APIResponse(403, "You don't have access to this guild.", null);
 
-            if (user == null)
-                user = Main.getBot().retrieveUserById(userid).complete();
+        GuildSettings settings = Settings.getGuildSettings(params.get("guild"));
 
-            return new APIResponse(200, "OK", new APIUser(user));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new APIResponse(404, "User not found.", null);
-        }
+        return new APIResponse(200, "OK", settings.getAll("xp"));
     }
 }

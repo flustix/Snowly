@@ -1,21 +1,19 @@
-package flustix.fluxifyed.database.api.routes.xp;
-
+package flustix.fluxifyed.database.api.routes.modules.xp.roles;
 
 import com.sun.net.httpserver.HttpExchange;
+import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.api.authentification.AuthUtils;
-import flustix.fluxifyed.database.api.components.xp.UserStats;
+import flustix.fluxifyed.database.api.components.xp.RewardRoles;
 import flustix.fluxifyed.database.api.types.APIResponse;
 import flustix.fluxifyed.database.api.types.APIRoute;
 import flustix.fluxifyed.database.api.types.Route;
-import flustix.fluxifyed.modules.xp.XP;
-import flustix.fluxifyed.modules.xp.components.XPGuild;
-import flustix.fluxifyed.modules.xp.components.XPUser;
 import flustix.fluxifyed.settings.Settings;
+import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.HashMap;
 
-@APIRoute(path = "/modules/xp/stats/:guild/:user")
-public class XPUserRoute implements Route {
+@APIRoute(path = "/modules/xp/rewardroles/:guild")
+public class GuildRewardRolesRoute implements Route {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         if (Settings.hasSettings(params.get("guild"))) {
             if (Settings.getGuildSettings(params.get("guild")).getBoolean("xp.requireAuth", false)) {
@@ -33,16 +31,10 @@ public class XPUserRoute implements Route {
             }
         }
 
-        String guildid = params.get("guild");
-        String userid = params.get("user");
+        Guild guild = Main.getBot().getGuildById(params.get("guild"));
 
-        XPGuild guild = XP.getGuild(guildid);
         if (guild == null) return new APIResponse(404, "Guild not found", null);
 
-        if (!guild.hasUser(userid)) return new APIResponse(404, "User not found", null);
-
-        XPUser user = guild.getUser(userid);
-
-        return new APIResponse(200, "OK", new UserStats(user, guild));
+        return new APIResponse(200, "OK", new RewardRoles(guild));
     }
 }
