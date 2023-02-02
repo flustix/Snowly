@@ -77,6 +77,18 @@ public class GuildSettings {
         return settings.getOrDefault(setting, null);
     }
 
+    public Map<String, JsonElement> getAll(String prefix) {
+        HashMap<String, JsonElement> map = new HashMap<>();
+
+        for (Map.Entry<String, JsonElement> entry : settings.entrySet()) {
+            if (entry.getKey().startsWith(prefix)) {
+                map.put(entry.getKey().substring(prefix.length()), entry.getValue());
+            }
+        }
+
+        return map;
+    }
+
     public void set(String setting, Object value) {
         JsonElement element;
 
