@@ -15,13 +15,13 @@ public class ModerationModule extends Module {
     private static List<Infraction> infractions;
 
     public ModerationModule() {
-        super("moderation", "Moderation", "Moderate your server with ease.", false);
+        super("moderation", "Moderation", "Moderate your server with ease.");
     }
 
     public void init() {
         infractions = new ArrayList<>();
 
-        ResultSet rs = Database.executeQuery("SELECT * FROM infractions");
+        ResultSet rs = Database.executeQuery("SELECT * FROM fluxifyed.infractions");
         if (rs == null) {
             Main.LOGGER.error("Error while retrieving infractions from database: ResultSet is null");
             return;

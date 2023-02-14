@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 public class XPModule extends Module {
     public XPModule() {
-        super("xp", "XP", "Reward your members for chatting and being active.", true);
+        super("xp", "XP", "Reward your members for chatting and being active.");
     }
 
     public void init() {

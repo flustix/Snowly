@@ -43,6 +43,15 @@ public class Database {
         }
     }
 
+    public static void executeQuery(@Language("mysql") String query, QueryCallback callback) {
+        callback.onResult(executeQuery(query));
+    }
+
+    public static void executeQuery(@Language("mysql") String query, String[] replaceable, QueryCallback callback) {
+        query = replaceQuery(query, replaceable);
+        callback.onResult(executeQuery(query));
+    }
+
     public static ResultSet executeQuery(@Language("mysql") String query, List<Object> replaceables) {
         for (Object replaceable : replaceables) {
             query = query.replaceFirst("\\?", replaceable.toString());
@@ -60,6 +69,13 @@ public class Database {
                 .replace("'", "\\'")
                 .replace("`", "\\`")
                 .replace("=", "\\=");
+    }
+
+    private static String replaceQuery(String query, String[] replaceable) {
+        for (String s : replaceable)
+            query = query.replaceFirst("\\?", s);
+
+        return query;
     }
 
     public static int connectionCount() {

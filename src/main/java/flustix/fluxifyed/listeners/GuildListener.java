@@ -11,6 +11,7 @@ public class GuildListener extends ListenerAdapter {
     public void onGuildJoin(@NotNull GuildJoinEvent event) {
         Main.LOGGER.info("Added to guild '" + event.getGuild().getName() + "' (" + event.getGuild().getId() + ")");
         Settings.loadGuild(event.getGuild());
+        Main.getModules().forEach(module -> module.onGuildInit(event.getGuild()));
     }
 
     @Override

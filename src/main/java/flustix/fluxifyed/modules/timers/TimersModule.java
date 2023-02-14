@@ -12,12 +12,12 @@ public class TimersModule extends Module {
     private static final HashMap<Integer, TimedMessage> timedMessages = new HashMap<>();
 
     public TimersModule() {
-        super("timers", "Timers", "Send custom messages at a set interval.", true);
+        super("timers", "Timers", "Send custom messages at a set interval.");
     }
 
     @Override
     public void init() {
-        ResultSet rs = Database.executeQuery("SELECT * FROM timers");
+        ResultSet rs = Database.executeQuery("SELECT * FROM fluxifyed.timers");
 
         if (rs == null) return;
 
