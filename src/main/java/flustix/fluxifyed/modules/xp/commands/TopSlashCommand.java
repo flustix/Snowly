@@ -5,12 +5,10 @@ import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.modules.xp.components.XPUser;
-import flustix.fluxifyed.modules.xp.utils.XPUtils;
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
@@ -32,30 +30,22 @@ public class TopSlashCommand extends SlashCommand {
         }
 
         EmbedBuilder embed = new EmbedBuilder()
-                .setTitle(g.getName() + " - Top 10")
+                .setTitle(g.getName() + " - Leaderboard")
                 .setThumbnail(g.getIconUrl())
                 .setColor(Colors.ACCENT);
 
         XPGuild xpGuild = XP.getGuild(g.getId());
+        StringBuilder content = new StringBuilder();
 
         for (int i = 0; i < 10; i++) {
             if (i >= xpGuild.getTop().size()) break;
+            if (i != 0) content.append("\n");
+
             XPUser user = xpGuild.getTop().get(i);
-
-            Member member = g.getMemberById(user.getID());
-            try {
-                if (member == null)
-                    member = g.retrieveMemberById(user.getID()).complete();
-
-                if (member.getEffectiveName().equals(member.getUser().getName())) {
-                    embed.addField("#" + (i + 1) + " - " + member.getUser().getName() + "#" + member.getUser().getDiscriminator(), user.getXP() + " XP | Level " + XPUtils.calculateLevel(user.getXP(), gs.getString("xp.levelMode", "default")), false);
-                } else {
-                    embed.addField("#" + (i + 1) + " - " + member.getEffectiveName() + " (" + member.getUser().getName() + "#" + member.getUser().getDiscriminator() + ")", user.getXP() + " XP | Level " + XPUtils.calculateLevel(user.getXP(), gs.getString("xp.levelMode", "default")), false);
-                }
-            } catch (Exception e) {
-                embed.addField("#" + (i + 1) + " - " + user.getID(), user.getXP() + " XP | Level " + XPUtils.calculateLevel(user.getXP(), gs.getString("xp.levelMode", "default")), false);
-            }
+            content.append("#").append(i + 1).append(" - <@").append(user.getID()).append("> - ").append(user.getXP()).append(" XP | Level ").append(user.getLevel());
         }
+
+        embed.setDescription(content.toString());
 
         MessageCreateBuilder builder = new MessageCreateBuilder();
         builder.setEmbeds(embed.build());
