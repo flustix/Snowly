@@ -5,7 +5,7 @@ import flustix.fluxifyed.activity.ActivityUpdater;
 import flustix.fluxifyed.components.Module;
 import flustix.fluxifyed.components.SlashCommandList;
 import flustix.fluxifyed.settings.Settings;
-import flustix.fluxifyed.utils.TimeUtils;
+import flustix.fluxifyed.utils.FormatUtils;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class ReadyListener extends ListenerAdapter {
     @Override
     public void onReady(@NotNull ReadyEvent event) {
-        Main.LOGGER.info("Everything Ready! Took " + TimeUtils.format(System.currentTimeMillis() - Main.getStartTime()) + " to start");
+        Main.LOGGER.info("Everything Ready! Took " + FormatUtils.timeToString(System.currentTimeMillis() - Main.getStartTime()) + " to start");
 
         SlashCommandList.registerCommands(event);
         ActivityUpdater.start();

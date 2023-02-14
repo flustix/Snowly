@@ -5,7 +5,7 @@ import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.modules.economy.EconomyModule;
 import flustix.fluxifyed.modules.economy.components.EcoGuild;
 import flustix.fluxifyed.modules.economy.components.EcoUser;
-import flustix.fluxifyed.utils.TimeUtils;
+import flustix.fluxifyed.utils.FormatUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
@@ -37,7 +37,7 @@ public class DailySlashCommand extends SlashCommand {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Daily reward")
                     .setDescription("You already claimed your daily reward today!")
-                    .setFooter("You can claim it again in " + TimeUtils.format(timeLeft))
+                    .setFooter("You can claim it again in " + FormatUtils.timeToString(timeLeft))
                     .setColor(Colors.ERROR);
 
             interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();

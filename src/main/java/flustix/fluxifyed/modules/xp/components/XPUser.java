@@ -226,6 +226,10 @@ public class XPUser {
         return xp;
     }
 
+    public long getLevel() {
+        return calculateLevel();
+    }
+
     public String getID() {
         return id;
     }
