@@ -1,0 +1,39 @@
+{
+  "command.description.economy.balance": "Check your balance.",
+  "command.description.economy.daily": "Get your daily reward.",
+
+  "command.description.fun.coinflip": "Flip a coin!",
+  "command.description.fun.8ball": "Ask the magic 8ball a question!",
+  "command.description.fun.higherlower": "Play a game of higher or lower!",
+  "command.description.fun.reddit": "Get a random post from a subreddit.",
+
+  "command.description.moderation.ban": "Ban a user from the server.",
+  "command.description.moderation.clear": "Clear a certain amount of messages.",
+  "command.description.moderation.infractions": "Check a user's infractions.",
+  "command.description.moderation.kick": "Kick a user from the server.",
+  "command.description.moderation.note": "Add a note to a user.",
+  "command.description.moderation.removeinfraction": "Remove an infraction from a user.",
+  "command.description.moderation.warn": "Warn a user.",
+
+  "command.description.utility.about": "Get information about the bot.",
+  "command.description.utility.avatar": "Get a user's avatar.",
+  "command.description.utility.calc": "Calculate a math expression.",
+  "command.description.utility.color": "Get information about a color.",
+  "command.description.utility.invite": "Get the bot's invite link.",
+  "command.description.utility.ping": "Get the bot's ping.",
+  "command.description.utility.poll": "Create a poll.",
+  "command.description.utility.roleinfo": "Get information about a role.",
+  "command.description.utility.serverinfo": "Get information about the server.",
+  "command.description.utility.stats": "Get the bot's statistics.",
+  "command.description.utility.support": "Get an invite link to the support server.",
+  "command.description.utility.urban": "Search the Urban Dictionary for a term.",
+  "command.description.utility.userinfo": "Get information about a user.",
+
+  "command.description.xp.calculate": "Calculate the amount of XP and time you need to reach a certain level.",
+  "command.description.xp.modifyxp": "Modify a user's XP.",
+  "command.description.xp.rank": "Get your rank.",
+  "command.description.xp.togglelevelup": "Toggle level up messages.",
+  "command.description.xp.toggleserverlevelup": "Toggle the server's level up messages.",
+  "command.description.xp.togglexp": "Toggle XP on the server.",
+  "command.description.xp.top": "Get the top 10 users on the server."
+}

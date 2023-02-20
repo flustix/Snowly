@@ -8,6 +8,7 @@ import flustix.fluxifyed.database.api.APIServer;
 import flustix.fluxifyed.listeners.GuildListener;
 import flustix.fluxifyed.listeners.ReadyListener;
 import flustix.fluxifyed.listeners.SlashCommandListener;
+import flustix.fluxifyed.localization.Localization;
 import flustix.fluxifyed.utils.ModuleUtils;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -34,6 +35,8 @@ public class Main {
     private static List<Permission> requiredPermissions;
 
     public static void main(String[] args) throws Exception {
+        Localization.init();
+
         LOGGER.info("Starting Fluxifyed...");
 
         config = JsonParser.parseString(Files.readString(Path.of("config.json"))).getAsJsonObject();

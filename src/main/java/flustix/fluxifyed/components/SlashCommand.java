@@ -13,26 +13,34 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SlashCommand {
-    final String name;
-    final String description;
-    final List<Permission> requiredPermissions = new ArrayList<>();
+    private final String name;
+    @Deprecated
+    private String description = "";
+    private final List<Permission> requiredPermissions = new ArrayList<>();
     /**
      * The permissions required for the bot to execute the command.
      */
-    final List<Permission> botPermissions = new ArrayList<>();
-    final List<OptionData> options = new ArrayList<>();
-    final HashMap<String, List<Autocomplete>> optionAutocompletes = new HashMap<>();
-    final boolean guildOnly;
+    private final List<Permission> botPermissions = new ArrayList<>();
+    private final List<OptionData> options = new ArrayList<>();
+    private final HashMap<String, List<Autocomplete>> optionAutocompletes = new HashMap<>();
+    private final boolean guildOnly;
 
+    @Deprecated
     public SlashCommand(String name, String description) {
         this.name = name;
         this.description = description;
         guildOnly = false;
     }
 
+    @Deprecated
     public SlashCommand(String name, String desc, boolean guildOnly) {
         this.name = name;
         this.description = desc;
+        this.guildOnly = guildOnly;
+    }
+
+    public SlashCommand(String name, boolean guildOnly) {
+        this.name = name;
         this.guildOnly = guildOnly;
     }
 
@@ -87,6 +95,7 @@ public class SlashCommand {
         return guildOnly;
     }
 
+    @Deprecated
     public String getDescription() {
         return description;
     }

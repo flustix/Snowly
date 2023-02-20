@@ -8,6 +8,7 @@ import flustix.fluxifyed.components.SlashCommandList;
 import flustix.fluxifyed.database.api.types.APIResponse;
 import flustix.fluxifyed.database.api.types.APIRoute;
 import flustix.fluxifyed.database.api.types.Route;
+import flustix.fluxifyed.localization.Localization;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
@@ -28,7 +29,7 @@ public class CommandsRoute implements Route {
                 SlashCommand slashCommand = command.getValue();
                 JsonObject commandJson = new JsonObject();
                 commandJson.addProperty("name", slashCommand.getName());
-                commandJson.addProperty("description", slashCommand.getDescription());
+                commandJson.addProperty("description", Localization.get("command.description." + module.getKey() + "." + slashCommand.getName()));
 
                 JsonArray options = new JsonArray();
                 for (OptionData option : slashCommand.getOptions()) {

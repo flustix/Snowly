@@ -1,6 +1,7 @@
 package flustix.fluxifyed.components;
 
 import flustix.fluxifyed.constants.Colors;
+import flustix.fluxifyed.localization.Localization;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -23,8 +24,8 @@ public class SlashCommandList {
         TreeMap<String, SlashCommand> moduleCommandMap = new TreeMap<>();
 
         for (SlashCommand command : moduleCommands) {
-            moduleCommandMap.put(command.name, command);
-            commandMap.put(command.name, moduleID);
+            moduleCommandMap.put(command.getName(), command);
+            commandMap.put(command.getName(), moduleID);
         }
 
         commands.put(moduleID, moduleCommandMap);
@@ -34,11 +35,15 @@ public class SlashCommandList {
         List<CommandData> slashCommandList = new ArrayList<>();
 
         commands.forEach((module, list) -> list.forEach((name, command) -> {
-            SlashCommandData commandData = Commands.slash(name, command.getDescription());
-            commandData.addOptions(command.getOptions());
-            commandData.setDefaultPermissions(DefaultMemberPermissions.enabledFor(command.getPermissions()));
-            commandData.setGuildOnly(command.isGuildOnly());
-            slashCommandList.add(commandData);
+            String descriptionKey = "command.description." + module + "." + name;
+
+            SlashCommandData data = Commands.slash(name, Localization.get(descriptionKey));
+            data.addOptions(command.getOptions());
+            data.setDefaultPermissions(DefaultMemberPermissions.enabledFor(command.getPermissions()));
+            data.setGuildOnly(command.isGuildOnly());
+            data.setDescriptionLocalizations(Localization.getAll(descriptionKey));
+
+            slashCommandList.add(data);
         }));
 
         event.getJDA().updateCommands().addCommands(slashCommandList).complete();
@@ -96,7 +101,7 @@ public class SlashCommandList {
             return commands.get(moduleID).get(commandName);
         }
 
-        return new SlashCommand("", "");
+        return new SlashCommand("", false);
     }
 
     public static HashMap<String, String> getCommandMap() {
