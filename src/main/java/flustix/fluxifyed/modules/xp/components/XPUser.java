@@ -12,6 +12,7 @@ import flustix.fluxifyed.settings.Settings;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.channel.Channel;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.utils.FileUpload;
@@ -59,7 +60,7 @@ public class XPUser {
         }
 
         int xpToAdd = new Random().nextInt(randomXpMax - randomXpMin + 1) + randomXpMin;
-        xpToAdd *= getMultiplier(event, event.getMember().getRoles());
+        xpToAdd *= getMultiplier(event, event.getMember().getRoles()) * getChannelMultiplier(event.getChannel());
         this.xp += xpToAdd;
 
         if (calculateLevel() > level) {
@@ -209,6 +210,15 @@ public class XPUser {
         return multiplier;
     }
 
+    private int getChannelMultiplier(Channel channel) {
+        for (XPChannel xpChannel : guild.getChannelMultipliers()) {
+            if (channel.getId().equals(xpChannel.getID()))
+                return xpChannel.getValue();
+        }
+
+        return 1;
+    }
+
     void updateLevel() {
         level = calculateLevel();
     }
@@ -219,7 +229,7 @@ public class XPUser {
     }
 
     public void updateXP() {
-        Database.executeQuery("INSERT INTO xp (guildid, userid, xp) VALUES ('" + guild.getID() + "', '" + id + "', " + xp + ") ON DUPLICATE KEY UPDATE xp = " + xp);
+        Database.executeQuery("INSERT INTO fluxifyed.xp (guildid, userid, xp) VALUES ('" + guild.getID() + "', '" + id + "', " + xp + ") ON DUPLICATE KEY UPDATE xp = " + xp);
     }
 
     public long getXP() {

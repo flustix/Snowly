@@ -11,6 +11,7 @@ public class XPGuild {
     private final HashMap<String, XPUser> users = new HashMap<>();
     private final List<XPRole> levelRoles = new ArrayList<>();
     private final List<XPRole> multipliers = new ArrayList<>();
+    private final List<XPChannel> channelMultipliers = new ArrayList<>();
 
     public XPGuild(String id) {
         this.id = id;
@@ -43,17 +44,21 @@ public class XPGuild {
         multipliers.add(role);
     }
 
+    public void addChannelMultiplier(XPChannel channel) {
+        channelMultipliers.add(channel);
+    }
+
     /**
      * Removes all xp roles from the guild and adds the new ones
      */
     public void rebuildLevelRoles(List<XPRole> newRoles) {
         levelRoles.clear();
-        Database.executeQuery("DELETE FROM xpRoles WHERE guildid = ? AND type = 'level'", id);
+        Database.executeQuery("DELETE FROM fluxifyed.xpRoles WHERE guildid = ? AND type = 'level'", id);
 
         levelRoles.addAll(newRoles);
 
         for (XPRole role : newRoles) {
-            Database.executeQuery("INSERT INTO xpRoles (guildid, roleid, value, type) VALUES (?, ?, ?, 'level')", id, role.getID(), role.getValue());
+            Database.executeQuery("INSERT INTO fluxifyed.xpRoles (guildid, roleid, value, type) VALUES (?, ?, ?, 'level')", id, role.getID(), role.getValue());
         }
     }
 
@@ -73,5 +78,9 @@ public class XPGuild {
 
     public List<XPRole> getMultipliers() {
         return multipliers;
+    }
+
+    public List<XPChannel> getChannelMultipliers() {
+        return channelMultipliers;
     }
 }
