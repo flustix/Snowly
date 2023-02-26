@@ -45,7 +45,6 @@ public class Main {
         APIServer.main();
 
         EnumSet<GatewayIntent> intents = EnumSet.allOf(GatewayIntent.class);
-        intents.remove(GatewayIntent.MESSAGE_CONTENT);
         initReqPerms();
 
         JDABuilder builder = JDABuilder.create(config.get("token").getAsString(), intents);
