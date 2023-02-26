@@ -5,12 +5,12 @@ import flustix.fluxifyed.database.api.utils.QueryUtils;
 import flustix.fluxifyed.database.api.components.xp.GlobalLeaderboard;
 import flustix.fluxifyed.database.api.types.APIResponse;
 import flustix.fluxifyed.database.api.types.APIRoute;
-import flustix.fluxifyed.database.api.types.Route;
+import flustix.fluxifyed.database.api.types.IRoute;
 
 import java.util.HashMap;
 
 @APIRoute(path = "/modules/xp/leaderboard/global")
-public class GlobalLeaderboardRoute implements Route {
+public class GlobalLeaderboardRoute implements IRoute {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         HashMap<String, String> query = QueryUtils.getQuery(exchange.getRequestURI().getQuery());
 

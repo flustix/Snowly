@@ -43,11 +43,11 @@ public class Database {
         }
     }
 
-    public static void executeQuery(@Language("mysql") String query, QueryCallback callback) {
+    public static void executeQuery(@Language("mysql") String query, IQueryCallback callback) {
         callback.onResult(executeQuery(query));
     }
 
-    public static void executeQuery(@Language("mysql") String query, String[] replaceable, QueryCallback callback) {
+    public static void executeQuery(@Language("mysql") String query, String[] replaceable, IQueryCallback callback) {
         query = replaceQuery(query, replaceable);
         callback.onResult(executeQuery(query));
     }

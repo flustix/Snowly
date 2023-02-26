@@ -6,7 +6,7 @@ import flustix.fluxifyed.database.api.authentification.AuthUtils;
 import flustix.fluxifyed.database.api.components.xp.UserStats;
 import flustix.fluxifyed.database.api.types.APIResponse;
 import flustix.fluxifyed.database.api.types.APIRoute;
-import flustix.fluxifyed.database.api.types.Route;
+import flustix.fluxifyed.database.api.types.IRoute;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.modules.xp.components.XPUser;
@@ -15,7 +15,7 @@ import flustix.fluxifyed.settings.Settings;
 import java.util.HashMap;
 
 @APIRoute(path = "/modules/xp/stats/:guild/:user")
-public class XPUserStatsRoute implements Route {
+public class XPUserStatsRoute implements IRoute {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         if (Settings.hasSettings(params.get("guild"))) {
             if (Settings.getGuildSettings(params.get("guild")).getBoolean("xp.requireAuth", false)) {

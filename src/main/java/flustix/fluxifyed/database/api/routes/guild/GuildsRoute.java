@@ -6,14 +6,14 @@ import flustix.fluxifyed.database.api.authentification.AuthUtils;
 import flustix.fluxifyed.database.api.components.APIGuild;
 import flustix.fluxifyed.database.api.types.APIResponse;
 import flustix.fluxifyed.database.api.types.APIRoute;
-import flustix.fluxifyed.database.api.types.Route;
+import flustix.fluxifyed.database.api.types.IRoute;
 import flustix.fluxifyed.utils.JSONUtils;
 import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.HashMap;
 
 @APIRoute(path = "/guilds")
-public class GuildsRoute implements Route {
+public class GuildsRoute implements IRoute {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         String token = AuthUtils.getToken(exchange.getRequestHeaders());
 

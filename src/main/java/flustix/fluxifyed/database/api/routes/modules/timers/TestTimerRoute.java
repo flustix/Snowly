@@ -4,14 +4,14 @@ import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.database.api.authentification.AuthUtils;
 import flustix.fluxifyed.database.api.types.APIResponse;
 import flustix.fluxifyed.database.api.types.APIRoute;
-import flustix.fluxifyed.database.api.types.Route;
+import flustix.fluxifyed.database.api.types.IRoute;
 import flustix.fluxifyed.modules.timers.TimersModule;
 import flustix.fluxifyed.modules.timers.components.TimedMessage;
 
 import java.util.HashMap;
 
 @APIRoute(path = "/modules/timers/:id/test")
-public class TestTimerRoute implements Route {
+public class TestTimerRoute implements IRoute {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         TimedMessage message = TimersModule.getTimer(Integer.parseInt(params.get("id")));
         if (message == null) return new APIResponse(404, "Timer not found.", null);

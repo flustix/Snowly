@@ -4,14 +4,14 @@ import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.database.api.authentification.AuthUtils;
 import flustix.fluxifyed.database.api.types.APIResponse;
 import flustix.fluxifyed.database.api.types.APIRoute;
-import flustix.fluxifyed.database.api.types.Route;
+import flustix.fluxifyed.database.api.types.IRoute;
 import flustix.fluxifyed.settings.GuildSettings;
 import flustix.fluxifyed.settings.Settings;
 
 import java.util.HashMap;
 
 @APIRoute(path = "/modules/xp/settings/:guild")
-public class XPSettingsRoute implements Route {
+public class XPSettingsRoute implements IRoute {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         String token = AuthUtils.getToken(exchange.getRequestHeaders());
         if (token.isEmpty())

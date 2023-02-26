@@ -8,7 +8,7 @@ import com.sun.net.httpserver.HttpExchange;
 import flustix.fluxifyed.database.api.authentification.AuthUtils;
 import flustix.fluxifyed.database.api.types.APIResponse;
 import flustix.fluxifyed.database.api.types.APIRoute;
-import flustix.fluxifyed.database.api.types.Route;
+import flustix.fluxifyed.database.api.types.IRoute;
 import flustix.fluxifyed.modules.xp.XP;
 import flustix.fluxifyed.modules.xp.components.XPGuild;
 import flustix.fluxifyed.modules.xp.components.XPRole;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @APIRoute(path = "/modules/xp/levelroles/:guild", method = "POST")
-public class LevelRolesPOSTRoute implements Route {
+public class LevelRolesPOSTRoute implements IRoute {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         String token = AuthUtils.getToken(exchange.getRequestHeaders());
         if (token.isEmpty())

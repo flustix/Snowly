@@ -7,7 +7,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import flustix.fluxifyed.database.api.types.APIResponse;
 import flustix.fluxifyed.database.api.types.APIRoute;
-import flustix.fluxifyed.database.api.types.Route;
+import flustix.fluxifyed.database.api.types.IRoute;
 import flustix.fluxifyed.database.api.utils.ratelimit.RateLimitData;
 import flustix.fluxifyed.database.api.utils.ratelimit.RateLimitUtils;
 import org.reflections.Reflections;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Router implements HttpHandler {
-    private static final HashMap<String, Route> routes = new HashMap<>();
+    private static final HashMap<String, IRoute> routes = new HashMap<>();
     private static final HashMap<String, Integer> rateLimits = new HashMap<>();
 
     public void init() {
@@ -26,7 +26,7 @@ public class Router implements HttpHandler {
         reflections.getTypesAnnotatedWith(APIRoute.class).forEach(clazz -> {
             try {
                 APIRoute annotation = clazz.getAnnotation(APIRoute.class);
-                addRoute(annotation.method() + "|" + annotation.path(), (Route) clazz.getConstructor().newInstance());
+                addRoute(annotation.method() + "|" + annotation.path(), (IRoute) clazz.getConstructor().newInstance());
                 rateLimits.put(annotation.path(), annotation.rateLimit());
             } catch (Exception e) {
                 APIServer.LOGGER.error("Error while loading route: " + clazz.getName());
@@ -40,7 +40,7 @@ public class Router implements HttpHandler {
             return;
         }
 
-        for (Map.Entry<String, Route> routeEntry : routes.entrySet()) {
+        for (Map.Entry<String, IRoute> routeEntry : routes.entrySet()) {
             String[] route = routeEntry.getKey().split("\\|");
             String method = route[0];
             String path = route[1];
@@ -76,7 +76,7 @@ public class Router implements HttpHandler {
         sendResponse(exchange, null, null, null, false);
     }
 
-    private void sendResponse(HttpExchange exchange, String path, Route route, HashMap<String, String> params, boolean found) throws IOException {
+    private void sendResponse(HttpExchange exchange, String path, IRoute route, HashMap<String, String> params, boolean found) throws IOException {
         Headers headers = exchange.getResponseHeaders();
 
         JsonObject json = new JsonObject();
@@ -128,7 +128,7 @@ public class Router implements HttpHandler {
         exchange.close();
     }
 
-    public void addRoute(String path, Route route) {
+    public void addRoute(String path, IRoute route) {
         routes.put(path, route);
     }
 

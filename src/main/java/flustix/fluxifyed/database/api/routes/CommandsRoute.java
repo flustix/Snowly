@@ -7,7 +7,7 @@ import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.components.SlashCommandList;
 import flustix.fluxifyed.database.api.types.APIResponse;
 import flustix.fluxifyed.database.api.types.APIRoute;
-import flustix.fluxifyed.database.api.types.Route;
+import flustix.fluxifyed.database.api.types.IRoute;
 import flustix.fluxifyed.localization.Localization;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 @APIRoute(path = "/commands")
-public class CommandsRoute implements Route {
+public class CommandsRoute implements IRoute {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         JsonArray commands = new JsonArray();
 

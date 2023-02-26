@@ -6,14 +6,14 @@ import flustix.fluxifyed.database.api.authentification.AuthUtils;
 import flustix.fluxifyed.database.api.components.xp.RewardRoles;
 import flustix.fluxifyed.database.api.types.APIResponse;
 import flustix.fluxifyed.database.api.types.APIRoute;
-import flustix.fluxifyed.database.api.types.Route;
+import flustix.fluxifyed.database.api.types.IRoute;
 import flustix.fluxifyed.settings.Settings;
 import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.HashMap;
 
 @APIRoute(path = "/modules/xp/rewardroles/:guild")
-public class GuildRewardRolesRoute implements Route {
+public class GuildRewardRolesRoute implements IRoute {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         if (Settings.hasSettings(params.get("guild"))) {
             if (Settings.getGuildSettings(params.get("guild")).getBoolean("xp.requireAuth", false)) {

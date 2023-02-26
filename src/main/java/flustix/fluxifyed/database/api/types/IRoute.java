@@ -4,6 +4,6 @@ import com.sun.net.httpserver.HttpExchange;
 
 import java.util.HashMap;
 
-public interface Route {
+public interface IRoute {
     APIResponse execute(HttpExchange exchange, HashMap<String, String> params);
 }

@@ -2,6 +2,6 @@ package flustix.fluxifyed.database;
 
 import java.sql.ResultSet;
 
-public interface QueryCallback {
+public interface IQueryCallback {
     void onResult(ResultSet result);
 }

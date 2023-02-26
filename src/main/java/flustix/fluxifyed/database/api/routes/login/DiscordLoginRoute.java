@@ -10,7 +10,7 @@ import flustix.fluxifyed.database.api.authentification.TokenGen;
 import flustix.fluxifyed.database.api.components.APIUser;
 import flustix.fluxifyed.database.api.types.APIResponse;
 import flustix.fluxifyed.database.api.types.APIRoute;
-import flustix.fluxifyed.database.api.types.Route;
+import flustix.fluxifyed.database.api.types.IRoute;
 import net.dv8tion.jda.api.entities.User;
 
 import java.net.URI;
@@ -21,7 +21,7 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 
 @APIRoute(path = "/login/discord")
-public class DiscordLoginRoute implements Route {
+public class DiscordLoginRoute implements IRoute {
     public APIResponse execute(HttpExchange exchange, HashMap<String, String> params) {
         String token = AuthUtils.getToken(exchange.getRequestHeaders());
         if (token.isEmpty())
