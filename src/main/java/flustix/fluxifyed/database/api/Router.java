@@ -36,37 +36,39 @@ public class Router implements HttpHandler {
     }
 
     public void handle(HttpExchange exchange) throws IOException {
-        if (!exchange.getRequestMethod().equals("HEAD")) {
-            for (Map.Entry<String, Route> routeEntry : routes.entrySet()) {
-                String[] route = routeEntry.getKey().split("\\|");
-                String method = route[0];
-                String path = route[1];
+        if (exchange.getRequestMethod().equals("HEAD")) {
+            return;
+        }
 
-                if (!exchange.getRequestMethod().equals(method)) {
-                    continue;
+        for (Map.Entry<String, Route> routeEntry : routes.entrySet()) {
+            String[] route = routeEntry.getKey().split("\\|");
+            String method = route[0];
+            String path = route[1];
+
+            if (!exchange.getRequestMethod().equals(method)) {
+                continue;
+            }
+
+            String[] pathSplit = path.split("/");
+            String[] requestSplit = exchange.getRequestURI().getPath().split("/");
+
+            if (pathSplit.length == requestSplit.length) {
+                boolean match = true;
+                HashMap<String, String> params = new HashMap<>();
+
+                for (int i = 0; i < pathSplit.length; i++) {
+                    if (pathSplit[i].startsWith(":")) {
+                        params.put(pathSplit[i].substring(1), requestSplit[i]);
+                        continue;
+                    }
+                    if (!pathSplit[i].equals(requestSplit[i])) {
+                        match = false;
+                        break;
+                    }
                 }
-
-                String[] pathSplit = path.split("/");
-                String[] requestSplit = exchange.getRequestURI().getPath().split("/");
-
-                if (pathSplit.length == requestSplit.length) {
-                    boolean match = true;
-                    HashMap<String, String> params = new HashMap<>();
-
-                    for (int i = 0; i < pathSplit.length; i++) {
-                        if (pathSplit[i].startsWith(":")) {
-                            params.put(pathSplit[i].substring(1), requestSplit[i]);
-                            continue;
-                        }
-                        if (!pathSplit[i].equals(requestSplit[i])) {
-                            match = false;
-                            break;
-                        }
-                    }
-                    if (match) {
-                        sendResponse(exchange, path, routeEntry.getValue(), params, true);
-                        return;
-                    }
+                if (match) {
+                    sendResponse(exchange, path, routeEntry.getValue(), params, true);
+                    return;
                 }
             }
         }
