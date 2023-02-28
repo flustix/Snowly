@@ -5,6 +5,7 @@ import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.components.message.MessageData;
 import flustix.fluxifyed.utils.CustomMessageUtils;
 import flustix.fluxifyed.utils.MessageUtils;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.channel.Channel;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
@@ -19,6 +20,7 @@ public class SaySlashCommand extends SlashCommand {
         addOption(OptionType.STRING, "message", "The message to say", true, false);
         addOption(OptionType.CHANNEL, "channel", "The channel to say the message in", false, false);
         addOption(OptionType.STRING, "reply", "The message to reply to (as ID)", false, false);
+        addPermissions(Permission.MESSAGE_MANAGE);
     }
 
     public void execute(SlashCommandInteraction event) {
