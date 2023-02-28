@@ -23,6 +23,7 @@
   "command.description.utility.ping": "Get the bot's ping.",
   "command.description.utility.poll": "Create a poll.",
   "command.description.utility.roleinfo": "Get information about a role.",
+  "command.description.utility.say": "Make the bot say something!",
   "command.description.utility.serverinfo": "Get information about the server.",
   "command.description.utility.stats": "Get the bot's statistics.",
   "command.description.utility.support": "Get an invite link to the support server.",
