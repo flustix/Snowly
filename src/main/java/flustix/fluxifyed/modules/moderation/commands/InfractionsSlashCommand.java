@@ -6,6 +6,7 @@ import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.modules.moderation.ModerationModule;
 import flustix.fluxifyed.modules.moderation.components.Infraction;
 import flustix.fluxifyed.modules.moderation.types.InfractionType;
+import flustix.fluxifyed.utils.MessageUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class InfractionsSlashCommand extends SlashCommand {
     public InfractionsSlashCommand() {
-        super("infractions", "Shows the infractions of a user.", true);
+        super("infractions", true);
         addPermissions(Permission.MODERATE_MEMBERS);
         addOption(OptionType.USER, "target", "The user to show the infractions of.", true, false);
         addOption(OptionType.STRING, "type", "The type of infractions to show.", false, true);
@@ -68,7 +69,7 @@ public class InfractionsSlashCommand extends SlashCommand {
 
             for (Infraction infraction : infractions) {
                 if (index >= (page - 1) * 10 && index < page * 10) {
-                    embed.addField(getInfractionType(infraction.getType()) + " (#" + infraction.getId() + ") <t:" + (infraction.getTime() / 1000) + ":f>", "**Reason** " + infraction.getReason() + "\n**Moderator** <@" + infraction.getModerator() + ">", true);
+                    embed.addField(getInfractionType(infraction.getType()) + " <t:" + (infraction.getTime() / 1000) + ":f>", "**Reason** " + infraction.getReason() + "\n**Moderator** <@" + infraction.getModerator() + ">\n**ID** " + infraction.getId(), true);
                 }
                 index++;
             }
@@ -78,7 +79,7 @@ public class InfractionsSlashCommand extends SlashCommand {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(":x: Failed to show infractions!")
                     .addField(":bust_in_silhouette: User", target.getAsTag(), true)
-                    .addField(":x: Error", ex.getMessage(), false)
+                    .addField(":x: Error", MessageUtils.exceptionToCode(ex), false)
                     .setColor(Colors.ACCENT);
 
             interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
