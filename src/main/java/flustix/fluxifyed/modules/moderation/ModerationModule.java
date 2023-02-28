@@ -76,14 +76,16 @@ public class ModerationModule extends Module {
                 AutoAction action = new AutoAction(
                         AutoActionType.fromString(rs.getString("action")),
                         rs.getInt("duration"),
-                        rs.getInt("threshold"),
-                        rs.getInt("duration")
+                        rs.getInt("infractions"),
+                        rs.getInt("threshold")
                 );
 
                 if (!autoActions.containsKey(rs.getString("id"))) {
                     autoActions.put(rs.getString("id"), new ArrayList<>());
                 }
                 autoActions.get(rs.getString("id")).add(action);
+
+                Main.LOGGER.info("ID: " + rs.getString("id") + " | Action: " + action.getAction().toString() + " | Duration: " + action.getDuration() + " | Threshold: " + rs.getInt("threshold"));
             }
         } catch (Exception e) {
             Main.LOGGER.error("Error while retrieving auto actions from database", e);
