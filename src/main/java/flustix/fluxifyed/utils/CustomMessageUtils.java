@@ -71,7 +71,8 @@ public class CustomMessageUtils {
                 }
             }
 
-            msg.setEmbeds(embed.build());
+            if (!embed.isEmpty())
+                msg.setEmbeds(embed.build());
         }
 
         return msg.build();
