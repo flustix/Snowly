@@ -49,7 +49,7 @@ public class RewardRoles {
             if (role == null) id = xpRole.getID();
 
             String levelMode = settings.getString("xp.levelMode", "default");
-            level = xpRole.getValue();
+            level = (int)xpRole.getValue();
             xp = XPUtils.calculateXP(level, levelMode);
         }
     }

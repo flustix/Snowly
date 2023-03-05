@@ -73,7 +73,7 @@ public class XP {
 
         while (roles.next()) {
             String type = roles.getString("type");
-            XPRole role = new XPRole(roles.getString("roleid"), roles.getInt("value"));
+            XPRole role = new XPRole(roles.getString("roleid"), roles.getFloat("value"));
 
             switch (type) {
                 case "level" -> guild.addLevelRole(role);
@@ -88,7 +88,7 @@ public class XP {
         if (channels == null) return;
 
         while (channels.next()) {
-            XPChannel channel = new XPChannel(channels.getString("channelid"), channels.getInt("value"));
+            XPChannel channel = new XPChannel(channels.getString("channelid"), channels.getFloat("value"));
             xpGuild.addChannelMultiplier(channel);
         }
     }

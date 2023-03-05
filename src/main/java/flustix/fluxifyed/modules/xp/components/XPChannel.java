@@ -2,9 +2,9 @@ package flustix.fluxifyed.modules.xp.components;
 
 public class XPChannel {
     private final String id;
-    private final int value;
+    private final float value;
 
-    public XPChannel(String id, int level) {
+    public XPChannel(String id, float level) {
         this.id = id;
         this.value = level;
     }
@@ -13,7 +13,7 @@ public class XPChannel {
         return id;
     }
 
-    public int getValue() {
+    public float getValue() {
         return value;
     }
 }

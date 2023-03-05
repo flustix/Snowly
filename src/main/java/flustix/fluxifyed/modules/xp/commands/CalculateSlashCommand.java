@@ -20,12 +20,11 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class CalculateSlashCommand extends SlashCommand {
     public CalculateSlashCommand() {
-        super("calculate", "Calculate the amount of XP and time you need to reach a certain level.", true);
+        super("calculate", true);
         addOption(OptionType.INTEGER, "level", "The level you want to reach.", false, true);
     }
 
@@ -49,10 +48,10 @@ public class CalculateSlashCommand extends SlashCommand {
         if (levelMapping == null) {
             // try getting the next level reward role
             List<XPRole> next = new ArrayList<>(guild.getLevelRoles().stream().filter(r -> r.getValue() > user.getLevel()).toList());
-            next.sort(Comparator.comparingInt(XPRole::getValue));
+            next.sort((a, b) -> Float.compare(a.getValue(), b.getValue()));
 
             if (next.size() > 0) {
-                level = next.get(0).getValue();
+                level = (int)next.get(0).getValue();
             } else {
                 interaction.reply("There is no next reward role! Please specify a level.").setEphemeral(true).queue();
                 return;

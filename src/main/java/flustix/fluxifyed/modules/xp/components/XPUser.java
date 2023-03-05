@@ -55,7 +55,7 @@ public class XPUser {
         Member member = event.getMember();
 
         if (member == null) {
-            Main.LOGGER.warn("Member is null?? (XPUser.addXP:LevelUPMessage) (" + guild.getID() + ":" + id + ")");
+            Main.LOGGER.warn("Member intent is disabled!");
             return;
         }
 
@@ -119,7 +119,7 @@ public class XPUser {
 
         // if we are in highest mode, remove all roles except the highest one
         if (isHighestMode) {
-            roles.sort((o1, o2) -> (o2.getValue() - o1.getValue()));
+            roles.sort((o1, o2) -> Float.compare(o2.getValue(), o1.getValue()));
 
             if (roles.size() > 0) {
                 roles = List.of(roles.get(0));
@@ -210,7 +210,7 @@ public class XPUser {
         return multiplier;
     }
 
-    private int getChannelMultiplier(Channel channel) {
+    private float getChannelMultiplier(Channel channel) {
         for (XPChannel xpChannel : guild.getChannelMultipliers()) {
             if (channel.getId().equals(xpChannel.getID()))
                 return xpChannel.getValue();

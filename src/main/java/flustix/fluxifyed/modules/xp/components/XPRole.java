@@ -5,9 +5,9 @@ package flustix.fluxifyed.modules.xp.components;
  */
 public class XPRole {
     private final String id;
-    private final int value;
+    private final float value;
 
-    public XPRole(String id, int level) {
+    public XPRole(String id, float level) {
         this.id = id;
         this.value = level;
     }
@@ -16,7 +16,7 @@ public class XPRole {
         return id;
     }
 
-    public int getValue() {
+    public float getValue() {
         return value;
     }
 }
