@@ -1,0 +1,8 @@
+size(800, 200);
+rect(#1d1d22, 0, 0, 800, 200);
+rect(#26262c, 10, 10, 180, 180, 5);
+rect(#26262c, 200, 10, 590, 180, 5);
+image({user.banner}?size=512, 10, 10, 180, 180, 5);
+image({member.avatar}?size=256, 30, 30, 140, 140, 5);
+text({member.nickname}, 210, 20, {role.color}, 50, left, 570);
+text(Leveled up to level {xp.level}, 210, 110, #ffffff, 30, left, 570);
