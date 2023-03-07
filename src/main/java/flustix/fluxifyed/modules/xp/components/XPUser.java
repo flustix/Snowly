@@ -78,7 +78,7 @@ public class XPUser {
 
             if (showLevelUp) {
                 try {
-                    if (ImageRenderer.renderImage(new RenderArgs("levelup", "levelup.png", new RenderData(member.getGuild(), member)))) {
+                    if (ImageRenderer.renderImage(new RenderArgs("levelup", new RenderData(member.getGuild(), member)))) {
                         if (showTooltip) {
                             channel.sendMessage("*You can disable this message for yourself using </togglelevelup:1023272930295169156> (Toggles this on all servers using this bot)*").addFiles(FileUpload.fromData(new File("levelup.png"))).complete();
                         } else {

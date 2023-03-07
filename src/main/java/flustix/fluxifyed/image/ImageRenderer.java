@@ -2,7 +2,6 @@ package flustix.fluxifyed.image;
 
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.utils.ColorUtils;
-import flustix.fluxifyed.utils.FileUtils;
 import flustix.fluxifyed.utils.graphics.Alignment;
 import flustix.fluxifyed.utils.graphics.GraphicsUtils;
 
@@ -12,13 +11,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 public class ImageRenderer {
     public static boolean renderImage(RenderArgs args) {
         try {
-            String data = FileUtils.getResourceString("/images/" + args.template + ".image");
-            String[] lines = data.split(";");
+            String[] lines = args.template.split(";");
 
             int width = 0;
             int height = 0;
@@ -50,6 +50,7 @@ public class ImageRenderer {
             }
 
             graphics.dispose();
+            Files.createDirectories(Path.of(args.output.split("/").length > 1 ? args.output.substring(0, args.output.lastIndexOf("/")) : ""));
             ImageIO.write(image, "png", new File(args.output));
             return true;
         } catch (Exception e) {
@@ -86,8 +87,6 @@ public class ImageRenderer {
         int w = args.length > 3 ? tryParseInt(args[3], 0) : 0;
         int h = args.length > 4 ? tryParseInt(args[4], 0) : 0;
         int r = args.length > 5 ? tryParseInt(args[5], 0) : 0;
-
-        Main.LOGGER.info("Rendering rect: " + fill + ", " + x + ", " + y + ", " + w + ", " + h + ", " + r);
 
         fill = replaceVars(fill, data);
 

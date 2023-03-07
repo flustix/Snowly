@@ -46,7 +46,7 @@ public class RankSlashCommand extends SlashCommand {
                 return;
             }
 
-            if (ImageRenderer.renderImage(new RenderArgs("rank", "rank.png", new RenderData(guild, member)))) {
+            if (ImageRenderer.renderImage(new RenderArgs("rank", new RenderData(guild, member)))) {
                 hook.editOriginal("")
                         .setFiles(FileUpload.fromData(new File("rank.png")))
                         .setActionRow(Button.link("https://fluxifyed.foxes4life.net/leaderboard/" + guild.getId() + "/" + member.getId(), "View on website")).queue();

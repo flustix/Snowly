@@ -7,12 +7,17 @@ import com.google.gson.JsonParser;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.components.message.MessageData;
 import flustix.fluxifyed.database.Database;
+import flustix.fluxifyed.image.ImageRenderer;
+import flustix.fluxifyed.image.RenderArgs;
 import flustix.fluxifyed.image.RenderData;
 import flustix.fluxifyed.utils.CustomMessageUtils;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
+import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
+import net.dv8tion.jda.api.utils.FileUpload;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.util.Map;
 
@@ -20,6 +25,7 @@ public class WelcomeData {
     private final String guildId;
     private String channelId;
     private String messageRaw;
+    private String imageTemplate;
     private JsonArray roles;
 
     public WelcomeData(String guildId) {
@@ -29,13 +35,14 @@ public class WelcomeData {
     }
 
     private void load() {
-        ResultSet rs = Database.executeQuery("SELECT * FROM welcome WHERE guildid = '" + guildId + "'");
+        ResultSet rs = Database.executeQuery("SELECT * FROM fluxifyed.welcome WHERE guildid = '" + guildId + "'");
         if (rs == null) return;
 
         try {
             while (rs.next()) {
                 channelId = rs.getString("channelid");
                 messageRaw = rs.getString("message");
+                imageTemplate = rs.getString("image");
                 roles = JsonParser.parseString(rs.getString("roles")).getAsJsonArray();
             }
         } catch (Exception ex) {
@@ -67,7 +74,16 @@ public class WelcomeData {
                 message = message.replace("{" + key + "}", value);
             }
 
-            channel.sendMessage(CustomMessageUtils.create(new Gson().fromJson(message, MessageData.class))).queue();
+            MessageCreateAction action = channel.sendMessage(CustomMessageUtils.create(new Gson().fromJson(message, MessageData.class)));
+
+            if (imageTemplate != null && !imageTemplate.isBlank()) {
+                String path = "images/welcome/" + guildId + ".png";
+
+                if (ImageRenderer.renderImage(new RenderArgs(imageTemplate, path, renderData)))
+                    action.addFiles(FileUpload.fromData(new File(path)));
+            }
+
+            action.queue();
         } catch (Exception ex) {
             Main.LOGGER.error("Error while sending welcome message for guild " + guildId, ex);
         }
