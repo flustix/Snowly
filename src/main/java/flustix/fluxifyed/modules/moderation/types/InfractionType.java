@@ -1,11 +1,21 @@
 package flustix.fluxifyed.modules.moderation.types;
 
 public enum InfractionType {
-    NOTE,
-    WARN,
-    MUTE,
-    KICK,
-    BAN;
+    NOTE(false),
+    WARN(true),
+    MUTE(false),
+    KICK(false),
+    BAN(false);
+
+    final boolean countForAutoActions;
+
+    InfractionType(boolean countForAutoActions) {
+        this.countForAutoActions = countForAutoActions;
+    }
+
+    public boolean countForAutoActions() {
+        return countForAutoActions;
+    }
 
     public static InfractionType fromString(String type) {
         return switch (type) {

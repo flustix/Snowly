@@ -100,7 +100,7 @@ public class ModerationModule extends Module {
         if (actions == null) return;
 
         List<Infraction> userInfractions = infractions.stream()
-                .filter(i -> i.getGuild().equals(infraction.getGuild()) && i.getUser().equals(infraction.getUser()) && i.getType() != InfractionType.NOTE)
+                .filter(i -> i.getGuild().equals(infraction.getGuild()) && i.getUser().equals(infraction.getUser()) && i.getType().countForAutoActions())
                 .toList();
 
         // all actions that apply to this infraction sorted by infraction count (descending)
