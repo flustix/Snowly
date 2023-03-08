@@ -70,7 +70,7 @@ public class CalculateSlashCommand extends SlashCommand {
             return;
         }
 
-        long xpToLevel = XPUtils.calculateXP(level + 1, guildSettings.getString("xp.levelMode", "default"));
+        long xpToLevel = XPUtils.calculateXP(level, guildSettings.getString("xp.levelMode", "default"));
         long xpLeft = xpToLevel - user.getXP();
 
         int rngMin = guildSettings.getInt("xp.randomMin", 10);
