@@ -4,6 +4,8 @@ import flustix.fluxifyed.components.SlashCommand;
 import flustix.fluxifyed.constants.Colors;
 import flustix.fluxifyed.modules.moderation.ModerationModule;
 import flustix.fluxifyed.modules.moderation.components.Infraction;
+import flustix.fluxifyed.modules.moderation.types.InfractionType;
+import flustix.fluxifyed.utils.UserUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
@@ -11,10 +13,12 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
+import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 public class WarnSlashCommand extends SlashCommand {
     public WarnSlashCommand() {
-        super("warn", "Warn a user.", true);
+        super("warn", true);
         addPermissions(Permission.MODERATE_MEMBERS);
         addOption(OptionType.USER, "user", "The user to warn.", true, false);
         addOption(OptionType.STRING, "reason", "The reason for the warning.", true, false);
@@ -45,6 +49,16 @@ public class WarnSlashCommand extends SlashCommand {
                     .setColor(Colors.ACCENT);
 
             interaction.replyEmbeds(embed.build()).setEphemeral(true).queue();
+
+            MessageCreateData data = new MessageCreateBuilder()
+                    .setEmbeds(new EmbedBuilder()
+                            .setTitle(":warning: You have been warned in " + guild.getName())
+                            .addField(":scroll: Reason", reason, false)
+                            .setFooter("You have " + ModerationModule.getInfractions(user.getId(), guild.getId()).stream().filter(i -> i.getType() == InfractionType.WARN).toList().size() + " warning(s).")
+                            .setColor(Colors.WARNING)
+                            .build()).build();
+
+            UserUtils.directMessage(user, data);
         } catch (Exception ex) {
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle(":x: Failed to warn user!")

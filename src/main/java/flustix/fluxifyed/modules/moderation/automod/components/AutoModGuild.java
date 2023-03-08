@@ -5,13 +5,18 @@ import com.google.gson.JsonParser;
 import flustix.fluxifyed.Main;
 import flustix.fluxifyed.database.Database;
 import flustix.fluxifyed.modules.moderation.ModerationModule;
+import flustix.fluxifyed.modules.moderation.automod.components.messages.MessageStorage;
 import flustix.fluxifyed.modules.moderation.automod.types.AutoModRuleset;
 import flustix.fluxifyed.modules.moderation.components.Infraction;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class AutoModGuild {
     public final String id;
@@ -20,11 +25,13 @@ public class AutoModGuild {
     private AutoModRuleset massMentionsRuleset = AutoModRuleset.Nothing;
     private AutoModRuleset massEmojisRuleset = AutoModRuleset.Nothing;
     private AutoModRuleset massCapsRuleset = AutoModRuleset.Nothing;
+    private AutoModRuleset spamRuleset = AutoModRuleset.Nothing;
 
     private final ArrayList<String> badWords = new ArrayList<>();
     private int massMentionsThreshold = 7;
     private int massEmojisThreshold = 7;
     private int massCapsThreshold = 80;
+    private int spamThreshold = 3;
 
     public AutoModGuild(String id) {
         this.id = id;
@@ -52,6 +59,8 @@ public class AutoModGuild {
                     massEmojisRuleset = AutoModRuleset.parse(rulesets.get("massemojis").getAsInt());
                 if (rulesets.has("masscaps"))
                     massCapsRuleset = AutoModRuleset.parse(rulesets.get("masscaps").getAsInt());
+                if (rulesets.has("spam"))
+                    spamRuleset = AutoModRuleset.parse(rulesets.get("spam").getAsInt());
 
                 // Settings
                 if (settings.has("badwords"))
@@ -62,6 +71,8 @@ public class AutoModGuild {
                     massEmojisThreshold = settings.get("massemojis").getAsInt();
                 if (settings.has("masscaps"))
                     massCapsThreshold = settings.get("masscaps").getAsInt();
+                if (settings.has("spam"))
+                    spamThreshold = settings.get("spam").getAsInt();
             }
         } catch (Exception e) {
             Main.LOGGER.error("Error while loading AutoMod settings for guild " + id, e);
@@ -160,6 +171,37 @@ public class AutoModGuild {
                     deleteAction.queue();
                     break;
             }
+        }
+
+        // spam
+        List<Message> matches = new ArrayList<>();
+
+        for (Message msg : MessageStorage.getByAuthorInGuild(message.getAuthor().getId(), id)) {
+            if (msg.getContentRaw().equals(message.getContentRaw())) {
+                if (msg.getTimeCreated().toInstant().toEpochMilli() + TimeUnit.MINUTES.toMillis(2) >= message.getTimeCreated().toInstant().toEpochMilli()) {
+                    matches.add(msg);
+                }
+            }
+        }
+
+        if (matches.size() >= spamThreshold) {
+            if (spamRuleset != AutoModRuleset.DeleteTimeout) return;
+
+            for (Message match : matches) match.delete().queue(s -> {}, e -> {
+                if (e instanceof ErrorResponseException error) {
+                    if (error.getErrorCode() == 10008) return; // message already deleted
+                    Main.LOGGER.error("Error while deleting message", e);
+                }
+            });
+
+            Member member = message.getMember();
+
+            if (member == null) {
+                Main.LOGGER.warn("Member intent disabled!");
+                return;
+            }
+
+            message.getMember().timeoutFor(1, TimeUnit.HOURS).reason("Spam").queue();
         }
     }
 }
