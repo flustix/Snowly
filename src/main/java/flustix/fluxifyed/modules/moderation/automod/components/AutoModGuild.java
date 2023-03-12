@@ -81,25 +81,34 @@ public class AutoModGuild {
 
     public void checkMessage(Message message) {
         // bad words
-        for (String word : badWords) {
-            if (message.getContentRaw().contains(word)) {
-                Infraction warn = new Infraction(id, message.getAuthor().getId(), message.getJDA().getSelfUser().getId(), "warn", "Bad word: " + word, message.getTimeCreated().toInstant().toEpochMilli());
-                AuditableRestAction<Void> deleteAction = message.delete().reason("Bad word usage: " + word);
+        boolean badword = false;
+        String word = "";
 
-                switch (badWordsRuleset) {
-                    case Nothing:
-                        break;
-                    case Delete:
-                        deleteAction.queue();
-                        break;
-                    case Warn:
-                        ModerationModule.addInfraction(warn);
-                        break;
-                    case WarnDelete:
-                        ModerationModule.addInfraction(warn);
-                        deleteAction.queue();
-                        break;
-                }
+        for (String w : badWords) {
+            if (message.getContentRaw().toLowerCase().contains(w.toLowerCase())) {
+                badword = true;
+                word = w;
+                break;
+            }
+        }
+
+        if (badword) {
+            Infraction warn = new Infraction(id, message.getAuthor().getId(), message.getJDA().getSelfUser().getId(), "warn", "Bad word: " + word, message.getTimeCreated().toInstant().toEpochMilli());
+            AuditableRestAction<Void> deleteAction = message.delete().reason("Bad word usage: " + word);
+
+            switch (badWordsRuleset) {
+                case Nothing:
+                    break;
+                case Delete:
+                    deleteAction.queue();
+                    break;
+                case Warn:
+                    ModerationModule.addInfraction(warn);
+                    break;
+                case WarnDelete:
+                    ModerationModule.addInfraction(warn);
+                    deleteAction.queue();
+                    break;
             }
         }
 
