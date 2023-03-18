@@ -10,6 +10,7 @@ import flustix.fluxifyed.modules.moderation.automod.types.AutoModRuleset;
 import flustix.fluxifyed.modules.moderation.components.Infraction;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.sticker.StickerItem;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;
 
@@ -186,10 +187,19 @@ public class AutoModGuild {
         List<Message> matches = new ArrayList<>();
 
         for (Message msg : MessageStorage.getByAuthorInGuild(message.getAuthor().getId(), id)) {
-            if (msg.getContentRaw().equals(message.getContentRaw())) {
-                if (msg.getTimeCreated().toInstant().toEpochMilli() + TimeUnit.MINUTES.toMillis(2) >= message.getTimeCreated().toInstant().toEpochMilli()) {
-                    matches.add(msg);
-                }
+            StringBuilder content = new StringBuilder(msg.getContentRaw().toLowerCase());
+            StringBuilder content2 = new StringBuilder(message.getContentRaw().toLowerCase());
+            boolean inTime = msg.getTimeCreated().toInstant().toEpochMilli() + TimeUnit.MINUTES.toMillis(2) >= message.getTimeCreated().toInstant().toEpochMilli();
+
+            for (StickerItem sticker : msg.getStickers())
+                content.append(sticker.getName().toLowerCase());
+
+            for (StickerItem sticker : message.getStickers())
+                content2.append(sticker.getName().toLowerCase());
+
+
+            if (content.toString().equals(content2.toString()) && inTime) {
+                matches.add(msg);
             }
         }
 
