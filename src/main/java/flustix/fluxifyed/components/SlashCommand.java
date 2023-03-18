@@ -50,12 +50,17 @@ public class SlashCommand {
 
     public void addAutocomplete(String option, Autocomplete... autocompletes) {
         if (optionAutocompletes.containsKey(option)) {
-            for (Autocomplete autocomplete : autocompletes) {
-                for (Autocomplete existingAutocomplete : optionAutocompletes.get(option)) {
-                    if (!existingAutocomplete.getName().equals(autocomplete.getName())) {
-                        optionAutocompletes.get(option).add(autocomplete);
+            for (Autocomplete autocomplete1 : autocompletes) {
+                boolean found = false;
+
+                for (Autocomplete autocomplete : optionAutocompletes.get(option)) {
+                    if (autocomplete.equals(autocomplete1)) {
+                        found = true;
+                        break;
                     }
                 }
+
+                if (!found) optionAutocompletes.get(option).add(autocomplete1);
             }
         } else {
             List<Autocomplete> list = new ArrayList<>(Arrays.asList(autocompletes));

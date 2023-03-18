@@ -18,7 +18,7 @@ public class RedditSlashCommand extends SlashCommand {
     public static final Map<String, RedditInteraction> messages = new HashMap<>(); // <messageId, interaction>
 
     public RedditSlashCommand() {
-        super("reddit", "Get a reddit post");
+        super("reddit", false);
         addOption(OptionType.STRING, "subreddit", "The subreddit to get a post from", true, true);
     }
 
@@ -40,7 +40,7 @@ public class RedditSlashCommand extends SlashCommand {
 
         interaction.reply("Getting a post from r/" + subreddit + "...").queue((hook) -> {
             RedditMessage message = RedditUtils.getRedditPost(subreddit, interaction.getChannel().asTextChannel().isNSFW());
-            if (!message.nsfw) addAutocomplete("subreddit", new Autocomplete("r/" + message.subreddit, message.subreddit));
+            if (!message.nsfw) addAutocomplete("subreddit", new Autocomplete(message.subreddit, message.subreddit));
             hook.editOriginal(message.message).queue(
                     (msg) -> messages.put(msg.getId(), new RedditInteraction(message.subreddit, interaction.getUser().getId()))
             );

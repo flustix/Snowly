@@ -16,4 +16,11 @@ public class Autocomplete {
     public String getName() {
         return name;
     }
+
+    public boolean equals(Object obj) {
+        if (obj instanceof Autocomplete autocomplete) {
+            return autocomplete.getName().equals(name) && autocomplete.getValue().equals(value);
+        }
+        return false;
+    }
 }
