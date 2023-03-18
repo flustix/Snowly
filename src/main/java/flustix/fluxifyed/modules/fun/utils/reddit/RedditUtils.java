@@ -1,5 +1,6 @@
 package flustix.fluxifyed.modules.fun.utils.reddit;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import flustix.fluxifyed.Main;
@@ -86,7 +87,15 @@ public class RedditUtils {
     }
 
     public static RedditPost parsePost(String response) {
-        JsonObject apiData = JsonParser.parseString(response).getAsJsonArray().get(0).getAsJsonObject();
+        JsonElement json = JsonParser.parseString(response);
+        JsonObject apiData;
+
+        if (json.isJsonArray()) {
+            apiData = json.getAsJsonArray().get(0).getAsJsonObject();
+        } else {
+            apiData = json.getAsJsonObject();
+        }
+
         JsonObject data = apiData.getAsJsonObject("data")
                 .getAsJsonArray("children")
                 .get(0)
