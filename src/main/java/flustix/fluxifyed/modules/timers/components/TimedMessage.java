@@ -33,7 +33,9 @@ public class TimedMessage {
         this.random = JsonParser.parseString(random).getAsJsonArray();
         this.antiRepeat = antiRepeat;
         for (String s : lastIndexes.split(",")) {
-            this.lastIndexes.add(Integer.parseInt(s));
+            if (!s.isEmpty()) {
+                this.lastIndexes.add(Integer.parseInt(s));
+            }
         }
     }
 
