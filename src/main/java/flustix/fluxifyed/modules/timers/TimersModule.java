@@ -23,7 +23,7 @@ public class TimersModule extends Module {
 
         try {
             while (rs.next()) {
-                timedMessages.put(rs.getInt("id"), new TimedMessage(rs.getString("guildid"), rs.getString("channelid"), rs.getString("message"), rs.getString("time"), rs.getString("random")));
+                timedMessages.put(rs.getInt("id"), new TimedMessage(rs.getString("guildid"), rs.getString("channelid"), rs.getString("message"), rs.getString("time"), rs.getString("random"), rs.getInt("antirepeat"), rs.getString("lastindexes")));
             }
         } catch (Exception ex) {
             Main.LOGGER.error("Error while loading timers!", ex);
