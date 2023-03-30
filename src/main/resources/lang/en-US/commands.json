@@ -6,6 +6,7 @@
   "command.description.fun.8ball": "Ask the magic 8ball a question!",
   "command.description.fun.higherlower": "Play a game of higher or lower!",
   "command.description.fun.reddit": "Get a random post from a subreddit.",
+  "command.description.fun.ship": "Ship two users together!",
 
   "command.description.moderation.ban": "Ban a user from the server.",
   "command.description.moderation.clear": "Clear a certain amount of messages.",
