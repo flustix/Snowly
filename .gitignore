@@ -1,6 +1,7 @@
 target
 .idea
 config.json
+run.sh
 rank.png
 top.png
 levelup.png
