@@ -27,7 +27,7 @@ public class DailySlashCommand extends SlashCommand {
 
             EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Daily reward")
-                    .setDescription("You claimed your daily reward of **" + reward + ":coin: (" + ecoUser.getDailyStreak() + "x steak)** coins!")
+                    .setDescription("You claimed your daily reward of **" + reward + ":coin: (" + ecoUser.getDailyStreak() + "x streak)** coins!")
                     .setColor(Colors.SUCCESS);
 
             interaction.replyEmbeds(embed.build()).queue();
