@@ -52,7 +52,7 @@ public class Logger : ILogger {
             exception.StackTrace?.Split('\n').ToList().ForEach(x => Console.WriteLine(x.Trim()));
         }
         
-        EmptyLine();
+        // EmptyLine();
     }
     
     public static void EmptyLine() {

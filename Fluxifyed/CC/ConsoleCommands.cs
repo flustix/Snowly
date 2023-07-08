@@ -18,11 +18,10 @@ public static class ConsoleCommands {
         Commands.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.Ordinal));
         
         var thread = new Thread(Listen) { IsBackground = true };
-        thread.Start();
+        // thread.Start();
     }
     
     private static void Register(IConsoleCommand command) {
-        // Logger.Log($"Registered console command '{command.Name}'");
         Commands.Add(command);
     }
     
