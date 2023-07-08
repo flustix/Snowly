@@ -1,0 +1,8 @@
+﻿bin
+obj
+.idea
+*.realm
+*.realm.*
+Fluxifyed.sln.DotSettings.user
+FodyWeavers.*
+config.json

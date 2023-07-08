@@ -1,0 +1,67 @@
+﻿using DSharpPlus;
+using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
+using Fluxifyed.Commands;
+using Fluxifyed.Constants;
+using Microsoft.Extensions.Logging;
+
+namespace Fluxifyed.Listeners; 
+
+public static class SlashListener {
+    public static async Task OnSlashCommand(DiscordClient sender, InteractionCreateEventArgs args) {
+        var command = Fluxifyed.SlashCommands.FirstOrDefault(x => x.Name == args.Interaction.Data.Name);
+        
+        if (command == null) {
+            await NotFound(args.Interaction);
+            return;
+        }
+
+        try {
+            if (command is ISlashCommandGroup group) {
+                var subcommand = group.Subcommands.FirstOrDefault(x => x.Name == args.Interaction.Data.Options.First().Name);
+                if (subcommand == null) {
+                    await NotFound(args.Interaction);
+                    return;
+                }
+
+                subcommand.Handle(args.Interaction);
+                return;
+            }
+
+            command.Handle(args.Interaction);
+        }
+        catch (Exception e) {
+            Fluxifyed.Logger.LogError(e, $"An error occurred while executing command {command.Name}.");
+
+            await args.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder().AddEmbed(new DiscordEmbedBuilder
+                {
+                    Title = "An error occurred",
+                    Description = "An error occurred while executing this command.",
+                    Color = Colors.Error,
+                    ImageUrl = GetRandomErrorGif()
+                }));
+        }
+    }
+
+    private static async Task NotFound(DiscordInteraction interaction) {
+        await interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(new DiscordEmbedBuilder {
+            Title = "Unknown command",
+            Description = "This command is not implemented yet.",
+            Color = Colors.Warning,
+            ImageUrl = "https://media.discordapp.net/attachments/328453138665439232/1066616268406407168/gyFdA6F.gif"
+        }));
+    }
+
+    private static readonly List<string> Gifs = new() {
+        "https://media.discordapp.net/attachments/328453138665439232/1066616268406407168/gyFdA6F.gif",
+        "https://media.discordapp.net/attachments/1080605262559322112/1082567997316673656/1946004A-73E7-45E9-B687-960F3ACC53BA.gif",
+        "https://media.discordapp.net/attachments/937487144933539881/986090958057775144/globe.gif"
+    };
+
+    private static string GetRandomErrorGif() {
+        var random = new Random();
+        var number = random.Next(0, Gifs.Count);
+        return Gifs[number];
+    }
+}
