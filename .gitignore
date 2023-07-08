@@ -6,3 +6,4 @@ obj
 Fluxifyed.sln.DotSettings.user
 FodyWeavers.*
 config.json
+run.sh
