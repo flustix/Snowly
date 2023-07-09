@@ -15,5 +15,5 @@ public class XpUser : RealmObject {
     [Ignored] public long XpFromCurrentToNext => TotalXpForNextLevel - TotalXpForCurrentLevel;
     [Ignored] public long XpLeft => TotalXpForNextLevel - Xp;
     [Ignored] public long LevelProgress => XpFromCurrentToNext - XpLeft;
-    [Ignored] public double LevelProgressPercent => (double) XpLeft / XpFromCurrentToNext;
+    [Ignored] public double LevelProgressPercent => (double) LevelProgress / XpFromCurrentToNext;
 }

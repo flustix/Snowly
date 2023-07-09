@@ -60,7 +60,7 @@ public class RankCommand : IOptionSlashCommand {
                             Inline = true
                         },
                         new() {
-                            Name = "Progress",
+                            Name = ":symbols: Progress",
                             Value = $"{user.LevelProgressPercent:P2} ({user.LevelProgress}/{user.XpFromCurrentToNext})".Replace(",", "."),
                             Inline = true
                         }
