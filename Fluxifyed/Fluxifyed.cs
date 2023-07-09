@@ -3,7 +3,6 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Exceptions;
-using Fluxifyed.CC;
 using Fluxifyed.Commands;
 using Fluxifyed.Config;
 using Fluxifyed.Image;
@@ -57,7 +56,6 @@ public static class Fluxifyed {
 
         if (Bot != null) throw new Exception("Bot is already running!");
         
-        ConsoleCommands.Init();
         Console.Title = "Fluxifyed";
         Console.Clear();
         
