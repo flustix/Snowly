@@ -29,7 +29,7 @@ public class Logger : ILogger {
         
         var msg = formatter(state, exception);
 
-        ClearCurrentConsoleLine();
+        // ClearCurrentConsoleLine();
         Console.ForegroundColor = ConsoleColor.Gray;
         Console.Write($"[{DateTime.Now:HH:mm:ss}] ");
         Console.ForegroundColor = logLevel switch {
@@ -52,6 +52,10 @@ public class Logger : ILogger {
             exception.StackTrace?.Split('\n').ToList().ForEach(x => Console.WriteLine(x.Trim()));
         }
         
+        var log = $"[{DateTime.Now:HH:mm:ss}] [{severity}] [{source}] {msg}";
+        File.AppendAllText("fluxifyed.log", log + "\n");
+        exception?.StackTrace?.Split('\n').ToList().ForEach(x => File.AppendAllText("fluxifyed.log", x.Trim() + "\n"));
+
         // EmptyLine();
     }
     

@@ -40,6 +40,13 @@ public static class Fluxifyed {
     private static readonly List<DiscordApplicationCommand> List = new();
 
     public static async Task Main(string[] args) {
+        AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => {
+            if (eventArgs.ExceptionObject is not Exception e)
+                Logger.LogError($"Unhandled exception: {eventArgs.ExceptionObject}");
+            else
+                Logger.LogError(e, $"Unhandled exception: {e.Message}");
+        };
+
         if (args.Contains("--image")) {
             ImageTest();
             return;
