@@ -40,6 +40,8 @@ public static class Fluxifyed {
     private static readonly List<DiscordApplicationCommand> List = new();
 
     public static async Task Main(string[] args) {
+        await File.WriteAllTextAsync("fluxifyed.log", string.Empty);
+        
         AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => {
             if (eventArgs.ExceptionObject is not Exception e)
                 Logger.LogError($"Unhandled exception: {eventArgs.ExceptionObject}");
