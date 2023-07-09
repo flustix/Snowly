@@ -13,6 +13,7 @@ using Fluxifyed.Listeners;
 using Fluxifyed.Logging;
 using Fluxifyed.Modules;
 using Fluxifyed.Modules.Economy;
+using Fluxifyed.Modules.Fun;
 using Fluxifyed.Modules.Timers;
 using Fluxifyed.Modules.Utility;
 using Fluxifyed.Modules.Welcome;
@@ -108,6 +109,7 @@ public static class Fluxifyed {
         LoadModule(new XpModule(), List);
         LoadModule(new TimersModule(), List);
         LoadModule(new WelcomeModule(), List);
+        LoadModule(new FunModule(), List);
     }
 
     private static async Task Ready(DiscordClient sender, ReadyEventArgs args) {
