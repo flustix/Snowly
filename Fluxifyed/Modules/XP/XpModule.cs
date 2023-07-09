@@ -93,7 +93,7 @@ public class XpModule : IModule {
         await Task.CompletedTask;
     }
     
-    private static async void HandleRoles(XpUser user, Realm realm, DiscordMember member, DiscordGuild guild) {
+    private static void HandleRoles(XpUser user, Realm realm, DiscordMember member, DiscordGuild guild) {
         var roles = realm.All<XpRewardRole>().ToList().Where(x => x.GuildId == guild.Id.ToString()).OrderBy(x => x.Level).ToList();
         if (!roles.Any()) return;
         
@@ -105,7 +105,7 @@ public class XpModule : IModule {
         
             if (member.Roles.Any(x => x.Id == role1.Id)) return;
         
-            await member.GrantRoleAsync(role1, "Level up");
+            member.GrantRoleAsync(role1, "Level up");
         }
 
         var rolesToRemove = roles.Where(x => x.Level > user.Level);
@@ -116,7 +116,7 @@ public class XpModule : IModule {
             
             if (member.Roles.All(x => x.Id != role1.Id)) continue;
             
-            await member.RevokeRoleAsync(role1, "Level down");
+            member.RevokeRoleAsync(role1, "Level down");
         }
     }
 }
