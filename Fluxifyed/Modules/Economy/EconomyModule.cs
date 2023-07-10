@@ -9,8 +9,9 @@ public class EconomyModule : IModule {
     public List<ISlashCommand> SlashCommands => new() {
         new BalanceCommand(),
         new DailyCommand(),
+        new TopBalCommand(),
+        new TopStreakCommand()
         // new GiveCommand(),
-        // new LeaderboardCommand(),
         // new ModifyCommand(),
         // new ShopCommand(),
         // new TransferCommand()
