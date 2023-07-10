@@ -10,6 +10,7 @@ public class UtilityModule : IModule {
         new AboutCommand(),
         new AvatarCommand(),
         new PingCommand(),
-        new SayCommand()
+        new SayCommand(),
+        new SayJsonCommand()
     };
 }

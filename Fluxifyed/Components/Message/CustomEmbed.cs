@@ -57,4 +57,14 @@ public class CustomEmbed {
 
         return embed;
     }
+
+    public void AddField(string title, string value, bool inline = false) {
+        if (Fields == null) Fields = new List<CustomEmbedField>();
+        
+        Fields.Add(new CustomEmbedField {
+            Name = title,
+            Value = value,
+            Inline = inline
+        });
+    }
 }
