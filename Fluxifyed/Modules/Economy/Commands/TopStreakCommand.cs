@@ -15,7 +15,7 @@ public class TopStreakCommand : ISlashCommand {
     public void Handle(DiscordInteraction interaction) {
         RealmAccess.Run(realm => {
             if (interaction.Channel.IsPrivate) return;
-            var users = EcoUtils.GetTopBalUsers(realm, interaction.Guild.Id.ToString(), 10);
+            var users = EcoUtils.GetTopStreakUsers(realm, interaction.Guild.Id.ToString(), 10);
             
             var description = string.Join("\n", users.Select((user, index) => $"#{index + 1} <@{user.UserId}> - {user.ActualStreak}x Streak"));
             if (users.Count == 0) description = "Nothing here...";
