@@ -23,8 +23,10 @@ public static class EcoUtils {
     public static List<EconomyUser> GetTopBalUsers(Realm realm, string guildid, int count) =>
         GetTopBalUsers(realm, guildid).Take(count).ToList();
     
-    public static List<EconomyUser> GetTopStreakUsers(Realm realm, string guildid) => 
-        realm.All<EconomyUser>().Where(x => x.GuildId == guildid).OrderByDescending(x => x.ActualStreak).ToList();
+    public static List<EconomyUser> GetTopStreakUsers(Realm realm, string guildid) {
+        var users = realm.All<EconomyUser>().Where(x => x.GuildId == guildid).ToList();
+        return users.OrderByDescending(x => x.ActualStreak).Where(x => x.ActualStreak > 0).ToList();
+    }
 
     public static List<EconomyUser> GetTopStreakUsers(Realm realm, string guildid, int count) =>
         GetTopStreakUsers(realm, guildid).Take(count).ToList();
