@@ -101,9 +101,9 @@ public class XpModule : IModule {
         
         foreach (var role in rolesToAdd) {
             var role1 = guild.Roles.FirstOrDefault(x => x.Value.Id.ToString() == role.RoleId).Value;
-            if (role1 is null) return;
+            if (role1 is null) continue;
         
-            if (member.Roles.Any(x => x.Id == role1.Id)) return;
+            if (member.Roles.Any(x => x.Id == role1.Id)) continue;
         
             member.GrantRoleAsync(role1, "Level up");
         }
