@@ -1,6 +1,7 @@
 ﻿using DSharpPlus.Entities;
 using Fluxifyed.Commands;
 using Fluxifyed.Components.Message;
+using Fluxifyed.Config;
 using Fluxifyed.Constants;
 using Fluxifyed.Database;
 using Fluxifyed.Modules.Economy.Utils;
@@ -16,8 +17,9 @@ public class TopBalCommand : ISlashCommand {
         RealmAccess.Run(realm => {
             if (interaction.Channel.IsPrivate) return;
             var users = EcoUtils.GetTopBalUsers(realm, interaction.Guild.Id.ToString(), 10);
+            var guild = GuildConfig.GetOrCreate(realm, interaction.Guild.Id.ToString());
             
-            var description = string.Join("\n", users.Select((user, index) => $"#{index + 1} <@{user.UserId}> - {user.Balance}:coin:"));
+            var description = string.Join("\n", users.Select((user, index) => $"#{index + 1} <@{user.UserId}> - {user.Balance}{guild.CurrencySymbol}"));
             if (users.Count == 0) description = "Nothing here...";
             
             interaction.ReplyEmbed(new CustomEmbed {

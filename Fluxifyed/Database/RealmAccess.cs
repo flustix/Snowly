@@ -1,10 +1,21 @@
-﻿using Realms;
+﻿using Fluxifyed.Config;
+using Realms;
 
 namespace Fluxifyed.Database; 
 
 public static class RealmAccess {
     private static RealmConfiguration Config => new($"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}fluxifyed.realm") {
-        SchemaVersion = 4
+        SchemaVersion = 5,
+        MigrationCallback = (migration, version) => {
+            switch (version) {
+                case 5:
+                    foreach (var config in migration.NewRealm.All<GuildConfig>()) {
+                        config.CurrencyName = "coins";
+                        config.CurrencySymbol = ":coin:";
+                    }
+                    break;
+            }
+        }
     };
     
     private static Realm Realm => Realm.GetInstance(Config);

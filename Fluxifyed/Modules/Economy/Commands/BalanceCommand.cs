@@ -1,6 +1,7 @@
 ﻿using DSharpPlus.Entities;
 using Fluxifyed.Commands;
 using Fluxifyed.Components.Message;
+using Fluxifyed.Config;
 using Fluxifyed.Constants;
 using Fluxifyed.Database;
 using Fluxifyed.Modules.Economy.Utils;
@@ -17,13 +18,14 @@ public class BalanceCommand : ISlashCommand {
         
         RealmAccess.Run(realm => {
             var user = EcoUtils.GetUser(realm, interaction.Guild.Id.ToString(), interaction.User.Id.ToString());
+            var guild = GuildConfig.GetOrCreate(realm, interaction.Guild.Id.ToString());
             
             interaction.ReplyEmbed(new CustomEmbed {
                     Title = $"{FormatUtils.FormatName(interaction.User.GetNickname())} Balance",
                     Fields = new List<CustomEmbedField> {
                         new() {
-                            Name = ":coin: Balance",
-                            Value = $"**{user.Balance}**",
+                            Name = $"{guild.CurrencySymbol} Balance",
+                            Value = $"**{user.Balance}** {guild.CurrencyName}",
                             Inline = true
                         },
                         new() {

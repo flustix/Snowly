@@ -8,7 +8,6 @@ namespace Fluxifyed.Commands;
 /// </summary>
 public interface ISlashCommandGroup : ISlashCommand {
     ISlashCommand[] Subcommands { get; }
-    string ISlashCommand.Description => "missing description";
 
     void ISlashCommand.Handle(DiscordInteraction interaction) {
         var subcommand = interaction.Data.Options.First().Name;

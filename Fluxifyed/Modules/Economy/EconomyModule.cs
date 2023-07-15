@@ -1,5 +1,6 @@
 ﻿using Fluxifyed.Commands;
 using Fluxifyed.Modules.Economy.Commands;
+using Fluxifyed.Modules.Economy.Commands.Management;
 
 namespace Fluxifyed.Modules.Economy; 
 
@@ -10,7 +11,8 @@ public class EconomyModule : IModule {
         new BalanceCommand(),
         new DailyCommand(),
         new TopBalCommand(),
-        new TopStreakCommand()
+        new TopStreakCommand(),
+        new EconomyCommand()
         // new GiveCommand(),
         // new ModifyCommand(),
         // new ShopCommand(),
