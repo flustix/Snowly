@@ -12,6 +12,7 @@ namespace Fluxifyed.Modules.XP.Commands;
 public class RankCommand : IOptionSlashCommand {
     public string Name => "rank";
     public string Description => "Shows your rank";
+
     public List<SlashOption> Options => new() {
         new SlashOption {
             Name = "user",
