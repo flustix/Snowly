@@ -4,7 +4,7 @@ using Fluxifyed.Config;
 using Fluxifyed.Database;
 using Fluxifyed.Utils;
 
-namespace Fluxifyed.Modules.XP.Commands.Management; 
+namespace Fluxifyed.Modules.XP.Commands.Management;
 
 public class EnableXpCommand : ISlashCommand {
     public string Name => "enabled";

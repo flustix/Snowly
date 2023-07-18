@@ -7,7 +7,7 @@ using Fluxifyed.Constants;
 using Fluxifyed.Database;
 using Fluxifyed.Utils;
 
-namespace Fluxifyed.Modules.Economy.Commands.Management; 
+namespace Fluxifyed.Modules.Economy.Commands.Management;
 
 public class EconomyConfigCommand : IOptionSlashCommand {
     public string Name => "config";
@@ -32,11 +32,11 @@ public class EconomyConfigCommand : IOptionSlashCommand {
             Required = true
         }
     };
-    
+
     public void Handle(DiscordInteraction interaction) {
         var setting = interaction.GetString("setting");
         var value = interaction.GetString("value");
-        
+
         RealmAccess.Run(realm => {
             switch (setting) {
                 case "currency-name":
@@ -48,6 +48,7 @@ public class EconomyConfigCommand : IOptionSlashCommand {
                         Color = Colors.Random
                     }, true);
                     break;
+
                 case "currency-symbol":
                     guild = GuildConfig.GetOrCreate(realm, interaction.Guild.Id.ToString());
                     guild.CurrencySymbol = value;
@@ -57,6 +58,7 @@ public class EconomyConfigCommand : IOptionSlashCommand {
                         Color = Colors.Random
                     }, true);
                     break;
+
                 default:
                     interaction.ReplyEmbed(new CustomEmbed {
                         Title = "Economy Configuration",

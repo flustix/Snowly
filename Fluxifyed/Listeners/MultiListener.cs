@@ -1,10 +1,8 @@
 ﻿using DSharpPlus;
-using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
-using Fluxifyed.Logging;
 using Microsoft.Extensions.Logging;
 
-namespace Fluxifyed.Listeners; 
+namespace Fluxifyed.Listeners;
 
 public static class MultiListener {
     public static async Task ChannelCreated(DiscordClient sender, ChannelCreateEventArgs args) {
@@ -18,7 +16,7 @@ public static class MultiListener {
     public static async Task ChannelUpdated(DiscordClient sender, ChannelUpdateEventArgs args) {
         foreach (var module in Fluxifyed.Modules) await module.OnChannelUpdated(args);
     }
-    
+
     public static async Task OnMessageReceived(DiscordClient sender, MessageCreateEventArgs args) {
         foreach (var module in Fluxifyed.Modules) await module.OnMessageReceived(args);
     }

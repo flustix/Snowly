@@ -5,7 +5,7 @@ using Fluxifyed.Components.Message;
 using Fluxifyed.Constants;
 using Fluxifyed.Utils;
 
-namespace Fluxifyed.Modules.Utility.Commands; 
+namespace Fluxifyed.Modules.Utility.Commands;
 
 public class AvatarCommand : IOptionSlashCommand {
     public string Name => "avatar";
@@ -19,7 +19,7 @@ public class AvatarCommand : IOptionSlashCommand {
             Required = false
         }
     };
-    
+
     public async void Handle(DiscordInteraction interaction) {
         var user = await interaction.GetUser("user") ?? interaction.User;
 

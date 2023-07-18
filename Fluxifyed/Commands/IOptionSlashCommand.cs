@@ -1,4 +1,4 @@
-﻿namespace Fluxifyed.Commands; 
+﻿namespace Fluxifyed.Commands;
 
 /// <summary>
 /// A slash command with options.

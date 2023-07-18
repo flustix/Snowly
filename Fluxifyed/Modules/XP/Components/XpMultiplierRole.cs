@@ -1,6 +1,6 @@
 ﻿using Realms;
 
-namespace Fluxifyed.Modules.XP.Components; 
+namespace Fluxifyed.Modules.XP.Components;
 
 public class XpMultiplierRole : RealmObject {
     [Indexed] public string GuildId { get; set; }

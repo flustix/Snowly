@@ -2,7 +2,7 @@
 using Fluxifyed.Commands;
 using Fluxifyed.Modules.XP.Commands.Management;
 
-namespace Fluxifyed.Modules.XP.Commands; 
+namespace Fluxifyed.Modules.XP.Commands;
 
 public class XpCommand : ISlashCommandGroup {
     public string Name => "xp";

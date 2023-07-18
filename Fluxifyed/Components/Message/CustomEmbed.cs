@@ -1,20 +1,19 @@
-﻿using System.Globalization;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using Fluxifyed.Constants;
 using Newtonsoft.Json;
 
-namespace Fluxifyed.Components.Message; 
+namespace Fluxifyed.Components.Message;
 
 public class CustomEmbed {
     [JsonProperty("title")]
     public string Title { get; set; }
-    
+
     [JsonProperty("description")]
     public string Description { get; set; }
-    
+
     [JsonProperty("url")]
     public string Url { get; set; }
-    
+
     [JsonProperty("color")]
     public string ColorHex { get; set; }
 
@@ -26,16 +25,16 @@ public class CustomEmbed {
 
     [JsonProperty("image")]
     public string ImageUrl { get; set; }
-    
+
     [JsonProperty("thumbnail")]
     public string ThumbnailUrl { get; set; }
-    
+
     [JsonProperty("footer")]
     public CustomEmbedFooter Footer { get; set; }
-    
+
     [JsonProperty("author")]
     public CustomEmbedAuthor Author { get; set; }
-    
+
     [JsonProperty("fields")]
     public List<CustomEmbedField> Fields { get; set; }
 
@@ -59,8 +58,8 @@ public class CustomEmbed {
     }
 
     public void AddField(string title, string value, bool inline = false) {
-        if (Fields == null) Fields = new List<CustomEmbedField>();
-        
+        Fields ??= new List<CustomEmbedField>();
+
         Fields.Add(new CustomEmbedField {
             Name = title,
             Value = value,

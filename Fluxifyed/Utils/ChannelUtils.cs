@@ -1,7 +1,7 @@
 ﻿using DSharpPlus;
 using DSharpPlus.Entities;
 
-namespace Fluxifyed.Utils; 
+namespace Fluxifyed.Utils;
 
 public static class ChannelUtils {
     public static bool CanMessage(this DiscordChannel channel) {

@@ -7,19 +7,19 @@ using Fluxifyed.Database;
 using Fluxifyed.Modules.Economy.Utils;
 using Fluxifyed.Utils;
 
-namespace Fluxifyed.Modules.Economy.Commands; 
+namespace Fluxifyed.Modules.Economy.Commands;
 
 public class BalanceCommand : ISlashCommand {
     public string Name => "balance";
     public string Description => "Check your balance.";
-    
+
     public void Handle(DiscordInteraction interaction) {
         if (interaction.Channel.IsPrivate) return;
-        
+
         RealmAccess.Run(realm => {
             var user = EcoUtils.GetUser(realm, interaction.Guild.Id.ToString(), interaction.User.Id.ToString());
             var guild = GuildConfig.GetOrCreate(realm, interaction.Guild.Id.ToString());
-            
+
             interaction.ReplyEmbed(new CustomEmbed {
                     Title = $"{FormatUtils.FormatName(interaction.User.GetNickname())} Balance",
                     Fields = new List<CustomEmbedField> {

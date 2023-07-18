@@ -6,10 +6,8 @@ using Fluxifyed.Constants;
 using Fluxifyed.Database;
 using Fluxifyed.Modules.XP.Utils;
 using Fluxifyed.Utils;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
-namespace Fluxifyed.Modules.XP.Commands.Management; 
+namespace Fluxifyed.Modules.XP.Commands.Management;
 
 public class ModifyXpCommand : IOptionSlashCommand {
     public string Name => "modify";
@@ -34,14 +32,14 @@ public class ModifyXpCommand : IOptionSlashCommand {
             Type = ApplicationCommandOptionType.String
         }
     };
-    
+
     public async void Handle(DiscordInteraction interaction) {
         if (interaction.Channel.IsPrivate) return;
-        
+
         var user = await interaction.GetUser("user");
         var amount = interaction.GetInt("amount") ?? 0;
         var action = interaction.GetString("action") ?? "add";
-        
+
         if (user == null) throw new Exception("Member not found.");
         if (amount == 0) throw new Exception("Amount not found.");
 
@@ -53,14 +51,14 @@ public class ModifyXpCommand : IOptionSlashCommand {
                 "set" => amount - target.Xp,
                 _ => throw new Exception("Invalid action.")
             };
-            
+
             var actionString = action switch {
                 "add" => "Added",
                 "remove" => "Removed",
                 "set" => "Set",
                 _ => throw new Exception("Invalid action.")
             };
-            
+
             interaction.ReplyEmbed(new CustomEmbed {
                 Title = "XP Modified",
                 Description = $"{actionString} {amount} XP to {user.Mention}",

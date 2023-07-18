@@ -5,12 +5,12 @@ using Fluxifyed.Components.Message;
 using Fluxifyed.Constants;
 using Fluxifyed.Utils;
 
-namespace Fluxifyed.Modules.Utility.Commands; 
+namespace Fluxifyed.Modules.Utility.Commands;
 
 public class AboutCommand : ISlashCommand {
     public string Name => "about";
     public string Description => "About Fluxifyed";
-    
+
     public void Handle(DiscordInteraction interaction) {
         interaction.ReplyEmbed(new CustomEmbed {
             Title = "About Fluxifyed",

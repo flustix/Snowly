@@ -1,6 +1,6 @@
 ﻿using DSharpPlus.Entities;
 
-namespace Fluxifyed.Utils; 
+namespace Fluxifyed.Utils;
 
 public static class UserUtils {
     public static string GetUsername(this DiscordUser user) {
@@ -10,7 +10,7 @@ public static class UserUtils {
             _ => $"{user.Username}#{user.Discriminator}"
         };
     }
-    
+
     public static string GetNickname(this DiscordUser user) {
         return user is DiscordMember member
             ? member.Nickname ?? member.GetUsername()

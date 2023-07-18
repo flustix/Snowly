@@ -1,26 +1,27 @@
 ﻿using Fluxifyed.Config;
 using Realms;
 
-namespace Fluxifyed.Database; 
+namespace Fluxifyed.Database;
 
 public static class RealmAccess {
-    private static RealmConfiguration Config => new($"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}fluxifyed.realm") {
+    private static RealmConfiguration config => new($"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}fluxifyed.realm") {
         SchemaVersion = 5,
         MigrationCallback = (migration, version) => {
             switch (version) {
                 case 5:
-                    foreach (var config in migration.NewRealm.All<GuildConfig>()) {
-                        config.CurrencyName = "coins";
-                        config.CurrencySymbol = ":coin:";
+                    foreach (var guildconf in migration.NewRealm.All<GuildConfig>()) {
+                        guildconf.CurrencyName = "coins";
+                        guildconf.CurrencySymbol = ":coin:";
                     }
+
                     break;
             }
         }
     };
-    
-    private static Realm Realm => Realm.GetInstance(Config);
 
-    public static void Run(Action<Realm> action) => Write(Realm, action);
+    private static Realm realm => Realm.GetInstance(config);
 
-    private static void Write(Realm realm, Action<Realm> func) => realm.Write(() => func(realm));
+    public static void Run(Action<Realm> action) => write(realm, action);
+
+    private static void write(Realm realm, Action<Realm> func) => realm.Write(() => func(realm));
 }

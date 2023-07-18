@@ -1,7 +1,7 @@
 ﻿using DSharpPlus;
 using DSharpPlus.Entities;
 
-namespace Fluxifyed.Commands; 
+namespace Fluxifyed.Commands;
 
 /// <summary>
 /// A basic slash command.

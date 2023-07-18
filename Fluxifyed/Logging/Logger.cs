@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Fluxifyed.Logging; 
+namespace Fluxifyed.Logging;
 
 public class Logger : ILogger {
-    private string Name { get; init; }
-    
+    private string name { get; }
+
     public Logger(string name) {
-        Name = name;
+        this.name = name;
     }
 
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter) {
@@ -22,11 +22,11 @@ public class Logger : ILogger {
             LogLevel.None => "???",
             _ => throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, null)
         };
-        
+
         severity = severity.PadRight(8)[..8];
-        
-        var source = Name.Split('.').Last().PadRight(12)[..12];
-        
+
+        var source = name.Split('.').Last().PadRight(12)[..12];
+
         var msg = formatter(state, exception);
 
         Console.ForegroundColor = ConsoleColor.Gray;
@@ -44,13 +44,13 @@ public class Logger : ILogger {
         Console.Write($"{source} ");
         Console.ForegroundColor = ConsoleColor.White;
         Console.Write($"{msg}\n");
-        
+
         if (exception != null) {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(exception.Message);
             exception.StackTrace?.Split('\n').ToList().ForEach(x => Console.WriteLine(x.Trim()));
         }
-        
+
         var log = $"[{DateTime.Now:HH:mm:ss}] [{severity}] [{source}] {msg}";
         File.AppendAllText("fluxifyed.log", log + "\n");
         exception?.StackTrace?.Split('\n').ToList().ForEach(x => File.AppendAllText("fluxifyed.log", x.Trim() + "\n"));

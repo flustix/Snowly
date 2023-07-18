@@ -1,28 +1,28 @@
-﻿namespace Fluxifyed.Utils; 
+﻿namespace Fluxifyed.Utils;
 
 public static class FormatUtils {
-    private const long Second = 1000;
-    private const long Minute = 60 * Second;
-    private const long Hour = 60 * Minute;
-    private const long Day = 24 * Hour;
-    private const long Month = 30 * Day;
-    private const long Year = 365 * Day;
-    
+    private const long second = 1000;
+    private const long minute = 60 * second;
+    private const long hour = 60 * minute;
+    private const long day = 24 * hour;
+    private const long month = 30 * day;
+    private const long year = 365 * day;
+
     public static string FormatTime(long time, bool ms = true) {
-        var years = time / Year;
-        time %= Year;
-        var months = time / Month;
-        time %= Month;
-        var days = time / Day;
-        time %= Day;
-        var hours = time / Hour;
-        time %= Hour;
-        var minutes = time / Minute;
-        time %= Minute;
-        var seconds = time / Second;
-        time %= Second;
+        var years = time / year;
+        time %= year;
+        var months = time / month;
+        time %= month;
+        var days = time / day;
+        time %= day;
+        var hours = time / hour;
+        time %= hour;
+        var minutes = time / minute;
+        time %= minute;
+        var seconds = time / second;
+        time %= second;
         var milliseconds = time;
-        
+
         var formatted = "";
         if (years > 0) formatted += $"{years}y ";
         if (months > 0) formatted += $"{months}mo ";
@@ -36,8 +36,7 @@ public static class FormatUtils {
 
     public static string FormatName(string name) {
         if (string.IsNullOrEmpty(name)) return "";
-        
-        if (name.EndsWith("s")) return $"{name}'";
-        return $"{name}'s";
+
+        return name.EndsWith("s") ? $"{name}'" : $"{name}'s";
     }
 }

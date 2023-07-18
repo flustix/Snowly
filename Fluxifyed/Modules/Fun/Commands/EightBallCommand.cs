@@ -5,11 +5,12 @@ using Fluxifyed.Components.Message;
 using Fluxifyed.Constants;
 using Fluxifyed.Utils;
 
-namespace Fluxifyed.Modules.Fun.Commands; 
+namespace Fluxifyed.Modules.Fun.Commands;
 
 public class EightBallCommand : IOptionSlashCommand {
     public string Name => "8ball";
     public string Description => "Ask the magic 8ball a question.";
+
     public List<SlashOption> Options => new() {
         new SlashOption {
             Name = "question",
@@ -18,8 +19,8 @@ public class EightBallCommand : IOptionSlashCommand {
             Required = true
         }
     };
-    
-    private static readonly string[] Answers = {
+
+    private static readonly string[] answers = {
         ":white_check_mark:|It is certain.",
         ":white_check_mark:|It is decidedly so.",
         ":white_check_mark:|Without a doubt.",
@@ -41,14 +42,14 @@ public class EightBallCommand : IOptionSlashCommand {
         ":x:|Outlook not so good.",
         ":x:|Very doubtful."
     };
-    
+
     public void Handle(DiscordInteraction interaction) {
         var question = interaction.GetString("question");
         if (question == null) return;
-        
-        var answer = Answers[new Random().Next(0, Answers.Length)];
+
+        var answer = answers[new Random().Next(0, answers.Length)];
         var split = answer.Split('|');
-        
+
         interaction.ReplyEmbed(new CustomEmbed {
             Title = "Magic 8ball",
             Fields = new List<CustomEmbedField> {

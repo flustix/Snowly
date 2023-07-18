@@ -6,10 +6,8 @@ using Fluxifyed.Constants;
 using Fluxifyed.Database;
 using Fluxifyed.Modules.XP.Utils;
 using Fluxifyed.Utils;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
-namespace Fluxifyed.Modules.XP.Commands; 
+namespace Fluxifyed.Modules.XP.Commands;
 
 public class RankCommand : IOptionSlashCommand {
     public string Name => "rank";
@@ -25,14 +23,14 @@ public class RankCommand : IOptionSlashCommand {
 
     public async void Handle(DiscordInteraction interaction) {
         await interaction.Acknowledge();
-        
+
         var member = await interaction.GetUser("user") ?? interaction.User;
-        
+
         RealmAccess.Run(realm => {
             if (interaction.Channel.IsPrivate) return;
             var user = XpUtils.GetUser(realm, interaction.Guild.Id.ToString(), member.Id.ToString());
 
-            interaction.FollowupEmbed(new CustomEmbed { 
+            interaction.FollowupEmbed(new CustomEmbed {
                     Author = new CustomEmbedAuthor {
                         Name = member.GetUsername(),
                         IconUrl = member.GetAvatarUrl(ImageFormat.Auto)

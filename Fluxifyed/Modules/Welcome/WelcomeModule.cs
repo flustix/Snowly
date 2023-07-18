@@ -1,5 +1,4 @@
-﻿using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
+﻿using DSharpPlus.EventArgs;
 using Fluxifyed.Commands;
 using Fluxifyed.Components.Message;
 using Fluxifyed.Database;
@@ -8,7 +7,7 @@ using Fluxifyed.Utils;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace Fluxifyed.Modules.Welcome; 
+namespace Fluxifyed.Modules.Welcome;
 
 public class WelcomeModule : IModule {
     public string Name => "Welcome";
@@ -22,18 +21,12 @@ public class WelcomeModule : IModule {
             RealmAccess.Run(realm => {
                 var message = realm.All<WelcomeMessage>().FirstOrDefault(x => x.GuildId == args.Guild.Id.ToString());
                 if (message is null) return;
-            
+
                 var channel = args.Guild.GetChannel(ulong.Parse(message.ChannelId));
                 if (channel is null) return;
-            
+
                 var roles = message.Roles.Split(" ");
-                var roleList = new List<DiscordRole>();
-            
-                foreach (var role in roles) {
-                    var roleToAdd = args.Guild.GetRole(ulong.Parse(role));
-                    if (roleToAdd is null) continue;
-                    roleList.Add(roleToAdd);
-                }
+                var roleList = roles.Select(role => args.Guild.GetRole(ulong.Parse(role))).Where(roleToAdd => roleToAdd is not null).ToList();
 
                 var content = message.Message.Replace("{user.id}", $"{args.Member.Id}")
                     .Replace("{user.mention}", $"{args.Member.Mention}")
@@ -42,10 +35,11 @@ public class WelcomeModule : IModule {
 
                 var parsed = JsonConvert.DeserializeObject<CustomMessage>(content);
                 channel.SendMessageAsync(parsed.Content, parsed.ToEmbed());
-                
+
                 roleList.ForEach(r => args.Member.GrantRoleAsync(r, "Auto-Role"));
             });
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Fluxifyed.Logger.LogError(e, "Error while welcoming new member!");
         }
 
