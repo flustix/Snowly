@@ -38,7 +38,7 @@ public class WelcomeModule : IModule {
                 var content = message.Message.Replace("{user.id}", $"{args.Member.Id}")
                     .Replace("{user.mention}", $"{args.Member.Mention}")
                     .Replace("{user.name}", $"{args.Member.DisplayName}")
-                    .Replace("{user.avatar}", $"{args.Member.GetNickname()}");
+                    .Replace("{user.avatar}", $"{args.Member.AvatarUrl}");
 
                 var parsed = JsonConvert.DeserializeObject<CustomMessage>(content);
                 channel.SendMessageAsync(parsed.Content, parsed.ToEmbed());
