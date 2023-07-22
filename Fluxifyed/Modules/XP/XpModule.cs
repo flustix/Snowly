@@ -29,10 +29,7 @@ public class XpModule : IModule {
 
     public async Task OnComponentInteraction(ComponentInteractionCreateEventArgs args)
     {
-        if (args.Id.StartsWith("xp-top"))
-        {
-            SlashCommands.OfType<TopCommand>().First().HandleButton(args);
-        }
+        if (args.Id.StartsWith("xp-top")) TopCommand.HandleButton(args);
 
         await Task.CompletedTask;
     }
