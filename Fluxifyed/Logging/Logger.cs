@@ -13,35 +13,13 @@ public class Logger : ILogger {
         if (logLevel == LogLevel.Trace || (logLevel == LogLevel.Debug && !Fluxifyed.IsDebug)) return;
 
         // ReSharper disable once SwitchExpressionHandlesSomeKnownEnumValuesWithExceptionInDefault
-        var severity = logLevel switch {
-            LogLevel.Critical => "Critical",
-            LogLevel.Debug => "Debug",
-            LogLevel.Information => "Info",
-            LogLevel.Warning => "Warn",
-            LogLevel.Error => "Error",
-            LogLevel.None => "???",
-            _ => throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, null)
-        };
-
-        severity = severity.PadRight(8)[..8];
-
-        var source = name.Split('.').Last().PadRight(12)[..12];
-
+        var severity = getSeverity(logLevel).PadRight(8)[..8];
         var msg = formatter(state, exception);
 
         Console.ForegroundColor = ConsoleColor.Gray;
         Console.Write($"[{DateTime.Now:HH:mm:ss}] ");
-        Console.ForegroundColor = logLevel switch {
-            LogLevel.Critical => ConsoleColor.DarkRed,
-            LogLevel.Error => ConsoleColor.Red,
-            LogLevel.Warning => ConsoleColor.Yellow,
-            LogLevel.Information => ConsoleColor.Cyan,
-            LogLevel.Debug => ConsoleColor.Magenta,
-            _ => ConsoleColor.White
-        };
+        Console.ForegroundColor = getColor(logLevel);
         Console.Write($"{severity} ");
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.Write($"{source} ");
         Console.ForegroundColor = ConsoleColor.White;
         Console.Write($"{msg}\n");
 
@@ -51,16 +29,29 @@ public class Logger : ILogger {
             exception.StackTrace?.Split('\n').ToList().ForEach(x => Console.WriteLine(x.Trim()));
         }
 
-        var log = $"[{DateTime.Now:HH:mm:ss}] [{severity}] [{source}] {msg}";
+        var log = $"{DateTime.Now:yyyy-MM-dd} {DateTime.Now:HH:mm:ss} [{severity.ToLower().Trim()}]: {msg}";
         File.AppendAllText("fluxifyed.log", log + "\n");
         exception?.StackTrace?.Split('\n').ToList().ForEach(x => File.AppendAllText("fluxifyed.log", x.Trim() + "\n"));
     }
 
-    public bool IsEnabled(LogLevel logLevel) {
-        throw new NotImplementedException();
-    }
+    private ConsoleColor getColor(LogLevel logLevel) => logLevel switch {
+        LogLevel.Critical => ConsoleColor.DarkRed,
+        LogLevel.Error => ConsoleColor.Red,
+        LogLevel.Warning => ConsoleColor.Yellow,
+        LogLevel.Information => ConsoleColor.Cyan,
+        LogLevel.Debug => ConsoleColor.Magenta,
+        _ => ConsoleColor.White
+    };
 
-    public IDisposable BeginScope<TState>(TState state) {
-        throw new NotImplementedException();
-    }
+    private string getSeverity(LogLevel logLevel) => logLevel switch {
+        LogLevel.Critical => "Critical",
+        LogLevel.Error => "Error",
+        LogLevel.Warning => "Warning",
+        LogLevel.Information => "Info",
+        LogLevel.Debug => "Debug",
+        _ => "???"
+    };
+
+    public bool IsEnabled(LogLevel logLevel) => throw new NotImplementedException();
+    public IDisposable BeginScope<TState>(TState state) => throw new NotImplementedException();
 }
