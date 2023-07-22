@@ -27,6 +27,16 @@ public class XpModule : IModule {
         new ToggleLevelUpCommand()
     };
 
+    public async Task OnComponentInteraction(ComponentInteractionCreateEventArgs args)
+    {
+        if (args.Id.StartsWith("xp-top"))
+        {
+            SlashCommands.OfType<TopCommand>().First().HandleButton(args);
+        }
+
+        await Task.CompletedTask;
+    }
+
     public async Task OnMessageReceived(MessageCreateEventArgs args) {
         RealmAccess.Run(realm => {
             if (args.Guild is null) return;
