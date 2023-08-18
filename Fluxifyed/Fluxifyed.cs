@@ -126,6 +126,18 @@ public static class Fluxifyed {
             return;
         }
 
+        var activityThread = new Thread(() =>
+        {
+            var guilds = Bot.Guilds.Count;
+            var members = Bot.Guilds.Values.Sum(guild => guild.MemberCount);
+
+            const ActivityType type = ActivityType.Watching;
+            var message = $"{guilds} guilds with {members} members";
+            Bot.UpdateStatusAsync(new DiscordActivity(message, type));
+            Logger.LogInformation($"Set status to '{type} {message}'");
+            Thread.Sleep(1000 * 60 * 60); // 1 hour
+        });
+        activityThread.Start();
 
         Logger.LogInformation("Ready!");
     }
