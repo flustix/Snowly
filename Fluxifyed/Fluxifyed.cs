@@ -128,14 +128,17 @@ public static class Fluxifyed {
 
         var activityThread = new Thread(() =>
         {
-            var guilds = Bot.Guilds.Count;
-            var members = Bot.Guilds.Values.Sum(guild => guild.MemberCount);
+            while (Bot != null)
+            {
+                var guilds = Bot.Guilds.Count;
+                var members = Bot.Guilds.Values.Sum(guild => guild.MemberCount);
 
-            const ActivityType type = ActivityType.Watching;
-            var message = $"{guilds} guilds with {members} members";
-            Bot.UpdateStatusAsync(new DiscordActivity(message, type));
-            Logger.LogInformation($"Set status to '{type} {message}'");
-            Thread.Sleep(1000 * 60 * 5); // 5 minutes
+                const ActivityType type = ActivityType.Watching;
+                var message = $"{guilds} guilds with {members} members";
+                Bot.UpdateStatusAsync(new DiscordActivity(message, type));
+                Logger.LogInformation($"Set status to '{type} {message}'");
+                Thread.Sleep(1000 * 60 * 5); // 5 minutes
+            }
         });
         activityThread.Start();
 
