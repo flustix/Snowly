@@ -23,7 +23,7 @@ public class AvatarCommand : IOptionSlashCommand {
     public async void Handle(DiscordInteraction interaction) {
         var user = await interaction.GetUser("user") ?? interaction.User;
 
-        var member = await interaction.Guild.GetMemberAsync(user.Id);
+        var member = interaction.Guild == null ? null : await interaction.Guild.GetMemberAsync(user.Id);
 
         interaction.ReplyEmbed(new CustomEmbed {
                 Title = "Avatar",
