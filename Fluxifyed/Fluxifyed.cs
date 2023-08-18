@@ -135,7 +135,7 @@ public static class Fluxifyed {
             var message = $"{guilds} guilds with {members} members";
             Bot.UpdateStatusAsync(new DiscordActivity(message, type));
             Logger.LogInformation($"Set status to '{type} {message}'");
-            Thread.Sleep(1000 * 60 * 60); // 1 hour
+            Thread.Sleep(1000 * 60 * 5); // 5 minutes
         });
         activityThread.Start();
 
