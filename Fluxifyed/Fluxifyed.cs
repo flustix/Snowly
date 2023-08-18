@@ -79,6 +79,9 @@ public static class Fluxifyed {
 
         config = JsonConvert.DeserializeObject<BotConfig>(await File.ReadAllTextAsync(configFile));
 
+        FontStorage.DefaultFont = config.DefaultFont;
+        foreach (var (name, path) in config.Fonts) FontStorage.RegisterFont(name, path);
+
         Bot = new DiscordClient(new DiscordConfiguration {
             Token = config.Token,
             TokenType = TokenType.Bot,

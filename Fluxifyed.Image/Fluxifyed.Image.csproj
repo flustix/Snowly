@@ -7,7 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="SixLabors.Fonts" Version="1.0.0" />
       <PackageReference Include="SixLabors.ImageSharp" Version="3.0.0" />
+      <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Folder Include="Colors\" />
     </ItemGroup>
 
 </Project>

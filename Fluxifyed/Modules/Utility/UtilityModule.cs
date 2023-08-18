@@ -9,6 +9,7 @@ public class UtilityModule : IModule {
 
     public List<ISlashCommand> SlashCommands => new() {
         new AboutCommand(),
+        new AccentColorCommand(),
         new AvatarCommand(),
         new PingCommand(),
         new SayCommand(),

@@ -2,6 +2,7 @@
 using DSharpPlus;
 using DSharpPlus.Entities;
 using Fluxifyed.Components.Message;
+using Microsoft.Extensions.Logging;
 
 namespace Fluxifyed.Utils;
 
@@ -92,7 +93,8 @@ public static class InteractionUtils {
     }
 
     public static DiscordAttachment? GetAttachment(this DiscordInteraction interaction, string name) {
-        return interaction.getOptions()?.Where(option => option.Name == name).Select(option => option.Value).FirstOrDefault() as DiscordAttachment;
+        var id = (ulong)(interaction.getOptions()?.Where(option => option.Name == name).Select(o => o.Value).FirstOrDefault() ?? 0);
+        return id == 0 ? null : interaction.Data.Resolved?.Attachments?.Where(a => a.Key == id).Select(b => b.Value).FirstOrDefault();
     }
 
     private static IEnumerable<DiscordInteractionDataOption>? getOptions(this DiscordInteraction interaction) {
