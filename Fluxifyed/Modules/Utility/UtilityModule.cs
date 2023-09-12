@@ -11,6 +11,7 @@ public class UtilityModule : IModule {
         new AboutCommand(),
         new AccentColorCommand(),
         new AvatarCommand(),
+        new ConfigCommand(),
         new PingCommand(),
         new SayCommand(),
         new SayJsonCommand()

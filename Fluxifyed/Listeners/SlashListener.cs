@@ -25,6 +25,8 @@ public static class SlashListener {
                 if (option.Focused)
                     focused = option;
 
+                if (option.Options == null) continue;
+
                 // TODO: garbage code
                 foreach (var subOption in option.Options)
                 {
@@ -33,6 +35,8 @@ public static class SlashListener {
                         focused = subOption;
                         break;
                     }
+
+                    if (subOption.Options == null) continue;
 
                     foreach (var subSubOption in subOption.Options)
                     {

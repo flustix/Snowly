@@ -2,7 +2,11 @@
 using DSharpPlus.Entities;
 using Fluxifyed.Commands;
 using Fluxifyed.Components.Message;
+using Fluxifyed.Config;
+using Fluxifyed.Constants;
+using Fluxifyed.Database;
 using Fluxifyed.Utils;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace Fluxifyed.Modules.Utility.Commands;
@@ -35,6 +39,7 @@ public class SayJsonCommand : IOptionSlashCommand {
 
     public async void Handle(DiscordInteraction interaction) {
         try {
+            var guildConfig = GuildConfig.GetOrCreate(RealmAccess.Realm, interaction.Guild.Id.ToString());
             var json = interaction.GetString("json");
             var channel = interaction.GetChannel("channel") ?? interaction.Channel;
             var replyString = interaction.GetString("reply");
@@ -74,6 +79,26 @@ public class SayJsonCommand : IOptionSlashCommand {
 
             await channel.SendMessageAsync(msg);
             interaction.Reply("Message sent!", true);
+
+            if (ulong.TryParse(guildConfig.LoggingChannelId, out var loggingChannelId)) {
+                var loggingChannel = interaction.Guild.GetChannel(loggingChannelId);
+
+                if (loggingChannel != null) {
+                    var embed = new DiscordEmbedBuilder()
+                        .WithAuthor(interaction.User.GetUsername(), iconUrl: interaction.User.AvatarUrl)
+                        .WithDescription($"**Message sent in {channel.Mention}**")
+                        .AddField("Json", json)
+                        .WithColor(Colors.Random);
+
+                    await loggingChannel.SendMessageAsync(embed);
+                }
+                else {
+                    Fluxifyed.Logger.LogWarning($"[{guildConfig.GuildId}] Logging channel {loggingChannelId} not found.");
+                }
+            }
+            else {
+                Fluxifyed.Logger.LogWarning($"[{guildConfig.GuildId}] Logging channel {loggingChannelId} not found.");
+            }
         }
         catch (Exception e) {
             var error = new CustomEmbed {

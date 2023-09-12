@@ -5,7 +5,7 @@ namespace Fluxifyed.Database;
 
 public static class RealmAccess {
     private static RealmConfiguration config => new($"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}fluxifyed.realm") {
-        SchemaVersion = 5,
+        SchemaVersion = 6,
         MigrationCallback = (migration, version) => {
             switch (version) {
                 case 5:
