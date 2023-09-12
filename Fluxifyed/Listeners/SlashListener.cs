@@ -20,39 +20,42 @@ public static class SlashListener {
         {
             DiscordInteractionDataOption focused = null;
 
-            foreach (var option in args.Interaction.Data.Options)
+            if (args.Interaction.Data.Options != null)
             {
-                if (option.Focused)
-                    focused = option;
-
-                if (option.Options == null) continue;
-
-                // TODO: garbage code
-                foreach (var subOption in option.Options)
+                foreach (var option in args.Interaction.Data.Options)
                 {
-                    if (subOption.Focused)
+                    if (option.Focused)
+                        focused = option;
+
+                    if (option.Options == null) continue;
+
+                    // TODO: garbage code
+                    foreach (var subOption in option.Options)
                     {
-                        focused = subOption;
-                        break;
+                        if (subOption.Focused)
+                        {
+                            focused = subOption;
+                            break;
+                        }
+
+                        if (subOption.Options == null) continue;
+
+                        foreach (var subSubOption in subOption.Options)
+                        {
+                            if (!subSubOption.Focused) continue;
+
+                            focused = subSubOption;
+                            break;
+                        }
                     }
 
-                    if (subOption.Options == null) continue;
 
-                    foreach (var subSubOption in subOption.Options)
-                    {
-                        if (!subSubOption.Focused) continue;
+                    if (focused == null) continue;
 
-                        focused = subSubOption;
-                        break;
-                    }
+                    Fluxifyed.Logger.LogDebug($"Focused option: {focused.Name}");
+                    command.HandleAutoComplete(args.Interaction, focused);
+                    return;
                 }
-
-
-                if (focused == null) continue;
-
-                Fluxifyed.Logger.LogDebug($"Focused option: {focused.Name}");
-                command.HandleAutoComplete(args.Interaction, focused);
-                return;
             }
 
             command.Handle(args.Interaction);
