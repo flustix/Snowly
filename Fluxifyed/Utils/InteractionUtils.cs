@@ -22,6 +22,12 @@ public static class InteractionUtils {
         });
     }
 
+    public static void ReplyAutoComplete(this DiscordInteraction interaction, List<DiscordAutoCompleteChoice> choices) {
+        var response = new DiscordInteractionResponseBuilder();
+        response.AddAutoCompleteChoices(choices);
+        interaction.CreateResponseAsync(InteractionResponseType.AutoCompleteResult, response);
+    }
+
     #endregion
 
     #region Acknowledge

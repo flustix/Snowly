@@ -4,9 +4,10 @@ using DSharpPlus.Entities;
 namespace Fluxifyed.Commands;
 
 public class SlashOption {
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public ApplicationCommandOptionType Type { get; set; }
-    public bool Required { get; set; }
-    public List<DiscordApplicationCommandOptionChoice> Choices { get; set; } = new();
+    public string Name { get; init; }
+    public string Description { get; init; }
+    public ApplicationCommandOptionType Type { get; init; }
+    public bool Required { get; init; }
+    public bool AutoComplete { get; init; }
+    public List<DiscordApplicationCommandOptionChoice> Choices { get; init; } = new();
 }

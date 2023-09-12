@@ -19,9 +19,9 @@ public static class RealmAccess {
         }
     };
 
-    private static Realm realm => Realm.GetInstance(config);
+    public static Realm Realm => Realm.GetInstance(config);
 
-    public static void Run(Action<Realm> action) => write(realm, action);
+    public static void Run(Action<Realm> action) => write(Realm, action);
 
     private static void write(Realm realm, Action<Realm> func) => realm.Write(() => func(realm));
 }

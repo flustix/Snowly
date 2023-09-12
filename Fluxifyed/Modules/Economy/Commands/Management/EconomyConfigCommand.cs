@@ -12,7 +12,6 @@ namespace Fluxifyed.Modules.Economy.Commands.Management;
 public class EconomyConfigCommand : IOptionSlashCommand {
     public string Name => "config";
     public string Description => "Configure the economy of your server.";
-    public Permissions? Permission => Permissions.ManageGuild;
 
     public List<SlashOption> Options => new() {
         new SlashOption {

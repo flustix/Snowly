@@ -1,5 +1,6 @@
 ﻿using DSharpPlus;
 using DSharpPlus.Entities;
+using Fluxifyed.Utils;
 
 namespace Fluxifyed.Commands;
 
@@ -12,4 +13,5 @@ public interface ISlashCommand {
     Permissions? Permission => null;
 
     void Handle(DiscordInteraction interaction);
+    void HandleAutoComplete(DiscordInteraction interaction, DiscordInteractionDataOption focused) => interaction.ReplyAutoComplete(new List<DiscordAutoCompleteChoice>());
 }

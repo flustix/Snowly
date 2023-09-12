@@ -9,7 +9,7 @@ public class XpCommand : ISlashCommandGroup {
     public string Description => "Manage the XP system.";
     public Permissions? Permission => Permissions.ManageGuild;
 
-    public ISlashCommand[] Subcommands => new ISlashCommand[] {
+    public IEnumerable<ISlashCommand> Subcommands => new ISlashCommand[] {
         new LevelRolesCommand(),
         new MultipliersCommand(),
         new EnableXpCommand(),

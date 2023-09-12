@@ -16,16 +16,38 @@ public static class SlashListener {
             return;
         }
 
-        try {
-            if (command is ISlashCommandGroup group) {
-                var subcommand = group.Subcommands.FirstOrDefault(x => x.Name == args.Interaction.Data.Options.First().Name);
+        try
+        {
+            DiscordInteractionDataOption focused = null;
 
-                if (subcommand == null) {
-                    await notFound(args.Interaction);
-                    return;
+            foreach (var option in args.Interaction.Data.Options)
+            {
+                if (option.Focused)
+                    focused = option;
+
+                // TODO: garbage code
+                foreach (var subOption in option.Options)
+                {
+                    if (subOption.Focused)
+                    {
+                        focused = subOption;
+                        break;
+                    }
+
+                    foreach (var subSubOption in subOption.Options)
+                    {
+                        if (!subSubOption.Focused) continue;
+
+                        focused = subSubOption;
+                        break;
+                    }
                 }
 
-                subcommand.Handle(args.Interaction);
+
+                if (focused == null) continue;
+
+                Fluxifyed.Logger.LogDebug($"Focused option: {focused.Name}");
+                command.HandleAutoComplete(args.Interaction, focused);
                 return;
             }
 

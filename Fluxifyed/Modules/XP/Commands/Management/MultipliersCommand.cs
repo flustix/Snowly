@@ -7,7 +7,7 @@ public class MultipliersCommand : ISlashCommandGroup {
     public string Name => "multipliers";
     public string Description => "Manage role and channel multipliers.";
 
-    public ISlashCommand[] Subcommands => new ISlashCommand[] {
+    public IEnumerable<ISlashCommand> Subcommands => new ISlashCommand[] {
         new RoleMultipliersListCommand()
     };
 }

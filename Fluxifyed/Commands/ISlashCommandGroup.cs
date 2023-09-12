@@ -1,5 +1,6 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
+using Fluxifyed.Utils;
+using Microsoft.Extensions.Logging;
 
 namespace Fluxifyed.Commands;
 
@@ -7,19 +8,47 @@ namespace Fluxifyed.Commands;
 /// A slash command that contains subcommands.
 /// </summary>
 public interface ISlashCommandGroup : ISlashCommand {
-    ISlashCommand[] Subcommands { get; }
+    int Depth => 1;
+    IEnumerable<ISlashCommand> Subcommands { get; }
 
     void ISlashCommand.Handle(DiscordInteraction interaction) {
-        var subcommand = interaction.Data.Options.First().Name;
+        var option = interaction.Data.Options.First();
+        var subcommand = option.Name;
+
+        for (var i = 0; i < Depth - 1; i++)
+        {
+            option = option.Options.First();
+            subcommand = option.Name;
+        }
+
         var command = Subcommands.FirstOrDefault(x => x.Name == subcommand);
 
         if (command is null) {
-            interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder {
-                Content = "Subcommand not found."
-            });
+            interaction.Reply("Subcommand not found.", true);
             return;
         }
 
         command.Handle(interaction);
+    }
+
+    void ISlashCommand.HandleAutoComplete(DiscordInteraction interaction, DiscordInteractionDataOption focused)
+    {
+        var option = interaction.Data.Options.First();
+        var subcommand = option.Name;
+
+        for (var i = 0; i < Depth - 1; i++)
+        {
+            option = option.Options.First();
+            subcommand = option.Name;
+        }
+
+        var command = Subcommands.FirstOrDefault(x => x.Name == subcommand);
+
+        if (command is null) {
+            interaction.Reply("Subcommand not found.", true);
+            return;
+        }
+
+        command.HandleAutoComplete(interaction, focused);
     }
 }

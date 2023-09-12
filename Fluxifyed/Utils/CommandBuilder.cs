@@ -44,7 +44,7 @@ public abstract class CommandBuilder {
     }
 
     private static DiscordApplicationCommandOption buildOption(SlashOption option) {
-        return new DiscordApplicationCommandOption(option.Name, option.Description, option.Type, option.Required, option.Choices);
+        return new DiscordApplicationCommandOption(option.Name, option.Description, option.Type, option.Required, option.Choices, autocomplete:option.AutoComplete);
     }
 
     private static DiscordApplicationCommandOption buildSubcommand(ISlashCommand subCommand, int depth = 0) {
