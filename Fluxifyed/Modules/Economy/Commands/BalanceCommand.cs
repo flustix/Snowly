@@ -16,31 +16,29 @@ public class BalanceCommand : ISlashCommand {
     public void Handle(DiscordInteraction interaction) {
         if (interaction.Channel.IsPrivate) return;
 
-        RealmAccess.Run(realm => {
-            var user = EcoUtils.GetUser(realm, interaction.Guild.Id.ToString(), interaction.User.Id.ToString());
-            var guild = GuildConfig.GetOrCreate(realm, interaction.Guild.Id.ToString());
+        var user = EcoUtils.GetUser(interaction.Guild.Id, interaction.User.Id);
+        var guild = Configs.GetGuildConfig(interaction.Guild.Id);
 
-            interaction.ReplyEmbed(new CustomEmbed {
-                    Title = $"{FormatUtils.FormatName(interaction.User.GetNickname())} Balance",
-                    Fields = new List<CustomEmbedField> {
-                        new() {
-                            Name = $"{guild.CurrencySymbol} Balance",
-                            Value = $"**{user.Balance}** {guild.CurrencyName}",
-                            Inline = true
-                        },
-                        new() {
-                            Name = ":star: Streak",
-                            Value = $"**{user.ActualStreak}**",
-                            Inline = true
-                        },
-                        new() {
-                            Name = ":clock1: Next Daily",
-                            Value = $"**{(user.TimeUntilDaily > 0 ? FormatUtils.FormatTime(user.TimeUntilDaily, false) : "Now")}**"
-                        }
+        interaction.ReplyEmbed(new CustomEmbed {
+                Title = $"{FormatUtils.FormatName(interaction.User.GetNickname())} Balance",
+                Fields = new List<CustomEmbedField> {
+                    new() {
+                        Name = $"{guild.CurrencySymbol} Balance",
+                        Value = $"**{user.Balance}** {guild.CurrencyName}",
+                        Inline = true
                     },
-                    Color = Colors.Random
-                }
-            );
-        });
+                    new() {
+                        Name = ":star: Streak",
+                        Value = $"**{user.ActualStreak}**",
+                        Inline = true
+                    },
+                    new() {
+                        Name = ":clock1: Next Daily",
+                        Value = $"**{(user.TimeUntilDaily > 0 ? FormatUtils.FormatTime(user.TimeUntilDaily, false) : "Now")}**"
+                    }
+                },
+                Color = Colors.Random
+            }
+        );
     }
 }

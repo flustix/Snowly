@@ -23,26 +23,25 @@ public class ConfigLoggingChannelCommand : IOptionSlashCommand
 
     public void Handle(DiscordInteraction interaction)
     {
-        RealmAccess.Run(realm =>
+        var config = Configs.GetGuildConfig(interaction.Guild.Id);
+        var channel = interaction.GetChannel("channel");
+
+        if (channel == null)
         {
-            var config = GuildConfig.GetOrCreate(realm, interaction.Guild.Id.ToString());
-            var channel = interaction.GetChannel("channel");
+            config.LoggingChannelId = 0;
+            interaction.Reply("Logging channel cleared.", true);
+            return;
+        }
 
-            if (channel == null)
-            {
-                config.LoggingChannelId = "";
-                interaction.Reply("Logging channel cleared.", true);
-                return;
-            }
+        if (!channel.CanMessage())
+        {
+            interaction.Reply("I can't send messages in that channel.", true);
+            return;
+        }
 
-            if (!channel.CanMessage())
-            {
-                interaction.Reply("I can't send messages in that channel.", true);
-                return;
-            }
+        config.LoggingChannelId = channel.Id;
+        Configs.UpdateGuildConfig(config);
 
-            config.LoggingChannelId = channel.Id.ToString();
-            interaction.Reply($"Logging channel set to {channel.Mention}.", true);
-        });
+        interaction.Reply($"Logging channel set to {channel.Mention}.", true);
     }
 }

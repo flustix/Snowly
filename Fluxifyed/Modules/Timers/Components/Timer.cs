@@ -1,13 +1,10 @@
-﻿using Realms;
+﻿namespace Fluxifyed.Modules.Timers.Components;
 
-namespace Fluxifyed.Modules.Timers.Components;
-
-public class Timer : RealmObject {
-    [PrimaryKey]
+public class Timer {
     public Guid Id { get; set; } = Guid.NewGuid();
 
-    public string GuildId { get; set; }
-    public string ChannelId { get; set; }
+    public ulong GuildId { get; set; }
+    public ulong ChannelId { get; set; }
 
     public int Hour { get; set; }
     public int Minute { get; set; }

@@ -11,11 +11,10 @@ public class ToggleLevelUpCommand : ISlashCommand {
     public string Description => "Toggle level up messages for (only) you globally.";
 
     public void Handle(DiscordInteraction interaction) {
-        RealmAccess.Run(realm => {
-            var userConfig = UserConfig.GetOrCreate(realm, interaction.User.Id.ToString());
-            userConfig.LevelUpMessages = !userConfig.LevelUpMessages;
+        var userConfig = Configs.GetUserConfig(interaction.User.Id);
+        userConfig.LevelUpMessages = !userConfig.LevelUpMessages;
+        Configs.UpdateUserConfig(userConfig);
 
-            interaction.Reply($"Level up messages are now **{(userConfig.LevelUpMessages ? "enabled" : "disabled")}** for you globally.", true);
-        });
+        interaction.Reply($"Level up messages are now **{(userConfig.LevelUpMessages ? "enabled" : "disabled")}** for you globally.", true);
     }
 }

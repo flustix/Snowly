@@ -43,27 +43,28 @@ public class ModifyXpCommand : IOptionSlashCommand {
         if (user == null) throw new Exception("Member not found.");
         if (amount == 0) throw new Exception("Amount not found.");
 
-        RealmAccess.Run(realm => {
-            var target = XpUtils.GetUser(realm, interaction.Guild.Id.ToString(), user.Id.ToString());
-            target.Xp += action switch {
-                "add" => amount,
-                "remove" => -amount,
-                "set" => amount - target.Xp,
-                _ => throw new Exception("Invalid action.")
-            };
+        var target = XpUtils.GetUser(interaction.Guild.Id, user.Id);
 
-            var actionString = action switch {
-                "add" => "Added",
-                "remove" => "Removed",
-                "set" => "Set",
-                _ => throw new Exception("Invalid action.")
-            };
+        target.Xp += action switch {
+            "add" => amount,
+            "remove" => -amount,
+            "set" => amount - target.Xp,
+            _ => throw new Exception("Invalid action.")
+        };
 
-            interaction.ReplyEmbed(new CustomEmbed {
-                Title = "XP Modified",
-                Description = $"{actionString} {amount} XP to {user.Mention}",
-                Color = Colors.Success
-            }, true);
-        });
+        var actionString = action switch {
+            "add" => "Added",
+            "remove" => "Removed",
+            "set" => "Set",
+            _ => throw new Exception("Invalid action.")
+        };
+
+        XpUtils.UpdateUser(target);
+
+        interaction.ReplyEmbed(new CustomEmbed {
+            Title = "XP Modified",
+            Description = $"{actionString} {amount} XP to {user.Mention}",
+            Color = Colors.Success
+        }, true);
     }
 }

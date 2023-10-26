@@ -39,7 +39,7 @@ public class SayJsonCommand : IOptionSlashCommand {
 
     public async void Handle(DiscordInteraction interaction) {
         try {
-            var guildConfig = GuildConfig.GetOrCreate(RealmAccess.Realm, interaction.Guild.Id.ToString());
+            var guildConfig = Configs.GetGuildConfig(interaction.Guild.Id);
             var json = interaction.GetString("json");
             var channel = interaction.GetChannel("channel") ?? interaction.Channel;
             var replyString = interaction.GetString("reply");
@@ -80,24 +80,19 @@ public class SayJsonCommand : IOptionSlashCommand {
             await channel.SendMessageAsync(msg);
             interaction.Reply("Message sent!", true);
 
-            if (ulong.TryParse(guildConfig.LoggingChannelId, out var loggingChannelId)) {
-                var loggingChannel = interaction.Guild.GetChannel(loggingChannelId);
+            var loggingChannel = interaction.Guild.GetChannel(guildConfig.LoggingChannelId);
 
-                if (loggingChannel != null) {
-                    var embed = new DiscordEmbedBuilder()
-                        .WithAuthor(interaction.User.GetUsername(), iconUrl: interaction.User.AvatarUrl)
-                        .WithDescription($"**Message sent in {channel.Mention}**")
-                        .AddField("Json", json)
-                        .WithColor(Colors.Random);
+            if (loggingChannel != null) {
+                var embed = new DiscordEmbedBuilder()
+                    .WithAuthor(interaction.User.GetUsername(), iconUrl: interaction.User.AvatarUrl)
+                    .WithDescription($"**Message sent in {channel.Mention}**")
+                    .AddField("Json", json)
+                    .WithColor(Colors.Random);
 
-                    await loggingChannel.SendMessageAsync(embed);
-                }
-                else {
-                    Fluxifyed.Logger.LogWarning($"[{guildConfig.GuildId}] Logging channel {loggingChannelId} not found.");
-                }
+                await loggingChannel.SendMessageAsync(embed);
             }
             else {
-                Fluxifyed.Logger.LogWarning($"[{guildConfig.GuildId}] Logging channel {loggingChannelId} not found.");
+                Fluxifyed.Logger.LogWarning($"[{guildConfig.Id}] Logging channel {guildConfig.LoggingChannelId} not found.");
             }
         }
         catch (Exception e) {

@@ -2,6 +2,7 @@
 using Fluxifyed.Components.Message;
 using Fluxifyed.Database;
 using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Timer = Fluxifyed.Modules.Timers.Components.Timer;
@@ -34,49 +35,47 @@ public class TimersModule : IModule {
     }
 
     private static void runTimers() {
-        RealmAccess.Run(realm => {
-            var now = DateTime.Now;
-            var timers = realm.All<Timer>().Where(timer => timer.Hour == now.Hour && timer.Minute == now.Minute);
+        var now = DateTime.Now;
+        var timers = MongoDatabase.GetCollection<Timer>("timers").Find(timer => timer.Hour == now.Hour && timer.Minute == now.Minute).ToList();
 
-            foreach (var timer in timers) {
-                try {
-                    var guild = Fluxifyed.Bot.Guilds[ulong.Parse(timer.GuildId)];
-                    var channel = guild.Channels[ulong.Parse(timer.ChannelId)];
+        foreach (var timer in timers) {
+            try {
+                var guild = Fluxifyed.Bot.Guilds[timer.GuildId];
+                var channel = guild.Channels[timer.ChannelId];
 
-                    var message = timer.Message;
-                    var random = JsonConvert.DeserializeObject(timer.Random);
+                var message = timer.Message;
+                var random = JsonConvert.DeserializeObject(timer.Random);
 
-                    if (random is JArray randomList) {
-                        var randomIndex = new Random().Next(0, randomList.Count);
+                if (random is JArray randomList) {
+                    var randomIndex = new Random().Next(0, randomList.Count);
 
-                        var historySplit = timer.AntiRepeatHistory?.Split(",").ToList() ?? new List<string>();
-                        if (timer.AntiRepeat == historySplit.Count) historySplit.RemoveAt(0);
+                    var historySplit = timer.AntiRepeatHistory?.Split(",").ToList() ?? new List<string>();
+                    if (timer.AntiRepeat == historySplit.Count) historySplit.RemoveAt(0);
 
-                        while (historySplit.Contains(randomIndex.ToString()) && randomList.Count > 0) {
-                            randomIndex = new Random().Next(0, randomList.Count);
-                        }
-
-                        historySplit.Add(randomIndex.ToString());
-                        timer.AntiRepeatHistory = string.Join(",", historySplit);
-
-                        var randomItem = randomList.ElementAt(randomIndex);
-
-                        foreach (var prop in randomItem.ToObject<Dictionary<string, string>>()) {
-                            var key = prop.Key;
-                            var value = prop.Value;
-                            value = value?.Replace("\"", "\\\"");
-
-                            message = message.Replace("{" + key + "}", value);
-                        }
+                    while (historySplit.Contains(randomIndex.ToString()) && randomList.Count > 0) {
+                        randomIndex = new Random().Next(0, randomList.Count);
                     }
 
-                    var parsed = JsonConvert.DeserializeObject<CustomMessage>(message);
-                    channel?.SendMessageAsync(parsed.Content, parsed.ToEmbed());
+                    historySplit.Add(randomIndex.ToString());
+                    timer.AntiRepeatHistory = string.Join(",", historySplit);
+
+                    var randomItem = randomList.ElementAt(randomIndex);
+
+                    foreach (var prop in randomItem.ToObject<Dictionary<string, string>>()) {
+                        var key = prop.Key;
+                        var value = prop.Value;
+                        value = value?.Replace("\"", "\\\"");
+
+                        message = message.Replace("{" + key + "}", value);
+                    }
                 }
-                catch (Exception e) {
-                    Fluxifyed.Logger.LogError(e, $"Failed to send timer message for {timer.GuildId} in {timer.ChannelId}");
-                }
+
+                var parsed = JsonConvert.DeserializeObject<CustomMessage>(message);
+                channel?.SendMessageAsync(parsed.Content, parsed.ToEmbed());
             }
-        });
+            catch (Exception e) {
+                Fluxifyed.Logger.LogError(e, $"Failed to send timer message for {timer.GuildId} in {timer.ChannelId}");
+            }
+        }
     }
 }

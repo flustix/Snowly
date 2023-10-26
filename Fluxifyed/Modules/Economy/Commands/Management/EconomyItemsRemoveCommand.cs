@@ -5,6 +5,7 @@ using Fluxifyed.Components.Message;
 using Fluxifyed.Constants;
 using Fluxifyed.Database;
 using Fluxifyed.Modules.Economy.Components;
+using Fluxifyed.Modules.Economy.Utils;
 using Fluxifyed.Utils;
 
 namespace Fluxifyed.Modules.Economy.Commands.Management;
@@ -29,7 +30,7 @@ public class EconomyItemsRemoveCommand : IOptionSlashCommand
     public void Handle(DiscordInteraction interaction)
     {
         var id = interaction.GetString("item");
-        var item = ShopItem.Get(RealmAccess.Realm, id);
+        var item = ShopItemUtils.Get(id);
 
         if (item == null)
         {
@@ -37,21 +38,19 @@ public class EconomyItemsRemoveCommand : IOptionSlashCommand
             return;
         }
 
-        RealmAccess.Run(realm =>
+        ShopItemUtils.Remove(item);
+
+        interaction.ReplyEmbed(new CustomEmbed
         {
-            interaction.ReplyEmbed(new CustomEmbed
-            {
-                Title = "Economy Management",
-                Description = $"Removed **{item.Name}** from the shop.",
-                Color = Colors.Red
-            }, true);
-            realm.Remove(item);
-        });
+            Title = "Economy Management",
+            Description = $"Removed **{item.Name}** from the shop.",
+            Color = Colors.Red
+        }, true);
     }
 
     public void HandleAutoComplete(DiscordInteraction interaction, DiscordInteractionDataOption focused)
     {
-        var items = ShopItem.GetAllFromGuild(RealmAccess.Realm, interaction.GuildId.ToString());
+        var items = ShopItemUtils.GetAllFromGuild(interaction.GuildId ?? 0);
         var choices = new List<DiscordAutoCompleteChoice>();
         var value = interaction.GetString(focused.Name);
 

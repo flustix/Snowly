@@ -27,45 +27,43 @@ public class RankCommand : IOptionSlashCommand {
 
         var member = await interaction.GetUser("user") ?? interaction.User;
 
-        RealmAccess.Run(realm => {
-            if (interaction.Channel.IsPrivate) return;
-            var user = XpUtils.GetUser(realm, interaction.Guild.Id.ToString(), member.Id.ToString());
+        if (interaction.Channel.IsPrivate) return;
+        var user = XpUtils.GetUser(interaction.Guild.Id, member.Id);
 
-            interaction.FollowupEmbed(new CustomEmbed {
-                    Author = new CustomEmbedAuthor {
-                        Name = member.GetUsername(),
-                        IconUrl = member.GetAvatarUrl(ImageFormat.Auto)
+        interaction.FollowupEmbed(new CustomEmbed {
+                Author = new CustomEmbedAuthor {
+                    Name = member.GetUsername(),
+                    IconUrl = member.GetAvatarUrl(ImageFormat.Auto)
+                },
+                Color = Colors.Random,
+                Fields = new List<CustomEmbedField> {
+                    new() {
+                        Name = ":trophy: Rank",
+                        Value = $"#{XpUtils.GetRank(interaction.Guild.Id,member.Id)}",
+                        Inline = true
                     },
-                    Color = Colors.Random,
-                    Fields = new List<CustomEmbedField> {
-                        new() {
-                            Name = ":trophy: Rank",
-                            Value = $"#{XpUtils.GetRank(realm, interaction.Guild.Id.ToString(),member.Id.ToString())}",
-                            Inline = true
-                        },
-                        new() {
-                            Name = ":star: XP",
-                            Value = $"{user.Xp}",
-                            Inline = true
-                        },
-                        new() {
-                            Name = ":1234: Level",
-                            Value = $"{user.Level}",
-                            Inline = true
-                        },
-                        new() {
-                            Name = ":1234: XP Left",
-                            Value = $"{user.XpLeft}",
-                            Inline = true
-                        },
-                        new() {
-                            Name = ":symbols: Progress",
-                            Value = $"{user.LevelProgressPercent:P2} ({user.LevelProgress}/{user.XpFromCurrentToNext})".Replace(",", "."),
-                            Inline = true
-                        }
+                    new() {
+                        Name = ":star: XP",
+                        Value = $"{user.Xp}",
+                        Inline = true
+                    },
+                    new() {
+                        Name = ":1234: Level",
+                        Value = $"{user.Level}",
+                        Inline = true
+                    },
+                    new() {
+                        Name = ":1234: XP Left",
+                        Value = $"{user.XpLeft}",
+                        Inline = true
+                    },
+                    new() {
+                        Name = ":symbols: Progress",
+                        Value = $"{user.LevelProgressPercent:P2} ({user.LevelProgress}/{user.XpFromCurrentToNext})".Replace(",", "."),
+                        Inline = true
                     }
                 }
-            );
-        });
+            }
+        );
     }
 }

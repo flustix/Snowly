@@ -2,12 +2,11 @@
 
 namespace Fluxifyed.Modules.Welcome.Components;
 
-public class WelcomeMessage : RealmObject {
-    [PrimaryKey]
+public class WelcomeMessage {
     public Guid Id { get; set; } = Guid.NewGuid();
 
-    public string GuildId { get; set; }
-    public string ChannelId { get; set; }
-    public string Message { get; set; }
-    public string Roles { get; set; }
+    public ulong GuildId { get; set; } = 0;
+    public ulong ChannelId { get; set; } = 0;
+    public string Message { get; set; } = string.Empty;
+    public List<ulong> Roles { get; set; } = new();
 }

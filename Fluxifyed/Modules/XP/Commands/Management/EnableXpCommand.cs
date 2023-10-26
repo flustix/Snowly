@@ -11,12 +11,12 @@ public class EnableXpCommand : ISlashCommand {
     public string Description => "Enable or disable XP collection for this server.";
 
     public void Handle(DiscordInteraction interaction) {
-        RealmAccess.Run(realm => {
-            if (interaction.Channel.IsPrivate) return;
-            var guildConfig = GuildConfig.GetOrCreate(realm, interaction.Guild.Id.ToString());
-            guildConfig.XpEnabled = !guildConfig.XpEnabled;
+        if (interaction.Channel.IsPrivate) return;
 
-            interaction.Reply($"XP collection is now **{(guildConfig.XpEnabled ? "enabled" : "disabled")}** for this server.", true);
-        });
+        var guildConfig = Configs.GetGuildConfig(interaction.Guild.Id);
+        guildConfig.XpEnabled = !guildConfig.XpEnabled;
+        Configs.UpdateGuildConfig(guildConfig);
+
+        interaction.Reply($"XP collection is now **{(guildConfig.XpEnabled ? "enabled" : "disabled")}** for this server.", true);
     }
 }

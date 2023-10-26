@@ -13,11 +13,10 @@ public class ToggleServerLevelUpCommand : ISlashCommand {
     public void Handle(DiscordInteraction interaction) {
         if (interaction.Channel.IsPrivate) return;
 
-        RealmAccess.Run(realm => {
-            var guildConfig = GuildConfig.GetOrCreate(realm, interaction.Guild.Id.ToString());
-            guildConfig.LevelUpMessages = !guildConfig.LevelUpMessages;
+        var guildConfig = Configs.GetGuildConfig(interaction.Guild.Id);
+        guildConfig.LevelUpMessages = !guildConfig.LevelUpMessages;
+        Configs.UpdateGuildConfig(guildConfig);
 
-            interaction.Reply($"Level up messages are now **{(guildConfig.LevelUpMessages ? "enabled" : "disabled")}** for the entire server.", true);
-        });
+        interaction.Reply($"Level up messages are now **{(guildConfig.LevelUpMessages ? "enabled" : "disabled")}** for the entire server.", true);
     }
 }

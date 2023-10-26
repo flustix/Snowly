@@ -1,10 +1,13 @@
-﻿using Realms;
+﻿using MongoDB.Bson;
+using Realms;
 
 namespace Fluxifyed.Modules.Economy.Components;
 
-public class EconomyUser : RealmObject {
-    [Indexed] public string GuildId { get; set; }
-    [Indexed] public string UserId { get; set; }
+public class EconomyUser {
+    public ObjectId Id { get; set; } = ObjectId.GenerateNewId();
+
+    public ulong GuildId { get; set; }
+    public ulong UserId { get; set; }
     public long Balance { get; set; }
     public int DailyStreak { get; set; }
     public DateTimeOffset LastDaily { get; set; }

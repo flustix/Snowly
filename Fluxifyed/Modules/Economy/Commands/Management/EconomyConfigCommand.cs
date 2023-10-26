@@ -36,36 +36,36 @@ public class EconomyConfigCommand : IOptionSlashCommand {
         var setting = interaction.GetString("setting");
         var value = interaction.GetString("value");
 
-        RealmAccess.Run(realm => {
-            switch (setting) {
-                case "currency-name":
-                    var guild = GuildConfig.GetOrCreate(realm, interaction.Guild.Id.ToString());
-                    guild.CurrencyName = value;
-                    interaction.ReplyEmbed(new CustomEmbed {
-                        Title = "Economy Configuration",
-                        Description = $"Set the currency name to **{value}**.",
-                        Color = Colors.Random
-                    }, true);
-                    break;
+        var config = Configs.GetGuildConfig(interaction.Guild.Id);
 
-                case "currency-symbol":
-                    guild = GuildConfig.GetOrCreate(realm, interaction.Guild.Id.ToString());
-                    guild.CurrencySymbol = value;
-                    interaction.ReplyEmbed(new CustomEmbed {
-                        Title = "Economy Configuration",
-                        Description = $"Set the currency symbol to **{value}**.",
-                        Color = Colors.Random
-                    }, true);
-                    break;
+        switch (setting) {
+            case "currency-name":
+                config.CurrencyName = value;
+                Configs.UpdateGuildConfig(config);
+                interaction.ReplyEmbed(new CustomEmbed {
+                    Title = "Economy Configuration",
+                    Description = $"Set the currency name to **{value}**.",
+                    Color = Colors.Random
+                }, true);
+                break;
 
-                default:
-                    interaction.ReplyEmbed(new CustomEmbed {
-                        Title = "Economy Configuration",
-                        Description = $"Unknown setting **{setting}**.",
-                        Color = Colors.Random
-                    }, true);
-                    break;
-            }
-        });
+            case "currency-symbol":
+                config.CurrencySymbol = value;
+                Configs.UpdateGuildConfig(config);
+                interaction.ReplyEmbed(new CustomEmbed {
+                    Title = "Economy Configuration",
+                    Description = $"Set the currency symbol to **{value}**.",
+                    Color = Colors.Random
+                }, true);
+                break;
+
+            default:
+                interaction.ReplyEmbed(new CustomEmbed {
+                    Title = "Economy Configuration",
+                    Description = $"Unknown setting **{setting}**.",
+                    Color = Colors.Random
+                }, true);
+                break;
+        }
     }
 }

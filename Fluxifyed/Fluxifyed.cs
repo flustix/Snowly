@@ -5,6 +5,7 @@ using DSharpPlus.EventArgs;
 using DSharpPlus.Exceptions;
 using Fluxifyed.Commands;
 using Fluxifyed.Config;
+using Fluxifyed.Database;
 using Fluxifyed.Image;
 using Fluxifyed.Image.Drawables;
 using Fluxifyed.Image.Drawables.Shapes;
@@ -12,14 +13,20 @@ using Fluxifyed.Listeners;
 using Fluxifyed.Logging;
 using Fluxifyed.Modules;
 using Fluxifyed.Modules.Economy;
+using Fluxifyed.Modules.Economy.Components;
 using Fluxifyed.Modules.Fun;
 using Fluxifyed.Modules.Timers;
 using Fluxifyed.Modules.Utility;
 using Fluxifyed.Modules.Welcome;
+using Fluxifyed.Modules.Welcome.Components;
 using Fluxifyed.Modules.XP;
+using Fluxifyed.Modules.XP.Components;
+using Fluxifyed.Modules.XP.Utils;
 using Fluxifyed.Utils;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Timer = Fluxifyed.Modules.Timers.Components.Timer;
 
 namespace Fluxifyed;
 
@@ -78,6 +85,7 @@ public static class Fluxifyed {
         }
 
         config = JsonConvert.DeserializeObject<BotConfig>(await File.ReadAllTextAsync(configFile));
+        MongoDatabase.Setup();
 
         FontStorage.DefaultFont = config.DefaultFont;
         foreach (var (name, path) in config.Fonts) FontStorage.RegisterFont(name, path);

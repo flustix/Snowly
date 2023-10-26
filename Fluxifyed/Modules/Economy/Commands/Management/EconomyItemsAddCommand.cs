@@ -59,21 +59,18 @@ public class EconomyItemsAddCommand : IOptionSlashCommand
             return;
         }
 
-        RealmAccess.Run(realm =>
+        var item = new ShopItem
         {
-            var item = new ShopItem
-            {
-                Name = name,
-                Icon = icon,
-                Price = price.Value,
-                Description = description,
-                GuildId = interaction.Guild.Id.ToString()
-            };
+            Name = name,
+            Icon = icon,
+            Price = price.Value,
+            Description = description,
+            GuildId = interaction.Guild.Id
+        };
 
-            realm.Add(item);
+        ShopItemUtils.Add(item);
 
-            var guild = GuildConfig.GetOrCreate(realm, interaction.Guild.Id.ToString());
-            interaction.Reply($"Added {item.Icon}**{item.Name}** for **{item.Price}**{guild.CurrencySymbol} {guild.CurrencyName}.", true);
-        });
+        var guild = Configs.GetGuildConfig(interaction.Guild.Id);
+        interaction.Reply($"Added {item.Icon}**{item.Name}** for **{item.Price}**{guild.CurrencySymbol} {guild.CurrencyName}.", true);
     }
 }
