@@ -2,6 +2,7 @@
 using Fluxifyed.Commands;
 using Fluxifyed.Components.Message;
 using Fluxifyed.Database;
+using Fluxifyed.Modules.Welcome.Commands;
 using Fluxifyed.Modules.Welcome.Components;
 using Fluxifyed.Utils;
 using Microsoft.Extensions.Logging;
@@ -13,7 +14,11 @@ namespace Fluxifyed.Modules.Welcome;
 public class WelcomeModule : IModule {
     public string Name => "Welcome";
     public string Description => "Welcome new members to your server!";
-    public List<ISlashCommand> SlashCommands => new();
+
+    public List<ISlashCommand> SlashCommands => new()
+    {
+        new WelcomeCreateCommand()
+    };
 
     public Task OnMemberJoined(GuildMemberAddEventArgs args) {
         Fluxifyed.Logger.LogDebug($"User {args.Member.GetUsername()} joined the server!");
