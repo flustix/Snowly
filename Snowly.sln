@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowly", "Snowly\Snowly.csproj", "{D3197BF8-318A-4CE6-A91E-015D0C7BD5C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowly.Image", "Snowly.Image\Snowly.Image.csproj", "{84E08796-ACBC-4711-8D11-B779B9C2FCD6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D3197BF8-318A-4CE6-A91E-015D0C7BD5C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3197BF8-318A-4CE6-A91E-015D0C7BD5C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3197BF8-318A-4CE6-A91E-015D0C7BD5C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3197BF8-318A-4CE6-A91E-015D0C7BD5C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84E08796-ACBC-4711-8D11-B779B9C2FCD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84E08796-ACBC-4711-8D11-B779B9C2FCD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84E08796-ACBC-4711-8D11-B779B9C2FCD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84E08796-ACBC-4711-8D11-B779B9C2FCD6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

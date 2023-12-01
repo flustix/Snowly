@@ -3,8 +3,8 @@ obj
 .idea
 *.realm
 *.realm.*
-Fluxifyed.sln.DotSettings.user
+Snowly.sln.DotSettings.user
 FodyWeavers.*
 config.json
 run.sh
-fluxifyed.log
+snowly.log
