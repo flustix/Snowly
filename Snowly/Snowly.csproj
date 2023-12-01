@@ -9,7 +9,6 @@
     <ItemGroup>
       <PackageReference Include="DSharpPlus" Version="4.4.2" />
       <PackageReference Include="MongoDB.Driver" Version="2.22.0" />
-      <PackageReference Include="Realm" Version="10.21.0" />
     </ItemGroup>
     
     <ItemGroup>
