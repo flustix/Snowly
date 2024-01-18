@@ -8,7 +8,14 @@ namespace Snowly.Commands;
 /// </summary>
 public interface ISlashCommandGroup : ISlashCommand
 {
+    /// <summary>
+    /// The depth of the subcommand.
+    /// </summary>
     int Depth => 1;
+
+    /// <summary>
+    /// The subcommands of this command.
+    /// </summary>
     IEnumerable<ISlashCommand> Subcommands { get; }
 
     void ISlashCommand.Handle(DiscordInteraction interaction)

@@ -9,8 +9,22 @@ namespace Snowly.Commands;
 /// </summary>
 public interface ISlashCommand
 {
+    /// <summary>
+    /// The name of the command.
+    /// Needs to be lowercase and can't contain spaces.
+    /// Limited to 32 characters.
+    /// </summary>
     string Name { get; }
+
+    /// <summary>
+    /// The description of the command.
+    /// Limited to 100 characters.
+    /// </summary>
     string Description { get; }
+
+    /// <summary>
+    /// Default permissions to run this command.
+    /// </summary>
     Permissions? Permission => null;
 
     void Handle(DiscordInteraction interaction);

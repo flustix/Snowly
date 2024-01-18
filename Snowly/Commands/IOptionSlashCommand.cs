@@ -5,5 +5,8 @@
 /// </summary>
 public interface IOptionSlashCommand : ISlashCommand
 {
+    /// <summary>
+    /// The options of this command.
+    /// </summary>
     List<SlashOption> Options { get; }
 }
