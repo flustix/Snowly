@@ -3,8 +3,10 @@ using DSharpPlus.Entities;
 
 namespace Snowly.Utils;
 
-public static class ChannelUtils {
-    public static bool CanMessage(this DiscordChannel channel) {
+public static class ChannelUtils
+{
+    public static bool CanMessage(this DiscordChannel channel)
+    {
         return channel.Type is ChannelType.Text
             or ChannelType.Private
             or ChannelType.Voice

@@ -38,7 +38,7 @@ public class XpModule : IModule {
         if (args.Author is not DiscordMember member) return;
         if (args.Author.IsBot) return;
         var guildConfig = Configs.GetGuildConfig(args.Guild.Id);
-        var xpEnabled = guildConfig?.XpEnabled ?? true;
+        var xpEnabled = guildConfig?.XPEnabled ?? true;
 
         if (!xpEnabled) return;
 
@@ -68,7 +68,7 @@ public class XpModule : IModule {
 
         var messageChannel = args.Channel;
 
-        var levelUpChannel = args.Guild.Channels.FirstOrDefault(x => x.Key == guildConfig.LevelUpChannelId);
+        var levelUpChannel = args.Guild.Channels.FirstOrDefault(x => x.Key == guildConfig.LevelUpChannelID);
 
         if (levelUpChannel.Value != null && levelUpChannel.Value.CanMessage()) {
             messageChannel = levelUpChannel.Value;

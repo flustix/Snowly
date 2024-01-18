@@ -8,12 +8,15 @@ using Snowly.Utils;
 
 namespace Snowly.Modules.XP.Commands;
 
-public class RankCommand : IOptionSlashCommand {
+public class RankCommand : IOptionSlashCommand
+{
     public string Name => "rank";
     public string Description => "Shows your rank";
 
-    public List<SlashOption> Options => new() {
-        new SlashOption {
+    public List<SlashOption> Options => new()
+    {
+        new SlashOption
+        {
             Name = "user",
             Description = "The user to get the rank of",
             Type = ApplicationCommandOptionType.User,
@@ -21,42 +24,53 @@ public class RankCommand : IOptionSlashCommand {
         }
     };
 
-    public async void Handle(DiscordInteraction interaction) {
+    public async void Handle(DiscordInteraction interaction)
+    {
         await interaction.Acknowledge();
 
         var member = await interaction.GetUser("user") ?? interaction.User;
 
-        if (interaction.Channel.IsPrivate) return;
+        if (interaction.Channel.IsPrivate)
+            return;
+
         var user = XpUtils.GetUser(interaction.Guild.Id, member.Id);
 
-        interaction.FollowupEmbed(new CustomEmbed {
-                Author = new CustomEmbedAuthor {
+        interaction.FollowupEmbed(new CustomEmbed
+            {
+                Author = new CustomEmbedAuthor
+                {
                     Name = member.GetUsername(),
                     IconUrl = member.GetAvatarUrl(ImageFormat.Auto)
                 },
                 Color = Colors.Random,
-                Fields = new List<CustomEmbedField> {
-                    new() {
+                Fields = new List<CustomEmbedField>
+                {
+                    new()
+                    {
                         Name = ":trophy: Rank",
-                        Value = $"#{XpUtils.GetRank(interaction.Guild.Id,member.Id)}",
+                        Value = $"#{XpUtils.GetRank(interaction.Guild.Id, member.Id)}",
                         Inline = true
                     },
-                    new() {
+                    new()
+                    {
                         Name = ":star: XP",
                         Value = $"{user.Xp}",
                         Inline = true
                     },
-                    new() {
+                    new()
+                    {
                         Name = ":1234: Level",
                         Value = $"{user.Level}",
                         Inline = true
                     },
-                    new() {
+                    new()
+                    {
                         Name = ":1234: XP Left",
                         Value = $"{user.XpLeft}",
                         Inline = true
                     },
-                    new() {
+                    new()
+                    {
                         Name = ":symbols: Progress",
                         Value = $"{user.LevelProgressPercent:P2} ({user.LevelProgress}/{user.XpFromCurrentToNext})".Replace(",", "."),
                         Inline = true

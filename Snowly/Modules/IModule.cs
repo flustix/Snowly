@@ -3,7 +3,8 @@ using Snowly.Commands;
 
 namespace Snowly.Modules;
 
-public interface IModule {
+public interface IModule
+{
     string Name { get; }
     string Description { get; }
     List<ISlashCommand> SlashCommands { get; }

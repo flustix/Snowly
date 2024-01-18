@@ -2,7 +2,8 @@
 
 namespace Snowly.Components.Message;
 
-public class CustomEmbedField {
+public class CustomEmbedField
+{
     [JsonProperty("name")]
     public string Name { get; set; }
 

@@ -3,7 +3,8 @@ using Newtonsoft.Json;
 
 namespace Snowly.Components.Message;
 
-public class CustomEmbedAuthor {
+public class CustomEmbedAuthor
+{
     [JsonProperty("name")]
     public string Name { get; set; }
 
@@ -13,8 +14,10 @@ public class CustomEmbedAuthor {
     [JsonProperty("url")]
     public string Url { get; set; }
 
-    public DiscordEmbedBuilder.EmbedAuthor Build() {
-        return new DiscordEmbedBuilder.EmbedAuthor {
+    public DiscordEmbedBuilder.EmbedAuthor Build()
+    {
+        return new DiscordEmbedBuilder.EmbedAuthor
+        {
             Name = Name,
             IconUrl = IconUrl,
             Url = Url

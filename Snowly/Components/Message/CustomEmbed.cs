@@ -4,7 +4,8 @@ using Snowly.Constants;
 
 namespace Snowly.Components.Message;
 
-public class CustomEmbed {
+public class CustomEmbed
+{
     [JsonProperty("title")]
     public string Title { get; set; }
 
@@ -18,7 +19,8 @@ public class CustomEmbed {
     public string ColorHex { get; set; }
 
     [JsonIgnore]
-    public DiscordColor Color {
+    public DiscordColor Color
+    {
         get => ColorHex == null ? DiscordColor.White : Colors.FromHex(ColorHex);
         init => ColorHex = value.ToString();
     }
@@ -38,14 +40,17 @@ public class CustomEmbed {
     [JsonProperty("fields")]
     public List<CustomEmbedField> Fields { get; set; }
 
-    public DiscordEmbed Build() {
-        var embed = new DiscordEmbedBuilder{
+    public DiscordEmbed Build()
+    {
+        var embed = new DiscordEmbedBuilder
+        {
             Title = Title,
             Description = Description,
             Url = Url,
             Color = Color,
             ImageUrl = ImageUrl,
-            Thumbnail = new DiscordEmbedBuilder.EmbedThumbnail {
+            Thumbnail = new DiscordEmbedBuilder.EmbedThumbnail
+            {
                 Url = ThumbnailUrl
             },
             Footer = Footer?.Build(),
@@ -57,10 +62,12 @@ public class CustomEmbed {
         return embed;
     }
 
-    public void AddField(string title, string value, bool inline = false) {
+    public void AddField(string title, string value, bool inline = false)
+    {
         Fields ??= new List<CustomEmbedField>();
 
-        Fields.Add(new CustomEmbedField {
+        Fields.Add(new CustomEmbedField
+        {
             Name = title,
             Value = value,
             Inline = inline

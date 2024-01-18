@@ -11,8 +11,10 @@ public class ConfigLoggingChannelCommand : IOptionSlashCommand
     public string Name => "loggingchannel";
     public string Description => "Sets the channel to send logs in.";
 
-    public List<SlashOption> Options => new() {
-        new SlashOption {
+    public List<SlashOption> Options => new()
+    {
+        new SlashOption
+        {
             Name = "channel",
             Description = "The channel to send logs in.",
             Type = ApplicationCommandOptionType.Channel,
@@ -27,7 +29,7 @@ public class ConfigLoggingChannelCommand : IOptionSlashCommand
 
         if (channel == null)
         {
-            config.LoggingChannelId = 0;
+            config.LoggingChannelID = 0;
             interaction.Reply("Logging channel cleared.", true);
             return;
         }
@@ -38,7 +40,7 @@ public class ConfigLoggingChannelCommand : IOptionSlashCommand
             return;
         }
 
-        config.LoggingChannelId = channel.Id;
+        config.LoggingChannelID = channel.Id;
         Configs.UpdateGuildConfig(config);
 
         interaction.Reply($"Logging channel set to {channel.Mention}.", true);

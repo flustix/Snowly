@@ -16,5 +16,5 @@ public static class ShopItemUtils
     public static ShopItem Get(string id) => Get(Guid.Parse(id));
     public static ShopItem Get(Guid id) => allItems.FirstOrDefault(x => x.Id == id);
 
-    public static List<ShopItem> GetAllFromGuild(ulong guildid) => allItems.Where(x => x.GuildId == guildid).ToList();
+    public static List<ShopItem> GetAllFromGuild(ulong guildid) => allItems.Where(x => x.GuildID == guildid).ToList();
 }

@@ -24,7 +24,8 @@ using Snowly.Utils;
 
 namespace Snowly;
 
-public static class Snowly {
+public static class Snowly
+{
     public static DiscordClient Bot { get; private set; }
     private static BotConfig config { get; set; }
 
@@ -40,17 +41,20 @@ public static class Snowly {
 
     private static readonly List<DiscordApplicationCommand> list = new();
 
-    public static async Task Main(string[] args) {
+    public static async Task Main(string[] args)
+    {
         await File.WriteAllTextAsync("snowly.log", string.Empty);
 
-        AppDomain.CurrentDomain.UnhandledException += (_, eventArgs) => {
+        AppDomain.CurrentDomain.UnhandledException += (_, eventArgs) =>
+        {
             if (eventArgs.ExceptionObject is not Exception e)
                 Logger.LogError($"Unhandled exception: {eventArgs.ExceptionObject}");
             else
                 Logger.LogError(e, $"Unhandled exception: {e.Message}");
         };
 
-        if (args.Contains("--image")) {
+        if (args.Contains("--image"))
+        {
             imageTest();
             return;
         }
@@ -63,7 +67,8 @@ public static class Snowly {
         configFile = args.Contains("--config") ? args[args.ToList().IndexOf("--config") + 1] : "config.json";
         IsDebug = args.Contains("--debug");
 
-        if (IsDebug) {
+        if (IsDebug)
+        {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Debug mode enabled!");
             Console.ResetColor();
@@ -72,8 +77,10 @@ public static class Snowly {
         await run();
     }
 
-    private static async Task run() {
-        if (!File.Exists(configFile)) {
+    private static async Task run()
+    {
+        if (!File.Exists(configFile))
+        {
             Logger.LogError($"Config file '{configFile}' does not exist!");
             return;
         }
@@ -84,7 +91,8 @@ public static class Snowly {
         FontStorage.DefaultFont = config.DefaultFont;
         foreach (var (name, path) in config.Fonts) FontStorage.RegisterFont(name, path);
 
-        Bot = new DiscordClient(new DiscordConfiguration {
+        Bot = new DiscordClient(new DiscordConfiguration
+        {
             Token = config.Token,
             TokenType = TokenType.Bot,
             Intents = DiscordIntents.AllUnprivileged | DiscordIntents.GuildMembers | DiscordIntents.GuildPresences,
@@ -103,7 +111,8 @@ public static class Snowly {
         await Task.Delay(-1);
     }
 
-    private static void loadModules() {
+    private static void loadModules()
+    {
         Modules = new List<IModule>();
         SlashCommands = new List<ISlashCommand>();
 
@@ -115,14 +124,17 @@ public static class Snowly {
         loadModule(new FunModule(), list);
     }
 
-    private static async Task ready(DiscordClient _, SessionReadyEventArgs __) {
+    private static async Task ready(DiscordClient _, SessionReadyEventArgs __)
+    {
         Logger.LogInformation($"Logged in as {Bot.CurrentUser.Username}#{Bot.CurrentUser.Discriminator}");
 
-        try {
+        try
+        {
             Logger.LogInformation("Overwriting global slash commands...");
             await Bot.BulkOverwriteGlobalApplicationCommandsAsync(list.ToArray());
         }
-        catch (BadRequestException e) {
+        catch (BadRequestException e)
+        {
             Logger.LogError(e, "Failed to load modules!");
             await File.WriteAllTextAsync("error.log", e.Message);
             return;
@@ -147,21 +159,27 @@ public static class Snowly {
         Logger.LogInformation("Ready!");
     }
 
-    private static void loadModule(IModule module, ICollection<DiscordApplicationCommand> list) {
+    private static void loadModule(IModule module, ICollection<DiscordApplicationCommand> list)
+    {
         Logger.LogDebug($"[Module] {module.Name}");
 
-        foreach (var command in module.SlashCommands) {
+        foreach (var command in module.SlashCommands)
+        {
             SlashCommands.Add(command);
 
             var cmd = CommandBuilder.BuildCommand(command);
-            if (cmd is null) continue;
+
+            if (cmd is null)
+                continue;
+
             list.Add(cmd);
         }
 
         Modules.Add(module);
     }
 
-    private static void registerListeners() {
+    private static void registerListeners()
+    {
         Bot.ChannelCreated += MultiListener.ChannelCreated;
         Bot.ChannelDeleted += MultiListener.ChannelDeleted;
         Bot.ChannelUpdated += MultiListener.ChannelUpdated;
@@ -214,14 +232,18 @@ public static class Snowly {
         Bot.StageInstanceUpdated += MultiListener.StageUpdated;
     }
 
-    private static void imageTest() {
-        var renderer = new ImageRenderer {
+    private static void imageTest()
+    {
+        var renderer = new ImageRenderer
+        {
             Path = "test.png",
             Size = new Vector2(1200, 500)
         };
 
-        renderer.AddRange(new Drawable[] {
-            new Box {
+        renderer.AddRange(new Drawable[]
+        {
+            new Box
+            {
                 X = 300,
                 Width = 100,
                 Height = 100,

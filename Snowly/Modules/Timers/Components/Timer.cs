@@ -1,10 +1,17 @@
-﻿namespace Snowly.Modules.Timers.Components;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
-public class Timer {
-    public Guid Id { get; set; } = Guid.NewGuid();
+namespace Snowly.Modules.Timers.Components;
 
-    public ulong GuildId { get; set; }
-    public ulong ChannelId { get; set; }
+public class Timer
+{
+    [BsonId]
+    public Guid ID { get; set; } = Guid.NewGuid();
+
+    [BsonElement("GuildId")]
+    public ulong GuildID { get; set; }
+
+    [BsonElement("ChannelId")]
+    public ulong ChannelID { get; set; }
 
     public int Hour { get; set; }
     public int Minute { get; set; }

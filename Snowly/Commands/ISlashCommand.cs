@@ -7,7 +7,8 @@ namespace Snowly.Commands;
 /// <summary>
 /// A basic slash command.
 /// </summary>
-public interface ISlashCommand {
+public interface ISlashCommand
+{
     string Name { get; }
     string Description { get; }
     Permissions? Permission => null;

@@ -3,7 +3,8 @@ using DSharpPlus.Entities;
 
 namespace Snowly.Constants;
 
-public static class Colors {
+public static class Colors
+{
     public static DiscordColor Red => FromHex("#FF5555");
     public static DiscordColor Orange => FromHex("#FFAA55");
     public static DiscordColor Yellow => FromHex("#FFFF55");
@@ -29,7 +30,8 @@ public static class Colors {
     public static DiscordColor Github => FromHex("#333333");
     public static DiscordColor Youtube => FromHex("#ff0000");
 
-    public static DiscordColor[] Rainbow => new[] {
+    public static DiscordColor[] Rainbow => new[]
+    {
         Red,
         Orange,
         Yellow,
@@ -43,18 +45,22 @@ public static class Colors {
 
     public static DiscordColor Random => Rainbow[new Random().Next(0, Rainbow.Length)];
 
-    public static DiscordColor FromHex(string hex) {
+    public static DiscordColor FromHex(string hex)
+    {
         hex = hex.Replace("#", "");
 
-        switch (hex.Length) {
-            case 3: {
+        switch (hex.Length)
+        {
+            case 3:
+            {
                 var r = byte.Parse(hex[0].ToString(), NumberStyles.HexNumber);
                 var g = byte.Parse(hex[1].ToString(), NumberStyles.HexNumber);
                 var b = byte.Parse(hex[2].ToString(), NumberStyles.HexNumber);
                 return new DiscordColor(r, g, b);
             }
 
-            case 6: {
+            case 6:
+            {
                 var r = byte.Parse(hex[..2], NumberStyles.HexNumber);
                 var g = byte.Parse(hex.Substring(2, 2), NumberStyles.HexNumber);
                 var b = byte.Parse(hex.Substring(4, 2), NumberStyles.HexNumber);

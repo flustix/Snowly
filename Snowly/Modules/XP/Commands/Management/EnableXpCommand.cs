@@ -13,9 +13,9 @@ public class EnableXpCommand : ISlashCommand {
         if (interaction.Channel.IsPrivate) return;
 
         var guildConfig = Configs.GetGuildConfig(interaction.Guild.Id);
-        guildConfig.XpEnabled = !guildConfig.XpEnabled;
+        guildConfig.XPEnabled = !guildConfig.XPEnabled;
         Configs.UpdateGuildConfig(guildConfig);
 
-        interaction.Reply($"XP collection is now **{(guildConfig.XpEnabled ? "enabled" : "disabled")}** for this server.", true);
+        interaction.Reply($"XP collection is now **{(guildConfig.XPEnabled ? "enabled" : "disabled")}** for this server.", true);
     }
 }

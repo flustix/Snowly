@@ -2,7 +2,8 @@
 
 namespace Snowly.Modules.XP.Components;
 
-public class XpMultiplierRole {
+public class XpMultiplierRole
+{
     public ObjectId Id { get; set; } = ObjectId.GenerateNewId();
 
     public ulong GuildId { get; set; }

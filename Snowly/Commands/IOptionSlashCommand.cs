@@ -3,6 +3,7 @@
 /// <summary>
 /// A slash command with options.
 /// </summary>
-public interface IOptionSlashCommand : ISlashCommand {
+public interface IOptionSlashCommand : ISlashCommand
+{
     List<SlashOption> Options { get; }
 }

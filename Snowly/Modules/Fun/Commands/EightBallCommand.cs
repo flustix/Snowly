@@ -7,12 +7,15 @@ using Snowly.Utils;
 
 namespace Snowly.Modules.Fun.Commands;
 
-public class EightBallCommand : IOptionSlashCommand {
+public class EightBallCommand : IOptionSlashCommand
+{
     public string Name => "8ball";
     public string Description => "Ask the magic 8ball a question.";
 
-    public List<SlashOption> Options => new() {
-        new SlashOption {
+    public List<SlashOption> Options => new()
+    {
+        new SlashOption
+        {
             Name = "question",
             Description = "The question you want to ask the 8ball.",
             Type = ApplicationCommandOptionType.String,
@@ -20,7 +23,8 @@ public class EightBallCommand : IOptionSlashCommand {
         }
     };
 
-    private static readonly string[] answers = {
+    private static readonly string[] answers =
+    {
         ":white_check_mark:|It is certain.",
         ":white_check_mark:|It is decidedly so.",
         ":white_check_mark:|Without a doubt.",
@@ -43,28 +47,34 @@ public class EightBallCommand : IOptionSlashCommand {
         ":x:|Very doubtful."
     };
 
-    public void Handle(DiscordInteraction interaction) {
+    public void Handle(DiscordInteraction interaction)
+    {
         var question = interaction.GetString("question");
         if (question == null) return;
 
         var answer = answers[new Random().Next(0, answers.Length)];
         var split = answer.Split('|');
 
-        interaction.ReplyEmbed(new CustomEmbed {
+        interaction.ReplyEmbed(new CustomEmbed
+        {
             Title = "Magic 8ball",
-            Fields = new List<CustomEmbedField> {
-                new() {
+            Fields = new List<CustomEmbedField>
+            {
+                new()
+                {
                     Name = ":question: Question",
                     Value = question,
                     Inline = false
                 },
-                new() {
+                new()
+                {
                     Name = $"{split[0]} Answer",
                     Value = split[1],
                     Inline = false
                 }
             },
-            Color = split[0] switch {
+            Color = split[0] switch
+            {
                 ":white_check_mark:" => Colors.Success,
                 ":heavy_minus_sign:" => Colors.Warning,
                 ":x:" => Colors.Error,

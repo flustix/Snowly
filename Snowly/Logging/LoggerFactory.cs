@@ -2,14 +2,16 @@
 
 namespace Snowly.Logging;
 
-public class LoggerFactory : ILoggerFactory {
-    public void Dispose() {
+public class LoggerFactory : ILoggerFactory
+{
+    public void Dispose()
+    {
         GC.SuppressFinalize(this);
     }
 
-    public ILogger CreateLogger(string categoryName) {
-        return new Logger(categoryName);
-    }
+    public ILogger CreateLogger(string categoryName) => new Logger();
 
-    public void AddProvider(ILoggerProvider provider) { }
+    public void AddProvider(ILoggerProvider provider)
+    {
+    }
 }

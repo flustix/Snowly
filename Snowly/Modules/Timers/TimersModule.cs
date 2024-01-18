@@ -9,20 +9,25 @@ using Timer = Snowly.Modules.Timers.Components.Timer;
 
 namespace Snowly.Modules.Timers;
 
-public class TimersModule : IModule {
+public class TimersModule : IModule
+{
     public string Name => "Timers";
     public string Description => "Send custom messages at a set time.";
     public List<ISlashCommand> SlashCommands => new();
 
     private int minute;
 
-    public TimersModule() {
+    public TimersModule()
+    {
         // ReSharper disable once FunctionNeverReturns
-        Task.Run(() => {
-            while (true) {
+        Task.Run(() =>
+        {
+            while (true)
+            {
                 var now = DateTime.Now;
 
-                if (now.Minute == minute) {
+                if (now.Minute == minute)
+                {
                     Thread.Sleep(1000);
                     continue;
                 }
@@ -34,25 +39,30 @@ public class TimersModule : IModule {
         });
     }
 
-    private static void runTimers() {
+    private static void runTimers()
+    {
         var now = DateTime.Now;
         var timers = MongoDatabase.GetCollection<Timer>("timers").Find(timer => timer.Hour == now.Hour && timer.Minute == now.Minute).ToList();
 
-        foreach (var timer in timers) {
-            try {
-                var guild = Snowly.Bot.Guilds[timer.GuildId];
-                var channel = guild.Channels[timer.ChannelId];
+        foreach (var timer in timers)
+        {
+            try
+            {
+                var guild = Snowly.Bot.Guilds[timer.GuildID];
+                var channel = guild.Channels[timer.ChannelID];
 
                 var message = timer.Message;
                 var random = JsonConvert.DeserializeObject(timer.Random);
 
-                if (random is JArray randomList) {
+                if (random is JArray randomList)
+                {
                     var randomIndex = new Random().Next(0, randomList.Count);
 
                     var historySplit = timer.AntiRepeatHistory?.Split(",").ToList() ?? new List<string>();
                     if (timer.AntiRepeat == historySplit.Count) historySplit.RemoveAt(0);
 
-                    while (historySplit.Contains(randomIndex.ToString()) && randomList.Count > 0) {
+                    while (historySplit.Contains(randomIndex.ToString()) && randomList.Count > 0)
+                    {
                         randomIndex = new Random().Next(0, randomList.Count);
                     }
 
@@ -61,7 +71,8 @@ public class TimersModule : IModule {
 
                     var randomItem = randomList.ElementAt(randomIndex);
 
-                    foreach (var prop in randomItem.ToObject<Dictionary<string, string>>()) {
+                    foreach (var prop in randomItem.ToObject<Dictionary<string, string>>())
+                    {
                         var key = prop.Key;
                         var value = prop.Value;
                         value = value?.Replace("\"", "\\\"");
@@ -73,8 +84,9 @@ public class TimersModule : IModule {
                 var parsed = JsonConvert.DeserializeObject<CustomMessage>(message);
                 channel?.SendMessageAsync(parsed.Content, parsed.ToEmbed());
             }
-            catch (Exception e) {
-                Snowly.Logger.LogError(e, $"Failed to send timer message for {timer.GuildId} in {timer.ChannelId}");
+            catch (Exception e)
+            {
+                Snowly.Logger.LogError(e, $"Failed to send timer message for {timer.GuildID} in {timer.ChannelID}");
             }
         }
     }

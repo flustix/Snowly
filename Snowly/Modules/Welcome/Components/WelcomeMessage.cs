@@ -1,6 +1,7 @@
 ﻿namespace Snowly.Modules.Welcome.Components;
 
-public class WelcomeMessage {
+public class WelcomeMessage
+{
     public Guid Id { get; set; } = Guid.NewGuid();
 
     public ulong GuildId { get; set; } = 0;

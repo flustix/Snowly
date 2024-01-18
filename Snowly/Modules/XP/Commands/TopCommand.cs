@@ -8,15 +8,19 @@ using Snowly.Modules.XP.Utils;
 
 namespace Snowly.Modules.XP.Commands;
 
-public class TopCommand : ISlashCommand {
+public class TopCommand : ISlashCommand
+{
     public string Name => "top-xp";
     public string Description => "Shows the top 10 users with the most XP.";
 
-    public void Handle(DiscordInteraction interaction) {
-        if (interaction.Channel.IsPrivate) return;
+    public void Handle(DiscordInteraction interaction)
+    {
+        if (interaction.Channel.IsPrivate)
+            return;
+
         var all = XpUtils.GetTopUsers(interaction.Guild.Id);
 
-        var pages = (int) Math.Ceiling(all.Count / 10d);
+        var pages = (int)Math.Ceiling(all.Count / 10d);
         var users = all.Take(10).ToList();
 
         var response = new DiscordInteractionResponseBuilder();
@@ -42,7 +46,7 @@ public class TopCommand : ISlashCommand {
         var users = XpUtils.GetTopUsers(args.Guild.Id);
         var page = int.Parse(args.Id.Split('-')[2]);
 
-        var pages = (int) Math.Ceiling(users.Count / 10d);
+        var pages = (int)Math.Ceiling(users.Count / 10d);
         var skip = (page - 1) * 10;
         var usersPage = users.Skip(skip).Take(10).ToList();
 

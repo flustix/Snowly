@@ -4,7 +4,8 @@ using Snowly.Modules.XP.Components;
 
 namespace Snowly.Modules.XP.Utils;
 
-public static class XpUtils {
+public static class XpUtils
+{
     #region Collections
 
     private static IMongoCollection<XpUser> users => MongoDatabase.GetCollection<XpUser>("xp-users");
@@ -21,11 +22,13 @@ public static class XpUtils {
 
     #region Users
 
-    public static XpUser GetUser(ulong guildid, ulong userid) {
+    public static XpUser GetUser(ulong guildid, ulong userid)
+    {
         var user = allUsers.FirstOrDefault(x => x.GuildId == guildid && x.UserId == userid);
         if (user != null) return user;
 
-        var newUser = new XpUser {
+        var newUser = new XpUser
+        {
             GuildId = guildid,
             UserId = userid
         };
@@ -39,7 +42,8 @@ public static class XpUtils {
     public static List<XpUser> GetTopUsers(ulong guildid) => allUsers.Where(x => x.GuildId == guildid).OrderByDescending(x => x.Xp).ToList();
     public static List<XpUser> GetTopUsers(ulong guildid, int count) => GetTopUsers(guildid).Take(count).ToList();
 
-    public static int GetRank(ulong guildid, ulong userid) {
+    public static int GetRank(ulong guildid, ulong userid)
+    {
         var top = GetTopUsers(guildid);
         var user = top.FirstOrDefault(x => x.UserId == userid);
         return top.IndexOf(user) + 1;
@@ -60,6 +64,6 @@ public static class XpUtils {
 
     #endregion
 
-    public static long GetLevel(long xp) => (long) Math.Sqrt(xp / 100f);
-    public static long GetXpForLevel(long level) => (long) Math.Pow(level, 2) * 100;
+    public static long GetLevel(long xp) => (long)Math.Sqrt(xp / 100f);
+    public static long GetXpForLevel(long level) => (long)Math.Pow(level, 2) * 100;
 }

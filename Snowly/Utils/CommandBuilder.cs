@@ -5,11 +5,14 @@ using Snowly.Commands;
 
 namespace Snowly.Utils;
 
-public abstract class CommandBuilder {
-    public static DiscordApplicationCommand BuildCommand(ISlashCommand command) {
+public abstract class CommandBuilder
+{
+    public static DiscordApplicationCommand BuildCommand(ISlashCommand command)
+    {
         DiscordApplicationCommand appCommand;
 
-        switch (command) {
+        switch (command)
+        {
             case ISlashCommandGroup group:
                 appCommand = new DiscordApplicationCommand(
                     command.Name,
@@ -43,22 +46,26 @@ public abstract class CommandBuilder {
         return appCommand;
     }
 
-    private static DiscordApplicationCommandOption buildOption(SlashOption option) {
-        return new DiscordApplicationCommandOption(option.Name, option.Description, option.Type, option.Required, option.Choices, autocomplete:option.AutoComplete);
+    private static DiscordApplicationCommandOption buildOption(SlashOption option)
+    {
+        return new DiscordApplicationCommandOption(option.Name, option.Description, option.Type, option.Required, option.Choices, autocomplete: option.AutoComplete);
     }
 
-    private static DiscordApplicationCommandOption buildSubcommand(ISlashCommand subCommand, int depth = 0) {
+    private static DiscordApplicationCommandOption buildSubcommand(ISlashCommand subCommand, int depth = 0)
+    {
         DiscordApplicationCommandOption builder;
 
         var log = "  ";
 
-        for (var i = 0; i < depth + 1; i++) {
+        for (var i = 0; i < depth + 1; i++)
+        {
             log += "  ";
         }
 
         log += $"| {subCommand.Name}";
 
-        switch (subCommand) {
+        switch (subCommand)
+        {
             case ISlashCommandGroup group:
                 builder = new DiscordApplicationCommandOption(
                     subCommand.Name,

@@ -6,11 +6,14 @@ using Snowly.Constants;
 
 namespace Snowly.Listeners;
 
-public static class SlashListener {
-    public static async Task OnSlashCommand(DiscordClient sender, InteractionCreateEventArgs args) {
+public static class SlashListener
+{
+    public static async Task OnSlashCommand(DiscordClient sender, InteractionCreateEventArgs args)
+    {
         var command = Snowly.SlashCommands.FirstOrDefault(x => x.Name == args.Interaction.Data.Name);
 
-        if (command == null) {
+        if (command == null)
+        {
             await notFound(args.Interaction);
             return;
         }
@@ -48,7 +51,6 @@ public static class SlashListener {
                         }
                     }
 
-
                     if (focused == null) continue;
 
                     Snowly.Logger.LogDebug($"Focused option: {focused.Name}");
@@ -59,7 +61,8 @@ public static class SlashListener {
 
             command.Handle(args.Interaction);
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             Snowly.Logger.LogError(e, $"An error occurred while executing command {command.Name}.");
 
             await args.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
@@ -73,8 +76,10 @@ public static class SlashListener {
         }
     }
 
-    private static async Task notFound(DiscordInteraction interaction) {
-        await interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(new DiscordEmbedBuilder {
+    private static async Task notFound(DiscordInteraction interaction)
+    {
+        await interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(new DiscordEmbedBuilder
+        {
             Title = "Unknown command",
             Description = "This command is not implemented yet.",
             Color = Colors.Warning,
@@ -82,13 +87,15 @@ public static class SlashListener {
         }));
     }
 
-    private static readonly List<string> gifs = new() {
+    private static readonly List<string> gifs = new()
+    {
         "https://media.discordapp.net/attachments/328453138665439232/1066616268406407168/gyFdA6F.gif",
         "https://media.discordapp.net/attachments/1080605262559322112/1082567997316673656/1946004A-73E7-45E9-B687-960F3ACC53BA.gif",
         "https://media.discordapp.net/attachments/937487144933539881/986090958057775144/globe.gif"
     };
 
-    private static string getRandomErrorGif() {
+    private static string getRandomErrorGif()
+    {
         var random = new Random();
         var number = random.Next(0, gifs.Count);
         return gifs[number];

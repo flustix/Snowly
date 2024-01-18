@@ -6,11 +6,13 @@ namespace Snowly.Commands;
 /// <summary>
 /// A slash command that contains subcommands.
 /// </summary>
-public interface ISlashCommandGroup : ISlashCommand {
+public interface ISlashCommandGroup : ISlashCommand
+{
     int Depth => 1;
     IEnumerable<ISlashCommand> Subcommands { get; }
 
-    void ISlashCommand.Handle(DiscordInteraction interaction) {
+    void ISlashCommand.Handle(DiscordInteraction interaction)
+    {
         var option = interaction.Data.Options.First();
         var subcommand = option.Name;
 
@@ -22,7 +24,8 @@ public interface ISlashCommandGroup : ISlashCommand {
 
         var command = Subcommands.FirstOrDefault(x => x.Name == subcommand);
 
-        if (command is null) {
+        if (command is null)
+        {
             interaction.Reply("Subcommand not found.", true);
             return;
         }
@@ -43,7 +46,8 @@ public interface ISlashCommandGroup : ISlashCommand {
 
         var command = Subcommands.FirstOrDefault(x => x.Name == subcommand);
 
-        if (command is null) {
+        if (command is null)
+        {
             interaction.Reply("Subcommand not found.", true);
             return;
         }

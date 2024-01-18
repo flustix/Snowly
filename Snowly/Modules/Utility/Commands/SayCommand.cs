@@ -3,7 +3,8 @@ using Snowly.Modules.Utility.Commands.Abstract;
 
 namespace Snowly.Modules.Utility.Commands;
 
-public class SayCommand : AbstractSayCommand {
+public class SayCommand : AbstractSayCommand
+{
     public override string Name => "say";
     public override string Description => "Sends a message in a channel.";
 

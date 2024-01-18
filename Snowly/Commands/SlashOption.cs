@@ -3,7 +3,8 @@ using DSharpPlus.Entities;
 
 namespace Snowly.Commands;
 
-public class SlashOption {
+public class SlashOption
+{
     public string Name { get; init; }
     public string Description { get; init; }
     public ApplicationCommandOptionType Type { get; init; }

@@ -1,15 +1,24 @@
-﻿namespace Snowly.Config;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
-public class GuildConfig {
-    public ulong Id { get; set; }
+namespace Snowly.Config;
+
+public class GuildConfig
+{
+    [BsonId]
+    public ulong ID { get; init; }
 
     // General
-    public ulong LoggingChannelId { get; set; }
+    [BsonElement("LoggingChannelId")]
+    public ulong LoggingChannelID { get; set; }
 
     // XP
-    public bool XpEnabled { get; set; } = true;
+    [BsonElement("XpEnabled")]
+    public bool XPEnabled { get; set; } = true;
+
     public bool LevelUpMessages { get; set; } = true;
-    public ulong LevelUpChannelId { get; set; }
+
+    [BsonElement("LevelUpChannelId")]
+    public ulong LevelUpChannelID { get; set; }
 
     // Economy
     public string CurrencyName { get; set; } = "coins";

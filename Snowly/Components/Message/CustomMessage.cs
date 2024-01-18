@@ -3,7 +3,8 @@ using Newtonsoft.Json;
 
 namespace Snowly.Components.Message;
 
-public class CustomMessage {
+public class CustomMessage
+{
     [JsonProperty("content")]
     public string Content { get; set; }
 

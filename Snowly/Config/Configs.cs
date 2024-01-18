@@ -13,22 +13,22 @@ public static class Configs
 
     public static UserConfig GetUserConfig(ulong userId)
     {
-        var user = allUsers.FirstOrDefault(x => x.Id == userId);
+        var user = allUsers.FirstOrDefault(x => x.ID == userId);
         if (user != null) return user;
 
-        users.InsertOne(user = new UserConfig { Id = userId });
+        users.InsertOne(user = new UserConfig { ID = userId });
         return user;
     }
 
     public static GuildConfig GetGuildConfig(ulong guildId)
     {
-        var guild = allGuilds.FirstOrDefault(x => x.Id == guildId);
+        var guild = allGuilds.FirstOrDefault(x => x.ID == guildId);
         if (guild != null) return guild;
 
-        guilds.InsertOne(guild = new GuildConfig { Id = guildId });
+        guilds.InsertOne(guild = new GuildConfig { ID = guildId });
         return guild;
     }
 
-    public static void UpdateUserConfig(UserConfig user) => users.ReplaceOne(x => x.Id == user.Id, user);
-    public static void UpdateGuildConfig(GuildConfig guild) => guilds.ReplaceOne(x => x.Id == guild.Id, guild);
+    public static void UpdateUserConfig(UserConfig user) => users.ReplaceOne(x => x.ID == user.ID, user);
+    public static void UpdateGuildConfig(GuildConfig guild) => guilds.ReplaceOne(x => x.ID == guild.ID, guild);
 }

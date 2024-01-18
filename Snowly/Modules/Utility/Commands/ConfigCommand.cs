@@ -10,7 +10,8 @@ public class ConfigCommand : ISlashCommandGroup
     public string Description => "Configure the bot for your server.";
     public Permissions? Permission => Permissions.ManageGuild;
 
-    public IEnumerable<ISlashCommand> Subcommands => new ISlashCommand[] {
+    public IEnumerable<ISlashCommand> Subcommands => new ISlashCommand[]
+    {
         new ConfigLoggingChannelCommand()
     };
 }

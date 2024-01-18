@@ -64,7 +64,7 @@ public class EconomyItemsAddCommand : IOptionSlashCommand
             Icon = icon,
             Price = price.Value,
             Description = description,
-            GuildId = interaction.Guild.Id
+            GuildID = interaction.Guild.Id
         };
 
         ShopItemUtils.Add(item);

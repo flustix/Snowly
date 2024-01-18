@@ -2,14 +2,10 @@
 
 namespace Snowly.Logging;
 
-public class Logger : ILogger {
-    private string name { get; }
-
-    public Logger(string name) {
-        this.name = name;
-    }
-
-    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter) {
+public class Logger : ILogger
+{
+    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+    {
         if (logLevel == LogLevel.Trace || (logLevel == LogLevel.Debug && !Snowly.IsDebug)) return;
 
         // ReSharper disable once SwitchExpressionHandlesSomeKnownEnumValuesWithExceptionInDefault
@@ -23,7 +19,8 @@ public class Logger : ILogger {
         Console.ForegroundColor = ConsoleColor.White;
         Console.Write($"{msg}\n");
 
-        if (exception != null) {
+        if (exception != null)
+        {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(exception.Message);
             exception.StackTrace?.Split('\n').ToList().ForEach(x => Console.WriteLine(x.Trim()));
@@ -34,7 +31,8 @@ public class Logger : ILogger {
         exception?.StackTrace?.Split('\n').ToList().ForEach(x => File.AppendAllText("snowly.log", x.Trim() + "\n"));
     }
 
-    private ConsoleColor getColor(LogLevel logLevel) => logLevel switch {
+    private ConsoleColor getColor(LogLevel logLevel) => logLevel switch
+    {
         LogLevel.Critical => ConsoleColor.DarkRed,
         LogLevel.Error => ConsoleColor.Red,
         LogLevel.Warning => ConsoleColor.Yellow,
@@ -43,7 +41,8 @@ public class Logger : ILogger {
         _ => ConsoleColor.White
     };
 
-    private string getSeverity(LogLevel logLevel) => logLevel switch {
+    private string getSeverity(LogLevel logLevel) => logLevel switch
+    {
         LogLevel.Critical => "Critical",
         LogLevel.Error => "Error",
         LogLevel.Warning => "Warning",

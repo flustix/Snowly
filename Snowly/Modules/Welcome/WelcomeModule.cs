@@ -11,7 +11,8 @@ using Snowly.Utils;
 
 namespace Snowly.Modules.Welcome;
 
-public class WelcomeModule : IModule {
+public class WelcomeModule : IModule
+{
     public string Name => "Welcome";
     public string Description => "Welcome new members to your server!";
 
@@ -20,10 +21,12 @@ public class WelcomeModule : IModule {
         new WelcomeCreateCommand()
     };
 
-    public Task OnMemberJoined(GuildMemberAddEventArgs args) {
+    public Task OnMemberJoined(GuildMemberAddEventArgs args)
+    {
         Snowly.Logger.LogDebug($"User {args.Member.GetUsername()} joined the server!");
 
-        try {
+        try
+        {
             var collection = MongoDatabase.GetCollection<WelcomeMessage>("welcome");
 
             var message = collection.Find(x => x.GuildId == args.Guild.Id).FirstOrDefault();
@@ -35,16 +38,17 @@ public class WelcomeModule : IModule {
             var roleList = message.Roles.Select(role => args.Guild.GetRole(role)).Where(roleToAdd => roleToAdd is not null).ToList();
 
             var content = message.Message.Replace("{user.id}", $"{args.Member.Id}")
-                .Replace("{user.mention}", $"{args.Member.Mention}")
-                .Replace("{user.name}", $"{args.Member.DisplayName}")
-                .Replace("{user.avatar}", $"{args.Member.AvatarUrl}");
+                                 .Replace("{user.mention}", $"{args.Member.Mention}")
+                                 .Replace("{user.name}", $"{args.Member.DisplayName}")
+                                 .Replace("{user.avatar}", $"{args.Member.AvatarUrl}");
 
             var parsed = JsonConvert.DeserializeObject<CustomMessage>(content);
             channel.SendMessageAsync(parsed.Content, parsed.ToEmbed());
 
             roleList.ForEach(r => args.Member.GrantRoleAsync(r, "Auto-Role"));
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             Snowly.Logger.LogError(e, "Error while welcoming new member!");
         }
 

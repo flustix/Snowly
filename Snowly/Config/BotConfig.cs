@@ -1,8 +1,12 @@
-﻿namespace Snowly.Config;
+﻿using JetBrains.Annotations;
 
-public class BotConfig {
-    public string Database { get; set; } = "snowly";
-    public string Token { get; set; }
-    public string DefaultFont { get; set; } = "Arial";
-    public Dictionary<string, string> Fonts { get; set; } = new();
+namespace Snowly.Config;
+
+[UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
+public class BotConfig
+{
+    public string Database { get; init; } = "snowly";
+    public string Token { get; init; }
+    public string DefaultFont { get; init; } = "Arial";
+    public Dictionary<string, string> Fonts { get; init; } = new();
 }
