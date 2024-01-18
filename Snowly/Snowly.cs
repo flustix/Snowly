@@ -93,7 +93,7 @@ public static class Snowly {
             LoggerFactory = loggerFactory
         });
 
-        Bot.Ready += ready;
+        Bot.SessionCreated += ready;
         Bot.InteractionCreated += SlashListener.OnSlashCommand;
 
         registerListeners();
@@ -115,7 +115,7 @@ public static class Snowly {
         loadModule(new FunModule(), list);
     }
 
-    private static async Task ready(DiscordClient sender, ReadyEventArgs args) {
+    private static async Task ready(DiscordClient _, SessionReadyEventArgs __) {
         Logger.LogInformation($"Logged in as {Bot.CurrentUser.Username}#{Bot.CurrentUser.Discriminator}");
 
         try {
@@ -124,7 +124,7 @@ public static class Snowly {
         }
         catch (BadRequestException e) {
             Logger.LogError(e, "Failed to load modules!");
-            await File.WriteAllTextAsync("error.log", e.WebResponse.Response);
+            await File.WriteAllTextAsync("error.log", e.Message);
             return;
         }
 
