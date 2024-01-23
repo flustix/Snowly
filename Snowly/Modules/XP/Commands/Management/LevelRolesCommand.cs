@@ -1,14 +1,18 @@
-﻿using DSharpPlus.Entities;
-using Snowly.Commands;
-using Snowly.Utils;
+﻿using Snowly.Commands;
+using Snowly.Modules.XP.Commands.Management.LevelRoles;
 
 namespace Snowly.Modules.XP.Commands.Management;
 
-public class LevelRolesCommand : ISlashCommand {
+public class LevelRolesCommand : ISlashCommandGroup
+{
     public string Name => "level-roles";
     public string Description => "Manage level roles";
+    public int Depth => 2;
 
-    public void Handle(DiscordInteraction interaction) {
-        interaction.Reply("This command is not implemented yet.", true);
-    }
+    public IEnumerable<ISlashCommand> Subcommands => new ISlashCommand[]
+    {
+        new LevelRolesListCommand(),
+        new LevelRolesAddCommand(),
+        new LevelRolesRemoveCommand()
+    };
 }

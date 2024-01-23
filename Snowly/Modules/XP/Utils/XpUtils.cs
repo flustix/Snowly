@@ -55,6 +55,23 @@ public static class XpUtils
 
     public static List<XpRewardRole> GetRewardRoles(ulong guildid) => allRewardRoles.Where(x => x.GuildId == guildid).ToList();
 
+    public static void AddRewardRole(ulong guildid, long level, ulong roleid)
+    {
+        var newRole = new XpRewardRole
+        {
+            GuildId = guildid,
+            Level = level,
+            RoleId = roleid
+        };
+
+        rewardroles.InsertOne(newRole);
+    }
+
+    public static void RemoveRewardRole(ulong guildId, ulong roleId)
+    {
+        rewardroles.DeleteOne(x => x.GuildId == guildId && x.RoleId == roleId);
+    }
+
     #endregion
 
     #region Multipliers
