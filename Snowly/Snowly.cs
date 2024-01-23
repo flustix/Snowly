@@ -14,6 +14,7 @@ using Snowly.Image.Drawables.Shapes;
 using Snowly.Listeners;
 using Snowly.Logging;
 using Snowly.Modules;
+using Snowly.Modules.AutoResponder;
 using Snowly.Modules.Economy;
 using Snowly.Modules.Fun;
 using Snowly.Modules.Timers;
@@ -95,7 +96,7 @@ public static class Snowly
         {
             Token = config.Token,
             TokenType = TokenType.Bot,
-            Intents = DiscordIntents.AllUnprivileged | DiscordIntents.GuildMembers | DiscordIntents.GuildPresences,
+            Intents = DiscordIntents.AllUnprivileged | DiscordIntents.GuildMembers | DiscordIntents.GuildPresences | DiscordIntents.MessageContents,
             AutoReconnect = true,
             MinimumLogLevel = IsDebug ? LogLevel.Debug : LogLevel.Information,
             LoggerFactory = loggerFactory
@@ -122,6 +123,7 @@ public static class Snowly
         loadModule(new TimersModule(), list);
         loadModule(new WelcomeModule(), list);
         loadModule(new FunModule(), list);
+        loadModule(new AutoResponderModule(), list);
     }
 
     private static async Task ready(DiscordClient _, SessionReadyEventArgs __)
