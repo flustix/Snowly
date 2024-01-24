@@ -103,7 +103,7 @@ public static class Snowly
         });
 
         Bot.SessionCreated += ready;
-        Bot.InteractionCreated += SlashListener.OnSlashCommand;
+        Bot.InteractionCreated += SlashListener.OnInteraction;
 
         registerListeners();
         loadModules();

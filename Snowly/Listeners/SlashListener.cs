@@ -2,68 +2,33 @@
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using Microsoft.Extensions.Logging;
+using Snowly.Commands;
 using Snowly.Constants;
 
 namespace Snowly.Listeners;
 
 public static class SlashListener
 {
-    public static async Task OnSlashCommand(DiscordClient sender, InteractionCreateEventArgs args)
+    public static async Task OnInteraction(DiscordClient sender, InteractionCreateEventArgs args)
     {
         var command = Snowly.SlashCommands.FirstOrDefault(x => x.Name == args.Interaction.Data.Name);
 
-        if (command == null)
-        {
-            await notFound(args.Interaction);
-            return;
-        }
-
         try
         {
-            DiscordInteractionDataOption focused = null;
-
-            if (args.Interaction.Data.Options != null)
+            switch (args.Interaction.Type)
             {
-                foreach (var option in args.Interaction.Data.Options)
-                {
-                    if (option.Focused)
-                        focused = option;
+                case InteractionType.ApplicationCommand:
+                    await onSlashCommand(command, args);
+                    break;
 
-                    if (option.Options == null) continue;
-
-                    // TODO: garbage code
-                    foreach (var subOption in option.Options)
-                    {
-                        if (subOption.Focused)
-                        {
-                            focused = subOption;
-                            break;
-                        }
-
-                        if (subOption.Options == null) continue;
-
-                        foreach (var subSubOption in subOption.Options)
-                        {
-                            if (!subSubOption.Focused) continue;
-
-                            focused = subSubOption;
-                            break;
-                        }
-                    }
-
-                    if (focused == null) continue;
-
-                    Snowly.Logger.LogDebug($"Focused option: {focused.Name}");
-                    command.HandleAutoComplete(args.Interaction, focused);
-                    return;
-                }
+                case InteractionType.AutoComplete:
+                    await onAutoComplete(command, args);
+                    break;
             }
-
-            command.Handle(args.Interaction);
         }
         catch (Exception e)
         {
-            Snowly.Logger.LogError(e, $"An error occurred while executing command {command.Name}.");
+            Snowly.Logger.LogError(e, $"An error occurred while executing command {command?.Name ?? "*undefined*"}.");
 
             await args.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder().AddEmbed(new DiscordEmbedBuilder
@@ -76,6 +41,63 @@ public static class SlashListener
         }
     }
 
+    private static async Task onSlashCommand(ISlashCommand command, InteractionCreateEventArgs args)
+    {
+        if (command == null)
+        {
+            await notFound(args.Interaction);
+            return;
+        }
+
+        command.Handle(args.Interaction);
+    }
+
+    private static Task onAutoComplete(ISlashCommand command, InteractionCreateEventArgs args)
+    {
+        if (command == null)
+            return Task.CompletedTask;
+
+        DiscordInteractionDataOption focused = null;
+
+        if (args.Interaction.Data.Options != null)
+        {
+            foreach (var option in args.Interaction.Data.Options)
+            {
+                if (option.Focused)
+                    focused = option;
+
+                if (option.Options == null) continue;
+
+                // TODO: garbage code
+                foreach (var subOption in option.Options)
+                {
+                    if (subOption.Focused)
+                    {
+                        focused = subOption;
+                        break;
+                    }
+
+                    if (subOption.Options == null) continue;
+
+                    foreach (var subSubOption in subOption.Options)
+                    {
+                        if (!subSubOption.Focused) continue;
+
+                        focused = subSubOption;
+                        break;
+                    }
+                }
+
+                if (focused == null) continue;
+
+                Snowly.Logger.LogDebug($"Focused option: {focused.Name}");
+                command.HandleAutoComplete(args.Interaction, focused);
+            }
+        }
+
+        return Task.CompletedTask;
+    }
+
     private static async Task notFound(DiscordInteraction interaction)
     {
         await interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(new DiscordEmbedBuilder
@@ -83,7 +105,7 @@ public static class SlashListener
             Title = "Unknown command",
             Description = "This command is not implemented yet.",
             Color = Colors.Warning,
-            ImageUrl = "https://media.discordapp.net/attachments/328453138665439232/1066616268406407168/gyFdA6F.gif"
+            ImageUrl = getRandomErrorGif()
         }));
     }
 
