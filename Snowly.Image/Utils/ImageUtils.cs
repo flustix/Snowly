@@ -1,4 +1,5 @@
 ﻿using SixLabors.Fonts;
+using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.Processing.Processors.Quantization;
 
@@ -6,6 +7,35 @@ namespace Snowly.Image.Utils;
 
 public static class ImageUtils
 {
+    public static Image<Rgba32> ApplyRoundedCorners(this Image<Rgba32> img, float radius)
+    {
+        if (radius <= 0) return img;
+
+        var rect = new Rectangle(0, 0, img.Width, img.Height);
+        var path = rect.getPath((int)radius);
+
+        var mask = new Image<Rgba32>(img.Width, img.Height);
+        mask.Mutate(x => x.Fill(ColorUtils.White, path));
+        mask.Mutate(x => x.DrawImage(img, PixelColorBlendingMode.Multiply, PixelAlphaCompositionMode.SrcIn, 1));
+
+        return mask;
+    }
+
+    private static IPath getPath(this Rectangle rect, int radius)
+    {
+        var builder = new PathBuilder();
+        builder.AddLine(rect.Left + radius, rect.Top, rect.Right - radius, rect.Top);
+        builder.AddArc(new Point(rect.Right - radius, rect.Top + radius), radius, radius, 0, 270, 90);
+        builder.AddLine(rect.Right, rect.Top + radius, rect.Right, rect.Bottom - radius);
+        builder.AddArc(new Point(rect.Right - radius, rect.Bottom - radius), radius, radius, 0, 0, 90);
+        builder.AddLine(rect.Right - radius, rect.Bottom, rect.Left + radius, rect.Bottom);
+        builder.AddArc(new Point(rect.Left + radius, rect.Bottom - radius), radius, radius, 0, 90, 90);
+        builder.AddLine(rect.Left, rect.Bottom - radius, rect.Left, rect.Top + radius);
+        builder.AddArc(new Point(rect.Left + radius, rect.Top + radius), radius, radius, 0, 180, 90);
+        builder.CloseFigure();
+        return builder.Build();
+    }
+
     public static List<Rgba32> GetAccentColors(this Image<Rgba32> image)
     {
         var colors = new List<Rgba32>();

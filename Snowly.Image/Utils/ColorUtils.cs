@@ -4,6 +4,8 @@ namespace Snowly.Image.Utils;
 
 public static class ColorUtils
 {
+    public static Color White => new(new Rgba32(255, 255, 255));
+
     private const double tolerance = 0.0001d;
 
     public static Vector3 ToHsl(this Rgba32 rgba32)
@@ -34,5 +36,14 @@ public static class ColorUtils
         else if (Math.Abs(b - max) < tolerance) h = 4f + (r - g) / delta;
 
         return new Vector3(h, s, l);
+    }
+
+    public static Rgba32 Blend(this Rgba32 color, Rgba32 other, float alpha)
+    {
+        var r = (byte)(color.R * (1 - alpha) + other.R * alpha);
+        var g = (byte)(color.G * (1 - alpha) + other.G * alpha);
+        var b = (byte)(color.B * (1 - alpha) + other.B * alpha);
+
+        return new Rgba32(r, g, b);
     }
 }

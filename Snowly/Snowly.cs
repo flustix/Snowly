@@ -5,12 +5,14 @@ using DSharpPlus.EventArgs;
 using DSharpPlus.Exceptions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using SixLabors.ImageSharp.PixelFormats;
 using Snowly.Commands;
 using Snowly.Config;
 using Snowly.Database;
 using Snowly.Image;
 using Snowly.Image.Drawables;
 using Snowly.Image.Drawables.Shapes;
+using Snowly.Image.Drawables.Sprites;
 using Snowly.Listeners;
 using Snowly.Logging;
 using Snowly.Modules;
@@ -246,10 +248,52 @@ public static class Snowly
         {
             new Box
             {
-                X = 300,
+                X = 0,
                 Width = 100,
-                Height = 100,
-                CornerRadius = 20
+                Height = 100
+            },
+            new Container
+            {
+                X = 50,
+                Y = 50,
+                Width = 80,
+                Height = 80,
+                Alpha = 0.5f,
+                CornerRadius = 20,
+                Drawables = new Drawable[]
+                {
+                    new Box
+                    {
+                        Width = 80,
+                        Height = 80,
+                        Color = new Rgba32(255, 0, 0)
+                    },
+                    new Box
+                    {
+                        X = 10,
+                        Y = 10,
+                        Width = 80,
+                        Height = 80,
+                        Color = new Rgba32(0, 255, 0)
+                    }
+                }
+            },
+            new Container
+            {
+                X = 200,
+                Y = 200,
+                Width = 80,
+                Height = 80,
+                CornerRadius = 20,
+                Drawables = new Drawable[]
+                {
+                    new Sprite
+                    {
+                        Width = 80,
+                        Height = 80,
+                        Path = "https://cdn.discordapp.com/avatars/386436194709274627/b78ec7a8381886fa4be61202779c1d00.png?size=1024",
+                    }
+                }
             }
         });
 
