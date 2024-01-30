@@ -8,7 +8,7 @@ public class EconomyUser
     [BsonId]
     public ObjectId ID { get; set; } = ObjectId.GenerateNewId();
 
-    [BsonElement("GuildID")]
+    [BsonElement("GuildId")]
     public ulong GuildID { get; set; }
 
     [BsonElement("UserId")]
