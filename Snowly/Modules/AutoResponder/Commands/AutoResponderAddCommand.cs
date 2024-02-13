@@ -2,6 +2,8 @@
 using DSharpPlus.Entities;
 using MongoDB.Driver;
 using Snowly.Commands;
+using Snowly.Config;
+using Snowly.Constants;
 using Snowly.Modules.AutoResponder.Components;
 using Snowly.Utils;
 
@@ -67,5 +69,20 @@ public class AutoResponderAddCommand : IOptionSlashCommand
 
         AutoResponderModule.Responses.InsertOne(autoResponse);
         interaction.Reply($"Added auto-response for `{trigger}`.", true);
+
+        var config = Configs.GetGuildConfig(interaction.Guild.Id);
+        var loggingChannel = interaction.Guild.GetChannel(config.LoggingChannelID);
+
+        if (loggingChannel != null)
+        {
+            var embed = new DiscordEmbedBuilder()
+                        .WithAuthor(interaction.User.GetUsername(), iconUrl: interaction.User.AvatarUrl)
+                        .WithDescription("Auto-response added.")
+                        .AddField("Trigger", autoResponse.Trigger, true)
+                        .AddField("Response", autoResponse.Response, true)
+                        .WithColor(Colors.Green);
+
+            loggingChannel.SendMessageAsync(embed);
+        }
     }
 }

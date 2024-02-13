@@ -2,6 +2,8 @@
 using DSharpPlus.Entities;
 using MongoDB.Driver;
 using Snowly.Commands;
+using Snowly.Config;
+using Snowly.Constants;
 using Snowly.Utils;
 
 namespace Snowly.Modules.AutoResponder.Commands;
@@ -43,5 +45,19 @@ public class AutoResponderRemoveCommand : IOptionSlashCommand
         AutoResponderModule.Responses.DeleteMany(x => x.GuildID == interaction.Guild.Id && x.Trigger == trigger);
 
         interaction.Reply($"Removed auto-response for `{trigger}`.", true);
+
+        var config = Configs.GetGuildConfig(interaction.Guild.Id);
+        var loggingChannel = interaction.Guild.GetChannel(config.LoggingChannelID);
+
+        if (loggingChannel != null)
+        {
+            var embed = new DiscordEmbedBuilder()
+                        .WithAuthor(interaction.User.GetUsername(), iconUrl: interaction.User.AvatarUrl)
+                        .WithDescription("Auto-response removed")
+                        .AddField("Trigger", trigger, true)
+                        .WithColor(Colors.Red);
+
+            loggingChannel.SendMessageAsync(embed);
+        }
     }
 }
