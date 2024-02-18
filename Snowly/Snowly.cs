@@ -89,7 +89,7 @@ public static class Snowly
         }
 
         config = JsonConvert.DeserializeObject<BotConfig>(await File.ReadAllTextAsync(configFile));
-        MongoDatabase.Setup(config.Database);
+        MongoDatabase.Setup(config.MongoConnection, config.Database);
 
         FontStorage.DefaultFont = config.DefaultFont;
         foreach (var (name, path) in config.Fonts) FontStorage.RegisterFont(name, path);

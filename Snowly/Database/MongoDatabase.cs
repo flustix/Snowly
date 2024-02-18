@@ -6,9 +6,9 @@ public static class MongoDatabase
 {
     private static IMongoDatabase database = null!;
 
-    public static void Setup(string db)
+    public static void Setup(string conn, string db)
     {
-        var client = new MongoClient("mongodb://localhost:27017");
+        var client = new MongoClient(conn);
         database = client.GetDatabase(db);
     }
 
