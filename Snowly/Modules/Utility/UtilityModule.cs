@@ -13,6 +13,7 @@ public class UtilityModule : IModule
         new AboutCommand(),
         new AccentColorCommand(),
         new AvatarCommand(),
+        new BeanCommand(),
         new ConfigCommand(),
         new PingCommand(),
         new SayCommand(),
