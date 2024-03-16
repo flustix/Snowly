@@ -10,6 +10,7 @@ public class CoinflipCommand : ISlashCommand
 {
     public string Name => "coinflip";
     public string Description => "Flips a coin.";
+    public bool AllowInDM => true;
 
     public void Handle(DiscordInteraction interaction)
     {

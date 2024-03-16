@@ -12,6 +12,7 @@ public class RankCommand : IOptionSlashCommand
 {
     public string Name => "rank";
     public string Description => "Shows your rank";
+    public bool AllowInDM => false;
 
     public List<SlashOption> Options => new()
     {

@@ -27,6 +27,11 @@ public interface ISlashCommand
     /// </summary>
     Permissions? Permission => null;
 
+    /// <summary>
+    /// Whether this command can be used in direct messages.
+    /// </summary>
+    bool AllowInDM { get; }
+
     void Handle(DiscordInteraction interaction);
     void HandleAutoComplete(DiscordInteraction interaction, DiscordInteractionDataOption focused) => interaction.ReplyAutoComplete(new List<DiscordAutoCompleteChoice>());
 }

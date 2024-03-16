@@ -11,6 +11,7 @@ public class TopStreakCommand : ISlashCommand
 {
     public string Name => "top-streak";
     public string Description => "Shows the top 10 users with the highest daily streak";
+    public bool AllowInDM => false;
 
     public void Handle(DiscordInteraction interaction)
     {

@@ -13,6 +13,7 @@ public class AccentColorCommand : IOptionSlashCommand
 {
     public string Name => "accentcolor";
     public string Description => "Gets 5 accent colors from an image.";
+    public bool AllowInDM => true;
 
     public List<SlashOption> Options => new()
     {

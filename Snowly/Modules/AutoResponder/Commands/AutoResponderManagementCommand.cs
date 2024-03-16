@@ -8,6 +8,7 @@ public class AutoResponderManagementCommand : ISlashCommandGroup
     public string Name => "auto-responder";
     public string Description => "Manage auto-responses.";
     public Permissions? Permission => Permissions.ManageMessages;
+    public bool AllowInDM => false;
 
     public IEnumerable<ISlashCommand> Subcommands => new List<ISlashCommand>
     {

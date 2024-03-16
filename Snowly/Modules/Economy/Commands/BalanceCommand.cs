@@ -12,6 +12,7 @@ public class BalanceCommand : ISlashCommand
 {
     public string Name => "balance";
     public string Description => "Check your balance.";
+    public bool AllowInDM => false;
 
     public void Handle(DiscordInteraction interaction)
     {

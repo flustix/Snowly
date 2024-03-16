@@ -12,6 +12,7 @@ public class DailyCommand : ISlashCommand
 {
     public string Name => "daily";
     public string Description => "Claim your daily reward.";
+    public bool AllowInDM => false;
 
     public void Handle(DiscordInteraction interaction)
     {

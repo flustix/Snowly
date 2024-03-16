@@ -12,6 +12,7 @@ public class TopCommand : ISlashCommand
 {
     public string Name => "top-xp";
     public string Description => "Shows the top 10 users with the most XP.";
+    public bool AllowInDM => false;
 
     public void Handle(DiscordInteraction interaction)
     {

@@ -12,6 +12,7 @@ public class BeanCommand : IOptionSlashCommand
     public string Name => "bean";
     public string Description => "Beans a user from the server.";
     public Permissions? Permission => Permissions.BanMembers;
+    public bool AllowInDM => false;
 
     public List<SlashOption> Options => new()
     {

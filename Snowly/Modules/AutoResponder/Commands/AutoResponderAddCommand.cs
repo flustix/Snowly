@@ -13,6 +13,7 @@ public class AutoResponderAddCommand : IOptionSlashCommand
 {
     public string Name => "add";
     public string Description => "Add an auto-response.";
+    public bool AllowInDM => false;
 
     public List<SlashOption> Options => new()
     {

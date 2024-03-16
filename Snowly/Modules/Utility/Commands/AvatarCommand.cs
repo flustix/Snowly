@@ -11,6 +11,7 @@ public class AvatarCommand : IOptionSlashCommand
 {
     public string Name => "avatar";
     public string Description => "Get a user's avatar";
+    public bool AllowInDM => true;
 
     public List<SlashOption> Options => new()
     {

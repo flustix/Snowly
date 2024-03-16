@@ -10,6 +10,7 @@ public class PingCommand : ISlashCommand
 {
     public string Name => "ping";
     public string Description => "Pong!";
+    public bool AllowInDM => true;
 
     public void Handle(DiscordInteraction interaction)
     {

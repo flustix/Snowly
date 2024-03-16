@@ -12,6 +12,7 @@ public class WelcomeCreateCommand : IOptionSlashCommand
     public string Name => "create-welcome";
     public string Description => "Creates a welcome message for the server.";
     public Permissions? Permission => Permissions.ManageGuild;
+    public bool AllowInDM => false;
 
     public List<SlashOption> Options => new()
     {

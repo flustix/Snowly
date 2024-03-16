@@ -11,6 +11,7 @@ public class LevelRolesAddCommand : IOptionSlashCommand
 {
     public string Name => "add";
     public string Description => "Add a level role.";
+    public bool AllowInDM => false;
 
     public List<SlashOption> Options => new()
     {

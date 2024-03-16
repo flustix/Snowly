@@ -10,6 +10,7 @@ public class LevelRolesListCommand : ISlashCommand
 {
     public string Name => "list";
     public string Description => "List all level roles.";
+    public bool AllowInDM => false;
 
     public void Handle(DiscordInteraction interaction)
     {

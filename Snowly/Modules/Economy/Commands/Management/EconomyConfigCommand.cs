@@ -12,6 +12,7 @@ public class EconomyConfigCommand : IOptionSlashCommand
 {
     public string Name => "config";
     public string Description => "Configure the economy of your server.";
+    public bool AllowInDM => false;
 
     public List<SlashOption> Options => new()
     {

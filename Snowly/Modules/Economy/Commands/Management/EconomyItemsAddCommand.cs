@@ -12,6 +12,7 @@ public class EconomyItemsAddCommand : IOptionSlashCommand
 {
     public string Name => "add";
     public string Description => "Add an item to the shop.";
+    public bool AllowInDM => false;
 
     public List<SlashOption> Options => new()
     {

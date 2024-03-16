@@ -12,6 +12,7 @@ public class TopBalCommand : ISlashCommand
 {
     public string Name => "top-bal";
     public string Description => "Shows the top 10 richest users";
+    public bool AllowInDM => false;
 
     public void Handle(DiscordInteraction interaction)
     {

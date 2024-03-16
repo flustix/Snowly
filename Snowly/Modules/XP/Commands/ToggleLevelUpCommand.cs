@@ -9,6 +9,7 @@ public class ToggleLevelUpCommand : ISlashCommand
 {
     public string Name => "toggle-level-up";
     public string Description => "Toggle level up messages for (only) you globally.";
+    public bool AllowInDM => true;
 
     public void Handle(DiscordInteraction interaction)
     {

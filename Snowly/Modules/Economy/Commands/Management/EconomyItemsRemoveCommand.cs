@@ -12,6 +12,7 @@ public class EconomyItemsRemoveCommand : IOptionSlashCommand
 {
     public string Name => "remove";
     public string Description => "Remove an item from the shop.";
+    public bool AllowInDM => false;
 
     public List<SlashOption> Options => new()
     {

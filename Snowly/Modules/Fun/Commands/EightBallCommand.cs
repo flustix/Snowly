@@ -11,6 +11,7 @@ public class EightBallCommand : IOptionSlashCommand
 {
     public string Name => "8ball";
     public string Description => "Ask the magic 8ball a question.";
+    public bool AllowInDM => true;
 
     public List<SlashOption> Options => new()
     {

@@ -11,6 +11,7 @@ public class LevelRolesRemoveCommand : IOptionSlashCommand
 {
     public string Name => "remove";
     public string Description => "Remove a level role.";
+    public bool AllowInDM => false;
 
     public List<SlashOption> Options => new()
     {

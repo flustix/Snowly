@@ -18,6 +18,7 @@ public abstract class CommandBuilder
                     command.Name,
                     command.Description,
                     group.Subcommands.Select(s => buildSubcommand(s)),
+                    allowDMUsage: command.AllowInDM,
                     defaultMemberPermissions: command.Permission);
 
                 Snowly.Logger.LogDebug($"  /{group.Name}");
@@ -28,6 +29,7 @@ public abstract class CommandBuilder
                     command.Name,
                     command.Description,
                     optionCommand.Options.Select(buildOption),
+                    allowDMUsage: command.AllowInDM,
                     defaultMemberPermissions: command.Permission);
 
                 Snowly.Logger.LogDebug(optionCommand.Options.Aggregate($"  /{command.Name}", (current, option) => current + $" {option.Name}:{option.Type.ToString()}"));
@@ -37,6 +39,7 @@ public abstract class CommandBuilder
                 appCommand = new DiscordApplicationCommand(
                     command.Name,
                     command.Description,
+                    allowDMUsage: command.AllowInDM,
                     defaultMemberPermissions: command.Permission);
 
                 Snowly.Logger.LogDebug($"  /{command.Name}");

@@ -9,6 +9,7 @@ public class ConfigCommand : ISlashCommandGroup
     public string Name => "config";
     public string Description => "Configure the bot for your server.";
     public Permissions? Permission => Permissions.ManageGuild;
+    public bool AllowInDM => false;
 
     public IEnumerable<ISlashCommand> Subcommands => new ISlashCommand[]
     {

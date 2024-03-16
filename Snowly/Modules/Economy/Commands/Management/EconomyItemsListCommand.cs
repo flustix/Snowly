@@ -7,6 +7,7 @@ public class EconomyItemsListCommand : ISlashCommand
 {
     public string Name => "list";
     public string Description => "List all items in the shop.";
+    public bool AllowInDM => false;
 
     public void Handle(DiscordInteraction interaction)
     {

@@ -11,6 +11,7 @@ public class AboutCommand : ISlashCommand
 {
     public string Name => "about";
     public string Description => "About Snowly";
+    public bool AllowInDM => true;
 
     public void Handle(DiscordInteraction interaction)
     {

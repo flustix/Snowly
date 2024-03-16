@@ -4,11 +4,14 @@ using Snowly.Utils;
 
 namespace Snowly.Modules.XP.Commands.Management.Multipliers;
 
-public class RoleMultipliersListCommand : ISlashCommand {
+public class RoleMultipliersListCommand : ISlashCommand
+{
     public string Name => "list-roles";
     public string Description => "List all role multipliers for the server.";
+    public bool AllowInDM => false;
 
-    public void Handle(DiscordInteraction interaction) {
+    public void Handle(DiscordInteraction interaction)
+    {
         interaction.Reply("This command is not implemented yet.", true);
     }
 }

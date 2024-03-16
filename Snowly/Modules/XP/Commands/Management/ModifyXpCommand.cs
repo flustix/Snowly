@@ -8,31 +8,38 @@ using Snowly.Utils;
 
 namespace Snowly.Modules.XP.Commands.Management;
 
-public class ModifyXpCommand : IOptionSlashCommand {
+public class ModifyXpCommand : IOptionSlashCommand
+{
     public string Name => "modify";
     public string Description => "Modify the XP of a user.";
+    public bool AllowInDM => false;
 
-    public List<SlashOption> Options => new() {
-        new SlashOption {
+    public List<SlashOption> Options => new()
+    {
+        new SlashOption
+        {
             Name = "user",
             Description = "The user to modify the XP of.",
             Type = ApplicationCommandOptionType.User,
             Required = true
         },
-        new SlashOption {
+        new SlashOption
+        {
             Name = "amount",
             Description = "The amount of XP to modify.",
             Type = ApplicationCommandOptionType.Integer,
             Required = true
         },
-        new SlashOption {
+        new SlashOption
+        {
             Name = "action",
             Description = "What to do with the XP. (add, remove, set)",
             Type = ApplicationCommandOptionType.String
         }
     };
 
-    public async void Handle(DiscordInteraction interaction) {
+    public async void Handle(DiscordInteraction interaction)
+    {
         if (interaction.Channel.IsPrivate) return;
 
         var user = await interaction.GetUser("user");
@@ -44,14 +51,16 @@ public class ModifyXpCommand : IOptionSlashCommand {
 
         var target = XpUtils.GetUser(interaction.Guild.Id, user.Id);
 
-        target.Xp += action switch {
+        target.Xp += action switch
+        {
             "add" => amount,
             "remove" => -amount,
             "set" => amount - target.Xp,
             _ => throw new Exception("Invalid action.")
         };
 
-        var actionString = action switch {
+        var actionString = action switch
+        {
             "add" => "Added",
             "remove" => "Removed",
             "set" => "Set",
@@ -60,7 +69,8 @@ public class ModifyXpCommand : IOptionSlashCommand {
 
         XpUtils.UpdateUser(target);
 
-        interaction.ReplyEmbed(new CustomEmbed {
+        interaction.ReplyEmbed(new CustomEmbed
+        {
             Title = "XP Modified",
             Description = $"{actionString} {amount} XP to {user.Mention}",
             Color = Colors.Success

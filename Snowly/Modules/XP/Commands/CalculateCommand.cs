@@ -12,6 +12,7 @@ public class CalculateCommand : IOptionSlashCommand
 {
     public string Name => "calculate-level";
     public string Description => "Calculate the amount of XP and time you need to reach a certain level.";
+    public bool AllowInDM => false;
 
     public List<SlashOption> Options => new()
     {

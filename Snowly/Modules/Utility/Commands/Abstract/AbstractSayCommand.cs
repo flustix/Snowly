@@ -14,6 +14,7 @@ public abstract class AbstractSayCommand : IOptionSlashCommand
     public abstract string Name { get; }
     public abstract string Description { get; }
     public Permissions? Permission => Permissions.ManageMessages;
+    public bool AllowInDM => false;
 
     public List<SlashOption> Options => new()
     {

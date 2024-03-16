@@ -12,6 +12,7 @@ public class AutoResponderRemoveCommand : IOptionSlashCommand
 {
     public string Name => "remove";
     public string Description => "Remove an auto-response.";
+    public bool AllowInDM => false;
 
     public List<SlashOption> Options => new()
     {

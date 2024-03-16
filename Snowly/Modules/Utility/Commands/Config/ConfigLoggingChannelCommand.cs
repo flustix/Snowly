@@ -10,6 +10,7 @@ public class ConfigLoggingChannelCommand : IOptionSlashCommand
 {
     public string Name => "loggingchannel";
     public string Description => "Sets the channel to send logs in.";
+    public bool AllowInDM => false;
 
     public List<SlashOption> Options => new()
     {
