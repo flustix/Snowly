@@ -32,7 +32,7 @@ public class AboutCommand : ISlashCommand
                 new()
                 {
                     Name = ":scroll: Source Code",
-                    Value = "[GitHub](https://github.com/Snowly/Snowly)",
+                    Value = "[GitHub](https://github.com/flustix/Snowly)",
                     Inline = true
                 }
             }
