@@ -15,7 +15,7 @@ public static class Colors
     public static DiscordColor Purple => FromHex("#FF55FF");
     public static DiscordColor Pink => FromHex("#FF55AA");
 
-    public static DiscordColor Accent => FromHex("#ef6624");
+    public static DiscordColor Accent => FromHex("#96dbff");
 
     public static DiscordColor Error => Red;
     public static DiscordColor Success => Green;
