@@ -12,4 +12,16 @@ public class CustomEmbedField
 
     [JsonProperty("inline")]
     public bool Inline { get; set; }
+
+    public CustomEmbedField(string name, string value, bool inline)
+    {
+        Name = name;
+        Value = value;
+        Inline = inline;
+    }
+
+    [JsonConstructor]
+    public CustomEmbedField()
+    {
+    }
 }

@@ -15,6 +15,7 @@ public class UtilityModule : IModule
         new AvatarCommand(),
         new BeanCommand(),
         new ConfigCommand(),
+        new GuildInfoCommand(),
         new PingCommand(),
         new SayCommand(),
         new SayJsonCommand()
