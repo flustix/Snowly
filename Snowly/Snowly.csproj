@@ -16,14 +16,4 @@
         <ProjectReference Include="..\Snowly.Image\Snowly.Image.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Resources\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Include="Resources\**">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-    </ItemGroup>
-
 </Project>

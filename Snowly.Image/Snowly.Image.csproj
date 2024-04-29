@@ -17,4 +17,8 @@
       <Folder Include="Colors\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\Fonts\**\*" />
+    </ItemGroup>
+
 </Project>

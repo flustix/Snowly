@@ -1,4 +1,5 @@
 using SixLabors.Fonts;
+using Snowly.Image.Utils;
 
 namespace Snowly.Image;
 
@@ -11,7 +12,12 @@ public static class FontStorage
 
     public static void RegisterFont(string name, string path)
     {
-        var family = collection.Add(path);
+        var stream = AssetUtils.ReadFromAssembly(path);
+
+        if (stream == null)
+            throw new FileNotFoundException($"Font file not found: {path}");
+
+        var family = collection.Add(stream);
         families.Add(name, family);
     }
 
