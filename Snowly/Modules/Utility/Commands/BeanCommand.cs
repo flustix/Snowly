@@ -9,8 +9,8 @@ namespace Snowly.Modules.Utility.Commands;
 
 public class BeanCommand : IOptionSlashCommand
 {
-    public string Name => "ban";
-    public string Description => "Bans a user from the server.";
+    public string Name => "bean";
+    public string Description => "Beans a user from the server.";
     public Permissions? Permission => Permissions.BanMembers;
     public bool AllowInDM => false;
 
@@ -19,14 +19,14 @@ public class BeanCommand : IOptionSlashCommand
         new SlashOption
         {
             Name = "user",
-            Description = "The user to ban.",
+            Description = "The user to bean.",
             Type = ApplicationCommandOptionType.User,
             Required = true
         },
         new SlashOption
         {
             Name = "reason",
-            Description = "The reason for banning the user.",
+            Description = "The reason for beaning the user.",
             Type = ApplicationCommandOptionType.String,
             Required = false
         }
