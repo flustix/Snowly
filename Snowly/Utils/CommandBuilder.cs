@@ -14,14 +14,14 @@ public abstract class CommandBuilder
         switch (command)
         {
             case ISlashCommandGroup group:
+                Snowly.Logger.LogDebug($"  /{group.Name}");
+
                 appCommand = new DiscordApplicationCommand(
                     command.Name,
                     command.Description,
                     group.Subcommands.Select(s => buildSubcommand(s)),
                     allowDMUsage: command.AllowInDM,
                     defaultMemberPermissions: command.Permission);
-
-                Snowly.Logger.LogDebug($"  /{group.Name}");
                 break;
 
             case IOptionSlashCommand optionCommand:
@@ -70,6 +70,8 @@ public abstract class CommandBuilder
         switch (subCommand)
         {
             case ISlashCommandGroup group:
+                Snowly.Logger.LogDebug(log);
+
                 builder = new DiscordApplicationCommandOption(
                     subCommand.Name,
                     subCommand.Description,
@@ -77,8 +79,6 @@ public abstract class CommandBuilder
                     null,
                     Array.Empty<DiscordApplicationCommandOptionChoice>(),
                     group.Subcommands.Select(s => buildSubcommand(s, depth + 1)));
-
-                Snowly.Logger.LogDebug(log);
                 break;
 
             case IOptionSlashCommand optionCommand:
@@ -90,7 +90,7 @@ public abstract class CommandBuilder
                     Array.Empty<DiscordApplicationCommandOptionChoice>(),
                     optionCommand.Options.Select(buildOption));
 
-                Snowly.Logger.LogDebug(optionCommand.Options.Aggregate(log, (current, option) => current + $" {option.Name}:{option.Type.ToString()}"));
+                Snowly.Logger.LogDebug(optionCommand.Options.Aggregate(log, (current, option) => current + $" {option.Name}{(option.Required ? "" : "?")}:{option.Type.ToString()}"));
                 break;
 
             default:
