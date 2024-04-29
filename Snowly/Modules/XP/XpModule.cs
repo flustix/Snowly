@@ -91,7 +91,8 @@ public class XpModule : IModule
                         IconUrl = args.Author.GetAvatarUrl(ImageFormat.Auto)
                     },
                     Color = Colors.Accent,
-                    Description = $"Leveled up to level **{user.Level}**!"
+                    Description = $"Leveled up to level **{user.Level}**!",
+                    Footer = new CustomEmbedFooter { Text = "You can disable these messages with /toggle-level-up." }
                 }.Build()
             );
         }
