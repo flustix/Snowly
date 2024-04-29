@@ -1,0 +1,10 @@
+services:
+  snowly:
+    image: snowly
+    environment:
+      - TOKEN=your_token_here
+      - MONGO_CONNECTION=mongodb://mongo:27017
+      - DATABASE=snowly
+    build:
+      context: .
+      dockerfile: Snowly/Dockerfile

@@ -4,7 +4,6 @@ using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Exceptions;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using SixLabors.ImageSharp.PixelFormats;
 using Snowly.Commands;
 using Snowly.Config;
@@ -33,7 +32,6 @@ public static class Snowly
     private static BotConfig config { get; set; }
 
     // flags
-    private static string configFile { get; set; }
     public static bool IsDebug { get; private set; }
 
     public static List<IModule> Modules { get; private set; }
@@ -67,7 +65,6 @@ public static class Snowly
         Console.Title = "Snowly";
         Console.Clear();
 
-        configFile = args.Contains("--config") ? args[args.ToList().IndexOf("--config") + 1] : "config.json";
         IsDebug = args.Contains("--debug");
 
         if (IsDebug)
@@ -82,17 +79,11 @@ public static class Snowly
 
     private static async Task run()
     {
-        if (!File.Exists(configFile))
-        {
-            Logger.LogError($"Config file '{configFile}' does not exist!");
-            return;
-        }
-
-        config = JsonConvert.DeserializeObject<BotConfig>(await File.ReadAllTextAsync(configFile));
+        loadConfig();
         MongoDatabase.Setup(config.MongoConnection, config.Database);
 
-        FontStorage.DefaultFont = config.DefaultFont;
-        foreach (var (name, path) in config.Fonts) FontStorage.RegisterFont(name, path);
+        FontStorage.DefaultFont = "Renogare Soft";
+        FontStorage.RegisterFont("Renogare Soft", "Resources/Fonts/RenogareSoft.ttf");
 
         Bot = new DiscordClient(new DiscordConfiguration
         {
@@ -112,6 +103,18 @@ public static class Snowly
 
         await Bot.ConnectAsync();
         await Task.Delay(-1);
+    }
+
+    private static void loadConfig()
+    {
+        var env = Environment.GetEnvironmentVariables();
+
+        config = new BotConfig
+        {
+            Token = env["TOKEN"]?.ToString() ?? throw new Exception("TOKEN environment variable not set!"),
+            MongoConnection = env["MONGO_CONNECTION"]?.ToString() ?? "mongodb://localhost:27017",
+            Database = env["DATABASE"]?.ToString() ?? "snowly"
+        };
     }
 
     private static void loadModules()

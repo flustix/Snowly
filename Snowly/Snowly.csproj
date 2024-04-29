@@ -16,4 +16,8 @@
         <ProjectReference Include="..\Snowly.Image\Snowly.Image.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Resources\" />
+    </ItemGroup>
+
 </Project>

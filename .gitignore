@@ -8,3 +8,4 @@ FodyWeavers.*
 config.json
 run.sh
 snowly.log
+docker-compose.yml
