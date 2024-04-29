@@ -68,33 +68,36 @@ public class XpModule : IModule
         XpUtils.UpdateUser(user);
 
         var userConfig = Configs.GetUserConfig(args.Author.Id);
-        var levelUpMessages = userConfig?.LevelUpMessages ?? true;
-        levelUpMessages = levelUpMessages && (guildConfig.LevelUpMessages);
+        var shouldShow = userConfig?.LevelUpMessages ?? true;
+        shouldShow = shouldShow && guildConfig.LevelUpMessages;
 
+        var showNote = true;
         var messageChannel = args.Channel;
 
-        var levelUpChannel = args.Guild.Channels.FirstOrDefault(x => x.Key == guildConfig.LevelUpChannelID);
-
-        if (levelUpChannel.Value != null && levelUpChannel.Value.CanMessage())
+        if (args.Guild.Channels.TryGetValue(guildConfig.LevelUpChannelID, out var levelUpChannel) && levelUpChannel.CanMessage())
         {
-            messageChannel = levelUpChannel.Value;
-            levelUpMessages = true;
+            messageChannel = levelUpChannel;
+            shouldShow = true;
+            showNote = false;
         }
 
-        if (level != user.Level && levelUpMessages)
+        if (level != user.Level && shouldShow)
         {
-            await messageChannel.SendMessageAsync(new CustomEmbed
+            var embed = new CustomEmbed
+            {
+                Author = new CustomEmbedAuthor
                 {
-                    Author = new CustomEmbedAuthor
-                    {
-                        Name = $"{args.Author.GetNickname()}",
-                        IconUrl = args.Author.GetAvatarUrl(ImageFormat.Auto)
-                    },
-                    Color = Colors.Accent,
-                    Description = $"Leveled up to level **{user.Level}**!",
-                    Footer = new CustomEmbedFooter { Text = "You can disable these messages with /toggle-level-up." }
-                }.Build()
-            );
+                    Name = $"{args.Author.GetNickname()}",
+                    IconUrl = args.Author.GetAvatarUrl(ImageFormat.Auto)
+                },
+                Color = Colors.Accent,
+                Description = $"Leveled up to level **{user.Level}**!"
+            };
+
+            if (showNote)
+                embed.Footer = new CustomEmbedFooter { Text = "You can disable these messages with /toggle-level-up." };
+
+            await messageChannel.SendMessageAsync(embed: embed.Build());
         }
 
         handleRoles(user, member, args.Guild);
