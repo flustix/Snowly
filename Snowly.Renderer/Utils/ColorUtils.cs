@@ -1,6 +1,8 @@
 ﻿using System.Numerics;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
-namespace Snowly.Image.Utils;
+namespace Snowly.Renderer.Utils;
 
 public static class ColorUtils
 {

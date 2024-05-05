@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 
 namespace Snowly.Commands;
 
@@ -21,7 +20,7 @@ public class SlashOption
     /// <summary>
     /// The type of this option.
     /// </summary>
-    public ApplicationCommandOptionType Type { get; init; }
+    public DiscordApplicationCommandOptionType Type { get; init; }
 
     /// <summary>
     /// Whether this option is required.

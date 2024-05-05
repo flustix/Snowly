@@ -1,4 +1,4 @@
-﻿using DSharpPlus;
+﻿using DSharpPlus.Entities;
 using Snowly.Commands;
 using Snowly.Modules.Utility.Commands.Config;
 
@@ -8,7 +8,7 @@ public class ConfigCommand : ISlashCommandGroup
 {
     public string Name => "config";
     public string Description => "Configure the bot for your server.";
-    public Permissions? Permission => Permissions.ManageGuild;
+    public DiscordPermissions? Permission => DiscordPermissions.ManageGuild;
     public bool AllowInDM => false;
 
     public IEnumerable<ISlashCommand> Subcommands => new ISlashCommand[]

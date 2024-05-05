@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using MongoDB.Driver;
 using Snowly.Commands;
 using Snowly.Config;
@@ -21,21 +20,21 @@ public class AutoResponderAddCommand : IOptionSlashCommand
         {
             Name = "trigger",
             Description = "The message that will trigger the response.",
-            Type = ApplicationCommandOptionType.String,
+            Type = DiscordApplicationCommandOptionType.String,
             Required = true
         },
         new SlashOption
         {
             Name = "response",
             Description = "The response to the message.",
-            Type = ApplicationCommandOptionType.String,
+            Type = DiscordApplicationCommandOptionType.String,
             Required = true
         },
         new SlashOption
         {
             Name = "channel",
             Description = "The channel to respond in. Leave blank to respond in the same channel.",
-            Type = ApplicationCommandOptionType.Channel,
+            Type = DiscordApplicationCommandOptionType.Channel,
             Required = false
         }
     };

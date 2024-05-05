@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using Snowly.Commands;
 using Snowly.Components.Message;
 using Snowly.Modules.XP.Utils;
@@ -19,14 +18,14 @@ public class LevelRolesAddCommand : IOptionSlashCommand
         {
             Name = "level",
             Description = "The level required to get this role.",
-            Type = ApplicationCommandOptionType.Integer,
+            Type = DiscordApplicationCommandOptionType.Integer,
             Required = true
         },
         new SlashOption
         {
             Name = "role",
             Description = "The role to give.",
-            Type = ApplicationCommandOptionType.Role,
+            Type = DiscordApplicationCommandOptionType.Role,
             Required = true
         }
     };

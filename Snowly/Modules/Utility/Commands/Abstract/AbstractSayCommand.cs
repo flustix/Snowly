@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using Microsoft.Extensions.Logging;
 using Snowly.Commands;
 using Snowly.Components.Message;
@@ -13,7 +12,7 @@ public abstract class AbstractSayCommand : IOptionSlashCommand
 {
     public abstract string Name { get; }
     public abstract string Description { get; }
-    public Permissions? Permission => Permissions.ManageMessages;
+    public DiscordPermissions? Permission => DiscordPermissions.ManageMessages;
     public bool AllowInDM => false;
 
     public List<SlashOption> Options => new()
@@ -22,21 +21,21 @@ public abstract class AbstractSayCommand : IOptionSlashCommand
         {
             Name = OptionName,
             Description = OptionDescription,
-            Type = ApplicationCommandOptionType.String,
+            Type = DiscordApplicationCommandOptionType.String,
             Required = true
         },
         new SlashOption
         {
             Name = "channel",
             Description = "The channel to send the message in.",
-            Type = ApplicationCommandOptionType.Channel,
+            Type = DiscordApplicationCommandOptionType.Channel,
             Required = false
         },
         new SlashOption
         {
             Name = "reply",
             Description = "The message to reply to.",
-            Type = ApplicationCommandOptionType.String,
+            Type = DiscordApplicationCommandOptionType.String,
             Required = false
         }
     };

@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using Microsoft.Extensions.Logging;
 using Snowly.Commands;
 
@@ -75,7 +74,7 @@ public abstract class CommandBuilder
                 builder = new DiscordApplicationCommandOption(
                     subCommand.Name,
                     subCommand.Description,
-                    ApplicationCommandOptionType.SubCommandGroup,
+                    DiscordApplicationCommandOptionType.SubCommandGroup,
                     null,
                     Array.Empty<DiscordApplicationCommandOptionChoice>(),
                     group.Subcommands.Select(s => buildSubcommand(s, depth + 1)));
@@ -85,7 +84,7 @@ public abstract class CommandBuilder
                 builder = new DiscordApplicationCommandOption(
                     subCommand.Name,
                     subCommand.Description,
-                    ApplicationCommandOptionType.SubCommand,
+                    DiscordApplicationCommandOptionType.SubCommand,
                     null,
                     Array.Empty<DiscordApplicationCommandOptionChoice>(),
                     optionCommand.Options.Select(buildOption));
@@ -97,7 +96,7 @@ public abstract class CommandBuilder
                 builder = new DiscordApplicationCommandOption(
                     subCommand.Name,
                     subCommand.Description,
-                    ApplicationCommandOptionType.SubCommand);
+                    DiscordApplicationCommandOptionType.SubCommand);
 
                 Snowly.Logger.LogDebug(log);
                 break;

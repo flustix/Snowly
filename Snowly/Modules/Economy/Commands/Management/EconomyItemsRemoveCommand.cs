@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using Snowly.Commands;
 using Snowly.Components.Message;
 using Snowly.Constants;
@@ -20,7 +19,7 @@ public class EconomyItemsRemoveCommand : IOptionSlashCommand
         {
             Name = "item",
             Description = "The item to remove.",
-            Type = ApplicationCommandOptionType.String,
+            Type = DiscordApplicationCommandOptionType.String,
             Required = true,
             AutoComplete = true
         }

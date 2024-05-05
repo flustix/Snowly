@@ -1,7 +1,10 @@
 ﻿using System.Numerics;
-using Snowly.Image.Drawables;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using Snowly.Renderer.Drawables;
 
-namespace Snowly.Image;
+namespace Snowly.Renderer;
 
 public class ImageRenderer
 {

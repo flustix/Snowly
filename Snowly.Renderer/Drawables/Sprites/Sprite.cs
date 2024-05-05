@@ -1,4 +1,8 @@
-﻿namespace Snowly.Image.Drawables.Sprites;
+﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+
+namespace Snowly.Renderer.Drawables.Sprites;
 
 public class Sprite : Drawable
 {
@@ -10,7 +14,7 @@ public class Sprite : Drawable
         {
             var client = new HttpClient();
             var stream = client.GetStreamAsync(Path).Result;
-            var image = SixLabors.ImageSharp.Image.Load<Rgba32>(stream);
+            var image = Image.Load<Rgba32>(stream);
             image.Mutate(x => x.Resize(Width, Height));
             return image;
         }

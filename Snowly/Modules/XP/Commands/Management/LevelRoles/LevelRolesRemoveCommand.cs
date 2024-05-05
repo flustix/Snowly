@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using Snowly.Commands;
 using Snowly.Components.Message;
 using Snowly.Modules.XP.Utils;
@@ -19,7 +18,7 @@ public class LevelRolesRemoveCommand : IOptionSlashCommand
         {
             Name = "role",
             Description = "The role to remove.",
-            Type = ApplicationCommandOptionType.Role,
+            Type = DiscordApplicationCommandOptionType.Role,
             Required = true
         }
     };

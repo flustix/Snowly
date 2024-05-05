@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using Snowly.Commands;
 using Snowly.Components.Message;
 using Snowly.Config;
@@ -20,7 +19,7 @@ public class EconomyConfigCommand : IOptionSlashCommand
         {
             Name = "setting",
             Description = "The setting to configure.",
-            Type = ApplicationCommandOptionType.String,
+            Type = DiscordApplicationCommandOptionType.String,
             Required = true,
             Choices = new List<DiscordApplicationCommandOptionChoice>
             {
@@ -32,7 +31,7 @@ public class EconomyConfigCommand : IOptionSlashCommand
         {
             Name = "value",
             Description = "The value to set the setting to.",
-            Type = ApplicationCommandOptionType.String,
+            Type = DiscordApplicationCommandOptionType.String,
             Required = true
         }
     };

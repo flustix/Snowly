@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using Snowly.Commands;
 using Snowly.Database;
 using Snowly.Modules.Welcome.Components;
@@ -11,7 +10,7 @@ public class WelcomeCreateCommand : IOptionSlashCommand
 {
     public string Name => "create-welcome";
     public string Description => "Creates a welcome message for the server.";
-    public Permissions? Permission => Permissions.ManageGuild;
+    public DiscordPermissions? Permission => DiscordPermissions.ManageGuild;
     public bool AllowInDM => false;
 
     public List<SlashOption> Options => new()
@@ -20,14 +19,14 @@ public class WelcomeCreateCommand : IOptionSlashCommand
         {
             Name = "channel",
             Description = "The channel to send the welcome message in.",
-            Type = ApplicationCommandOptionType.Channel,
+            Type = DiscordApplicationCommandOptionType.Channel,
             Required = true
         },
         new()
         {
             Name = "json",
             Description = "The JSON to send as the welcome message.",
-            Type = ApplicationCommandOptionType.String,
+            Type = DiscordApplicationCommandOptionType.String,
             Required = true
         }
     };

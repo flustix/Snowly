@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using Snowly.Commands;
 using Snowly.Components.Message;
 using Snowly.Constants;
@@ -20,21 +19,21 @@ public class ModifyXpCommand : IOptionSlashCommand
         {
             Name = "user",
             Description = "The user to modify the XP of.",
-            Type = ApplicationCommandOptionType.User,
+            Type = DiscordApplicationCommandOptionType.User,
             Required = true
         },
         new SlashOption
         {
             Name = "amount",
             Description = "The amount of XP to modify.",
-            Type = ApplicationCommandOptionType.Integer,
+            Type = DiscordApplicationCommandOptionType.Integer,
             Required = true
         },
         new SlashOption
         {
             Name = "action",
             Description = "What to do with the XP. (add, remove, set)",
-            Type = ApplicationCommandOptionType.String
+            Type = DiscordApplicationCommandOptionType.String
         }
     };
 

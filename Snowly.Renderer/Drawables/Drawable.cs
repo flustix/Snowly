@@ -1,4 +1,7 @@
-﻿namespace Snowly.Image.Drawables;
+﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+
+namespace Snowly.Renderer.Drawables;
 
 public abstract class Drawable
 {

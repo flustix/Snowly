@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using Snowly.Commands;
 using Snowly.Components.Message;
 using Snowly.Constants;
@@ -19,7 +18,7 @@ public class EightBallCommand : IOptionSlashCommand
         {
             Name = "question",
             Description = "The question you want to ask the 8ball.",
-            Type = ApplicationCommandOptionType.String,
+            Type = DiscordApplicationCommandOptionType.String,
             Required = true
         }
     };

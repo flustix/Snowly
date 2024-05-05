@@ -20,7 +20,7 @@ public class RankCommand : IOptionSlashCommand
         {
             Name = "user",
             Description = "The user to get the rank of",
-            Type = ApplicationCommandOptionType.User,
+            Type = DiscordApplicationCommandOptionType.User,
             Required = false
         }
     };

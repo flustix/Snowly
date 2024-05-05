@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using Snowly.Commands;
 using Snowly.Config;
 using Snowly.Modules.Economy.Components;
@@ -20,28 +19,28 @@ public class EconomyItemsAddCommand : IOptionSlashCommand
         {
             Name = "name",
             Description = "The name of the item.",
-            Type = ApplicationCommandOptionType.String,
+            Type = DiscordApplicationCommandOptionType.String,
             Required = true
         },
         new SlashOption
         {
             Name = "icon",
             Description = "The icon of the item.",
-            Type = ApplicationCommandOptionType.String,
+            Type = DiscordApplicationCommandOptionType.String,
             Required = true
         },
         new SlashOption
         {
             Name = "price",
             Description = "The price of the item.",
-            Type = ApplicationCommandOptionType.Integer,
+            Type = DiscordApplicationCommandOptionType.Integer,
             Required = true
         },
         new SlashOption
         {
             Name = "description",
             Description = "The description of the item.",
-            Type = ApplicationCommandOptionType.String,
+            Type = DiscordApplicationCommandOptionType.String,
             Required = false
         }
     };

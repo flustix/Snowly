@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using DSharpPlus;
 using DSharpPlus.Entities;
 using Snowly.Components.Message;
 
@@ -11,7 +10,7 @@ public static class InteractionUtils
 
     public static void ReplyEmbed(this DiscordInteraction interaction, CustomEmbed embed, bool ephemeral = false)
     {
-        interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder
+        interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder
         {
             IsEphemeral = ephemeral
         }.AddEmbed(embed.Build()));
@@ -19,7 +18,7 @@ public static class InteractionUtils
 
     public static void Reply(this DiscordInteraction interaction, string content, bool ephemeral = false)
     {
-        interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder
+        interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder
         {
             IsEphemeral = ephemeral,
             Content = content
@@ -30,7 +29,7 @@ public static class InteractionUtils
     {
         var response = new DiscordInteractionResponseBuilder();
         response.AddAutoCompleteChoices(choices);
-        interaction.CreateResponseAsync(InteractionResponseType.AutoCompleteResult, response);
+        interaction.CreateResponseAsync(DiscordInteractionResponseType.AutoCompleteResult, response);
     }
 
     #endregion
@@ -39,12 +38,12 @@ public static class InteractionUtils
 
     public static async Task Acknowledge(this DiscordInteraction interaction)
     {
-        await interaction.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
+        await interaction.CreateResponseAsync(DiscordInteractionResponseType.DeferredChannelMessageWithSource);
     }
 
     public static async Task AcknowledgeEphemeral(this DiscordInteraction interaction)
     {
-        await interaction.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource, new DiscordInteractionResponseBuilder
+        await interaction.CreateResponseAsync(DiscordInteractionResponseType.DeferredChannelMessageWithSource, new DiscordInteractionResponseBuilder
         {
             IsEphemeral = true
         });

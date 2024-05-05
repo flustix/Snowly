@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using Snowly.Utils;
 
 namespace Snowly.Commands;
@@ -25,7 +24,7 @@ public interface ISlashCommand
     /// <summary>
     /// Default permissions to run this command.
     /// </summary>
-    Permissions? Permission => null;
+    DiscordPermissions? Permission => null;
 
     /// <summary>
     /// Whether this command can be used in direct messages.

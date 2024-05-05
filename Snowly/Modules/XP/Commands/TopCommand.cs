@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using Snowly.Commands;
 using Snowly.Components.Message;
@@ -38,8 +37,8 @@ public class TopCommand : ISlashCommand
                 users.Select((user, index) => $"#{index + 1} <@{user.UserId}> - {user.Xp} XP | Level {user.Level}"))
         }.Build());
 
-        response.AddComponents(new DiscordButtonComponent(ButtonStyle.Primary, "xp-top-0", "<", true), new DiscordButtonComponent(ButtonStyle.Primary, "xp-top-2", ">", pages == 1));
-        interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
+        response.AddComponents(new DiscordButtonComponent(DiscordButtonStyle.Primary, "xp-top-0", "<", true), new DiscordButtonComponent(DiscordButtonStyle.Primary, "xp-top-2", ">", pages == 1));
+        interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, response);
     }
 
     public static void HandleButton(ComponentInteractionCreateEventArgs args)
@@ -64,8 +63,8 @@ public class TopCommand : ISlashCommand
             Description = string.Join("\n",
                 usersPage.Select((user, index) => $"#{skip + index + 1} <@{user.UserId}> - {user.Xp} XP | Level {user.Level}"))
         }.Build());
-        response.AddComponents(new DiscordButtonComponent(ButtonStyle.Primary, $"xp-top-{page - 1}", "<", page == 1), new DiscordButtonComponent(ButtonStyle.Primary, $"xp-top-{page + 1}", ">", page == pages));
+        response.AddComponents(new DiscordButtonComponent(DiscordButtonStyle.Primary, $"xp-top-{page - 1}", "<", page == 1), new DiscordButtonComponent(DiscordButtonStyle.Primary, $"xp-top-{page + 1}", ">", page == pages));
 
-        args.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, response);
+        args.Interaction.CreateResponseAsync(DiscordInteractionResponseType.UpdateMessage, response);
     }
 }

@@ -1,6 +1,9 @@
-﻿using SixLabors.ImageSharp.Drawing.Processing;
+﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Drawing.Processing;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
-namespace Snowly.Image.Drawables.Shapes;
+namespace Snowly.Renderer.Drawables.Shapes;
 
 public class Box : Drawable
 {

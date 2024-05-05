@@ -19,7 +19,7 @@ public class AvatarCommand : IOptionSlashCommand
         {
             Name = "user",
             Description = "The user to get the avatar of",
-            Type = ApplicationCommandOptionType.User,
+            Type = DiscordApplicationCommandOptionType.User,
             Required = false
         }
     };

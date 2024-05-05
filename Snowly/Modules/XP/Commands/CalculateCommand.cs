@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using Snowly.Commands;
 using Snowly.Components.Message;
 using Snowly.Constants;
@@ -20,7 +19,7 @@ public class CalculateCommand : IOptionSlashCommand
         {
             Name = "level",
             Description = "The level you want to reach",
-            Type = ApplicationCommandOptionType.Integer,
+            Type = DiscordApplicationCommandOptionType.Integer,
             Required = true
         }
     };

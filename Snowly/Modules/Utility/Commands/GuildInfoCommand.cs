@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using DSharpPlus;
 using DSharpPlus.Entities;
 using Snowly.Commands;
 using Snowly.Components.Message;
@@ -19,7 +18,7 @@ public class GuildInfoCommand : IOptionSlashCommand
         {
             Name = "guild",
             Description = "The guild to get information about.",
-            Type = ApplicationCommandOptionType.String,
+            Type = DiscordApplicationCommandOptionType.String,
             Required = false
         }
     };
@@ -70,12 +69,12 @@ public class GuildInfoCommand : IOptionSlashCommand
 
         foreach (var channel in guild.Channels.Values)
         {
-            if (channel.Type is ChannelType.Category
-                or ChannelType.PublicThread
-                or ChannelType.PrivateThread)
+            if (channel.Type is DiscordChannelType.Category
+                or DiscordChannelType.PublicThread
+                or DiscordChannelType.PrivateThread)
                 continue;
 
-            if (channel.Type is ChannelType.Voice or ChannelType.Stage)
+            if (channel.Type is DiscordChannelType.Voice or DiscordChannelType.Stage)
                 voice++;
             else
                 text++;

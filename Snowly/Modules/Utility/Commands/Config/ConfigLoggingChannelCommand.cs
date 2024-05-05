@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using Snowly.Commands;
 using Snowly.Config;
 using Snowly.Utils;
@@ -18,7 +17,7 @@ public class ConfigLoggingChannelCommand : IOptionSlashCommand
         {
             Name = "channel",
             Description = "The channel to send logs in.",
-            Type = ApplicationCommandOptionType.Channel,
+            Type = DiscordApplicationCommandOptionType.Channel,
             Required = false
         }
     };

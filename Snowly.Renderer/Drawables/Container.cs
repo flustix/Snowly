@@ -1,6 +1,9 @@
-﻿using Snowly.Image.Utils;
+﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using Snowly.Renderer.Utils;
 
-namespace Snowly.Image.Drawables;
+namespace Snowly.Renderer.Drawables;
 
 public class Container : Drawable
 {

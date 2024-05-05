@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Snowly.Image.Utils;
+namespace Snowly.Renderer.Utils;
 
 public static class AssetUtils
 {

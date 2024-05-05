@@ -17,11 +17,11 @@ public static class SlashListener
         {
             switch (args.Interaction.Type)
             {
-                case InteractionType.ApplicationCommand:
+                case DiscordInteractionType.ApplicationCommand:
                     await onSlashCommand(command, args);
                     break;
 
-                case InteractionType.AutoComplete:
+                case DiscordInteractionType.AutoComplete:
                     await onAutoComplete(command, args);
                     break;
             }
@@ -30,7 +30,7 @@ public static class SlashListener
         {
             Snowly.Logger.LogError(e, $"An error occurred while executing command {command?.Name ?? "*undefined*"}.");
 
-            await args.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+            await args.Interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder().AddEmbed(new DiscordEmbedBuilder
                 {
                     Title = "An error occurred",
@@ -100,7 +100,7 @@ public static class SlashListener
 
     private static async Task notFound(DiscordInteraction interaction)
     {
-        await interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(new DiscordEmbedBuilder
+        await interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(new DiscordEmbedBuilder
         {
             Title = "Unknown command",
             Description = "This command is not implemented yet.",

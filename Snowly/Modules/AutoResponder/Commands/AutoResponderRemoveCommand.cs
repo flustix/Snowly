@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using MongoDB.Driver;
 using Snowly.Commands;
 using Snowly.Config;
@@ -20,7 +19,7 @@ public class AutoResponderRemoveCommand : IOptionSlashCommand
         {
             Name = "trigger",
             Description = "The message that will trigger the response.",
-            Type = ApplicationCommandOptionType.String,
+            Type = DiscordApplicationCommandOptionType.String,
             Required = true
         }
     };

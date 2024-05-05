@@ -1,5 +1,4 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using Snowly.Commands;
 using Snowly.Components.Message;
 using Snowly.Constants;
@@ -11,7 +10,7 @@ public class BeanCommand : IOptionSlashCommand
 {
     public string Name => "bean";
     public string Description => "Beans a user from the server.";
-    public Permissions? Permission => Permissions.BanMembers;
+    public DiscordPermissions? Permission => DiscordPermissions.BanMembers;
     public bool AllowInDM => false;
 
     public List<SlashOption> Options => new()
@@ -20,14 +19,14 @@ public class BeanCommand : IOptionSlashCommand
         {
             Name = "user",
             Description = "The user to bean.",
-            Type = ApplicationCommandOptionType.User,
+            Type = DiscordApplicationCommandOptionType.User,
             Required = true
         },
         new SlashOption
         {
             Name = "reason",
             Description = "The reason for beaning the user.",
-            Type = ApplicationCommandOptionType.String,
+            Type = DiscordApplicationCommandOptionType.String,
             Required = false
         }
     };

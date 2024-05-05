@@ -10,10 +10,6 @@ using SixLabors.ImageSharp.PixelFormats;
 using Snowly.Commands;
 using Snowly.Config;
 using Snowly.Database;
-using Snowly.Image;
-using Snowly.Image.Drawables;
-using Snowly.Image.Drawables.Shapes;
-using Snowly.Image.Drawables.Sprites;
 using Snowly.Listeners;
 using Snowly.Logging;
 using Snowly.Modules;
@@ -24,6 +20,10 @@ using Snowly.Modules.Timers;
 using Snowly.Modules.Utility;
 using Snowly.Modules.Welcome;
 using Snowly.Modules.XP;
+using Snowly.Renderer;
+using Snowly.Renderer.Drawables;
+using Snowly.Renderer.Drawables.Shapes;
+using Snowly.Renderer.Drawables.Sprites;
 using Snowly.Utils;
 
 namespace Snowly;
@@ -155,7 +155,7 @@ public static class Snowly
                 var guilds = Bot.Guilds.Count;
                 var members = Bot.Guilds.Values.Sum(guild => guild.MemberCount);
 
-                const ActivityType type = ActivityType.Watching;
+                const DiscordActivityType type = DiscordActivityType.Watching;
                 var message = $"{guilds} guilds with {members} members";
                 Bot.UpdateStatusAsync(new DiscordActivity(message, type));
                 Logger.LogDebug($"Set status to '{type} {message}'");

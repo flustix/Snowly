@@ -1,10 +1,9 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using Microsoft.Extensions.Logging;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using Snowly.Commands;
-using Snowly.Image.Utils;
+using Snowly.Renderer.Utils;
 using Snowly.Utils;
 
 namespace Snowly.Modules.Utility.Commands;
@@ -21,7 +20,7 @@ public class AccentColorCommand : IOptionSlashCommand
         {
             Name = "attachment",
             Description = "The image to get the accent colors from.",
-            Type = ApplicationCommandOptionType.Attachment,
+            Type = DiscordApplicationCommandOptionType.Attachment,
             Required = true
         }
     };
@@ -54,7 +53,7 @@ public class AccentColorCommand : IOptionSlashCommand
             var stream = await response.Content.ReadAsStreamAsync();
 
             // get the accent colors
-            var image = await SixLabors.ImageSharp.Image.LoadAsync<Rgba32>(stream);
+            var image = await Image.LoadAsync<Rgba32>(stream);
             var colors = image.GetAccentColors();
             var palette = ImageUtils.RenderColorPalette(colors);
 

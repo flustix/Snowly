@@ -1,7 +1,7 @@
 using SixLabors.Fonts;
-using Snowly.Image.Utils;
+using Snowly.Renderer.Utils;
 
-namespace Snowly.Image;
+namespace Snowly.Renderer;
 
 public static class FontStorage
 {
