@@ -42,7 +42,8 @@ public class TimersModule : IModule
     private static void runTimers()
     {
         var now = DateTime.Now;
-        var timers = MongoDatabase.GetCollection<Timer>("timers").Find(timer => timer.Hour == now.Hour && timer.Minute == now.Minute).ToList();
+        var collection = MongoDatabase.GetCollection<Timer>("timers");
+        var timers = collection.Find(timer => timer.Hour == now.Hour && timer.Minute == now.Minute).ToList();
 
         foreach (var timer in timers)
         {
@@ -68,6 +69,7 @@ public class TimersModule : IModule
 
                     historySplit.Add(randomIndex.ToString());
                     timer.AntiRepeatHistory = string.Join(",", historySplit);
+                    collection.ReplaceOne(t => t.ID == timer.ID, timer);
 
                     var randomItem = randomList.ElementAt(randomIndex);
 
