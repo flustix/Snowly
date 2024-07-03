@@ -1,0 +1,61 @@
+﻿using DSharpPlus.Entities;
+using NLua;
+using Snowly.Scripting.Models.Channels.Messages.Embed;
+using Snowly.Utils;
+
+namespace Snowly.Scripting;
+
+public class ScriptRunner
+{
+    private DiscordInteraction interaction { get; }
+    private Lua lua { get; }
+    private Dictionary<string, ILuaModel> context { get; } = new();
+    private bool hasReplied { get; set; }
+
+    public ScriptRunner(DiscordInteraction interaction)
+    {
+        this.interaction = interaction;
+
+        lua = new Lua();
+        lua.DoString("import = function() end"); // disable importing
+
+        AddFunction("reply", replyContent);
+        AddFunction("reply", replyEmbed);
+
+        AddFunction("createEmbed", () => new LuaEmbed());
+    }
+
+    public void AddFunction(string name, Delegate function)
+    {
+        lua.RegisterFunction(name, function.Target, function.Method);
+    }
+
+    public void AddContext(string name, ILuaModel value)
+    {
+        context[name] = value;
+        lua["ctx"] = context;
+    }
+
+    public void Run(string code)
+    {
+        lua.DoString(code);
+
+        if (!hasReplied)
+            interaction.Reply("*<empty>*", true);
+    }
+
+    private void replyContent(string content)
+    {
+        if (string.IsNullOrWhiteSpace(content))
+            return;
+
+        interaction.Reply(content);
+        hasReplied = true;
+    }
+
+    private void replyEmbed(LuaEmbed embed)
+    {
+        interaction.ReplyEmbed(embed.ToCustomEmbed());
+        hasReplied = true;
+    }
+}

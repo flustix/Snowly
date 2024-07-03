@@ -16,6 +16,7 @@ public class UtilityModule : IModule
         new BeanCommand(),
         new ConfigCommand(),
         new GuildInfoCommand(),
+        new LuaCommand(),
         new PingCommand(),
         new SayCommand(),
         new SayJsonCommand()
