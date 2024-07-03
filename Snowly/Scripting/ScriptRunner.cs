@@ -1,6 +1,9 @@
 ﻿using DSharpPlus.Entities;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using NLua;
 using Snowly.Scripting.Models.Channels.Messages.Embed;
+using Snowly.Scripting.Models.Channels.Messages.Polls;
 using Snowly.Utils;
 
 namespace Snowly.Scripting;
@@ -21,8 +24,10 @@ public class ScriptRunner
 
         AddFunction("reply", replyContent);
         AddFunction("reply", replyEmbed);
+        AddFunction("reply", replyPoll);
 
         AddFunction("createEmbed", () => new LuaEmbed());
+        AddFunction("Poll", (string question) => new LuaPoll { Question = new LuaPollText { Text = question } });
     }
 
     public void AddFunction(string name, Delegate function)
@@ -56,6 +61,35 @@ public class ScriptRunner
     private void replyEmbed(LuaEmbed embed)
     {
         interaction.ReplyEmbed(embed.ToCustomEmbed());
+        hasReplied = true;
+    }
+
+    private void replyPoll(LuaPoll poll)
+    {
+        try
+        {
+            Snowly.Logger.LogDebug(JsonConvert.SerializeObject(poll));
+            var builder = new DiscordPollBuilder
+            {
+                Question = poll.Question.Text,
+                Duration = poll.Duration,
+                IsMultipleChoice = poll.MultiSelect
+            };
+
+            foreach (var answer in poll.Answers)
+            {
+                /*var emote = new DiscordComponentEmoji(answer.Emote);*/
+                builder.AddOption(answer.Text /*, answer.Emote == 0 ? null : emote*/);
+            }
+
+            interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithPoll(builder)).Wait();
+        }
+        catch (Exception ex)
+        {
+            Snowly.Logger.LogError(ex, "Error sending poll!");
+            throw;
+        }
+
         hasReplied = true;
     }
 }
