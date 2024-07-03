@@ -73,16 +73,16 @@ public class AutoResponderAddCommand : IOptionSlashCommand
         var config = Configs.GetGuildConfig(interaction.Guild.Id);
         var loggingChannel = interaction.Guild.GetChannel(config.LoggingChannelID);
 
-        if (loggingChannel != null)
-        {
-            var embed = new DiscordEmbedBuilder()
-                        .WithAuthor(interaction.User.GetUsername(), iconUrl: interaction.User.AvatarUrl)
-                        .WithDescription("Auto-response added.")
-                        .AddField("Trigger", autoResponse.Trigger, true)
-                        .AddField("Response", autoResponse.Response, true)
-                        .WithColor(Colors.Green);
+        if (loggingChannel == null)
+            return;
 
-            loggingChannel.SendMessageAsync(embed);
-        }
+        var embed = new DiscordEmbedBuilder()
+                    .WithAuthor(interaction.User.GetUsername(), iconUrl: interaction.User.AvatarUrl)
+                    .WithDescription("Auto-response added.")
+                    .AddField("Trigger", autoResponse.Trigger, true)
+                    .AddField("Response", autoResponse.Response, true)
+                    .WithColor(Colors.Green);
+
+        loggingChannel.SendMessageAsync(embed);
     }
 }

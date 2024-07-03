@@ -40,6 +40,6 @@ public static class FormatUtils
     {
         if (string.IsNullOrEmpty(name)) return "";
 
-        return name.EndsWith("s") ? $"{name}'" : $"{name}'s";
+        return name.EndsWith('s') ? $"{name}'" : $"{name}'s";
     }
 }

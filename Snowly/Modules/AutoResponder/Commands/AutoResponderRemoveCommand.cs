@@ -49,15 +49,15 @@ public class AutoResponderRemoveCommand : IOptionSlashCommand
         var config = Configs.GetGuildConfig(interaction.Guild.Id);
         var loggingChannel = interaction.Guild.GetChannel(config.LoggingChannelID);
 
-        if (loggingChannel != null)
-        {
-            var embed = new DiscordEmbedBuilder()
-                        .WithAuthor(interaction.User.GetUsername(), iconUrl: interaction.User.AvatarUrl)
-                        .WithDescription("Auto-response removed")
-                        .AddField("Trigger", trigger, true)
-                        .WithColor(Colors.Red);
+        if (loggingChannel == null)
+            return;
 
-            loggingChannel.SendMessageAsync(embed);
-        }
+        var embed = new DiscordEmbedBuilder()
+                    .WithAuthor(interaction.User.GetUsername(), iconUrl: interaction.User.AvatarUrl)
+                    .WithDescription("Auto-response removed")
+                    .AddField("Trigger", trigger, true)
+                    .WithColor(Colors.Red);
+
+        loggingChannel.SendMessageAsync(embed);
     }
 }

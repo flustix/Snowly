@@ -12,7 +12,7 @@ public class AutoResponse
     public ulong GuildID { get; init; }
 
     [BsonElement("cid")]
-    public ulong ChannelID { get; init; } = 0;
+    public ulong ChannelID { get; init; }
 
     [BsonElement("trigger")]
     public string Trigger { get; init; }

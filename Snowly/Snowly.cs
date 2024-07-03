@@ -295,7 +295,7 @@ public static class Snowly
                     {
                         Width = 80,
                         Height = 80,
-                        Path = "https://cdn.discordapp.com/avatars/386436194709274627/b78ec7a8381886fa4be61202779c1d00.png?size=1024",
+                        Path = "https://cdn.discordapp.com/avatars/386436194709274627/b78ec7a8381886fa4be61202779c1d00.png?size=1024"
                     }
                 }
             }

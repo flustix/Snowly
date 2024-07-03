@@ -131,7 +131,7 @@ public static class InteractionUtils
     private static IEnumerable<DiscordInteractionDataOption>? getOptions(this DiscordInteraction interaction)
     {
         var options = interaction.Data?.Options?.ToList();
-        if (options == null || !options.Any()) return null;
+        if (options == null || options.Count == 0) return null;
 
         while (options.FirstOrDefault()?.Options?.Any() ?? false)
             options = options.First().Options.ToList();

@@ -32,5 +32,5 @@ public class XpUser
     public long LevelProgress => XpFromCurrentToNext - XpLeft;
 
     [BsonIgnore]
-    public double LevelProgressPercent => (double) LevelProgress / XpFromCurrentToNext;
+    public double LevelProgressPercent => (double)LevelProgress / XpFromCurrentToNext;
 }

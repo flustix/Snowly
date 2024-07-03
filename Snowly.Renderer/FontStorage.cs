@@ -23,9 +23,8 @@ public static class FontStorage
 
     public static Font GetFont(string name, float size)
     {
-        if (!families.ContainsKey(name))
-            return SystemFonts.CreateFont(DefaultFont, size);
-
-        return families[name].CreateFont(size);
+        return !families.TryGetValue(name, out var family)
+            ? SystemFonts.CreateFont(DefaultFont, size)
+            : family.CreateFont(size);
     }
 }

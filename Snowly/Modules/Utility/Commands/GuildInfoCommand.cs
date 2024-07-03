@@ -23,7 +23,7 @@ public class GuildInfoCommand : IOptionSlashCommand
         }
     };
 
-    public async void Handle(DiscordInteraction interaction)
+    public void Handle(DiscordInteraction interaction)
     {
         var idStr = interaction.GetString("guild");
         ulong customId = 0;
@@ -55,7 +55,7 @@ public class GuildInfoCommand : IOptionSlashCommand
                 new(":clock1: Created At", $"<t:{guild.CreationTimestamp.ToUnixTimeSeconds()}:f>", true),
                 new(":books: Channels", getChannels(guild), true),
                 new(":moyai: Emotes", $"{guild.Emojis.Count}", true),
-                new(":scroll: Roles", $"{guild.Roles.Count}", true),
+                new(":scroll: Roles", $"{guild.Roles.Count}", true)
             }
         };
 
@@ -69,15 +69,21 @@ public class GuildInfoCommand : IOptionSlashCommand
 
         foreach (var channel in guild.Channels.Values)
         {
-            if (channel.Type is DiscordChannelType.Category
-                or DiscordChannelType.PublicThread
-                or DiscordChannelType.PrivateThread)
-                continue;
+            switch (channel.Type)
+            {
+                case DiscordChannelType.Category
+                    or DiscordChannelType.PublicThread
+                    or DiscordChannelType.PrivateThread:
+                    continue;
 
-            if (channel.Type is DiscordChannelType.Voice or DiscordChannelType.Stage)
-                voice++;
-            else
-                text++;
+                case DiscordChannelType.Voice or DiscordChannelType.Stage:
+                    voice++;
+                    break;
+
+                default:
+                    text++;
+                    break;
+            }
         }
 
         var builder = new StringBuilder();

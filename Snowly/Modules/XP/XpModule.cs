@@ -51,16 +51,16 @@ public class XpModule : IModule
         if (user.LastMessage + 60 > DateTimeOffset.Now.ToUnixTimeSeconds()) return;
 
         var level = user.Level;
-        var mulitplierRoles = XpUtils.GetMultiplierRoles(args.Guild.Id).Where(x => member.Roles.Any(r => r.Id == x.RoleId));
-        var mulitplier = 1d + mulitplierRoles.Sum(role => role.Multiplier);
+        var multiplierRoles = XpUtils.GetMultiplierRoles(args.Guild.Id).Where(x => member.Roles.Any(r => r.Id == x.RoleId));
+        var multiplier = 1d + multiplierRoles.Sum(role => role.Multiplier);
         var channelMultiplier = XpUtils.GetMultiplierChannels(args.Guild.Id).FirstOrDefault(c => c.ChannelId == args.Channel.Id);
 
         if (channelMultiplier is not null)
         {
-            mulitplier *= channelMultiplier.Multiplier;
+            multiplier *= channelMultiplier.Multiplier;
         }
 
-        var toAdd = (int)(new Random().Next(10, 20) * mulitplier);
+        var toAdd = (int)(new Random().Next(10, 20) * multiplier);
         Snowly.Logger.LogDebug($"Adding {toAdd} XP to {args.Author.GetNickname()} ({args.Author.Id})");
         user.Xp += toAdd;
         user.LastMessage = DateTimeOffset.Now.ToUnixTimeSeconds();
@@ -108,7 +108,7 @@ public class XpModule : IModule
     private static void handleRoles(XpUser user, DiscordMember member, DiscordGuild guild)
     {
         var roles = XpUtils.GetRewardRoles(guild.Id).OrderBy(x => x.Level).ToList();
-        if (!roles.Any()) return;
+        if (roles.Count == 0) return;
 
         var rolesToAdd = roles.Where(x => x.Level <= user.Level);
 

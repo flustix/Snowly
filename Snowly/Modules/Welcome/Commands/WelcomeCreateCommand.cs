@@ -15,14 +15,14 @@ public class WelcomeCreateCommand : IOptionSlashCommand
 
     public List<SlashOption> Options => new()
     {
-        new()
+        new SlashOption
         {
             Name = "channel",
             Description = "The channel to send the welcome message in.",
             Type = DiscordApplicationCommandOptionType.Channel,
             Required = true
         },
-        new()
+        new SlashOption
         {
             Name = "json",
             Description = "The JSON to send as the welcome message.",

@@ -8,7 +8,7 @@ namespace Snowly.Renderer.Drawables;
 public class Container : Drawable
 {
     public Drawable[] Drawables { get; init; } = Array.Empty<Drawable>();
-    public int CornerRadius { get; init; } = 0;
+    public int CornerRadius { get; init; }
 
     public override Image<Rgba32> Draw()
     {
