@@ -1,8 +1,8 @@
 ﻿using DSharpPlus.Entities;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using NLua;
 using Snowly.Scripting.Models.Channels.Messages.Embed;
+using Snowly.Scripting.Models.Channels.Messages.Expressions;
 using Snowly.Scripting.Models.Channels.Messages.Polls;
 using Snowly.Utils;
 
@@ -26,7 +26,8 @@ public class ScriptRunner
         AddFunction("reply", replyEmbed);
         AddFunction("reply", replyPoll);
 
-        AddFunction("createEmbed", () => new LuaEmbed());
+        AddFunction("Embed", () => new LuaEmbed());
+        AddFunction("Sticker", (ulong id) => new LuaSticker { ID = id });
         AddFunction("Poll", (string question) => new LuaPoll { Question = new LuaPollText { Text = question } });
     }
 
@@ -68,21 +69,8 @@ public class ScriptRunner
     {
         try
         {
-            Snowly.Logger.LogDebug(JsonConvert.SerializeObject(poll));
-            var builder = new DiscordPollBuilder
-            {
-                Question = poll.Question.Text,
-                Duration = poll.Duration,
-                IsMultipleChoice = poll.MultiSelect
-            };
-
-            foreach (var answer in poll.Answers)
-            {
-                /*var emote = new DiscordComponentEmoji(answer.Emote);*/
-                builder.AddOption(answer.Text /*, answer.Emote == 0 ? null : emote*/);
-            }
-
-            interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithPoll(builder)).Wait();
+            var message = new DiscordInteractionResponseBuilder().WithPoll(poll.Build());
+            interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource, message).Wait();
         }
         catch (Exception ex)
         {
