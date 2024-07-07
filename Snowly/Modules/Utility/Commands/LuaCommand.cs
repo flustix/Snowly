@@ -54,7 +54,7 @@ public class LuaCommand : IOptionSlashCommand
                 Title = "An error occurred while running Lua code",
                 Description = $"```{e.Message}```",
                 Color = DiscordColor.Red
-            });
+            }, true);
 
             Snowly.Logger.LogCritical(e, "An error occurred while running Lua code");
         }
