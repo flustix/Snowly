@@ -41,7 +41,7 @@ public class AutoResponderAddCommand : IOptionSlashCommand
 
     public void Handle(DiscordInteraction interaction)
     {
-        var trigger = interaction.GetString("trigger");
+        var trigger = interaction.GetString("trigger")?.ToLowerInvariant();
         var response = interaction.GetString("response");
         var channel = interaction.GetChannel("channel");
 

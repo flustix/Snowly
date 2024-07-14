@@ -26,7 +26,7 @@ public class AutoResponderRemoveCommand : IOptionSlashCommand
 
     public void Handle(DiscordInteraction interaction)
     {
-        var trigger = interaction.GetString("trigger");
+        var trigger = interaction.GetString("trigger")?.ToLowerInvariant();
 
         if (trigger is null)
         {
