@@ -1,5 +1,5 @@
 ﻿using DSharpPlus.Entities;
-using Microsoft.Extensions.Logging;
+using Midori.Logging;
 using Snowly.Commands;
 
 namespace Snowly.Utils;
@@ -13,7 +13,7 @@ public abstract class CommandBuilder
         switch (command)
         {
             case ISlashCommandGroup group:
-                Snowly.Logger.LogDebug($"  /{group.Name}");
+                Logger.Log($"  /{group.Name}", level: LogLevel.Debug);
 
                 appCommand = new DiscordApplicationCommand(
                     command.Name,
@@ -31,7 +31,7 @@ public abstract class CommandBuilder
                     allowDMUsage: command.AllowInDM,
                     defaultMemberPermissions: command.Permission);
 
-                Snowly.Logger.LogDebug(optionCommand.Options.Aggregate($"  /{command.Name}", (current, option) => current + $" {option.Name}:{option.Type.ToString()}"));
+                Logger.Log(optionCommand.Options.Aggregate($"  /{command.Name}", (current, option) => current + $" {option.Name}:{option.Type.ToString()}"), level: LogLevel.Debug);
                 break;
 
             default:
@@ -41,7 +41,7 @@ public abstract class CommandBuilder
                     allowDMUsage: command.AllowInDM,
                     defaultMemberPermissions: command.Permission);
 
-                Snowly.Logger.LogDebug($"  /{command.Name}");
+                Logger.Log($"  /{command.Name}", level: LogLevel.Debug);
                 break;
         }
 
@@ -69,7 +69,7 @@ public abstract class CommandBuilder
         switch (subCommand)
         {
             case ISlashCommandGroup group:
-                Snowly.Logger.LogDebug(log);
+                Logger.Log(log, level: LogLevel.Debug);
 
                 builder = new DiscordApplicationCommandOption(
                     subCommand.Name,
@@ -89,7 +89,7 @@ public abstract class CommandBuilder
                     Array.Empty<DiscordApplicationCommandOptionChoice>(),
                     optionCommand.Options.Select(buildOption));
 
-                Snowly.Logger.LogDebug(optionCommand.Options.Aggregate(log, (current, option) => current + $" {option.Name}{(option.Required ? "" : "?")}:{option.Type.ToString()}"));
+                Logger.Log(optionCommand.Options.Aggregate(log, (current, option) => current + $" {option.Name}{(option.Required ? "" : "?")}:{option.Type.ToString()}"), level: LogLevel.Debug);
                 break;
 
             default:
@@ -98,7 +98,7 @@ public abstract class CommandBuilder
                     subCommand.Description,
                     DiscordApplicationCommandOptionType.SubCommand);
 
-                Snowly.Logger.LogDebug(log);
+                Logger.Log(log, level: LogLevel.Debug);
                 break;
         }
 

@@ -1,5 +1,5 @@
 ﻿using DSharpPlus.Entities;
-using Microsoft.Extensions.Logging;
+using Midori.Logging;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using Snowly.Commands;
@@ -69,7 +69,7 @@ public class AccentColorCommand : IOptionSlashCommand
         }
         catch (Exception e)
         {
-            Snowly.Logger.LogError(e, "Error getting accent colors.");
+            Logger.Error(e, "Error getting accent colors.");
             interaction.Followup("Error getting accent colors.", true);
         }
         finally

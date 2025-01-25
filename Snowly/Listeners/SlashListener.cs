@@ -1,7 +1,7 @@
 ﻿using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
-using Microsoft.Extensions.Logging;
+using Midori.Logging;
 using Snowly.Commands;
 using Snowly.Constants;
 
@@ -28,7 +28,7 @@ public static class SlashListener
         }
         catch (Exception e)
         {
-            Snowly.Logger.LogError(e, $"An error occurred while executing command {command?.Name ?? "*undefined*"}.");
+            Logger.Error(e, $"An error occurred while executing command {command?.Name ?? "*undefined*"}.");
 
             await args.Interaction.CreateResponseAsync(DiscordInteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder().AddEmbed(new DiscordEmbedBuilder
@@ -90,7 +90,6 @@ public static class SlashListener
 
                 if (focused == null) continue;
 
-                Snowly.Logger.LogDebug($"Focused option: {focused.Name}");
                 command.HandleAutoComplete(args.Interaction, focused);
             }
         }

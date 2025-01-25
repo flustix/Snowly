@@ -1,5 +1,5 @@
 ﻿using DSharpPlus.Entities;
-using Microsoft.Extensions.Logging;
+using Midori.Logging;
 using Snowly.Commands;
 using Snowly.Components.Message;
 using Snowly.Scripting;
@@ -56,7 +56,7 @@ public class LuaCommand : IOptionSlashCommand
                 Color = DiscordColor.Red
             }, true);
 
-            Snowly.Logger.LogCritical(e, "An error occurred while running Lua code");
+            Logger.Error(e, "An error occurred while running Lua code");
         }
     }
 }

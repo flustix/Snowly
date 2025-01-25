@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Midori.Logging;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -88,7 +88,7 @@ public class TimersModule : IModule
             }
             catch (Exception e)
             {
-                Snowly.Logger.LogError(e, $"Failed to send timer message for {timer.GuildID} in {timer.ChannelID}");
+                Logger.Error(e, $"Failed to send timer message for {timer.GuildID} in {timer.ChannelID}.");
             }
         }
     }

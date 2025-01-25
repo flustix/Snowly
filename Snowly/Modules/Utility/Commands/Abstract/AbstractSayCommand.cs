@@ -1,5 +1,5 @@
 ﻿using DSharpPlus.Entities;
-using Microsoft.Extensions.Logging;
+using Midori.Logging;
 using Snowly.Commands;
 using Snowly.Components.Message;
 using Snowly.Config;
@@ -105,7 +105,7 @@ public abstract class AbstractSayCommand : IOptionSlashCommand
             }
             else
             {
-                Snowly.Logger.LogWarning($"[{guildConfig.ID}] Logging channel {guildConfig.LoggingChannelID} not found.");
+                Logger.Log($"[{guildConfig.ID}] Logging channel {guildConfig.LoggingChannelID} not found.", level: LogLevel.Warning);
             }
         }
         catch (Exception e)

@@ -1,5 +1,5 @@
 ﻿using DSharpPlus.EventArgs;
-using Microsoft.Extensions.Logging;
+using Midori.Logging;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using Snowly.Commands;
@@ -7,7 +7,6 @@ using Snowly.Components.Message;
 using Snowly.Database;
 using Snowly.Modules.Welcome.Commands;
 using Snowly.Modules.Welcome.Components;
-using Snowly.Utils;
 
 namespace Snowly.Modules.Welcome;
 
@@ -23,8 +22,6 @@ public class WelcomeModule : IModule
 
     public Task OnMemberJoined(GuildMemberAddEventArgs args)
     {
-        Snowly.Logger.LogDebug($"User {args.Member.GetUsername()} joined the server!");
-
         try
         {
             var collection = MongoDatabase.GetCollection<WelcomeMessage>("welcome");
@@ -49,7 +46,7 @@ public class WelcomeModule : IModule
         }
         catch (Exception e)
         {
-            Snowly.Logger.LogError(e, "Error while welcoming new member!");
+            Logger.Error(e, "Error while welcoming new member!");
         }
 
         return Task.CompletedTask;

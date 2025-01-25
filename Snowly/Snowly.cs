@@ -5,13 +5,12 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Exceptions;
-using Microsoft.Extensions.Logging;
+using Midori.Logging;
 using SixLabors.ImageSharp.PixelFormats;
 using Snowly.Commands;
 using Snowly.Config;
 using Snowly.Database;
 using Snowly.Listeners;
-using Snowly.Logging;
 using Snowly.Modules;
 using Snowly.Modules.AutoResponder;
 using Snowly.Modules.Economy;
@@ -39,21 +38,16 @@ public static class Snowly
     public static List<IModule> Modules { get; private set; }
     public static List<ISlashCommand> SlashCommands { get; private set; }
 
-    private static LoggerFactory loggerFactory { get; } = new();
-    public static ILogger Logger { get; } = loggerFactory.CreateLogger("Snowly");
-
     private static readonly List<DiscordApplicationCommand> list = new();
 
     public static async Task Main(string[] args)
     {
-        await File.WriteAllTextAsync("snowly.log", string.Empty);
-
         AppDomain.CurrentDomain.UnhandledException += (_, eventArgs) =>
         {
             if (eventArgs.ExceptionObject is not Exception e)
-                Logger.LogError($"Unhandled exception: {eventArgs.ExceptionObject}");
+                Logger.Log($"Unhandled exception: {eventArgs.ExceptionObject}", LoggingTarget.General, LogLevel.Error);
             else
-                Logger.LogError(e, $"Unhandled exception: {e.Message}");
+                Logger.Error(e, $"Unhandled exception: {e.Message}");
         };
 
         if (args.Contains("--image"))
@@ -92,8 +86,7 @@ public static class Snowly
             TokenType = TokenType.Bot,
             Intents = DiscordIntents.AllUnprivileged | DiscordIntents.GuildMembers | DiscordIntents.GuildPresences | DiscordIntents.MessageContents,
             AutoReconnect = true,
-            MinimumLogLevel = IsDebug ? LogLevel.Debug : LogLevel.Information,
-            LoggerFactory = loggerFactory
+            MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.None
         });
 
         Bot.SessionCreated += ready;
@@ -134,16 +127,16 @@ public static class Snowly
 
     private static async Task ready(DiscordClient _, SessionReadyEventArgs __)
     {
-        Logger.LogInformation($"Logged in as {Bot.CurrentUser.Username}#{Bot.CurrentUser.Discriminator}");
+        Logger.Log($"Logged in as {Bot.CurrentUser.Username}#{Bot.CurrentUser.Discriminator}");
 
         try
         {
-            Logger.LogInformation("Overwriting global slash commands...");
+            Logger.Log("Overwriting global slash commands...");
             await Bot.BulkOverwriteGlobalApplicationCommandsAsync(list.ToArray());
         }
         catch (BadRequestException e)
         {
-            Logger.LogError(e, "Failed to load modules!");
+            Logger.Error(e, "Failed to load modules!");
             await File.WriteAllTextAsync("error.log", e.Message);
             return;
         }
@@ -158,18 +151,18 @@ public static class Snowly
                 const DiscordActivityType type = DiscordActivityType.Watching;
                 var message = $"{guilds} guilds with {members} members";
                 Bot.UpdateStatusAsync(new DiscordActivity(message, type));
-                Logger.LogDebug($"Set status to '{type} {message}'");
+                Logger.Log($"Set status to '{type} {message}'", level: LogLevel.Debug);
                 Thread.Sleep(1000 * 60 * 5); // 5 minutes
             }
         });
         activityThread.Start();
 
-        Logger.LogInformation("Ready!");
+        Logger.Log("Ready!");
     }
 
     private static void loadModule(IModule module, ICollection<DiscordApplicationCommand> list)
     {
-        Logger.LogDebug($"[Module] {module.Name}");
+        Logger.Log($"[Module] {module.Name}", level: LogLevel.Debug);
 
         foreach (var command in module.SlashCommands)
         {

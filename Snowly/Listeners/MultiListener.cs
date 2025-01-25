@@ -1,6 +1,6 @@
 ﻿using DSharpPlus;
 using DSharpPlus.EventArgs;
-using Microsoft.Extensions.Logging;
+using Midori.Logging;
 
 namespace Snowly.Listeners;
 
@@ -83,7 +83,7 @@ public static class MultiListener
 
     public static async Task GuildAvailable(DiscordClient sender, GuildCreateEventArgs args)
     {
-        Snowly.Logger.LogInformation($"Loaded guild '{args.Guild.Name}' ({args.Guild.Id})");
+        Logger.Log($"Loaded guild '{args.Guild.Name}' ({args.Guild.Id})");
         foreach (var module in Snowly.Modules) await module.OnGuildAvailable(args);
     }
 

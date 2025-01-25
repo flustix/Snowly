@@ -1,5 +1,5 @@
 ﻿using DSharpPlus.Entities;
-using Microsoft.Extensions.Logging;
+using Midori.Logging;
 using NLua;
 using Snowly.Scripting.Models.Channels.Messages.Embed;
 using Snowly.Scripting.Models.Channels.Messages.Expressions;
@@ -74,7 +74,7 @@ public class ScriptRunner
         }
         catch (Exception ex)
         {
-            Snowly.Logger.LogError(ex, "Error sending poll!");
+            Logger.Error(ex, "Error sending poll!");
             throw;
         }
 

@@ -1,7 +1,6 @@
 ﻿using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
-using Microsoft.Extensions.Logging;
 using Snowly.Commands;
 using Snowly.Components.Message;
 using Snowly.Config;
@@ -61,7 +60,6 @@ public class XpModule : IModule
         }
 
         var toAdd = (int)(new Random().Next(10, 20) * multiplier);
-        Snowly.Logger.LogDebug($"Adding {toAdd} XP to {args.Author.GetNickname()} ({args.Author.Id})");
         user.Xp += toAdd;
         user.LastMessage = DateTimeOffset.Now.ToUnixTimeSeconds();
 
