@@ -1,5 +1,6 @@
 services:
   snowly:
+    container_name: snowly
     image: snowly
     environment:
       - TOKEN=your_token_here

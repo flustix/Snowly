@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Numerics;
-using System.Reflection;
+﻿using System.Numerics;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
@@ -32,9 +30,6 @@ public static class Snowly
     public static DiscordClient Bot { get; private set; }
     private static BotConfig config { get; set; }
 
-    // flags
-    public static bool IsDebug => Assembly.GetEntryAssembly()?.GetCustomAttribute<DebuggableAttribute>()?.IsJITTrackingEnabled ?? false;
-
     public static List<IModule> Modules { get; private set; }
     public static List<ISlashCommand> SlashCommands { get; private set; }
 
@@ -58,16 +53,6 @@ public static class Snowly
 
         if (Bot != null)
             throw new Exception("Bot is already running!");
-
-        Console.Title = "Snowly";
-        Console.Clear();
-
-        if (IsDebug)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Debug mode enabled!");
-            Console.ResetColor();
-        }
 
         await run();
     }
