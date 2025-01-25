@@ -1,11 +1,9 @@
 services:
   snowly:
     container_name: snowly
-    image: snowly
+    image: flustix/natsu:latest
+    restart: unless-stopped
     environment:
       - TOKEN=your_token_here
-      - MONGO_CONNECTION=mongodb://mongo:27017
+      - MONGO_CONNECTION=mongodb://localhost:27017
       - DATABASE=snowly
-    build:
-      context: .
-      dockerfile: Snowly/Dockerfile
